@@ -18,15 +18,15 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
-        // GET: Presentacion/Create
-        public ActionResult Create()
+        // GET: Presentacion/Crear
+        public ActionResult Crear()
         {
             return View();
         }
 
-        // POST: Presentacion/Create
+        // POST: Presentacion/Crear
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Crear(FormCollection collection)
         {
             try
             {
@@ -46,21 +46,21 @@ namespace BD_PR_01_Clinicas.Controllers
             }
         }
 
-        // GET: Presentacion/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Presentacion/Editar/5
+        public ActionResult Editar(int codPresentacion)
         {
-            tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == id select t).SingleOrDefault();
+            tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == codPresentacion select t).SingleOrDefault();
             return View(editar);
         }
 
-        // POST: Presentacion/Edit/5
+        // POST: Presentacion/Editar/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Editar(int codPresentacion, FormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
-                tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == id select t).SingleOrDefault();
+                tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == codPresentacion select t).SingleOrDefault();
                 editar.presentacion = collection["presentacion"];
                 db.SubmitChanges();
                 return RedirectToAction("Index");

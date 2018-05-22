@@ -7,7 +7,7 @@
 <h2>Presentaciones</h2>
 
 <p>
-    @Html.ActionLink("Nueva Presentación", "Create")
+    @Html.ActionLink("Nueva Presentación", "Crear")
 </p>
 <table class="table">
     <tr>
@@ -29,7 +29,7 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.codPresentacion }) |
+            @Html.ActionLink("Editar", "Editar", new { codPresentacion = item.codPresentacion }) |
             @if (item.estado == true)
             {
                 @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codPresentacion = item.codPresentacion, estado = false })
