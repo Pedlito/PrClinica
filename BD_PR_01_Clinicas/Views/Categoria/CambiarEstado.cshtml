@@ -1,0 +1,47 @@
+﻿@model BD_PR_01_Clinicas.Models.tbCategoria
+
+@{
+    ViewBag.Title = "CambiarEstado";
+}
+
+@if (Model.estado == true)
+{
+    <h2>Deshabilitar</h2>
+
+    <h3>¿Realmente quieres deshabilitar esta categoría?</h3>
+}
+else
+{
+    <h2>Habilitar</h2>
+
+    <h3>¿Realmente quieres habilitar esta categoría?</h3>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Categoría")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoria)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @if (Model.estado == true)
+            {
+                <input type="submit" value="Deshabilitar" class="btn btn-default" />
+            }
+            else
+            {
+                <input type="submit" value="Habilitar" class="btn btn-default" />
+            }
+            | @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

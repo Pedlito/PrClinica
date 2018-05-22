@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbClinica" Class="DataClasesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-R30TL5S;Initial Catalog=dbClinica;User ID=uPedro" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tbUsuario" Member="tbUsuario">
+    <Type Name="tbUsuario">
+      <Column Name="codUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="dpi" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="carnet" Type="System.String" DbType="VarChar(13)" CanBeNull="true" />
+      <Column Name="fechaNacimiento" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="usuario" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="tbUsuario_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbRotacionUsuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbDetalleEntrada" Member="tbDetalleEntrada">
+    <Type Name="tbDetalleEntrada">
+      <Column Name="codEntrada" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codProducto" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbEntrada_tbDetalleEntrada" Member="tbEntrada" ThisKey="codEntrada" OtherKey="codEntrada" Type="tbEntrada" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+      <Association Name="tbProducto_tbDetalleEntrada" Member="tbProducto" ThisKey="codProducto" OtherKey="codProducto" Type="tbProducto" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbDetalleSalida" Member="tbDetalleSalida">
+    <Type Name="tbDetalleSalida">
+      <Column Name="codSalida" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codProducto" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cantidad" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbProducto_tbDetalleSalida" Member="tbProducto" ThisKey="codProducto" OtherKey="codProducto" Type="tbProducto" IsForeignKey="true" />
+      <Association Name="tbSalida_tbDetalleSalida" Member="tbSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbSalida" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbEntrada" Member="tbEntrada">
+    <Type Name="tbEntrada">
+      <Column Name="codEntrada" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="fechaEntrada" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbEntrada_tbDetalleEntrada" Member="tbDetalleEntrada" ThisKey="codEntrada" OtherKey="codEntrada" Type="tbDetalleEntrada" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbPaciente" Member="tbPaciente">
+    <Type Name="tbPaciente">
+      <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nombre" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="genero" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="fechaNacimiento" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="estadoCivil" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="residencia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="procedencia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="religion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="profesion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="razaEtnia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="escolaridad" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="codTipoSangre" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbTipoSangre_tbPaciente" Member="tbTipoSangre" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbTipoSangre" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbProducto" Member="tbProducto">
+    <Type Name="tbProducto">
+      <Column Name="codProducto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codCategoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="codPresentacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="producto" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dosis" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="codVolumen" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbProducto_tbDetalleEntrada" Member="tbDetalleEntrada" ThisKey="codProducto" OtherKey="codProducto" Type="tbDetalleEntrada" />
+      <Association Name="tbProducto_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codProducto" OtherKey="codProducto" Type="tbDetalleSalida" />
+      <Association Name="tbCategoria_tbProducto" Member="tbCategoria" ThisKey="codCategoria" OtherKey="codCategoria" Type="tbCategoria" IsForeignKey="true" />
+      <Association Name="tbPresentacion_tbProducto" Member="tbPresentacion" ThisKey="codPresentacion" OtherKey="codPresentacion" Type="tbPresentacion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbRotacion" Member="tbRotacion">
+    <Type Name="tbRotacion">
+      <Column Name="codRotacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fechaInicio" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="fechaFinal" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacionUsuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbRotacionUsuario" Member="tbRotacionUsuario">
+    <Type Name="tbRotacionUsuario">
+      <Column Name="codRotacion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacion" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacion" IsForeignKey="true" />
+      <Association Name="tbUsuario_tbRotacionUsuario" Member="tbUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbSalida" Member="tbSalida">
+    <Type Name="tbSalida">
+      <Column Name="codSalida" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="fechaSalida" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbSalida_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbDetalleSalida" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbTipoSangre" Member="tbTipoSangre">
+    <Type Name="tbTipoSangre">
+      <Column Name="codTipoSangre" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipoSangre" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Association Name="tbTipoSangre_tbPaciente" Member="tbPaciente" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbPaciente" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbCategoria" Member="tbCategoria">
+    <Type Name="tbCategoria">
+      <Column Name="codCategoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="categoria" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbCategoria_tbProducto" Member="tbProducto" ThisKey="codCategoria" OtherKey="codCategoria" Type="tbProducto" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbPresentacion" Member="tbPresentacion">
+    <Type Name="tbPresentacion">
+      <Column Name="codPresentacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="presentacion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbPresentacion_tbProducto" Member="tbProducto" ThisKey="codPresentacion" OtherKey="codPresentacion" Type="tbProducto" />
+    </Type>
+  </Table>
+  <Function Name="dbo.Logiar" Method="Logiar">
+    <Parameter Name="username" Type="System.String" DbType="NVarChar(50)" />
+    <Parameter Name="contra" Type="System.String" DbType="NVarChar(50)" />
+    <ElementType Name="LogiarResult">
+      <Column Name="codUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="codTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="usuario" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.existencias" Method="existencias" IsComposable="true">
+    <Parameter Name="codProducto" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

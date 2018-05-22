@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbDetalleEntrada>
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Producto")
+        </th>
+        <th>
+            @Html.DisplayName("Presentación")
+        </th>
+        <th>
+            @Html.DisplayName("Cantidad")
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbProducto.producto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbProducto.tbPresentacion.presentacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cantidad)
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>

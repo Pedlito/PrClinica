@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbUsuario>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Usuarios</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Estudiante", "CrearEstudiante") |
+    @Html.ActionLink("Nuevo Doctor", "crearDoctor")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Usuario")
+        </th>
+        <th>
+            @Html.DisplayName("Contraseña")
+        </th>
+        <th>
+            @Html.DisplayName("Rol")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.password)
+        </td>
+        @if (item.codTipoUsuario == 1)
+        {
+            <td>
+                Doctor
+            </td>
+        }
+        else if (item.codTipoUsuario == 2)
+        {
+            <td>
+                Estudiante
+            </td>
+        }
+        
+        <td>
+            @Html.ActionLink("Detalles", "Detalles", new { codUsuario = item.codUsuario }) |
+            @if (item.estado == true)
+            {
+                @Html.ActionLink("Deshabilitar", "Deshabilitar", new { codUsuario = item.codUsuario })
+            }
+            else
+            {
+                @Html.ActionLink("Habilitar", "Habilitar", new { codUsuario = item.codUsuario })
+            }
+
+        </td>
+    </tr>
+}
+
+</table>

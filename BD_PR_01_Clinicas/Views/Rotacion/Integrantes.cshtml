@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbRotacionUsuario>
+
+@{
+    ViewBag.Title = "Integrantes";
+}
+
+<h2>Rotación @ViewBag.fechaInicio - @ViewBag.fechaFinal</h2>
+
+<p>
+    @Html.ActionLink("Agregar Integrante", "AgregarIntegrante", new { idRotacion = (int)ViewBag.idRotacion })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nombre")
+        </th>
+        <th>
+            @Html.DisplayName("Carnet")
+        </th>
+        <th>
+            @Html.DisplayName("Usuario")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+        </td>
+        <td>
+            @Html.ActionLink("Quitar", "Delete", new { idRotacion=item.codRotacion, idUsuario=item.codUsuario })
+        </td>
+    </tr>
+}
+
+</table>

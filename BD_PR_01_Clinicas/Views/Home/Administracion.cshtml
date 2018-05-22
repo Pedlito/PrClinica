@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Administración";
+}
+
+<div class="jumbotron">
+    <h1>Administración</h1>
+</div>
+
+
+<div>
+
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#inventario" aria-controls="first" role="tab" data-toggle="tab">Inventario</a></li>
+        <li role="presentation"><a href="#medicamentos" aria-controls="second" role="tab" data-toggle="tab">Medicamentos</a></li>
+        <li role="presentation"><a href="#rotaciones" aria-controls="third" role="tab" data-toggle="tab">Rotaciones</a></li>
+        <li role="presentation"><a href="#informacion" aria-controls="fourth" role="tab" data-toggle="tab">Información</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active" id="inventario">
+            <!-- poner aqui la primera pagina de administración-->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Existencias", "Index", "Inventario")</p></h2>
+                    <p>Ver las existencias de cada medicamento.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Entradas", "Index", "Entrada")</p></h2>
+                    <p>Administracion de las entradas a bodega.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Salidas", "Index", "Salida")</p></h2>
+                    <p>Administracion de las Salidas de bodega.</p>
+                </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="medicamentos">
+            <!-- poner aqui la primera pagina de administración-->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Catalogo", "Index", "Producto")</p></h2>
+                    <p>Administracion de todos los medicamentos.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Categorias", "Index", "Categoria")</p></h2>
+                    <p>Administracion de las categorias aplicables a cada producto, tales como los analgesicos, antidiureicos, etc.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Presentaciones", "Index", "Presentacion")</p></h2>
+                    <p>Administracion de las diferentes presentaciones aplicables a un producto.</p>
+                </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="rotaciones">
+            <!-- poner aqui la segunda pagina de administración-->
+            <div class="row">
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Rotaciones", "Index", "Rotacion")</p></h2>
+                    <p>Administracion de las rotaciones y asignacion de estudiantes.</p>
+                </div>
+
+                <div class="col-md-4">
+                    <h2><p>@Html.ActionLink("Usuarios", "Index", "Usuario")</p></h2>
+                    <p>Administracion de los medicamentos existentes en inventario.</p>
+                </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="informacion">
+            <!-- poner aqui la tercera pagina de administración-->
+            <div class="col-md-4">
+                <h2><p>@Html.ActionLink("Inventario", "Index", "Inventario")</p></h2>
+                <p>ve.</p>
+            </div>
+        </div>
+    </div>
+
+</div>

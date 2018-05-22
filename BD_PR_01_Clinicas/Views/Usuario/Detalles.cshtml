@@ -1,0 +1,69 @@
+﻿@model BD_PR_01_Clinicas.Models.tbUsuario
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Usuario</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tipo de Usuario")
+        </dt>
+
+        @if (Model.codTipoUsuario == 1)
+        {
+            <dd>
+                Doctor
+            </dd>
+        }
+        else if (Model.codTipoUsuario == 2)
+        {
+            <dd>
+                Estudiante
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayName("Nombre")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("DPI")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dpi)
+        </dd>
+
+        @if (Model.codTipoUsuario == 2)
+        {
+            <dt>
+                @Html.DisplayName("Carnet")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.carnet)
+            </dd>
+        }
+
+        <dt>
+            @Html.DisplayName("Fecha de Nacimiento")
+        </dt>
+
+        <dd>
+            @Model.fechaNacimiento.ToLongDateString()
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>

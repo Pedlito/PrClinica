@@ -1,0 +1,66 @@
+﻿@model BD_PR_01_Clinicas.Models.tbUsuario
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tbPersona</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Tipo de Usuario")
+        </dt>
+
+        <dd>
+            @if (@ViewBag.tUsuario == 1)
+            {
+                @Html.Display("Doctor")
+            }
+            else
+            {
+                @Html.Display("Estudiante")
+            }
+
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Nombre")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Documento de Identificación")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dpi)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Carnet")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.carnet)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Nacimiento")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaNacimiento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.codUsuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

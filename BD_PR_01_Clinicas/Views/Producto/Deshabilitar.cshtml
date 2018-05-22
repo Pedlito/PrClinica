@@ -1,0 +1,64 @@
+﻿@model BD_PR_01_Clinicas.Models.tbProducto
+
+@{
+    ViewBag.Title = "Deshabilitar";
+}
+
+<h2>Deshabilitar</h2>
+
+<h3>Realmente quieres Deshabilitar este producto?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Producto")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.producto)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Categoría")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbCategoria.categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Presentación")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbPresentacion.presentacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Dosis")
+        </dt>
+
+        @if (Model.codVolumen == 1)
+        {
+            <dd>
+                @Model.dosis mg
+            </dd>
+        }
+        else if (Model.codVolumen == 2)
+        {
+            <dd>
+                @Model.dosis ml
+            </dd>
+        }
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Deshabilitar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,65 @@
+﻿@model BD_PR_01_Clinicas.Models.tbProducto
+
+@{
+    ViewBag.Title = "Habilitar";
+}
+
+<h2>Habilitar</h2>
+
+<h3>Realmente quieres Habilitar este producto?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Producto")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.producto)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Categoría")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbCategoria.categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Presentación")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tbPresentacion.presentacion)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Volumen")
+        </dt>
+
+        @if (Model.codVolumen == 1)
+        {
+            <dd>
+                @Model.dosis mg
+            </dd>
+        }
+        else if (Model.codVolumen == 2)
+        {
+            <dd>
+                @Model.dosis ml
+            </dd>
+        }
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Habilitar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+    }
+</div>

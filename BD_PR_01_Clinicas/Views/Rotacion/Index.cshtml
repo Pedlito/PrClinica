@@ -1,0 +1,38 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbRotacion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Rotaciones</h2>
+
+<p>
+    @Html.ActionLink("Nueva", "Crear")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Fecha de Inicio")
+        </th>
+        <th>
+            @Html.DisplayName("Fecha de Finalización")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.fechaInicio.Value.ToLongDateString();
+        </td>
+        <td>
+            @item.fechaFinal.Value.ToLongDateString();
+        </td>
+        <td>
+            @Html.ActionLink("Integrantes", "Integrantes", new { codRotacion = item.codRotacion }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
