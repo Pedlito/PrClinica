@@ -7,7 +7,7 @@
 <h2>Categorias</h2>
 
 <p>
-    @Html.ActionLink("Nueva Categría", "Crear")
+    @Html.ActionLink("Nueva Categoría", "Crear")
 </p>
 <table class="table">
     <tr>
@@ -29,7 +29,7 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.codCategoria }) |
+            @Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }) |
             @if (item.estado == true)
             {
                 @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = false })

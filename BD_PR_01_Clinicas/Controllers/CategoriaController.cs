@@ -46,21 +46,21 @@ namespace BD_PR_01_Clinicas.Controllers
             }
         }
 
-        // GET: Categoria/Edit/5
-        public ActionResult Edit(int id)
+        // GET: Categoria/Editar/5
+        public ActionResult Editar(int codCategoria)
         {
-            tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == id select t).SingleOrDefault();
+            tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == codCategoria select t).SingleOrDefault();
             return View(editar);
         }
 
-        // POST: Categoria/Edit/5
+        // POST: Categoria/Editar/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Editar(int codCategoria, FormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
-                tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == id select t).SingleOrDefault();
+                tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == codCategoria select t).SingleOrDefault();
                 editar.categoria = collection["categoria"];
                 db.SubmitChanges();
                 return RedirectToAction("Index");
