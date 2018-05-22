@@ -56,7 +56,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/ListaProductos/5
         public ActionResult ListaProductos(int codEntrada)
         {
-            List<tbDetalleEntrada> lista = (from t in db.tbDetalleEntrada where t.codEntrada == codEntrada select t).ToList();
+            List<tbDetalleEntrada> lista = (from t in db.tbDetalleEntrada orderby t.tbProducto.producto where t.codEntrada == codEntrada select t).ToList();
             ViewBag.codEntrada = codEntrada;
             return View(lista);
         }

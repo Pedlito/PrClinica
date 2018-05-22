@@ -18,15 +18,15 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
-        // GET: Categoria/Create
-        public ActionResult Create()
+        // GET: Categoria/Crear
+        public ActionResult Crear()
         {
             return View();
         }
 
         // POST: Categoria/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Crear(FormCollection collection)
         {
             try
             {

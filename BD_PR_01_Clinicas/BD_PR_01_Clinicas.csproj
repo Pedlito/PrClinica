@@ -261,7 +261,6 @@
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\Details.cshtml" />
     <Content Include="Views\Categoria\Index.cshtml" />
-    <Content Include="Views\Categoria\Create.cshtml" />
     <Content Include="Views\Presentacion\Index.cshtml" />
     <Content Include="Views\Presentacion\Create.cshtml" />
     <Content Include="Views\Presentacion\Edit.cshtml" />
@@ -301,6 +300,7 @@
     <Content Include="Views\Usuario\Habilitar.cshtml" />
     <Content Include="Views\Categoria\CambiarEstado.cshtml" />
     <Content Include="Views\Presentacion\CambiarEstado.cshtml" />
+    <Content Include="Views\Categoria\Crear.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
