@@ -9,6 +9,26 @@
 <p>
     @Html.ActionLink("Nueva Presentación", "Crear")
 </p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-default">
+        <div class="panel-heading">Buscar por nombre de Presentación</div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 form-inline">
+                        @Html.TextBox("presentacion", "", new { @class = "form-control" })
+                        <input type="submit" value="Filtrar" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <table class="table">
     <tr>
         <th>

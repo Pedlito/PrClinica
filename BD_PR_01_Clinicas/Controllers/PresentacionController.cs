@@ -12,9 +12,17 @@ namespace BD_PR_01_Clinicas.Controllers
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Presentacion
-        public ActionResult Index()
+        public ActionResult Index(string presentacion = "")
         {
-            List<tbPresentacion> lista = (from t in db.tbPresentacion orderby t.estado descending, t.presentacion select t).ToList();
+            List<tbPresentacion> lista = null;
+            if (presentacion == "")
+            {
+                lista = (from t in db.tbPresentacion orderby t.estado descending, t.presentacion select t).ToList();
+            }
+            else
+            {
+                lista = (from t in db.tbPresentacion where t.presentacion.Contains(presentacion) orderby t.estado descending, t.presentacion select t).ToList();
+            }
             return View(lista);
         }
 

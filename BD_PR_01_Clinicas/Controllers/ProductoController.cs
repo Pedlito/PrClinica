@@ -14,8 +14,12 @@ namespace BD_PR_01_Clinicas.Controllers
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
         // GET: Producto
-        public ActionResult Index()
+        public ActionResult Index(string producto = "", string categoria = "", string presentacion = "")
         {
+            if (true)
+            {
+
+            }
             List<tbProducto> lista = (from t in db.tbProducto orderby t.estado descending, t.producto select t).ToList();
             return View(lista);
         }

@@ -20,8 +20,8 @@
                 <div class="form-group">
                     @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 form-inline">
-                        @Html.TextBox("filtro", "", new { @class = "form-control" })
-                        <input type="submit" value="Filtrar" class="btn btn-default" />
+                        @Html.TextBox("categoria", "", new { @class = "form-control" })
+                        <input type="submit" value="Filtrar" class="btn btn-info" />
                     </div>
                 </div>
             </div>
@@ -49,14 +49,14 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }) |
+            @Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })
             @if (item.estado == true)
             {
-                @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = false })
+                @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
             }
             else
             {
-                @Html.ActionLink("Habilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = true })
+                @Html.ActionLink("Habilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = true }, htmlAttributes: new { @class = "btn btn-xs" })
             }
         </td>
     </tr>
