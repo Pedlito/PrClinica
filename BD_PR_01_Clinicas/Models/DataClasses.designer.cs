@@ -66,10 +66,13 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbPresentacion(tbPresentacion instance);
     partial void UpdatetbPresentacion(tbPresentacion instance);
     partial void DeletetbPresentacion(tbPresentacion instance);
+    partial void InserttbConfiguracion(tbConfiguracion instance);
+    partial void UpdatetbConfiguracion(tbConfiguracion instance);
+    partial void DeletetbConfiguracion(tbConfiguracion instance);
     #endregion
 		
 		public DataClasesDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -191,6 +194,14 @@ namespace BD_PR_01_Clinicas.Models
 			get
 			{
 				return this.GetTable<tbPresentacion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbConfiguracion> tbConfiguracion
+		{
+			get
+			{
+				return this.GetTable<tbConfiguracion>();
 			}
 		}
 		
@@ -2578,6 +2589,116 @@ namespace BD_PR_01_Clinicas.Models
 		{
 			this.SendPropertyChanging();
 			entity.tbPresentacion = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbConfiguracion")]
+	public partial class tbConfiguracion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _codConfiguracion;
+		
+		private bool _valor;
+		
+		private string _descripcion;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodConfiguracionChanging(int value);
+    partial void OncodConfiguracionChanged();
+    partial void OnvalorChanging(bool value);
+    partial void OnvalorChanged();
+    partial void OndescripcionChanging(string value);
+    partial void OndescripcionChanged();
+    #endregion
+		
+		public tbConfiguracion()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codConfiguracion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int codConfiguracion
+		{
+			get
+			{
+				return this._codConfiguracion;
+			}
+			set
+			{
+				if ((this._codConfiguracion != value))
+				{
+					this.OncodConfiguracionChanging(value);
+					this.SendPropertyChanging();
+					this._codConfiguracion = value;
+					this.SendPropertyChanged("codConfiguracion");
+					this.OncodConfiguracionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_valor", DbType="Bit NOT NULL")]
+		public bool valor
+		{
+			get
+			{
+				return this._valor;
+			}
+			set
+			{
+				if ((this._valor != value))
+				{
+					this.OnvalorChanging(value);
+					this.SendPropertyChanging();
+					this._valor = value;
+					this.SendPropertyChanged("valor");
+					this.OnvalorChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_descripcion", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string descripcion
+		{
+			get
+			{
+				return this._descripcion;
+			}
+			set
+			{
+				if ((this._descripcion != value))
+				{
+					this.OndescripcionChanging(value);
+					this.SendPropertyChanging();
+					this._descripcion = value;
+					this.SendPropertyChanged("descripcion");
+					this.OndescripcionChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	

@@ -301,6 +301,8 @@
     <Content Include="Views\Categoria\Editar.cshtml" />
     <Content Include="Views\Presentacion\Crear.cshtml" />
     <Content Include="Views\Presentacion\Editar.cshtml" />
+    <Content Include="Views\Rotacion\ActivarDesacivarRegistro.cshtml" />
+    <Content Include="Views\Rotacion\MensajeDeRegistro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
