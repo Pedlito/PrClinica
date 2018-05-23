@@ -126,5 +126,36 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View();
             }
         }
+        [AllowAnonymous]
+        public ActionResult ActivarDesacivarRegistro()
+        {
+            tbConfiguracion tc = (from v in db.tbConfiguracion where v.codConfiguracion == 1 select v).SingleOrDefault();
+            return View(tc);
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ActivarDesacivarRegistro(tbConfiguracion confi)
+        {
+            tbConfiguracion config = null;
+            try
+            {
+                // TODO: Add update logic here
+                config = (from t in db.tbConfiguracion where t.codConfiguracion == confi.codConfiguracion select t).SingleOrDefault();
+                config.valor = confi.valor;
+                db.SubmitChanges();
+                return RedirectToAction("Administracion", "Home");
+            }
+            catch
+            {
+                ModelState.AddModelError("Error: al modificar ", config.valor.ToString());
+                return View();
+            }
+        }
+        [AllowAnonymous]
+        public ActionResult MensajeDeRegistro()
+        {
+
+            return View();
+        }
     }
 }

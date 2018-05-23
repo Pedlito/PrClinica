@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbClinica" Class="DataClasesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-R30TL5S;Initial Catalog=dbClinica;User ID=uPedro" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=PCASUS\SQLEXPRESS;Initial Catalog=dbClinica;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbUsuario" Member="tbUsuario">
     <Type Name="tbUsuario">
       <Column Name="codUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -118,6 +118,13 @@
       <Column Name="presentacion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="tbPresentacion_tbProducto" Member="tbProducto" ThisKey="codPresentacion" OtherKey="codPresentacion" Type="tbProducto" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbConfiguracion" Member="tbConfiguracion">
+    <Type Name="tbConfiguracion">
+      <Column Name="codConfiguracion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="valor" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">
