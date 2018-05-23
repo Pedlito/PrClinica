@@ -1,12 +1,22 @@
 ﻿@model BD_PR_01_Clinicas.Models.tbProducto
 
 @{
-    ViewBag.Title = "Habilitar";
+    ViewBag.Title = "CambiarEstado";
 }
 
-<h2>Habilitar</h2>
+@if (Model.estado == true)
+{
+    <h2>Deshabilitar</h2>
 
-<h3>Realmente quieres Habilitar este producto?</h3>
+    <h3>¿Realmente quieres deshabilitar este producto?</h3>
+}
+else
+{
+    <h2>Habilitar</h2>
+
+    <h3>¿Realmente quieres habilitar este producto?</h3>
+}
+
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -35,7 +45,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayName("Volumen")
+            @Html.DisplayName("Dosis")
         </dt>
 
         @if (Model.codVolumen == 1)
@@ -58,8 +68,15 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Habilitar" class="btn btn-default" /> |
-            @Html.ActionLink("Regresar", "Index")
+            @if (Model.estado == true)
+            {
+                <input type="submit" value="Deshabilitar" class="btn btn-danger" />
+            }
+            else
+            {
+                <input type="submit" value="Habilitar" class="btn btn-danger" />
+            }
+            @Html.ActionLink("Regresar", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })
         </div>
     }
 </div>

@@ -49,14 +49,14 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Editar", new { codPresentacion = item.codPresentacion }) |
+            @Html.ActionLink("Editar", "Editar", new { codPresentacion = item.codPresentacion }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })
             @if (item.estado == true)
             {
-                @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codPresentacion = item.codPresentacion, estado = false })
+                @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codPresentacion = item.codPresentacion, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
             }
             else
             {
-                @Html.ActionLink("Habilitar", "CambiarEstado", new { codPresentacion = item.codPresentacion, estado = true })
+                @Html.ActionLink("Habilitar", "CambiarEstado", new { codPresentacion = item.codPresentacion, estado = true }, htmlAttributes: new { @class = "btn btn-xs" })
             }
         </td>
     </tr>

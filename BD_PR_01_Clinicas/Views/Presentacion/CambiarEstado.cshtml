@@ -36,13 +36,13 @@ else
         <div class="form-actions no-color">
             @if (Model.estado == true)
             {
-                <input type="submit" value="Deshabilitar" class="btn btn-default" />
+                <input type="submit" value="Deshabilitar" class="btn btn-danger" />
             }
             else
             {
-                <input type="submit" value="Habilitar" class="btn btn-default" />
+                <input type="submit" value="Habilitar" class="btn btn-danger" />
             }
-            | @Html.ActionLink("Regresar", "Index")
+            @Html.ActionLink("Regresar", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })
         </div>
     }
 </div>

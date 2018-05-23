@@ -263,15 +263,12 @@
     <Content Include="Views\Categoria\Index.cshtml" />
     <Content Include="Views\Presentacion\Index.cshtml" />
     <Content Include="Views\Producto\Index.cshtml" />
-    <Content Include="Views\Producto\Create.cshtml" />
     <Content Include="Views\Usuario\CreateEstudiante.cshtml" />
     <Content Include="Views\Rotacion\Index.cshtml" />
     <Content Include="Views\Rotacion\Integrantes.cshtml" />
     <Content Include="Views\Rotacion\AgregarIntegrante.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Producto\Crear.cshtml" />
-    <Content Include="Views\Producto\Deshabilitar.cshtml" />
-    <Content Include="Views\Producto\Habilitar.cshtml" />
     <Content Include="Views\Producto\Editar.cshtml" />
     <Content Include="Views\Entrada\Crear.cshtml" />
     <Content Include="Views\Entrada\Index.cshtml" />
@@ -301,6 +298,7 @@
     <Content Include="Views\Categoria\Editar.cshtml" />
     <Content Include="Views\Presentacion\Crear.cshtml" />
     <Content Include="Views\Presentacion\Editar.cshtml" />
+    <Content Include="Views\Producto\CambiarEstado.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

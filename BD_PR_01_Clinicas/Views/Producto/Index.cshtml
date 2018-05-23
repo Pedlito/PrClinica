@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbProducto>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Productos";
 }
 
 <h2>Productos</h2>
@@ -9,6 +9,42 @@
 <p>
     @Html.ActionLink("Nuevo Producto", "Crear")
 </p>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-default">
+        <div class="panel-heading">Buscar por nombre de Presentación</div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.Label("Filtrar por:", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 form-inline">
+                        <label class="radio-inline">
+                            <input type="radio" name="accion" value=1 checked>Producto 
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="accion" value=2>Categoría
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="accion" value=3>Presentación
+                        </label>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Buscar", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 form-inline">
+                        @Html.TextBox("filtro", "", new { @class = "form-control" })
+                        <input type="submit" value="Filtrar" class="btn btn-info" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -56,14 +92,14 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Editar", new { codProducto=item.codProducto }) |
+            @Html.ActionLink("Editar", "Editar", new { codProducto=item.codProducto }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })
             @if (item.estado == true)
             {
-                @Html.ActionLink("Deshabilitar", "Deshabilitar", new { codProducto = item.codProducto })
+                @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codProducto = item.codProducto, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
             }
             else
             {
-                @Html.ActionLink("Habilitar", "Habilitar", new { codProducto = item.codProducto })
+                @Html.ActionLink("Habilitar", "CambiarEstado", new { codProducto = item.codProducto, estado = true }, htmlAttributes: new { @class = "btn btn-xs" })
             }
         </td>
     </tr>

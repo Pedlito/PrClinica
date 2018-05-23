@@ -14,21 +14,36 @@ namespace BD_PR_01_Clinicas.Controllers
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
         // GET: Producto
-        public ActionResult Index(string producto = "", string categoria = "", string presentacion = "")
+        public ActionResult Index(string filtro = "", int accion = 1)
         {
-            if (true)
+            List<tbProducto> lista = null;
+            if (filtro == "")
             {
-
+                lista = (from t in db.tbProducto orderby t.estado descending, t.producto select t).ToList();
             }
-            List<tbProducto> lista = (from t in db.tbProducto orderby t.estado descending, t.producto select t).ToList();
+            else if (accion == 1)
+            {
+                lista = (from t in db.tbProducto where t.producto.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+            }
+            else if (accion == 2)
+            {
+                lista = (from t in db.tbProducto where t.tbCategoria.categoria.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+            }
+            else if (accion == 3)
+            {
+                lista = (from t in db.tbProducto where t.tbPresentacion.presentacion.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+            }
+            
             return View(lista);
         }
 
         // GET: Producto/Crear
         public ActionResult Crear()
         {
-            ViewBag.codPresentacion = new SelectList(db.tbPresentacion, "codPresentacion", "presentacion");
-            ViewBag.codCategoria = new SelectList(db.tbCategoria, "codCategoria", "categoria");
+            List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true select t).ToList();
+            List<tbCategoria> categorias = (from t in db.tbCategoria where t.estado == true select t).ToList();
+            ViewBag.codPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
+            ViewBag.codCategoria = new SelectList(categorias, "codCategoria", "categoria");
             ViewBag.codVolumen = new SelectList(volumenes, "codVolumen", "volumen");
             return View();
         }
@@ -91,47 +106,22 @@ namespace BD_PR_01_Clinicas.Controllers
             }
         }
 
-        // GET: Producto/Delete/5
-        public ActionResult Deshabilitar(int codProducto)
+        // GET: Producto/CambiarEstado/5
+        public ActionResult CambiarEstado(int codProducto, bool estado)
         {
-            tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
-            return View(producto);
+            tbProducto cambio = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
+            return View(cambio);
         }
 
-        // POST: Producto/Delete/5
+        // POST: Producto/CambiarEstado/5
         [HttpPost]
-        public ActionResult Deshabilitar(int codProducto, FormCollection collection)
+        public ActionResult CambiarEstado(int codProducto, bool estado, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
-                producto.estado = false;
-                db.SubmitChanges();
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Producto/Habilitar/5
-        public ActionResult Habilitar(int codProducto)
-        {
-            tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
-            return View(producto);
-        }
-
-        // POST: Producto/Delete/5
-        [HttpPost]
-        public ActionResult Habilitar(int codProducto, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-                tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
-                producto.estado = true;
+                tbProducto cambio = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
+                cambio.estado = estado;
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
