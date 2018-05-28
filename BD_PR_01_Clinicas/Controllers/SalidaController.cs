@@ -26,31 +26,75 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Salida/Crear
         public ActionResult Crear()
         {
-            return View();
+            return View(new SalidaModel());
         }
 
         // POST: Salida/Crear
         [HttpPost]
-        public ActionResult Crear(FormCollection collection)
+        public ActionResult Crear(SalidaModel model, string action)
         {
-            try
+
+            if (action == "Generar")
             {
-                // TODO: Add insert logic here
-                tbSalida nueva = new tbSalida
+                try {
+                    db.tbSalida.InsertOnSubmit(model.agregarAMOdelo());
+                    db.SubmitChanges();
+                    return Redirect("~/");
+                }
+                catch (Exception)
                 {
-                    descripcion = collection["descripcion"],
-                    fechaSalida = DateTime.Now
-                };
-                db.tbSalida.InsertOnSubmit(nueva);
-                db.SubmitChanges();
-                int codSalida = (from t in db.tbSalida orderby t.codSalida descending select t.codSalida).First();
-                return RedirectToAction("ListaProductos", new { codSalida = codSalida });
+                    ModelState.AddModelError(model.descripcionSalida, "Error al agregar el registro");
+                }        
+                
             }
-            catch
+            else if (action == "Agregar")
             {
-                return View();
+                // Si no ha pasado nuestra validación, mostramos el mensaje personalizado de error
+                if (!model.SeAgregoUnProductoValido())
+                {
+                    ModelState.AddModelError("","Solo puede agregar un producto válido al detalle");
+                }
+                else if (model.ExisteEnDetalle(model.codigoProducto))
+                {
+                    ModelState.AddModelError("", "El producto elegido ya existe en el detalle");
+                }
+                else
+                {
+                    model.AgregarProducto();
+                }
             }
+            else if (action == "Retirar")
+            {
+                model.RetirarItemDeDetalle();
+            }
+            else
+            {
+                throw new Exception("Acción no definida ..");
+            }
+
+            return View(model);
         }
+        
+        public JsonResult Buscar(string nameProd) {
+
+            List<productoModelo> productos = (from p in db.tbProducto where p.producto.Contains(nameProd)
+                             select new productoModelo {
+                                 productoCod = p.codProducto,
+                                 productoNom = p.producto,
+                                 productoPresent = p.tbPresentacion.presentacion,
+                                 productoVol = (p.codVolumen == 1) ? "mg" : "ml",
+                                 productoExist = (int)db.existencias(p.codProducto)
+                 
+            }).Take(10).ToList();
+       
+            return Json(productos);
+        }
+        //codProducto,
+        //                         productoCod = p.codProducto,
+        //                         productoNom = p.producto,
+        //                         productoPresent = p.tbPresentacion.presentacion,
+        //                         productoVol = (p.codVolumen==1) ? "mg" :  "ml",
+        //                         productoExist = (int)db.existencias(p.codProducto)//genera una execpcion al agregar Null a un int
 
         // GET: Salida/ListaProductos/5
         public ActionResult ListaProductos(int codSalida)

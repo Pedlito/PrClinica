@@ -1,35 +1,204 @@
-﻿@model BD_PR_01_Clinicas.Models.tbSalida
+﻿@model BD_PR_01_Clinicas.Models.SalidaModel
 
 @{
-    ViewBag.Title = "Crear";
+    ViewBag.Title = "Salida";
 }
+<h2>Salidas</h2>
 
-<h2>Nueva</h2>
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Salida</h4>
+    <h4>Agrege productos a la salida y añada un comentario</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.Label("Descripción de Salida", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextArea("descripcion", null, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(x => x.codigoProducto)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-default" />
+
+                <div class="row">
+                    <div class="col-xs-5">
+                        <div class="form-group">
+                            @Html.Label("Descripcion")
+                            @Html.TextBoxFor(x => x.descripcionSalida, new { @class = "form-control", placeholder = "Ingrese una descripcion" })
+                            @Html.ValidationMessageFor(model => model.descripcionSalida, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="form-group">
+                            @Html.Label("Producto")
+                            @Html.TextBoxFor(x => x.nombreProducto, new { @class = "form-control", placeholder = "Buscar producto", id = "Producto" })
+                            @Html.ValidationMessageFor(model => model.nombreProducto, null, new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+    <div class="row">
+    <div class="col-xs-12">
+        <div class="well well-sm">
+            <div class="row">
+                <div class="col-xs-4">
+                    @Html.Label("Presentacion")
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Contenido")
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Existencia")
+                </div>
+                <div class="col-xs-2">
+                    @Html.Label("Cantidad")
+                </div>
+                <div class="col-xs-2">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    @Html.TextBoxFor(x => x.presentacionProducto, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.presentacionProducto, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-xs-2">
+                    @Html.TextBoxFor(x => x.volumenProducto, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.volumenProducto, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBoxFor(x => x.existenciaProducto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.existenciaProducto, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-xs-2">
+                    @Html.TextBoxFor(x => x.cantidadProducto, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.cantidadProducto, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-xs-1">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit"  class="btn btn-primary" value="Agregar" name="action" />
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
+        <hr />
+        <ul id="facturador-detalle" class="list-group">
+            @if (Model.ProductosAMostrar.Count > 0)
+            {
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-xs-1"></div>
+                        <div class="col-xs-6">
+                            <b>Producto</b>
+                        </div>
+                        <div class="col-xs-3 text-center">
+                            <b>Presetacion</b>
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            <b>Cantidad</b>
+                        </div>
+                    </div>
+                </li>
+            }
+            @foreach (var d in Model.ProductosAMostrar)
+            {
+                var i = Model.ProductosAMostrar.IndexOf(d);
+                <li class="list-group-item">
+                    <!-- Modelo -->
+                    @Html.Hidden("ProductosAMostrar[" + i + "].productoCod", d.productoCod)
+                        @Html.Hidden("ProductosAMostrar[" + i + "].productoNom", d.productoNom)
+                        @Html.Hidden("ProductosAMostrar[" + i + "].productoPresent", d.productoPresent)
+                        @Html.Hidden("ProductosAMostrar[" + i + "].productoVol", d.productoVol)
+                        @Html.Hidden("ProductosAMostrar[" + i + "].productoExist", d.productoExist)
+                        @Html.Hidden("ProductosAMostrar[" + i + "].productoQuitar", d.productoQuitar, new { @class = "retirar" })
+
+                    <div class="row">
+                        <div class="col-xs-6">
+                            @d.productoNom
+                        </div>
+                        <div class="col-xs-2 text-center">
+                            @d.productoPresent
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            @d.productoCant
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            <input type="submit" class="btn btn-danger btn-retirar" value="Retirar" name="action"/>
+                        </div>
+                    </div>
+                </li>
+            }
+
+        </ul>
+        @if (Model.ProductosAMostrar.Count > 0)
+                {
+            <div class="row">
+                <button class="btn btn-primary btn-block col-xs-2" type="submit" value="Generar" name="action">Guardar</button>
+            </div>
+        }
     </div>
+
+    </div>
+
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section Scripts {
+  
+    <script>
+        $(document).ready(function () {
+             LimpiarAgregarProducto();
+
+            $(".btn-retirar").click(function () {
+                if (confirm('¿Está seguro de retirar el producto seleccionado?')) {
+                    $(this).closest('.list-group-item').find('.retirar').val("True");                
+                               
+                    return true;
+                }
+
+                return false;
+            })
+            /* Autocomplete de producto, jquery UI */
+           
+
+                $("#Producto").autocomplete({
+                    source: function (request, response) {
+                        jQuery.ajax({
+                            url: "/Salida/Buscar",
+                            type: "POST",
+                            dataType: "json",
+                            data: { nameProd: request.term },
+                            success: function (data) {
+                                response($.map(data, function (item)
+                                {
+                                    return {
+                                        id: item.productoCod,
+                                        value: item.productoNom,
+                                        pr: item.productoPresent,
+                                        vl: item.productoVol,
+                                        exi: item.productoExist
+                                    }
+                                }))//response
+                            }//data
+                        })//ajax
+                    },//source
+                    select: function (e, ui) {
+                        $("#codigoProducto").val(ui.item.id);
+                        $("#presentacionProducto").val(ui.item.pr);
+                        $("#volumenProducto").val(ui.item.vl);
+                        $("#existenciaProducto").val(ui.item.exi);
+                    }//select
+                })//autocompete
+            })
+        
+            function LimpiarAgregarProducto() {
+        $("#codigoProducto").val(0);
+        $("#Producto").val("");
+        $("#presentacionProducto").val("");
+        $("#volumenProducto").val("");
+        $("#existenciaProducto").val(0);
+        $("#cantidadProducto").val(1);
+            }
+        </script>
+}

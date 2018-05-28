@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ModelosDeVistas.cs" />
     <Compile Include="Models\Rotaciones.cs" />
     <Compile Include="Models\TipoUsuario.cs" />
     <Compile Include="Models\Volumen.cs" />
@@ -279,7 +280,6 @@
     <Content Include="Views\Entrada\Detalles.cshtml" />
     <Content Include="Views\Salida\Index.cshtml" />
     <Content Include="Views\Salida\Detalles.cshtml" />
-    <Content Include="Views\Salida\Crear.cshtml" />
     <Content Include="Views\Salida\ListaProductos.cshtml" />
     <Content Include="Views\Salida\AgregarProducto.cshtml" />
     <Content Include="Views\Salida\cantidad.cshtml" />
@@ -301,17 +301,22 @@
     <Content Include="Views\Rotacion\ActivarDesacivarRegistro.cshtml" />
     <Content Include="Views\Rotacion\MensajeDeRegistro.cshtml" />
     <Content Include="Views\Producto\CambiarEstado.cshtml" />
+    <Content Include="Views\Salida\Crear.cshtml" />
+    <Content Include="Views\Casa\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="Scripts\jquery-ui\" />
     <Folder Include="Views\Recepción\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
