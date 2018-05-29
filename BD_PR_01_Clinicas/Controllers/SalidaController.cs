@@ -39,11 +39,11 @@ namespace BD_PR_01_Clinicas.Controllers
                 try {
                     db.tbSalida.InsertOnSubmit(model.agregarAMOdelo());
                     db.SubmitChanges();
-                    return Redirect("~/");
+                    return RedirectToAction("Index");
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError(model.descripcionSalida, "Error al agregar el registro");
+                    ModelState.AddModelError("descripcionSalida", "Error al agregar el registro");
                 }        
                 
             }
@@ -52,11 +52,11 @@ namespace BD_PR_01_Clinicas.Controllers
                 // Si no ha pasado nuestra validación, mostramos el mensaje personalizado de error
                 if (!model.SeAgregoUnProductoValido())
                 {
-                    ModelState.AddModelError("","Solo puede agregar un producto válido al detalle");
+                    ModelState.AddModelError("nombreProducto","Solo puede agregar un producto válido al detalle");
                 }
                 else if (model.ExisteEnDetalle(model.codigoProducto))
                 {
-                    ModelState.AddModelError("", "El producto elegido ya existe en el detalle");
+                    ModelState.AddModelError("nombreProducto", "El producto elegido ya existe en el detalle");
                 }
                 else
                 {
@@ -77,24 +77,25 @@ namespace BD_PR_01_Clinicas.Controllers
         
         public JsonResult Buscar(string nameProd) {
 
-            List<productoModelo> productos = (from p in db.tbProducto where p.producto.Contains(nameProd)
+
+
+            var productos = (from p in db.tbProducto where p.producto.Contains(nameProd)
                              select new productoModelo {
                                  productoCod = p.codProducto,
-                                 productoNom = p.producto,
+                                 productoNom = p.producto+"  "+p.tbPresentacion.presentacion,
                                  productoPresent = p.tbPresentacion.presentacion,
                                  productoVol = (p.codVolumen == 1) ? "mg" : "ml",
                                  productoExist = (int)db.existencias(p.codProducto)
                  
-            }).Take(10).ToList();
-       
+            }).Take(10);
+            if (productos.Equals(null))
+            {
+                return Json(productos.ToList());
+            }
+            
             return Json(productos);
         }
-        //codProducto,
-        //                         productoCod = p.codProducto,
-        //                         productoNom = p.producto,
-        //                         productoPresent = p.tbPresentacion.presentacion,
-        //                         productoVol = (p.codVolumen==1) ? "mg" :  "ml",
-        //                         productoExist = (int)db.existencias(p.codProducto)//genera una execpcion al agregar Null a un int
+        
 
         // GET: Salida/ListaProductos/5
         public ActionResult ListaProductos(int codSalida)

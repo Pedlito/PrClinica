@@ -44,9 +44,7 @@ namespace BD_PR_01_Clinicas.Models
         {
             if (ProductosAMostrar.Count > 0)
             {
-                var detalleARetirar = ProductosAMostrar.Where(x => x.productoQuitar)
-                                                        .SingleOrDefault();
-
+                var detalleARetirar = ProductosAMostrar.Where(x => x.productoQuitar).SingleOrDefault();
                 ProductosAMostrar.Remove(detalleARetirar);
             }
         }
@@ -69,8 +67,10 @@ namespace BD_PR_01_Clinicas.Models
         public tbSalida agregarAMOdelo()
         {   //codigo de Salida por ser incremental se agrega solo
             tbSalida regSalida = new tbSalida();
+
             regSalida.descripcion = this.descripcionSalida;
             regSalida.fechaSalida = DateTime.Now;
+
             foreach (var d in ProductosAMostrar)
             {
 
@@ -97,7 +97,16 @@ namespace BD_PR_01_Clinicas.Models
         public int productoCant { get; set; }
         public int productoExist { get; set; }
         public bool productoQuitar { get; set; }
-        
+
+        public productoModelo() {
+            productoCod = 0;
+            productoNom = "";
+            productoPresent = "";
+            productoVol = "";
+            productoCant = 0;
+            productoExist = 0;
+            productoQuitar = false;
+        }
     
     }
 
