@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
+
+<hr />
+<ul id="facturador-detalle" class="list-group">
+    <li class="list-group-item list-group-item-heading list-group-item-info">
+        <div class="row">
+            <div class="col-xs-2 text-left">
+                <b>Producto</b>
+            </div>
+            <div class="col-xs-2 text-center">
+                <b>Categoría</b>
+            </div>
+            <div class="col-xs-2 text-center">
+                <b>Presetación</b>
+            </div>
+            <div class="col-xs-2 text-center">
+                <b>Dosis</b>
+            </div>
+            <div class="col-xs-2 text-center">
+                <b>Cantidad</b>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </li>
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <div class="row">
+                <div class="col-xs-2 text-left">
+                    @item.nombre
+                </div>
+                <div class="col-xs-2 text-center">
+                    @item.categoria
+                </div>
+                <div class="col-xs-2 text-center">
+                    @item.presentacion
+                </div>
+                <div class="col-xs-2 text-center">
+                    @item.dosis
+                </div>
+                <div class="col-xs-2 text-center">
+                    @item.cantidad
+                </div>
+                <div class="col-xs-2 text-right">
+                    <input type="submit" class="btn btn-danger btn-xs btn-retirar" value="Retirar" name="action" />
+                </div>
+            </div>
+        </li>
+    }
+    
+</ul>
+
+@if (Model.Count() > 0)
+{
+    <div class="row">
+        <div class="" col-xs-10"></div>
+        <div class="" col-xs-2 text-right">
+            <button class="btn btn-primary btn-block " type="submit" value="Generar" name="action">Guardar</button>
+        </div>
+
+    </div>
+}

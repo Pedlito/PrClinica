@@ -17,6 +17,62 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
+        // GET: Entrada/Productos
+        public ActionResult Productos(string filtro = "")
+        {
+            List<RegistroProducto> lista = null;
+            if (filtro == "")
+            {
+                lista = (from t in db.tbProducto
+                            where t.estado == true
+                            orderby t.producto
+                            select new RegistroProducto
+                            {
+                                codProducto = t.codProducto,
+                                nombre = t.producto,
+                                categoria = t.tbCategoria.categoria,
+                                presentacion = t.tbPresentacion.presentacion,
+                                dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                            }).ToList();
+            }
+            else
+            {
+                lista = (from t in db.tbProducto
+                            where t.producto.Contains(filtro) & t.estado == true
+                            orderby t.producto
+                            select new RegistroProducto
+                            {
+                                codProducto = t.codProducto,
+                                nombre = t.producto,
+                                categoria = t.tbCategoria.categoria,
+                                presentacion = t.tbPresentacion.presentacion,
+                                dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                            }).ToList();
+            }
+            return PartialView("_Productos", lista);
+        }
+
+        public ActionResult MostrarDetalle(IEnumerable<Item> detalle)
+        {
+            List<RegistroProducto> lista = new List<RegistroProducto>();
+            foreach (Item item in detalle)
+            {
+                lista.Add((from t in db.tbProducto
+                           where t.codProducto == item.codProducto
+                           orderby t.producto
+                           select new RegistroProducto
+                           {
+                               codProducto = t.codProducto,
+                               nombre = t.producto,
+                               categoria = t.tbCategoria.categoria,
+                               presentacion = t.tbPresentacion.presentacion,
+                               dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                               cantidad = item.cantidad
+                           }).SingleOrDefault());
+            }
+            return PartialView("_Detalle", lista);
+        }
+
         // GET: Entrada/Detalles/5
         public ActionResult Detalles(int codEntrada)
         {
@@ -27,38 +83,59 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/Crear
         public ActionResult Crear()
         {
-            return View();
+            return View(new Entrada());
         }
 
         // POST: Entrada/Crear
         [HttpPost]
-        public ActionResult Crear(FormCollection collection)
+        public ActionResult Crear(Entrada model, string accion)
         {
-            try
+            if (accion == "Generar")
             {
-                // TODO: Add insert logic here
-                tbEntrada nueva = new tbEntrada
+                try
                 {
-                    descripcion = collection["descripcion"],
-                    fechaEntrada = DateTime.Now
-                };
-                db.tbEntrada.InsertOnSubmit(nueva);
-                db.SubmitChanges();
-                int codEntrada = (from t in db.tbEntrada orderby t.codEntrada descending select t.codEntrada).First();
-                return RedirectToAction("ListaProductos", new { codEntrada = codEntrada });
+                    //db.tbSalida.InsertOnSubmit(model.agregarAMOdelo());
+                    //db.SubmitChanges();
+                    //return RedirectToAction("Index");
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("descripcionSalida", "Error al agregar el registro");
+                }
+
             }
-            catch
+            else if (accion == "Agregar")
             {
-                return View();
+                // Si no ha pasado nuestra validación, mostramos el mensaje personalizado de error
+                //if (!model.SeAgregoUnProductoValido())
+                //{
+                //    ModelState.AddModelError("nombreProducto", "Solo puede agregar un producto válido al detalle");
+                //}
+                //else if (model.ExisteEnDetalle(model.codigoProducto))
+                //{
+                //    ModelState.AddModelError("nombreProducto", "El producto elegido ya existe en el detalle");
+                //}
+                //else
+                //{
+                //    model.AgregarProducto();
+                //}
             }
+            else if (accion == "Retirar")
+            {
+                //model.RetirarItemDeDetalle();
+            }
+            else
+            {
+                throw new Exception("Acción no definida ..");
+            }
+
+            return View(model);
         }
 
         // GET: Entrada/ListaProductos/5
         public ActionResult ListaProductos(int codEntrada)
         {
-            List<tbDetalleEntrada> lista = (from t in db.tbDetalleEntrada orderby t.tbProducto.producto where t.codEntrada == codEntrada select t).ToList();
-            ViewBag.codEntrada = codEntrada;
-            return View(lista);
+            return View();
         }
 
         // POST: Entrada/ListaProductos/5
@@ -68,13 +145,6 @@ namespace BD_PR_01_Clinicas.Controllers
             try
             {
                 // TODO: Add delete logic here
-                if (!accion)
-                {
-                    // TODO: Add cancel logic here
-                    tbEntrada eliminar = (from t in db.tbEntrada where t.codEntrada == codEntrada select t).SingleOrDefault();
-                    db.tbEntrada.DeleteOnSubmit(eliminar);
-                    db.SubmitChanges();
-                }
                 return RedirectToAction("Index");
             }
             catch
@@ -86,21 +156,12 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/AgregarProducto/5
         public ActionResult AgregarProducto(int codEntrada)
         {
-            List<tbProducto> productos = (from t in db.tbProducto where t.estado == true orderby t.producto select t).ToList();
-            ViewBag.codEntrada = codEntrada;
-            return View(productos);
+            return View();
         }
 
         // GET: Entrada/cantidad/5
         public ActionResult cantidad(int codEntrada, int codProducto)
         {
-            tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
-            ViewBag.codProducto = codProducto;
-            ViewBag.codEntrada = codEntrada;
-            ViewBag.producto = producto.producto;
-            ViewBag.categoria = producto.tbCategoria.categoria;
-            ViewBag.presentacion = producto.tbPresentacion.presentacion;
-            ViewBag.codVolumen = producto.codVolumen;
             return View();
         }
 
@@ -111,22 +172,6 @@ namespace BD_PR_01_Clinicas.Controllers
             try
             {
                 // TODO: Add delete logic here
-                tbDetalleEntrada existente = (from t in db.tbDetalleEntrada where t.codEntrada == codEntrada && t.codProducto == codProducto select t).SingleOrDefault();
-                if (existente == null)
-                {
-                    tbDetalleEntrada nueva = new tbDetalleEntrada
-                    {
-                        codEntrada = codEntrada,
-                        codProducto = codProducto,
-                        cantidad = int.Parse(collection["cantidad"])
-                    };
-                    db.tbDetalleEntrada.InsertOnSubmit(nueva);
-                }
-                else
-                {
-                    existente.cantidad += int.Parse(collection["cantidad"]);
-                }
-                db.SubmitChanges();
                 return RedirectToAction("ListaProductos", new { codEntrada = codEntrada });
             }
             catch (Exception e)
@@ -173,38 +218,6 @@ namespace BD_PR_01_Clinicas.Controllers
             }
         }
 
-        // GET: Entrada/QuitarProducto/5
-        public ActionResult QuitarProducto(int codEntrada, int codProducto)
-        {
-            tbDetalleEntrada quitar = (from t in db.tbDetalleEntrada where t.codEntrada == codEntrada && t.codProducto == codProducto select t).SingleOrDefault();
-            db.tbDetalleEntrada.DeleteOnSubmit(quitar);
-            db.SubmitChanges();
-            return RedirectToAction("ListaProductos", new { codEntrada = codEntrada });
-        }
-
-        // GET: Entrada/EditarCantidad/5
-        public ActionResult EditarCantidad(int codEntrada, int codProducto)
-        {
-            tbDetalleEntrada editar = (from t in db.tbDetalleEntrada where t.codEntrada == codEntrada && t.codProducto == codProducto select t).SingleOrDefault();
-            return View(editar);
-        }
-
-        // POST: Entrada/EditarCantidad/5
-        [HttpPost]
-        public ActionResult EditarCantidad(int codEntrada, int codProducto, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-                tbDetalleEntrada editar = (from t in db.tbDetalleEntrada where t.codEntrada == codEntrada && t.codProducto == codProducto select t).SingleOrDefault();
-                editar.cantidad = int.Parse(collection["cantidad"]);
-                db.SubmitChanges();
-                return RedirectToAction("ListaProductos", new { codEntrada = codEntrada });
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }

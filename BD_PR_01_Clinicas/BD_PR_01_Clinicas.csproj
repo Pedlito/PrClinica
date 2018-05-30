@@ -188,6 +188,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ModelosDeVistas.cs" />
@@ -198,6 +199,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -211,6 +214,14 @@
       <LastGenOutput>DataClasses.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -273,8 +284,6 @@
     <Content Include="Views\Producto\Editar.cshtml" />
     <Content Include="Views\Entrada\Crear.cshtml" />
     <Content Include="Views\Entrada\Index.cshtml" />
-    <Content Include="Views\Entrada\ListaProductos.cshtml" />
-    <Content Include="Views\Entrada\AgregarProducto.cshtml" />
     <Content Include="Views\Entrada\cantidad.cshtml" />
     <Content Include="Views\Entrada\NuevoProducto.cshtml" />
     <Content Include="Views\Entrada\Detalles.cshtml" />
@@ -283,7 +292,6 @@
     <Content Include="Views\Salida\ListaProductos.cshtml" />
     <Content Include="Views\Salida\AgregarProducto.cshtml" />
     <Content Include="Views\Salida\cantidad.cshtml" />
-    <Content Include="Views\Entrada\EditarCantidad.cshtml" />
     <Content Include="Views\Salida\EditarCantidad.cshtml" />
     <Content Include="Views\Inventario\Index.cshtml" />
     <Content Include="Views\Usuario\Detalles.cshtml" />
@@ -303,6 +311,8 @@
     <Content Include="Views\Producto\CambiarEstado.cshtml" />
     <Content Include="Views\Salida\Crear.cshtml" />
     <Content Include="Views\Casa\Index.cshtml" />
+    <Content Include="Views\Entrada\_Productos.cshtml" />
+    <Content Include="Views\Entrada\_Detalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -311,9 +321,6 @@
     <Folder Include="Views\Recepción\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>

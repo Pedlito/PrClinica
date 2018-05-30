@@ -62,7 +62,7 @@
         <elementListCompartment Id="bef88816-3c55-4c3f-bdb2-e30dd34417db" absoluteBounds="10.765, 15.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 9.6050439453125); (6.46875 : 9.6050439453125); (6.46875 : 5.1362939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 9.6050439453125); (6.46875 : 9.6050439453125); (6.46875 : 5.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasesDataContext/tbEntrada/tbEntrada_tbDetalleEntrada" />
       <nodes>
         <classShapeMoniker Id="2bfc43ed-6457-4c60-9dc4-eafe21d4d3ae" />
@@ -76,7 +76,7 @@
         <classShapeMoniker Id="f51b5154-f7e5-4ca8-8aca-b0ee2a747a20" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5 : 3.375); (5 : 2.1362939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5 : 3.375); (5 : 2.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasesDataContext/tbProducto/tbProducto_tbDetalleSalida" />
       <nodes>
         <classShapeMoniker Id="d81a7f3c-6dd3-40a9-b340-b8d595087fde" />
@@ -130,7 +130,7 @@
         <elementListCompartment Id="23fbf529-33bf-44cb-b320-3443ffa6e479" absoluteBounds="3.64, 6.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.5625 : 6.125); (4.5625 : 5.53049967447917)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.5625 : 6.125); (4.5625 : 5.53049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasesDataContext/tbPresentacion/tbPresentacion_tbProducto" />
       <nodes>
         <classShapeMoniker Id="ae968b5a-3911-41b9-b501-0a6bdd7ad42a" />
