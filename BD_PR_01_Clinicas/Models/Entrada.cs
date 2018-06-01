@@ -32,5 +32,11 @@ namespace BD_PR_01_Clinicas.Models
         public int codProducto { get; set; }
         public int cantidad { get; set; }
     }
+
+    public class Datos
+    {
+        public string descripcion { get; set; }
+        public List<Item> detalle { get; set; }
+    }
 }
 

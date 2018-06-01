@@ -17,9 +17,41 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
+        // GET: Entrada/Crear
+        public ActionResult Crear()
+        {
+            return View(new Entrada());
+        }
+
+        // POST: Entrada/Crear
+        [HttpPost]
+        public ActionResult Crear(Datos datos)
+        {
+            //aqui creo el objeto tbEntrada y todo lo del detalle, esto tu me lo enseñaste no voy a explicarlo jajajajajajajajaslkdjfa;sldkfja;lskdjf;
+            tbEntrada entrada = new tbEntrada
+            {
+                descripcion = datos.descripcion,
+                fechaEntrada = DateTime.Now
+            };
+            foreach (Item item in datos.detalle)
+            {
+                entrada.tbDetalleEntrada.Add(new tbDetalleEntrada
+                {
+                    codProducto = item.codProducto,
+                    cantidad = item.cantidad
+                });
+            }
+            db.tbEntrada.InsertOnSubmit(entrada);
+            db.SubmitChanges();
+            return RedirectToAction("Index");
+        }
+
         // GET: Entrada/Productos
         public ActionResult Productos(string filtro = "")
         {
+            //este es el codigo que se ejecuta cuando se habre el modal apachando el boton buscar, tiene un filtro como cualquier otro
+            //pero al final, dice return PartialView("_Productos", lista), osea que llama a la vista parcial _Productos y le pasa la lista
+            //como el modelo
             List<RegistroProducto> lista = null;
             if (filtro == "")
             {
@@ -54,22 +86,30 @@ namespace BD_PR_01_Clinicas.Controllers
 
         public ActionResult MostrarDetalle(IEnumerable<Item> detalle)
         {
+            //este action recibe como parametro la lista de productos Item, tenes que verla en los modelos, esta dentro del modelo Entrada,
+            //es un objeto con un int codProducto y un int cantidad, que son los dos campos del array en javascript
+            //creo una lista
             List<RegistroProducto> lista = new List<RegistroProducto>();
-            foreach (Item item in detalle)
+            if (detalle != null)
             {
-                lista.Add((from t in db.tbProducto
-                           where t.codProducto == item.codProducto
-                           orderby t.producto
-                           select new RegistroProducto
-                           {
-                               codProducto = t.codProducto,
-                               nombre = t.producto,
-                               categoria = t.tbCategoria.categoria,
-                               presentacion = t.tbPresentacion.presentacion,
-                               dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
-                               cantidad = item.cantidad
-                           }).SingleOrDefault());
+                foreach (Item item in detalle)
+                {
+                    //por cada item dentro de la lista detalle creo un registroProducto
+                    lista.Add((from t in db.tbProducto
+                               where t.codProducto == item.codProducto
+                               orderby t.producto
+                               select new RegistroProducto
+                               {
+                                   codProducto = t.codProducto,
+                                   nombre = t.producto,
+                                   categoria = t.tbCategoria.categoria,
+                                   presentacion = t.tbPresentacion.presentacion,
+                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   cantidad = item.cantidad
+                               }).SingleOrDefault());
+                }
             }
+            //el retorno sera el html creado en la vista parcial _detalle pasandole como modelo la lista
             return PartialView("_Detalle", lista);
         }
 
@@ -80,57 +120,7 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
-        // GET: Entrada/Crear
-        public ActionResult Crear()
-        {
-            return View(new Entrada());
-        }
-
-        // POST: Entrada/Crear
-        [HttpPost]
-        public ActionResult Crear(Entrada model, string accion)
-        {
-            if (accion == "Generar")
-            {
-                try
-                {
-                    //db.tbSalida.InsertOnSubmit(model.agregarAMOdelo());
-                    //db.SubmitChanges();
-                    //return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("descripcionSalida", "Error al agregar el registro");
-                }
-
-            }
-            else if (accion == "Agregar")
-            {
-                // Si no ha pasado nuestra validación, mostramos el mensaje personalizado de error
-                //if (!model.SeAgregoUnProductoValido())
-                //{
-                //    ModelState.AddModelError("nombreProducto", "Solo puede agregar un producto válido al detalle");
-                //}
-                //else if (model.ExisteEnDetalle(model.codigoProducto))
-                //{
-                //    ModelState.AddModelError("nombreProducto", "El producto elegido ya existe en el detalle");
-                //}
-                //else
-                //{
-                //    model.AgregarProducto();
-                //}
-            }
-            else if (accion == "Retirar")
-            {
-                //model.RetirarItemDeDetalle();
-            }
-            else
-            {
-                throw new Exception("Acción no definida ..");
-            }
-
-            return View(model);
-        }
+        
 
         // GET: Entrada/ListaProductos/5
         public ActionResult ListaProductos(int codEntrada)
