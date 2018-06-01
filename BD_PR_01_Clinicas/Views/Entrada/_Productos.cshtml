@@ -1,6 +1,9 @@
 ﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
 
-
+@* aqui lo unico que hago es construir una tabla con <ul> y <li> para cada fila usando el modelo, en este caso la lista de productos
+   que mande ya filtrados. Es importante tomar en cuenta de que esta vista parcial al ponerla en una vista normal, es como que 
+   estuviera escrita ahi, por lo que si aqui un boton tiene un id, puede ser llamado desde la vista principal, si un boton llama a una funcion
+   que esta en la vista principal, lo podra hacer. *@
 <ul class="list-group">
             
         <li class="list-group-item list-group-item-heading list-group-item-info">
@@ -39,6 +42,8 @@
                     @item.dosis
                 </div>
                 <div class="col-xs-2 text-left">
+                    @* en este caso al hacer click en el boton agregar de una fila, se llama a la funcion agregar que esta en la pagina principal
+                       y se le manda como parametro el codigo del producto del item de esa fila *@
                     <input type="button" value="Agregar" class="btn btn-xs btn-success" onclick="agregar(@item.codProducto)" />
                 </div>
             </div>

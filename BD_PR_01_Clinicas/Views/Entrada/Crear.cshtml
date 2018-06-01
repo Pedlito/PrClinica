@@ -11,33 +11,29 @@
     @Html.AntiForgeryToken()
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @*@Html.HiddenFor(x => x.codProducto)*@
-
 
     <div class="row">
-        <div class="col-xs-5">
+        <div class="form-horizontal">
             <div class="form-group">
-                @Html.Label("Descripcion")
-                @Html.TextArea("descripcion", null, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
-                @Html.ValidationMessage("descripcion", null, new { @class = "text-danger" })
+                @Html.Label("Descripcion", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 form-inline">
+                    @Html.TextArea("descripcion", null, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", cols = "40" })
+                    @Html.ValidationMessage("descripcion", null, new { @class = "text-danger" })
+                </div>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">Buscar Productos</div>
-                <div class="panel-body">
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10 form-inline">
-                                @Html.TextBox("producto", "", new { @class = "form-control" })
-                                <input type="button" value="Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />
-                            </div>
-                        </div>
-                    </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 form-inline">
+                    @Html.TextBox("producto", "", new { @class = "form-control" })
+
+                    @*este boton se encarga de mostrar el modal, el data-target hace referencia a un div de clase modal con id= busqueda
+                        cada vez que es precionado se muestra el modal. tambien tiene un evento onclick que llama a una funcion getDataAjax() *@
+                    <input type="button" value="Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />
                 </div>
             </div>
         </div>
@@ -47,19 +43,17 @@
 
     <div class="row">
         <div class="col-xs-12" id="detalle">
-            
-           
+            @* aqui se va a insertar todo el codigo que retorna la vista parcial _Detalle *@
         </div>
-
     </div>
-
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    @Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })
 </div>
 
 <!-- Modal -->
+@*Este es el modal que tiene clase modal fade y el id = busqueda, tiene tres partes, header, body y footer*@
 <div class="modal fade" id="busqueda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -68,7 +62,8 @@
                 <h4 class="modal-title" id="myModalLabel">Lista de Productos</h4>
             </div>
             <div class="modal-body" id="cuerpoModal">
-
+                @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
+                    la tabla de los productos filtrados *@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
@@ -79,47 +74,98 @@
 
 @section Scripts {
     <script>
+        //variable que contentra el array de todos los productos agregados
         var detalle = [];
+
+        //la funcion que se encarga de ir al servidor y realizar la busqueda, en el servidor busca la accion Productos
+        //hay una variable filtro que toma el valor de lo escrito en el textbox producto, en la opcion data se pasa esta variable
+        //que sera el parametro que recibe en el controlador por ejemplo: acctionResult Productos(string filtro)
         function getDataAjax() {
             var filtro = $("#producto").val();
             $.ajax({
                 url: '@Url.Action("Productos", "Entrada")',
                 data: { filtro },
                 success: function (response) {
+                    //el return de la accion Productos es un PartialView, un partialview es un trozo e codigo html que puede ser llamado
+                    //desde cualquier vista, en este caso la vista parcial es _Productos, las vistas parciales siempre empiezan con guion bajo .
+                    //lo que hace este codigo es que en el div con id = cuerpoModal escribe el html que trae la partiaView, osea el response
                     $('#cuerpoModal').html(response);
                 }
             });
         }
 
         function agregar(codProducto) {
-            detalle.push({codProducto:codProducto, cantidad:1 })
+            //al llamar a esta funcion se hace un push a detalles que es el array de productos usando el codigo del producto enviado desde la
+            //vista parcial y se inicializa con una cantidad de 1
+            detalle.push({ codProducto: parseInt(codProducto), cantidad: 1 })
+            //este ajax se encarga de ir a la accion MostrarDetalle del controlador y le pasa como parametro el array de productos
+            //en la opcion data:
             $.ajax({
                 traditional: true,
                 url: '@Url.Action("MostrarDetalle", "Entrada")',
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(
-                    detalle
-                   ),
+                data: JSON.stringify(detalle),
+                success: function (response) {
+                    //el return de MostrarDetalle es tambien una vista parcial por lo que la respuesta practicamente es codigo
+                    //html que se insertara el el div con id = detalle
+                    $('#detalle').html(response);
+                }
+            });
+        }
+
+        function quitar(codProducto) {
+            // obtengo el index con findIndex que retorna el idex del elemento en el cual el codigo del producto sea igual al parametro codProducto
+            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            //cuando ya tengo el index lo elimino del array
+            detalle.splice(index, 1);
+            //una vez eliminado del array vuelvo a refrescar la vista parcial _Detalle con la lista ya actulizada, este es el mimo llamdo
+            //utilizado en la funcion agregar.
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("MostrarDetalle", "Entrada")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(detalle),
                 success: function (response) {
                     $('#detalle').html(response);
                 }
             });
         }
 
-    </script>
-    <script>
-        $(document).ready(function () {
+        function cantidad(codProducto, cantidad) {
+            //esta funcion unicamente se encarga de cambiar la cantidad dentro del array, si la cantidad es "" no se ejecuta puesto
+            //que el usuario podria borrar todo y dejarlo en blanco
+            if (cantidad != "") {
+                //si existe busco el index donde el codigo de producto sea igual al parametro codProducto
+                var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+                //cambio la propiedad cantidad del array en el index por el parametro cantidad
+                detalle[index].cantidad = cantidad;
+            }
+        }
 
-            
-
-            $(".btn-retirar").click(function () {
-                if (confirm('¿Está seguro de retirar el producto seleccionado?')) {
-                    $(this).closest('.list-group-item').find('.retirar').val("True");
-                    return true;
+        function guardar() {
+            //cuando precionan el boton guardar se ejecuta esta funcion
+            //primero hago este json con lo que voy a enviar, la descripcion que la tomo del textbox con id = descripcion y el detalle que es el array
+            var datos = { "descripcion": document.getElementById("descripcion").value, "detalle": detalle }
+            //con ajax mando a la accion crear y en data paso la variable datos
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Crear", "Entrada")',
+                contentType: "application/json",
+                type: "POST",
+                data: JSON.stringify(datos),
+                success: function (response) {
+                    //cuando ya se creo todo redirecciono al usuario al index
+                    location.href = '@Url.Action("Index", "Entrada")';
+                },
+                error: function (response) {
+                    alert("Hubo un error");
                 }
-                return false;
             })
-        })
+        }
+
+
+
     </script>
 }
