@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
 
 @* aqui hay un if que indica que si el modelo esta vacio no se crea nada de codigo html y se devuelve una vista parcial vacia
-   de lo contrario se crea el boton Guardar que hace referencia a la funcion guardar(), esta funcion es la que envia todos los datos
-   al post de crear y lo inserta a la base de datos para finalizar y guardar la entrada *@
+    de lo contrario se crea el boton Guardar que hace referencia a la funcion guardar(), esta funcion es la que envia todos los datos
+    al post de crear y lo inserta a la base de datos para finalizar y guardar la entrada *@
 
 @if (Model.Count() > 0)
 {
-    <hr/>
-    <input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save"/>
-    <hr/>
+    <hr />
+    <input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save" />
+    <hr />
 
     //aqui creo la lista que contiene todos los productos ya agregados a el detalle de Entrada
     <ul id="facturador-detalle" class="list-group">
@@ -34,7 +34,8 @@
         </li>
         @foreach (var item in Model)
         {
-            <li class="list-group-item">          
+            <li class="list-group-item">
+                <input type="hidden" value="@item.existencia" />
                 <div class="row">
                     <div class="col-xs-2 text-left">
                         <label class="btn">@item.nombre</label>
@@ -50,8 +51,8 @@
                     </div>
                     <div class="col-xs-2 text-left">
                         @* es importante tomar en cuenta que agregue un evento onchange a la funcion cantidad(codigoProducto, el valor cambiado)
-                           que se realiza cuando cambian el numero del input (el usuario cambia la cantidad default por otra) para ir a cambiarlo en el array *@
-                        <input type="number" class="form-control input-sm cant" value="@item.cantidad" onchange="cantidad(@item.codProducto,this)" />
+                            que se realiza cuando cambian el numero del input (el usuario cambia la cantidad default por otra) para ir a cambiarlo en el array *@
+                        <input type="number" class="form-control input-sm cant" value="@item.cantidad" onchange="cantidad(@item.codProducto,this,@item.existencia)" />
                     </div>
                     <div class="col-xs-2 text-center">
                         @* el boton quitar tiene un evento a la funcion quitar y le manda como parametro el codigo del producto *@

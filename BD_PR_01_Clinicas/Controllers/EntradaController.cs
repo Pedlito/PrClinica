@@ -20,7 +20,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/Crear
         public ActionResult Crear()
         {
-            return View(new Entrada());
+            return View(new Movimiento());
         }
 
         // POST: Entrada/Crear
@@ -56,21 +56,21 @@ namespace BD_PR_01_Clinicas.Controllers
             if (filtro == "")
             {
                 lista = (from t in db.tbProducto
-                            where t.estado == true
-                            orderby t.producto
-                            select new RegistroProducto
-                            {
-                                codProducto = t.codProducto,
-                                nombre = t.producto,
-                                categoria = t.tbCategoria.categoria,
-                                presentacion = t.tbPresentacion.presentacion,
-                                dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                         where t.estado == true
+                         orderby t.producto
+                         select new RegistroProducto
+                         {
+                             codProducto = t.codProducto,
+                             nombre = t.producto,
+                             categoria = t.tbCategoria.categoria,
+                             presentacion = t.tbPresentacion.presentacion,
+                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
                             }).ToList();
             }
             else
             {
                 lista = (from t in db.tbProducto
-                            where t.producto.Contains(filtro) & t.estado == true
+                            where t.producto.Contains(filtro) && t.estado == true//cambiado de & a && (no evalua la segunda expr si la 1era ea false)
                             orderby t.producto
                             select new RegistroProducto
                             {

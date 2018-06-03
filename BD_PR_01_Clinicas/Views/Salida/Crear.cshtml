@@ -1,210 +1,211 @@
-﻿@model BD_PR_01_Clinicas.Models.SalidaModel
+﻿@model BD_PR_01_Clinicas.Models.Movimiento
 
 @{
-    ViewBag.Title = "Salida";
+    ViewBag.Title = "Crear";
+
 }
-<h2>Realizar una Salida</h2>
+
+<h2>Nueva Salida</h2>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <h4>Agrege productos a la salida y añada un comentario</h4>
-        <hr />
+    <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(x => x.codigoProducto)
-
-
-                <div class="row">
-                    <div class="col-xs-5">
-                        <div class="form-group">
-                            @Html.Label("Descripcion")
-                            @Html.TextBoxFor(x => x.descripcionSalida, new { @class = "form-control", placeholder = "Ingrese una descripcion" })
-                            @Html.ValidationMessageFor(model => model.descripcionSalida, null, new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="col-xs-7">
-                        <div class="form-group">
-                            @Html.Label("Producto")
-                            @Html.TextBoxFor(x => x.nombreProducto, new { @class = "form-control", placeholder = "Buscar producto", id = "Producto" })
-                            @Html.ValidationMessageFor(model => model.nombreProducto, null, new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </div>
-
     <div class="row">
-    <div class="col-xs-12">
-        <div class="well well-sm">
-            <div class="row">
-                <div class="col-xs-4">
-                    @Html.Label("Presentacion")
-                </div>
-                <div class="col-xs-2">
-                    @Html.Label("Contenido")
-                </div>
-                <div class="col-xs-2">
-                    @Html.Label("Existencia")
-                </div>
-                <div class="col-xs-2">
-                    @Html.Label("Cantidad")
-                </div>
-                <div class="col-xs-2">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-4">
-                    @Html.TextBoxFor(x => x.presentacionProducto, new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.presentacionProducto, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-xs-2">
-                    @Html.TextBoxFor(x => x.volumenProducto, new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.volumenProducto, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-xs-2">
-                    @Html.TextBoxFor(x => x.existenciaProducto, new { @class = "form-control", @readonly = "readonly" })
-                    @Html.ValidationMessageFor(model => model.existenciaProducto, "", new { @class = "text-danger" })
-                </div>
-                <div class="col-xs-2">
-                    @Html.TextBoxFor(x => x.cantidadProducto, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.cantidadProducto, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="col-xs-2 text-right">
-                    
-                        
-                            <input type="submit"  class="btn btn-default" value="Agregar" name="action" />
-                        
-                    
-
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.Label("Descripcion", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 form-inline">
+                    @Html.TextArea("descripcion", null, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", cols = "40" })
+                    @Html.ValidationMessage("descripcion", null, new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-        <hr />
-        <ul id="facturador-detalle" class="list-group">
-            @if (Model.ProductosAMostrar.Count > 0)
-            {
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-xs-5 text-left">
-                            <b>Producto</b>
-                        </div>
-                        <div class="col-xs-3 text-center">
-                            <b>Presetacion</b>
-                        </div>
-                        <div class="col-xs-2 text-center">
-                            <b>Cantidad</b>
-                        </div>
-                        <div class="col-xs-2"></div>
-                    </div>
-                </li>
-            }
-            @foreach (var d in Model.ProductosAMostrar)
-            {
-                var i = Model.ProductosAMostrar.IndexOf(d);
-                <li class="list-group-item">
-                    <!-- Modelo -->
-                    @Html.Hidden("ProductosAMostrar[" + i + "].productoCod", d.productoCod)
-                        @Html.Hidden("ProductosAMostrar[" + i + "].productoNom", d.productoNom)
-                        @Html.Hidden("ProductosAMostrar[" + i + "].productoPresent", d.productoPresent)
-                        @Html.Hidden("ProductosAMostrar[" + i + "].productoVol", d.productoVol)
-                        @Html.Hidden("ProductosAMostrar[" + i + "].productoCant", d.productoCant)
-                        @Html.Hidden("ProductosAMostrar[" + i + "].productoQuitar", d.productoQuitar, new { @class = "retirar" })
-
-                    <div class="row">
-                        <div class="col-xs-5 text-left">
-                            @d.productoNom
-                        </div>
-                        <div class="col-xs-3 text-center">
-                            @d.productoPresent
-                        </div>
-                        <div class="col-xs-2 text-center">
-                            @d.productoCant
-                        </div>
-                        <div class="col-xs-2 text-right">
-                            <input type="submit" class="btn btn-danger btn-xs btn-retirar" value="Retirar" name="action"/>
-                        </div>
-                    </div>
-                </li>
-            }
-
-        </ul>
-        @if (Model.ProductosAMostrar.Count > 0)
-                {
-            <div class="row">
-                <div class="  col-xs-10"></div>
-                <div class="  col-xs-2 text-right">
-                    <button class="btn btn-primary btn-block " type="submit" value="Generar" name="action">Guardar</button>
-                </div>
-           
-            </div>
-        }
     </div>
 
+    <div class="row">
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 form-inline">
+                    @Html.TextBox("producto", "", new { @class = "form-control", placeholder = "Escriba parte del nombre del producto" })
+
+                    @*este boton se encarga de mostrar el modal, el data-target hace referencia a un div de clase modal con id= busqueda
+                        cada vez que es precionado se muestra el modal. tambien tiene un evento onclick que llama a una funcion getDataAjax() *@
+                    <input type="button" value="Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" id="detalle">
+            @* aqui se va a insertar todo el codigo que retorna la vista parcial _Detalle *@
+        </div>
     </div>
 
 }
 
+
 <div>
-    @Html.ActionLink("Ver Salidas", "Index")
-    <br>
-    @Html.ActionLink("Ir a Administracion", "Administracion","Home")
+    @Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })
+</div>
+
+<!-- Modal -->
+@*Este es el modal que tiene clase modal fade y el id = busqueda, tiene tres partes, header, body y footer*@
+<div class="modal fade" id="busqueda" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Lista de Productos</h4>
+            </div>
+            <div class="modal-body" id="cuerpoModal">
+                @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
+                    la tabla de los productos filtrados *@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!--CuadroDeDialogo-->
+<div id="dialogo" title="Advertencia">
+    <p>
+
+    </p>
 </div>
 
 @section Scripts {
-  
-    <script>
-        $(document).ready(function () {
-             LimpiarAgregarProducto();
-
-            $(".btn-retirar").click(function () {
-                if (confirm('¿Está seguro de retirar el producto seleccionado?')) {
-                    $(this).closest('.list-group-item').find('.retirar').val("True");                
-                               
-                    return true;
-                }
-
-                return false;
-            })
-            /* Autocomplete de producto, jquery UI */
-           
-
-                $("#Producto").autocomplete({
-                    source: function (request, response) {
-                        jQuery.ajax({
-                            url: "/Salida/Buscar",
-                            type: "POST",
-                            dataType: "json",
-                            data: { nameProd: request.term },
-                            success: function (data) {
-                                response($.map(data, function (item)
-                                {
-                                    return {
-                                        id: item.productoCod,
-                                        value: item.productoNom,
-                                        pr: item.productoPresent,
-                                        vl: item.productoVol,
-                                        exi: item.productoExist
-                                    }
-                                }))//response
-                            }//data
-                        })//ajax
-                    },//source
-                    select: function (e, ui) {
-                        $("#codigoProducto").val(ui.item.id);
-                        $("#presentacionProducto").val(ui.item.pr);
-                        $("#volumenProducto").val(ui.item.vl);
-                        $("#existenciaProducto").val(ui.item.exi);
-                    }//select
-                })//autocompete
-            })
-        
-            function LimpiarAgregarProducto() {
-        $("#codigoProducto").val(0);
-        $("#Producto").val("");
-        $("#presentacionProducto").val("");
-        $("#volumenProducto").val("");
-        $("#existenciaProducto").val(0);
-        $("#cantidadProducto").val(1);
+<script>
+    $("div#dialogo").dialog({
+        autoOpen: false,
+        show: "blind",
+        hide: "explode",
+        modal: true,
+        buttons: {
+            Ok: function () {
+                $(this).dialog('close')
             }
-        </script>
+        }
+    });
+
+    //variable que contentra el array de todos los productos agregados
+        var detalle = [];
+
+        //la funcion que se encarga de ir al servidor y realizar la busqueda, en el servidor busca la accion Productos
+        //hay una variable filtro que toma el valor de lo escrito en el textbox producto, en la opcion data se pasa esta variable
+        //que sera el parametro que recibe en el controlador por ejemplo: acctionResult Productos(string filtro)
+        function getDataAjax() {
+            var filtro = $("#producto").val();
+            $.ajax({
+                url: '@Url.Action("Productos", "Salida")',
+                data: { filtro },
+                success: function (response) {
+                    //el return de la accion Productos es un PartialView, un partialview es un trozo e codigo html que puede ser llamado
+                    //desde cualquier vista, en este caso la vista parcial es _Productos, las vistas parciales siempre empiezan con guion bajo .
+                    //lo que hace este codigo es que en el div con id = cuerpoModal escribe el html que trae la partiaView, osea el response
+                    $('#cuerpoModal').html(response);
+                }
+            });
+        }
+
+        function agregar(codProducto) {
+            //evitar que se agregen productos repetidos
+            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            if (index == -1) {
+
+                detalle.push({ codProducto: parseInt(codProducto), cantidad: 1 })
+
+                          $.ajax({
+                              traditional: true,
+                              url: '@Url.Action("MostrarDetalle", "Salida")',
+                              type: "POST",
+                              contentType: "application/json; charset=utf-8",
+                              data: JSON.stringify(detalle),
+                              success: function (response) {
+                                  //el return de MostrarDetalle es tambien una vista parcial por lo que la respuesta practicamente es codigo
+                                  //html que se insertara el el div con id = detalle
+                                  $('#detalle').html(response);
+                              }
+                          }); 
+            }
+            else
+            {
+                //como el dialog queda abajo no me funciona por esa razon aqui hay un alert
+                alert("El Articulo seleccionado ya ha sido agregado");
+            }
+        }
+
+    function quitar(codProducto) {
+
+            // obtengo el index con findIndex que retorna el idex del elemento en el cual el codigo del producto sea igual al parametro codProducto
+            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            //cuando ya tengo el index lo elimino del array
+            detalle.splice(index, 1);
+            //una vez eliminado del array vuelvo a refrescar la vista parcial _Detalle con la lista ya actulizada, este es el mimo llamdo
+            //utilizado en la funcion agregar.
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("MostrarDetalle", "Salida")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(detalle),
+                success: function (response) {
+                    $('#detalle').html(response);
+                }
+            });
+        }
+
+        function cantidad(codProducto, entrada, existen) {
+            //esta funcion unicamente se encarga de cambiar la cantidad dentro del array, si la cantidad es "" no se ejecuta puesto
+            //que el usuario podria borrar todo y dejarlo en blanco
+            //var existen = existencia(parseInt(codProducto));
+
+            if (entrada.value != "") {
+                var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+
+                if (existen >= parseInt(entrada.value)) {
+                    detalle[index].cantidad = entrada.value;
+                } else {
+                    $("div#dialogo").html("<p>El valor ingresado <br/> supera la existencia </p>");
+                    $("div#dialogo").dialog("open"); $(entrada).val(existen);
+                    detalle[index].cantidad = existen;
+                }
+             
+            } else {
+                $("div#dialogo").html("<p> Debe especificarse <br/> una cantidad valida </p>");
+                $("div#dialogo").dialog("open"); $(entrada).val(1);
+                    }
+        }
+          
+        function guardar() {
+            //cuando precionan el boton guardar se ejecuta esta funcion
+            //primero hago este json con lo que voy a enviar, la descripcion que la tomo del textbox con id = descripcion y el detalle que es el array
+            var datos = { "descripcion":$('#descripcion').value, "detalle": detalle }
+            //con ajax mando a la accion crear y en data paso la variable datos
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Crear", "Salida")',
+                contentType: "application/json",
+                type: "POST",
+                data: JSON.stringify(datos),
+                success: function (response) {
+                    location.href = '@Url.Action("Index", "Salida")';
+                },
+                error: function (response) {
+                    $("div#dialogo").html("<p>Hubo un error al guardar los datos</p>");
+                    $("div#dialogo").dialog("open");
+                }
+            })
+
+        }
+
+
+
+</script>
 }
