@@ -10,6 +10,8 @@ namespace BD_PR_01_Clinicas.Controllers
     public class EntradaController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
+        List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
+                                             (new Volumen { codVolumen = 2, volumen = "ml" }) };
         // GET: Entrada
         public ActionResult Index()
         {
@@ -20,6 +22,11 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/Crear
         public ActionResult Crear()
         {
+            List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
+            List<tbCategoria> categorias = (from t in db.tbCategoria where t.estado == true orderby t.categoria select t).ToList();
+            ViewBag.nCodPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
+            ViewBag.nCodCategoria = new SelectList(categorias, "codCategoria", "categoria");
+            ViewBag.nCodVolumen = new SelectList(volumenes, "codVolumen", "volumen");
             return View(new Entrada());
         }
 
@@ -120,7 +127,12 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
-        
+        public JsonResult CrearProducto(tbProducto producto)
+        {
+            db.tbProducto.InsertOnSubmit(producto);
+            db.SubmitChanges();
+            return Json(producto.codProducto);
+        }
 
         // GET: Entrada/ListaProductos/5
         public ActionResult ListaProductos(int codEntrada)

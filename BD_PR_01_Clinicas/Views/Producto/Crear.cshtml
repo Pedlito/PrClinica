@@ -24,18 +24,24 @@
 
         <div class="form-group">
             @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.codCategoria, null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.codCategoria, "", new { @class = "text-danger" })
+            <div class="col-md-10" style="padding-left: 0px">
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.codCategoria, null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.codCategoria, "", new { @class = "text-danger" })
+                </div>
+                <button class="btn btn-info" style="display:inline" type="button" data-toggle="modal" data-target="#nuevaCategoria">Nueva Categoría</button>
             </div>
         </div>
 
         <div class="form-group">
             @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.codPresentacion, null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.codPresentacion, "", new { @class = "text-danger" })
-            </div>
+            <div class="col-md-10" style="padding-left: 0px">
+                <div class="col-md-4">
+                    @Html.DropDownListFor(model => model.codPresentacion, null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control col-md-3" })
+                    @Html.ValidationMessageFor(model => model.codPresentacion, "", new { @class = "text-danger" })
+                </div>
+                <button class="btn btn-info" style="display:inline" type="button" data-toggle="modal" data-target="#nuevaPresentacion">Nueva Presentación</button>
+             </div>
         </div>
 
         <div class="form-group">
@@ -58,6 +64,121 @@
     </div>
 }
 
+
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
+
+
+<!-- modal para categoría-->
+<div class="modal fade" id="nuevaCategoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Categoría</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("categoria", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearCategoria()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para Presentación-->
+<div class="modal fade" id="nuevaPresentacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Categoría</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("presentacion", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearPresentacion()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        function crearCategoria() {
+            var categoria = {
+                "categoria": document.getElementById("categoria").value,
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("nuevaCategoria", "Producto")',
+                type: "POST",
+                dataType: "json",
+                data: { "categoria": categoria },
+                success: function (categoria) {
+                    alert(categoria.codCategoria + " " + categoria.categoria)
+                    var item = "<option value='" + categoria.codCategoria + "'>" + categoria.categoria + "</option>"
+                    $('#codCategoria').append(item);
+                    document.getElementById("codCategoria").value = categoria.codCategoria; $('#nuevaCategoria').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
+
+        function crearPresentacion() {
+            var presentacion = {
+                "presentacion": document.getElementById("presentacion").value,
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("NuevaPresentacion", "Producto")',
+                type: "POST",
+                dataType: "json",
+                data: { "presentacion": presentacion },
+                success: function (presentacion) {
+                    alert(presentacion.codPresentacion + " " + presentacion.presentacion)
+                    var item = "<option value='" + presentacion.codPresentacion + "'>" + presentacion.presentacion + "</option>"
+                    $('#codPresentacion').append(item);
+                    document.getElementById("codPresentacion").value = presentacion.codPresentacion;
+                    $('#nuevaPresentacion').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
+
+    </script>    
+}

@@ -61,12 +61,35 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="myModalLabel">Lista de Productos</h4>
             </div>
-            <div class="modal-body" id="cuerpoModal">
-                @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="button" class="btn btn-info" onclick="cerrar()" value="Nuevo Producto" data-toggle="modal" data-target="#nuevo" />
+                </div>
+                <div id="cuerpoModal">
+                    @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
                     la tabla de los productos filtrados *@
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="nuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nuevo Producto</h4>
+            </div>
+            <div class="modal-body">
+                @Html.Partial("_NuevoProducto")
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearProducto()">Crear y Agregar</button>
             </div>
         </div>
     </div>
@@ -164,8 +187,35 @@
                 }
             })
         }
+        
+        function crearProducto() {
+            var producto = {
+                "codProducto": null,
+                "producto": document.getElementById("nProducto").value,
+                "codCategoria": parseInt(document.getElementById("nCodCategoria").value),
+                "codPresentacion": parseInt(document.getElementById("nCodPresentacion").value),
+                "dosis": parseFloat(document.getElementById("nDosis").value),
+                "codVolumen": parseInt(document.getElementById("nCodVolumen").value),
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("CrearProducto", "Entrada")',
+                type: "POST",
+                dataType: "json",
+                data: { "producto":producto },
+                success: function (response) {
+                    agregar(response);
+                    $('#nuevo').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
 
-
+        function cerrar() {
+            $('#busqueda').modal('hide');
+        }
 
     </script>
 }

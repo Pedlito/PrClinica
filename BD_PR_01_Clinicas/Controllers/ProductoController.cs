@@ -40,12 +40,28 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Producto/Crear
         public ActionResult Crear()
         {
-            List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true select t).ToList();
-            List<tbCategoria> categorias = (from t in db.tbCategoria where t.estado == true select t).ToList();
+            List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
+            List<tbCategoria> categorias = (from t in db.tbCategoria where t.estado == true orderby t.categoria select t).ToList();
             ViewBag.codPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
             ViewBag.codCategoria = new SelectList(categorias, "codCategoria", "categoria");
             ViewBag.codVolumen = new SelectList(volumenes, "codVolumen", "volumen");
             return View();
+        }
+
+        // GET: Producto/nuevaCategoria
+        public JsonResult nuevaCategoria(tbCategoria categoria)
+        {
+            db.tbCategoria.InsertOnSubmit(categoria);
+            db.SubmitChanges();
+            return Json(categoria);
+        }
+
+        // GET: Producto/NuevaPresentacion
+        public JsonResult NuevaPresentacion(tbPresentacion presentacion)
+        {
+            db.tbPresentacion.InsertOnSubmit(presentacion);
+            db.SubmitChanges();
+            return Json(presentacion);
         }
 
         // POST: Producto/Crear
