@@ -26,77 +26,106 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Salida/Crear
         public ActionResult Crear()
         {
-            return View(new SalidaModel());
+            return View(new Movimiento());
         }
 
         // POST: Salida/Crear
         [HttpPost]
-        public ActionResult Crear(SalidaModel model, string action)
+        public ActionResult Crear(Datos datos)
         {
+            //aqui creo el objeto tbEntrada y todo lo del detalle, esto tu me lo enseñaste no voy a explicarlo jajajajajajajajaslkdjfa;sldkfja;lskdjf;
+            try
+            {
+                tbSalida Salida = new tbSalida
+                {
+                    descripcion = datos.descripcion,
+                    fechaSalida = DateTime.Now
+                };
+                foreach (Item item in datos.detalle)
+                {
+                    Salida.tbDetalleSalida.Add(new tbDetalleSalida
+                    {
+                        codProducto = item.codProducto,
+                        cantidad = item.cantidad
+                    });
+                }
+                db.tbSalida.InsertOnSubmit(Salida);
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
 
-            if (action == "Generar")
-            {
-                try {
-                    db.tbSalida.InsertOnSubmit(model.agregarAMOdelo());
-                    db.SubmitChanges();
-                    return RedirectToAction("Index");
-                }
-                catch (Exception)
-                {
-                    ModelState.AddModelError("descripcionSalida", "Error al agregar el registro");
-                }        
-                
+                return  View(e.Message);
             }
-            else if (action == "Agregar")
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Productos(string filtro = "") {
+
+            List<RegistroProducto> lista = null;
+
+            if (filtro == "")
             {
-                // Si no ha pasado nuestra validación, mostramos el mensaje personalizado de error
-                if (!model.SeAgregoUnProductoValido())
-                {
-                    ModelState.AddModelError("nombreProducto","Solo puede agregar un producto válido al detalle");
-                }
-                else if (model.ExisteEnDetalle(model.codigoProducto))
-                {
-                    ModelState.AddModelError("nombreProducto", "El producto elegido ya existe en el detalle");
-                }
-                else
-                {
-                    model.AgregarProducto();
-                }
-            }
-            else if (action == "Retirar")
-            {
-                model.RetirarItemDeDetalle();
+                lista = (from e in db.tbDetalleEntrada
+                         join p in db.tbProducto on e.codProducto equals p.codProducto
+                         where p.estado == true
+                         select new RegistroProducto
+                         {
+                             codProducto = p.codProducto,
+                             nombre = p.producto,
+                             categoria = p.tbCategoria.categoria,
+                             presentacion = p.tbPresentacion.presentacion,
+                             dosis = p.dosis.ToString() + ((p.codVolumen == 1) ? " mg" : " ml")
+                         }).Distinct().ToList();
             }
             else
             {
-                throw new Exception("Acción no definida ..");
+                lista = (from e in db.tbDetalleEntrada
+                         join p in db.tbProducto on e.codProducto equals p.codProducto
+                         where p.producto.Contains(filtro) && p.estado == true
+                         select new RegistroProducto
+                         {
+                             codProducto = p.codProducto,
+                             nombre = p.producto,
+                             categoria = p.tbCategoria.categoria,
+                             presentacion = p.tbPresentacion.presentacion,
+                             dosis = p.dosis.ToString() + ((p.codVolumen == 1) ? " mg" : " ml")
+                            
+                         }).Distinct().ToList();
             }
-
-            return View(model);
+            return PartialView("_Productos", lista);  
         }
-        
-        public JsonResult Buscar(string nameProd) {
 
+        public ActionResult MostrarDetalle(IEnumerable<Item> detalle) {
 
-
-            var productos = (from p in db.tbProducto where p.producto.Contains(nameProd)
-                             select new productoModelo {
-                                 productoCod = p.codProducto,
-                                 productoNom = p.producto+"  "+p.tbPresentacion.presentacion,
-                                 productoPresent = p.tbPresentacion.presentacion,
-                                 productoVol = (p.codVolumen == 1) ? "mg" : "ml",
-                                 productoExist = (int)db.existencias(p.codProducto)
-                 
-            }).Take(10);
-            if (productos.Equals(null))
+            //este action recibe como parametro la lista de productos Item, tenes que verla en los modelos, esta dentro del modelo Entrada,
+            //es un objeto con un int codProducto y un int cantidad, que son los dos campos del array en javascript
+            //creo una lista
+            List<RegistroProducto> lista = new List<RegistroProducto>();
+            if (detalle != null)
             {
-                return Json(productos.ToList());
+                foreach (Item item in detalle)
+                {
+                    //por cada item dentro de la lista detalle creo un registroProducto
+                    lista.Add((from t in db.tbProducto
+                               where t.codProducto == item.codProducto
+                               orderby t.producto
+                               select new RegistroProducto
+                               {
+                                   codProducto = t.codProducto,
+                                   nombre = t.producto,
+                                   categoria = t.tbCategoria.categoria,
+                                   presentacion = t.tbPresentacion.presentacion,
+                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   cantidad = item.cantidad,
+                                   existencia = db.existencias(t.codProducto).Value
+                               }).SingleOrDefault());
+                }
             }
-            
-            return Json(productos);
+            //el retorno sera el html creado en la vista parcial _detalle pasandole como modelo la lista
+            return PartialView("_Detalle", lista);
         }
-        
-
         // GET: Salida/ListaProductos/5
         public ActionResult ListaProductos(int codSalida)
         {

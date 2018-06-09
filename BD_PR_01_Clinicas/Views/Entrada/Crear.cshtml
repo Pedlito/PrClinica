@@ -1,4 +1,4 @@
-﻿@model BD_PR_01_Clinicas.Models.Entrada
+﻿@model BD_PR_01_Clinicas.Models.Movimiento
 
 @{
     ViewBag.Title = "Crear";
@@ -76,6 +76,12 @@
         </div>
     </div>
 </div>
+    <!--CuadroDeDialogo-->
+<div id="dialogo" title="Advertencia">
+    <p>
+
+    </p>
+</div>
 
 <div class="modal fade" id="nuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -97,6 +103,18 @@
 
 @section Scripts {
     <script>
+        //comportamiento cuadro de dialogo
+        $("div#dialogo").dialog({
+            autoOpen: false,
+            show: "blind",
+            hide: "explode",
+            modal: true,
+            buttons: {
+                Ok: function () {
+                    $(this).dialog('close')
+                }
+            }
+        });
         //variable que contentra el array de todos los productos agregados
         var detalle = [];
 
@@ -118,23 +136,32 @@
         }
 
         function agregar(codProducto) {
-            //al llamar a esta funcion se hace un push a detalles que es el array de productos usando el codigo del producto enviado desde la
-            //vista parcial y se inicializa con una cantidad de 1
-            detalle.push({ codProducto: parseInt(codProducto), cantidad: 1 })
-            //este ajax se encarga de ir a la accion MostrarDetalle del controlador y le pasa como parametro el array de productos
-            //en la opcion data:
-            $.ajax({
-                traditional: true,
-                url: '@Url.Action("MostrarDetalle", "Entrada")',
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(detalle),
-                success: function (response) {
-                    //el return de MostrarDetalle es tambien una vista parcial por lo que la respuesta practicamente es codigo
-                    //html que se insertara el el div con id = detalle
-                    $('#detalle').html(response);
-                }
-            });
+            //evitar que se agregen productos repetidos
+            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            if (index == -1) {
+                //al llamar a esta funcion se hace un push a detalles que es el array de productos usando el codigo del producto enviado desde la
+                //vista parcial y se inicializa con una cantidad de 1
+                detalle.push({ codProducto: parseInt(codProducto), cantidad: 1 })
+                //este ajax se encarga de ir a la accion MostrarDetalle del controlador y le pasa como parametro el array de productos
+                //en la opcion data:
+                $.ajax({
+                    traditional: true,
+                    url: '@Url.Action("MostrarDetalle", "Entrada")',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(detalle),
+                    success: function (response) {
+                        //el return de MostrarDetalle es tambien una vista parcial por lo que la respuesta practicamente es codigo
+                        //html que se insertara el el div con id = detalle
+                        $('#detalle').html(response);
+                    }
+                });
+            }
+            else
+            {
+                //como el dialog queda abajo no me funciona por esa razon aqui hay un alert
+                alert("El Articulo seleccionado ya ha sido agregado");
+            }
         }
 
         function quitar(codProducto) {
@@ -156,14 +183,19 @@
             });
         }
 
-        function cantidad(codProducto, cantidad) {
+        function cantidad(codProducto, entrada) {
             //esta funcion unicamente se encarga de cambiar la cantidad dentro del array, si la cantidad es "" no se ejecuta puesto
             //que el usuario podria borrar todo y dejarlo en blanco
-            if (cantidad != "") {
+            if (entrada.value != "") {
                 //si existe busco el index donde el codigo de producto sea igual al parametro codProducto
                 var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
                 //cambio la propiedad cantidad del array en el index por el parametro cantidad
-                detalle[index].cantidad = cantidad;
+                detalle[index].cantidad = entrada.value;
+            }
+            else
+            {
+                $("div#dialogo").html("<p> Debe especificarse <br/> una cantidad valida </p>");
+                $("div#dialogo").dialog("open"); $(entrada).val(1);
             }
         }
 
@@ -183,7 +215,8 @@
                     location.href = '@Url.Action("Index", "Entrada")';
                 },
                 error: function (response) {
-                    alert("Hubo un error");
+                    $("div#dialogo").html("<p>Hubo un error al guardar los datos</p>");
+                    $("div#dialogo").dialog("open");
                 }
             })
         }

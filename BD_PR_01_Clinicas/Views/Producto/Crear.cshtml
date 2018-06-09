@@ -9,7 +9,7 @@
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Producto</h4>
         <hr />
@@ -50,12 +50,13 @@
                 @Html.EditorFor(model => model.dosis, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.dosis, "", new { @class = "text-danger" })
             </div>
-            <div class="col-md-1">
+        </div>
+        <div class="form-group">
+            <div class="col-md-2">
                 @Html.DropDownListFor(model => model.codVolumen, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.codVolumen, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Crear" class="btn btn-success" />

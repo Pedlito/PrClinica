@@ -191,7 +191,7 @@
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ModelosDeVistas.cs" />
+    <Compile Include="Models\ModelosDeSalidas.cs" />
     <Compile Include="Models\Rotaciones.cs" />
     <Compile Include="Models\TipoUsuario.cs" />
     <Compile Include="Models\Volumen.cs" />
@@ -309,11 +309,11 @@
     <Content Include="Views\Rotacion\ActivarDesacivarRegistro.cshtml" />
     <Content Include="Views\Rotacion\MensajeDeRegistro.cshtml" />
     <Content Include="Views\Producto\CambiarEstado.cshtml" />
-    <Content Include="Views\Salida\Crear.cshtml" />
-    <Content Include="Views\Casa\Index.cshtml" />
     <Content Include="Views\Entrada\_Productos.cshtml" />
     <Content Include="Views\Entrada\_Detalle.cshtml" />
-    <Content Include="Views\Entrada\_NuevoProducto.cshtml" />
+    <Content Include="Views\Salida\Crear.cshtml" />
+    <Content Include="Views\Salida\_Detalle.cshtml" />
+    <Content Include="Views\Salida\_Productos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

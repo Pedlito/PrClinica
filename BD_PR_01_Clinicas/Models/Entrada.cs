@@ -5,14 +5,17 @@ using System.Web;
 
 namespace BD_PR_01_Clinicas.Models
 {
-    public class Entrada
+    public class Movimiento
     {
-        DataClasesDataContext db = new DataClasesDataContext();
+    
+        
         public List<RegistroProducto> detalle { get; set; }
-        public Entrada()
+        public Movimiento()
         {
             detalle = new List<RegistroProducto>();
         }
+
+
     }
 
 
@@ -25,9 +28,9 @@ namespace BD_PR_01_Clinicas.Models
         public string presentacion { get; set; }
         public string dosis { get; set; }
         public int cantidad { get; set; }
+        public int existencia { get; set; }
     }
-
-    public class Item
+        public class Item
     {
         public int codProducto { get; set; }
         public int cantidad { get; set; }
