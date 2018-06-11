@@ -21,7 +21,10 @@
                     @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 form-inline">
                         @Html.TextBox("categoria", "", new { @class = "form-control" })
-                        <input type="submit" value="Filtrar" class="btn btn-info" />
+                        @*<input type="submit" value="Filtrar" class="btn btn-info" />*@
+                        <button type="submit" class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span> Filtrar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -29,7 +32,7 @@
     </div>
 }
 
-<table class="table">
+<table class="table table-striped table-hover table-bordered">
     <tr>
         <th>
             @Html.DisplayName("Categoría")
@@ -49,7 +52,8 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })
+            @*@Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })*@
+            <a class="btn btn-xs btn-primary" href="/Categoria/Editar?codCategoria=@item.codCategoria"><span class="glyphicon glyphicon-edit"></span> Editar</a>
             @if (item.estado == true)
             {
                 @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
@@ -63,3 +67,6 @@
 }
 
 </table>
+<div>
+    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+</div>

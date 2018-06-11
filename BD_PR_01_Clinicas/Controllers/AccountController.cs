@@ -109,7 +109,7 @@ namespace BD_PR_01_Clinicas.Controllers
                   fechaNacimiento =  model.FechaNacimiento,
                   usuario = model.Usuario,
                   password = model.Password,
-                  codTipoUsuario = 3
+                  codTipoUsuario = 2
                 };
                 try
                 {
@@ -155,7 +155,7 @@ namespace BD_PR_01_Clinicas.Controllers
                 throw ex;
             }
             // Info.    
-            return this.RedirectToAction("Login", "Account");
+            return this.RedirectToAction("Index", "Home");
         }
 
 

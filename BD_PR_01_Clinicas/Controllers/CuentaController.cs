@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+//TODO NO SE ESTA UTILIZANDO
 namespace BD_PR_01_Clinicas.Controllers
 {
     public class CuentaController : Controller

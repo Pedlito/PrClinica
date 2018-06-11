@@ -32,7 +32,10 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-default" />
+                @*<input type="submit" value="Crear" class="btn btn-default" />*@
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span> Crear
+                </button>
             </div>
         </div>
     </div>
@@ -41,3 +44,20 @@
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
+@section Scripts {
+    <script>
+        $("form").submit(
+                    function validar(event) {
+                        var date;
+
+                        if ($("#fechaInicio").val() >= $("#fechaFinal").val()) { alert("error fecha inicio debe ser menor a fecha finalizacion"); event.preventDefault(); }
+                        else {
+                       
+
+                        }
+
+                    }
+
+            );
+    </script>
+}

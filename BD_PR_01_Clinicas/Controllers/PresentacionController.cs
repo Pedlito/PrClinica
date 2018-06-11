@@ -52,6 +52,7 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 return View();
             }
+
         }
 
         // GET: Presentacion/Editar/5
@@ -67,7 +68,7 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                //TODO: Add update logic here
                 tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == codPresentacion select t).SingleOrDefault();
                 editar.presentacion = collection["presentacion"];
                 db.SubmitChanges();

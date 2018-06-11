@@ -1,5 +1,7 @@
-﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbProducto>
-
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<BD_PR_01_Clinicas.Models.tbProducto>
+@*@model IEnumerable<BD_PR_01_Clinicas.Models.tbProducto>*@
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Productos";
 }
@@ -22,7 +24,7 @@
                     @Html.Label("Filtrar por:", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 form-inline">
                         <label class="radio-inline">
-                            <input type="radio" name="accion" value=1 checked>Producto 
+                       <input type="radio" name="accion" value=1>Producto
                         </label>
                         <label class="radio-inline">
                             <input type="radio" name="accion" value=2>Categoría
@@ -36,8 +38,11 @@
                 <div class="form-group">
                     @Html.Label("Buscar", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 form-inline">
-                        @Html.TextBox("filtro", "", new { @class = "form-control" })
-                        <input type="submit" value="Filtrar" class="btn btn-info" />
+                        @Html.TextBox("filtro",  ViewBag.filtroActual as string, new { @class = "form-control" })
+                        @*<input type="submit" value="Filtrar" class="btn btn-info" />*@
+                        <button type="submit" class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span> Filtrar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -45,7 +50,7 @@
     </div>
 }
 
-<table class="table">
+<table class="table table-striped table-hover table-bordered">
     <tr>
         <th>
             @Html.DisplayName("Producto")
@@ -92,7 +97,9 @@
             @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
         </td>
         <td>
-            @Html.ActionLink("Editar", "Editar", new { codProducto=item.codProducto }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })
+            @*@Html.ActionLink("Editar", "Editar", new { codProducto=item.codProducto }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })*@
+            <a class="btn btn-xs btn-primary" href="/Producto/Editar?codProducto=@item.codProducto"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+
             @if (item.estado == true)
             {
                 @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codProducto = item.codProducto, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
@@ -106,3 +113,10 @@
 }
 
 </table>
+@*esto solo muestra el mensaje de numero de pagina actual, ejemplo: Pagina 1 de 5*@
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, filtroActual = ViewBag.filtroActual, accionActual = ViewBag.accionActual }))
+<div>
+    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+</div>

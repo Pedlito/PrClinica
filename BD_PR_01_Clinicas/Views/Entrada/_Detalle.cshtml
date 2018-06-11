@@ -7,7 +7,10 @@
 @if (Model.Count() > 0)
 {
     <hr/>
-    <input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save"/>
+    @*<input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save"/>*@
+    <button type="button" class="btn btn-primary" onclick="guardar()" id="save">
+        <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+    </button>
     <hr/>
 
     //aqui creo la lista que contiene todos los productos ya agregados a el detalle de Entrada
@@ -55,7 +58,10 @@
                     </div>
                     <div class="col-xs-2 text-center">
                         @* el boton quitar tiene un evento a la funcion quitar y le manda como parametro el codigo del producto *@
-                        <input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />
+                        @*<input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />*@
+                        <button type="button" class="btn btn-danger" onclick="quitar(@item.codProducto, event)">
+                            <span class="glyphicon glyphicon-remove"></span> Quitar
+                        </button>
                     </div>
                 </div>
             </li>

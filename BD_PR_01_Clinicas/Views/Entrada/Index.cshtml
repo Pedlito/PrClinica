@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Nueva entrada", "Crear")
 </p>
-<table class="table">
+<table class="table table-striped table-hover table-bordered">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.descripcion)
@@ -38,5 +38,5 @@
 
 </table>
 <div>
-    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-default" })
+    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
 </div>

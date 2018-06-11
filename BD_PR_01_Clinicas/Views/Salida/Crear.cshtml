@@ -34,7 +34,11 @@
 
                     @*este boton se encarga de mostrar el modal, el data-target hace referencia a un div de clase modal con id= busqueda
                         cada vez que es precionado se muestra el modal. tambien tiene un evento onclick que llama a una funcion getDataAjax() *@
-                    <input type="button" value="Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+
+                    @*<input type="button" value=" Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />*@
                 </div>
             </div>
         </div>
@@ -50,7 +54,12 @@
 
 
 <div>
-    @Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })
+    @*@Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })*@
+    @*<button type="button" class="btn btn-danger" href="/Salida/Index" >
+        <span class="glyphicon glyphicon-stop"></span> Cancelar
+    </button>*@
+    <a class="btn btn-danger" href="/Salida/Index" role="button"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
+
 </div>
 
 <!-- Modal -->
@@ -67,7 +76,7 @@
                     la tabla de los productos filtrados *@
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Cerrar</button>
             </div>
         </div>
     </div>
@@ -76,7 +85,7 @@
     <!--CuadroDeDialogo-->
 <div id="dialogo" title="Advertencia">
     <p>
-
+        <!--Mensaje-->
     </p>
 </div>
 
@@ -86,6 +95,7 @@
         autoOpen: false,
         show: "blind",
         hide: "explode",
+        width: 400,
         modal: true,
         buttons: {
             Ok: function () {
@@ -184,6 +194,13 @@
         }
           
         function guardar() {
+            if ($("#descripcion").val() == "") {
+
+                $("div#dialogo").html("<p>Por favor Ingrese una descripcion</p>");
+                $("div#dialogo").dialog("open");
+                //O sea no lo dejes pasar
+                return;
+            }
             //cuando precionan el boton guardar se ejecuta esta funcion
             //primero hago este json con lo que voy a enviar, la descripcion que la tomo del textbox con id = descripcion y el detalle que es el array
             var datos = { "descripcion":$('#descripcion').value, "detalle": detalle }

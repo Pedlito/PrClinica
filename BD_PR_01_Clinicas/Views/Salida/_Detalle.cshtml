@@ -7,7 +7,10 @@
 @if (Model.Count() > 0)
 {
     <hr />
-    <input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save" />
+    @*<input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save" />*@
+    <button type="button" class="btn btn-primary" onclick="guardar()" id="save">
+        <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
+    </button>
     <hr />
 
     //aqui creo la lista que contiene todos los productos ya agregados a el detalle de Entrada
@@ -23,8 +26,11 @@
                 <div class="col-xs-2 text-left">
                     <b>Presetación</b>
                 </div>
-                <div class="col-xs-2 text-left">
+                <div class="col-xs-1 text-center">
                     <b>Dosis</b>
+                </div>
+                <div class="col-xs-1 text-center">
+                    <b>Existencia</b>
                 </div>
                 <div class="col-xs-2 text-center">
                     <b>Cantidad</b>
@@ -46,17 +52,23 @@
                     <div class="col-xs-2 text-left">
                         <label class="btn">@item.presentacion</label>
                     </div>
-                    <div class="col-xs-2 text-left">
+                    <div class="col-xs-1 text-left">
                         <label class="btn">@item.dosis</label>
                     </div>
-                    <div class="col-xs-2 text-left">
+                    <div class="col-xs-1 text-center">
+                        <label class="btn">@item.existencia</label>
+                    </div>
+                    <div class="col-xs-2 text-right">
                         @* es importante tomar en cuenta que agregue un evento onchange a la funcion cantidad(codigoProducto, el valor cambiado)
                             que se realiza cuando cambian el numero del input (el usuario cambia la cantidad default por otra) para ir a cambiarlo en el array *@
                         <input type="number" class="form-control input-sm cant" value="@item.cantidad" onchange="cantidad(@item.codProducto,this,@item.existencia)" />
                     </div>
-                    <div class="col-xs-2 text-center">
+                    <div class="col-xs-2 text-right">
                         @* el boton quitar tiene un evento a la funcion quitar y le manda como parametro el codigo del producto *@
-                        <input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />
+                        @*<input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />*@
+                        <button type="button" class="btn btn-danger" onclick="quitar(@item.codProducto, event)">
+                            <span class="glyphicon glyphicon-remove"></span> Quitar
+                        </button>
                     </div>
                 </div>
             </li>

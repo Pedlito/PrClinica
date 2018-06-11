@@ -6,7 +6,7 @@
 
 <h2>Nuevo</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm(Html.BeginForm("Crear", "Producto", FormMethod.Post, new { @id = "formId", @class = "form-horizontal", role = "form" }))) 
 {
     @Html.AntiForgeryToken()
 
@@ -16,7 +16,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.producto, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.producto, "", new { @class = "text-danger" })
             </div>
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">            
                 @Html.DropDownListFor(model => model.codCategoria, null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.codCategoria, "", new { @class = "text-danger" })
             </div>
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">
                 @Html.DropDownListFor(model => model.codPresentacion, null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.codPresentacion, "", new { @class = "text-danger" })
             </div>
@@ -40,20 +40,23 @@
 
         <div class="form-group">
             @Html.Label("Dosis", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
+            <div class="col-md-2 entrada">
                 @Html.EditorFor(model => model.dosis, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.dosis, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-2">
+            <div class="col-md-offset-2 col-md-2">
                 @Html.DropDownListFor(model => model.codVolumen, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.codVolumen, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-success" />
+                @*<input type="submit" value="Crear" class="btn btn-success" />*@
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span> Crear
+                </button>
             </div>
         </div>
     </div>
@@ -62,3 +65,54 @@
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
+@section Scripts {
+    @*JqueriVal permite la validacion  escrita abajo*@
+@Scripts.Render("~/bundles/jqueryval")
+<script>
+    $.validator.addMethod("soloLetras", function (value, element) {
+        return /^[a-zA-Z ]+$/i.test(value);
+    }, "Ingrese sólo Letras");
+
+    $("#formId").validate({
+        errorClass: 'help-block animation-slideDown',
+        errorElement: 'div',
+        errorPlacement: function (error, e) {
+            e.parents('.form-group > div').append(error);
+        },
+        highlight: function (e) {
+
+            $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
+            $(e).closest('.help-block').remove();
+        },
+        success: function (e) {
+            e.closest('.entrada').removeClass('has-success has-error');
+            e.closest('.help-block').remove();
+        },
+        rules: {
+            codCategoria: { required: true, number:true},
+            codPresentacion:{required:true, number:true},
+            producto: { required: true, soloLetras: true},
+            dosis: { required: true, number: true},
+        },
+        messages: {
+            producto: {
+                required: "Debe introducir su nombre",
+                soloLetras:"Solo se admite texto"
+            },
+            codCategoria:{
+                required: "Debe seleccionar una categoria"
+                
+            },
+            codPresentacion: {
+                required: "Debe seleccionar una presentacion"          
+            },
+
+            dosis: {
+                required: "Debe introducir una dosis",
+                number: "Solo se admiten numeros"
+            }
+        }
+
+    });
+</script>
+}
