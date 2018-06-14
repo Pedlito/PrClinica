@@ -45,7 +45,10 @@
                 <div class="col-xs-2 text-left">
                     @* en este caso al hacer click en el boton agregar de una fila, se llama a la funcion agregar que esta en la pagina principal
                        y se le manda como parametro el codigo del producto del item de esa fila *@
-                    <input type="button" value="Agregar" class="btn btn-xs btn-success" onclick="agregar(@item.codProducto)" />
+                    @*<input type="button" value="Agregar" class="btn btn-xs btn-success" onclick="agregar(@item.codProducto)" />*@
+                    <button type="button" class="btn btn-xs btn-success" onclick="agregar(@item.codProducto)">
+                        <span class="glyphicon glyphicon-check"></span> Agregar
+                    </button>
                 </div>
             </div>
         </li>

@@ -25,11 +25,15 @@ namespace BD_PR_01_Clinicas
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
             bundles.Add(new ScriptBundle("~/Contenido/js").Include(
-"~/Scripts/jquery-ui/jquery-ui.min.js"));
+                    "~/Scripts/jquery-ui/jquery-ui.min.js",
+                    "~/Scripts/datapickerEspaniol.js"));
             bundles.Add(new StyleBundle("~/Contenido/cs").Include(
-             "~/Scripts/jquery-ui/jquery-ui.min.css"));
+                    "~/Scripts/jquery-ui/jquery-ui.min.css"));
+
+            bundles.Add(new StyleBundle("~/EstiloUi/cs").Include(
+                    "~/Content/estilos_ui.css"));
         }
     }
 }

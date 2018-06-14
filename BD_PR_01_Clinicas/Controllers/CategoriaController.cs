@@ -7,7 +7,7 @@ using BD_PR_01_Clinicas.Models;
 
 namespace BD_PR_01_Clinicas.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CategoriaController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
@@ -38,7 +38,7 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                 //TODO: Add insert logic here
                 tbCategoria nueva = new tbCategoria
                 {
                     categoria = collection["categoria"],
@@ -67,7 +67,7 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             try
             {
-                // TODO: Add update logic here
+                //TODO: Add update logic here
                 tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == codCategoria select t).SingleOrDefault();
                 editar.categoria = collection["categoria"];
                 db.SubmitChanges();

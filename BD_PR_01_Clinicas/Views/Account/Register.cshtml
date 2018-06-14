@@ -14,17 +14,17 @@
         <h4>Por favor ingrese sus datos</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        <div class="form-group" >
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+            <div class="col-md-10" >
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder ="Nombre completo"} })
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Dpi, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10" >
                 @Html.EditorFor(model => model.Dpi, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Dpi, "", new { @class = "text-danger" })
             </div>
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Carnet, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10" >
                 @Html.EditorFor(model => model.Carnet, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Carnet, "", new { @class = "text-danger" })
             </div>
@@ -41,7 +41,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FechaNacimiento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextBoxFor(model => model.FechaNacimiento, "", new { @class = "form-control", @ReadOnly = true } )
                 @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -49,7 +49,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", placeholder="Identificador de usuario" } })
                 @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -72,12 +72,26 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @*<input type="submit" value="Crear" class="btn btn-default" />*@
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-user"></span> Crear
+                </button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index","Home")
+    @Html.ActionLink("Ir a Inicio", "Index","Home")
 </div>
+@section Scripts{
+<script>
+    $("#FechaNacimiento").datepicker({   
+        changeMonth: true,
+        changeYear: true,
+        autoclose: true,
+        yearRange: '-80:-17',
+        defaultDate: '20/10/2000'
+    });
+    </script>
+}

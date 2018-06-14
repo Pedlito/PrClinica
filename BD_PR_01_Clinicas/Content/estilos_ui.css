@@ -1,0 +1,37 @@
+﻿/*cambia el color del fondo del boton y letra tamanio etc.*/
+.ui-button
+{
+background: #df013a;
+color: white;
+font-size: 14px;
+border: 0;
+}
+/*al entrar el mouse cambia las propiedades del boton*/
+.ui-button:hover
+{
+background: red;
+color: white;
+border: 1px solid black;
+}
+/*Para cambiar el fondo de la cabecera*/
+.ui-dialog .ui-widget-header
+{
+background: black;
+}
+/*Para cambiar el contenido de la cabecera, tamaño de fuente, color de fuente, ...*/
+.ui-dialog .ui-dialog-titlebar
+{
+color: white;
+font-family: arial;
+}
+/*para cambiar el fondo del cuadro de diálogo*/
+.ui-dialog
+{
+background: #2e9afe;
+}
+/*Para cambiar el contenido del cuadro de diálogo, tamaño de fuente, color de fuente, ...*/
+.ui-dialog .ui-widget-content
+{
+color: white;
+font-family: arial;
+}

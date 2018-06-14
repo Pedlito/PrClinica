@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using BD_PR_01_Clinicas.Models;
 
 namespace BD_PR_01_Clinicas.Controllers
@@ -14,27 +15,49 @@ namespace BD_PR_01_Clinicas.Controllers
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
         // GET: Producto
-        public ActionResult Index(string filtro = "", int accion = 1)
+       // public ActionResult Index(string filtro = "", int accion = 1)
+        public ActionResult Index(int? accionActual, string filtro ,string filtroActual, int? accion , int? page)
         {
             List<tbProducto> lista = null;
-            if (filtro == "")
+
+            if (filtro != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                filtro = filtroActual;
+                accion = accionActual;
+
+            }
+
+            ViewBag.filtroActual = filtro;
+            ViewBag.accionActual = accion;
+
+          
+
+        
+            if (!String.IsNullOrEmpty(filtro))
+            {
+                if (accion == 1)
+                    lista = (from t in db.tbProducto where t.producto.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+                else if (accion == 2)
+                    lista = (from t in db.tbProducto where t.tbCategoria.categoria.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+                else if (accion == 3)
+                    lista = (from t in db.tbProducto where t.tbPresentacion.presentacion.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+
+            }
+            else 
             {
                 lista = (from t in db.tbProducto orderby t.estado descending, t.producto select t).ToList();
+
             }
-            else if (accion == 1)
-            {
-                lista = (from t in db.tbProducto where t.producto.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
-            }
-            else if (accion == 2)
-            {
-                lista = (from t in db.tbProducto where t.tbCategoria.categoria.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
-            }
-            else if (accion == 3)
-            {
-                lista = (from t in db.tbProducto where t.tbPresentacion.presentacion.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
-            }
-            
-            return View(lista);
+         
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Producto/Crear

@@ -10,7 +10,7 @@
     @Html.ActionLink("Nuevo Estudiante", "CrearEstudiante") |
     @Html.ActionLink("Nuevo Doctor", "crearDoctor")
 </p>
-<table class="table">
+<table class="table table-striped table-hover table-bordered">
     <tr>
         <th>
             @Html.DisplayName("Nombre")
@@ -67,3 +67,6 @@
 }
 
 </table>
+<div>
+    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+</div>

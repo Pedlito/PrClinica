@@ -33,7 +33,10 @@
 
                     @*este boton se encarga de mostrar el modal, el data-target hace referencia a un div de clase modal con id= busqueda
                         cada vez que es precionado se muestra el modal. tambien tiene un evento onclick que llama a una funcion getDataAjax() *@
-                    <input type="button" value="Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />
+                    @*<input type="button" value="Buscar" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()" />*@
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#busqueda" onclick="getDataAjax()">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
                 </div>
             </div>
         </div>
@@ -49,7 +52,8 @@
 }
 
 <div>
-    @Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })
+    @*@Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })*@
+    <a class="btn btn-danger" href="/Entrada/Index" role="button"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
 </div>
 
 <!-- Modal -->
@@ -66,12 +70,13 @@
                     <input type="button" class="btn btn-info" onclick="cerrar()" value="Nuevo Producto" data-toggle="modal" data-target="#nuevo" />
                 </div>
                 <div id="cuerpoModal">
-                    @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
+                @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
                     la tabla de los productos filtrados *@
-                </div>
+            </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                @*<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>*@
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Cerrar</button>
             </div>
         </div>
     </div>
@@ -169,6 +174,7 @@
         $("div#dialogo").dialog({
             autoOpen: false,
             show: "blind",
+            width: 400,
             hide: "explode",
             modal: true,
             buttons: {
@@ -262,6 +268,13 @@
         }
 
         function guardar() {
+            if ($("#descripcion").val() == "") {
+
+                $("div#dialogo").html("<p>Por favor Ingrese una descripcion</p>");
+                $("div#dialogo").dialog("open");
+                //O sea no lo dejes pasar
+                return;
+            }
             //cuando precionan el boton guardar se ejecuta esta funcion
             //primero hago este json con lo que voy a enviar, la descripcion que la tomo del textbox con id = descripcion y el detalle que es el array
             var datos = { "descripcion": document.getElementById("descripcion").value, "detalle": detalle }
@@ -308,9 +321,6 @@
             })
         }
 
-        function cerrar() {
-            $('#busqueda').modal('hide');
-        }
 
         function crearCategoria() {
             var categoria = {
