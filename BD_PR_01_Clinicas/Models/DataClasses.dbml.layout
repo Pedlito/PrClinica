@@ -76,7 +76,7 @@
         <classShapeMoniker Id="f51b5154-f7e5-4ca8-8aca-b0ee2a747a20" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5 : 3.375); (5 : 2.1362939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5 : 3.375); (5 : 2.1362939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasesDataContext/tbProducto/tbProducto_tbDetalleSalida" />
       <nodes>
         <classShapeMoniker Id="d81a7f3c-6dd3-40a9-b340-b8d595087fde" />

@@ -101,6 +101,68 @@
     </div>
 </div>
 
+<!-- modal para categoría-->
+<div class="modal fade" id="nuevaCategoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Categoría</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("categoria", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearCategoria()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para Presentación-->
+<div class="modal fade" id="nuevaPresentacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Presentación</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("presentacion", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearPresentacion()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         //comportamiento cuadro de dialogo
@@ -220,7 +282,7 @@
                 }
             })
         }
-        
+
         function crearProducto() {
             var producto = {
                 "codProducto": null,
@@ -248,6 +310,52 @@
 
         function cerrar() {
             $('#busqueda').modal('hide');
+        }
+
+        function crearCategoria() {
+            var categoria = {
+                "categoria": document.getElementById("categoria").value,
+                "estado": true
+            };
+            console.log(categoria);
+            $.ajax({
+                url: '@Url.Action("NuevaCategoria", "Entrada")',
+                type: "POST",
+                dataType: "json",
+                data: { "categoria": categoria },
+                success: function (categoria) {
+                    alert(categoria.codCategoria + " " + categoria.categoria)
+                    var item = "<option value='" + categoria.codCategoria + "'>" + categoria.categoria + "</option>"
+                    $('#nCodCategoria').append(item);
+                    document.getElementById("nCodCategoria").value = categoria.codCategoria; $('#nuevaCategoria').modal('hide');
+                },
+                error: function (response) {
+                    alert("error de categoria");
+                }
+            })
+        }
+
+        function crearPresentacion() {
+            var presentacion = {
+                "presentacion": document.getElementById("presentacion").value,
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("NuevaPresentacion", "Entrada")',
+                type: "POST",
+                dataType: "json",
+                data: { "presentacion": presentacion },
+                success: function (presentacion) {
+                    alert(presentacion.codPresentacion + " " + presentacion.presentacion)
+                    var item = "<option value='" + presentacion.codPresentacion + "'>" + presentacion.presentacion + "</option>"
+                    $('#nCodPresentacion').append(item);
+                    document.getElementById("nCodPresentacion").value = presentacion.codPresentacion;
+                    $('#nuevaPresentacion').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
         }
 
     </script>

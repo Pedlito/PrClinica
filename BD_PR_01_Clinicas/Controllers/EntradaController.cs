@@ -27,7 +27,7 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.nCodPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
             ViewBag.nCodCategoria = new SelectList(categorias, "codCategoria", "categoria");
             ViewBag.nCodVolumen = new SelectList(volumenes, "codVolumen", "volumen");
-            return View(new Entrada());
+            return View(new Movimiento());
         }
 
         // POST: Entrada/Crear
@@ -123,7 +123,21 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/Detalles/5
         public ActionResult Detalles(int codEntrada)
         {
-            List<tbDetalleEntrada> lista = (from t in db.tbDetalleEntrada where t.codEntrada == codEntrada select t).ToList();
+            List<RegistroProducto> lista = (from det in db.tbDetalleEntrada
+                                            join pro in db.tbProducto on det.codProducto equals pro.codProducto
+                                            where det.codEntrada == codEntrada
+                                            select new RegistroProducto
+                                            {
+                                                codProducto = det.codProducto,
+                                                nombre = pro.producto,
+                                                categoria = pro.tbCategoria.categoria,
+                                                presentacion = pro.tbPresentacion.presentacion,
+                                                dosis = pro.dosis.ToString() + ((pro.codVolumen == 1) ? " mg" : " ml"),
+                                                cantidad = det.cantidad.Value
+                                            }).ToList();
+            tbEntrada entrada = (from t in db.tbEntrada where t.codEntrada == codEntrada select t).SingleOrDefault();
+            ViewBag.descripcion = entrada.descripcion;
+            ViewBag.fechaEntrada = entrada.fechaEntrada.Value.ToLongDateString();
             return View(lista);
         }
 
@@ -158,28 +172,23 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Entrada/AgregarProducto/5
         public ActionResult AgregarProducto(int codEntrada)
         {
-            return View();
+            return View(); 
         }
 
-        // GET: Entrada/cantidad/5
-        public ActionResult cantidad(int codEntrada, int codProducto)
+        // GET: Entrada/NuevaCategoria
+        public JsonResult NuevaCategoria(tbCategoria categoria)
         {
-            return View();
+            db.tbCategoria.InsertOnSubmit(categoria);
+            db.SubmitChanges();
+            return Json(categoria);
         }
 
-        // POST: Entrada/cantidad/5
-        [HttpPost]
-        public ActionResult cantidad(int codEntrada, int codProducto, FormCollection collection)
+        // GET: Entrada/NuevaPresentacion
+        public JsonResult NuevaPresentacion(tbPresentacion presentacion)
         {
-            try
-            {
-                // TODO: Add delete logic here
-                return RedirectToAction("ListaProductos", new { codEntrada = codEntrada });
-            }
-            catch (Exception e)
-            {
-                return View();
-            }
+            db.tbPresentacion.InsertOnSubmit(presentacion);
+            db.SubmitChanges();
+            return Json(presentacion);
         }
 
         // GET: Entrada/NuevoProducto/5

@@ -26,12 +26,10 @@
             @Html.DisplayFor(modelItem => item.descripcion)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.fechaEntrada)
+            @item.fechaEntrada.Value.ToLongDateString()
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.codEntrada }) |
-            @Html.ActionLink("Detailles", "Details", new { id=item.codEntrada }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.codEntrada })
+            @Html.ActionLink("Detalles", "Detalles", new { codEntrada=item.codEntrada }, htmlAttributes: new { @class = "btn btn-xs btn-info" })
         </td>
     </tr>
 }
