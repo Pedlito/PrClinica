@@ -5,12 +5,12 @@ using System.Web;
 
 namespace BD_PR_01_Clinicas.Models
 {
-    public class Movimiento
+    public class Entrada
     {
     
         
         public List<RegistroProducto> detalle { get; set; }
-        public Movimiento()
+        public Entrada()
         {
             detalle = new List<RegistroProducto>();
         }

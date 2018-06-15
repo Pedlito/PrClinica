@@ -176,7 +176,7 @@ namespace BD_PR_01_Clinicas.Controllers
                 // TODO: Add delete logic here
                 return RedirectToAction("ListaProductos", new { codEntrada = codEntrada });
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return View();
             }
