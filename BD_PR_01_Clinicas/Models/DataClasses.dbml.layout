@@ -91,7 +91,7 @@
         <classShapeMoniker Id="42187f47-3b6e-4acb-a027-ff41c0e60f95" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.25 : 1.31814697265625); (4.5 : 1.31814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.25 : 1.31814697265625); (4.5 : 1.31814697265625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasesDataContext/tbSalida/tbSalida_tbDetalleSalida" />
       <nodes>
         <classShapeMoniker Id="a2ec2c2b-5826-47c6-9878-f92919fba1c1" />
