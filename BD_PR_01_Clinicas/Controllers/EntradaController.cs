@@ -27,7 +27,7 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.nCodPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
             ViewBag.nCodCategoria = new SelectList(categorias, "codCategoria", "categoria");
             ViewBag.nCodVolumen = new SelectList(volumenes, "codVolumen", "volumen");
-            return View(new Movimiento());
+            return View(new Entrada());
         }
 
         // POST: Entrada/Crear

@@ -1,4 +1,4 @@
-﻿@model BD_PR_01_Clinicas.Models.Movimiento
+﻿@model BD_PR_01_Clinicas.Models.Entrada
 
 @{
     ViewBag.Title = "Crear";
@@ -50,7 +50,7 @@
         </div>
     </div>
 }
-
+@*onclick="cerrar()"*@
 <div>
     @*@Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })*@
     <a class="btn btn-danger" href="/Entrada/Index" role="button"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
@@ -67,7 +67,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="button" class="btn btn-info" onclick="cerrar()" value="Nuevo Producto" data-toggle="modal" data-target="#nuevo" />
+                    <input type="button" class="btn btn-info"  value="Nuevo Producto" data-toggle="modal" data-target="#nuevo" data-dismiss="modal"/>
                 </div>
                 <div id="cuerpoModal">
                 @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
@@ -297,7 +297,20 @@
         }
 
         function crearProducto() {
-            var producto = {
+            //valida categoria y presentacion 
+            if ($("#nProducto").val().length <= 2)
+            {
+                alert("Ingrese un nombre de producto, 3 caracteres como minimo"); return;
+               
+            }
+            else if ($("#nCodCategoria").val() == "") {
+                
+                alert("Seleccione una categoria"); return;
+            } else if ($("#nCodPresentacion").val() == "") {
+                alert("Seleccione  una presentacion"); return;
+            } else if ($("#nDosis").val()=="") { alert("Ingrese una dosis"); return; }
+            //ingreso de un producto
+            var producto = {    
                 "codProducto": null,
                 "producto": document.getElementById("nProducto").value,
                 "codCategoria": parseInt(document.getElementById("nCodCategoria").value),
@@ -323,6 +336,8 @@
 
 
         function crearCategoria() {
+                //validacion categoria 
+            if (!$("#categoria").val().match(/^[a-zA-Z]{2}[a-zA-Z ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
             var categoria = {
                 "categoria": document.getElementById("categoria").value,
                 "estado": true
@@ -346,6 +361,8 @@
         }
 
         function crearPresentacion() {
+            //validacion presentacion
+            if (!$("#presentacion").val().match(/^[a-zA-Z]{2}[a-zA-Z ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
             var presentacion = {
                 "presentacion": document.getElementById("presentacion").value,
                 "estado": true

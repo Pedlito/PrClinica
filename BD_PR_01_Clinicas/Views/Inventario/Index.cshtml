@@ -6,54 +6,56 @@
 
 <h2>Invetario</h2>
 
-<table class="table table-striped table-hover table-bordered">
-    <tr>
-        <th>
-            @Html.DisplayName("Producto")
-        </th>
-        <th>
-            @Html.DisplayName("Categoría")
-        </th>
-        <th>
-            @Html.DisplayName("Presentación")
-        </th>
-        <th>
-            @Html.DisplayName("Dosis")
-        </th>
-        <th>
-            @Html.DisplayName("Existencias")
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-striped table-hover" >
+    <thead>
+        <tr class="bg-info">
+            <th >
+                @Html.DisplayName("Producto")
+            </th>
+            <th>
+                @Html.DisplayName("Categoría")
+            </th>
+            <th>
+                @Html.DisplayName("Presentación")
+            </th>
+            <th>
+                @Html.DisplayName("Dosis")
+            </th>
+            <th>
+                @Html.DisplayName("Existencias")
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.producto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.categoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.presentacion)
-        </td>
-        @if (item.codVolumen == 1)
+        </tr>
+          </thead>
+        @foreach (var item in Model)
         {
-            <td>
-                @item.dosis mg
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.producto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presentacion)
+                </td>
+                @if (item.codVolumen == 1)
+                {
+                    <td>
+                        @item.dosis mg
+                    </td>
+                }
+                else if (item.codVolumen == 2)
+                {
+                    <td>
+                        @item.dosis ml
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.existencia)
+                </td>
+            </tr>
         }
-        else if (item.codVolumen == 2)
-        {
-            <td>
-                @item.dosis ml
-            </td>
-        }
-        <td>
-            @Html.DisplayFor(modelItem => item.existencia)
-        </td>
-    </tr>
-}
 
 </table>
 <div>

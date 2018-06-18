@@ -15,13 +15,15 @@ namespace BD_PR_01_Clinicas.Controllers
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
         // GET: Producto
-       // public ActionResult Index(string filtro = "", int accion = 1)
-        public ActionResult Index(int? accionActual, string filtro ,string filtroActual, int? accion , int? page)
+        // public ActionResult Index(string filtro = "", int accion = 1)
+        public ActionResult Index(int? accionActual, string filtro, string filtroActual, int? accion, int? page)
         {
             List<tbProducto> lista = null;
+
             if (filtro != null)
             {
                 page = 1;
+              
             }
             else
             {
@@ -29,12 +31,17 @@ namespace BD_PR_01_Clinicas.Controllers
                 accion = accionActual;
             }
             ViewBag.filtroActual = filtro;
+
+            if (accion == null) { accion = 1; };
+
             ViewBag.accionActual = accion;
+
+
 
             if (!String.IsNullOrEmpty(filtro))
             {
                 if (accion == 1)
-                    lista = (from t in db.tbProducto where t.producto.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
+                    lista = (from t in db.tbProducto where t.producto.Contains(filtro) orderby t.estado descending, t.producto select t).ToList(); 
                 else if (accion == 2)
                     lista = (from t in db.tbProducto where t.tbCategoria.categoria.Contains(filtro) orderby t.estado descending, t.producto select t).ToList();
                 else if (accion == 3)
@@ -47,9 +54,10 @@ namespace BD_PR_01_Clinicas.Controllers
 
             }
          
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
 
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
             return View(lista.ToPagedList(pageNumber, pageSize));
         }
 

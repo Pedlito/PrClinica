@@ -26,7 +26,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Salida/Crear
         public ActionResult Crear()
         {
-            return View(new Movimiento());
+            return View(new Salida());
         }
 
         // POST: Salida/Crear

@@ -36,8 +36,8 @@
 <div>
     @Html.ActionLink("Regresar", "Index")
 </div>
-@section Scripts {
-@Scripts.Render("~/bundles/jqueryval") @*inportante que este presente*@
+@section Scripts{
+@Scripts.Render("~/bundles/jqueryval") 
 <script>
         $.validator.addMethod("soloLetras", function (value, element) {
             return /^[a-zA-Z ]+$/i.test(value);

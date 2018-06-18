@@ -201,6 +201,7 @@
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Rotaciones.cs" />
+    <Compile Include="Models\Salida.cs" />
     <Compile Include="Models\TipoUsuario.cs" />
     <Compile Include="Models\Volumen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

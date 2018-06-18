@@ -75,7 +75,7 @@ namespace BD_PR_01_Clinicas.Models
     #endregion
 		
 		public DataClasesDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}

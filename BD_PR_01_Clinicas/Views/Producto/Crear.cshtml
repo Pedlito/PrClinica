@@ -25,7 +25,7 @@
         <div class="form-group">
             @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="padding-left: 0px">
-                <div class="col-md-4">
+                <div class="col-md-4 entrada">
                     @Html.DropDownListFor(model => model.codCategoria, null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.codCategoria, "", new { @class = "text-danger" })
                 </div>
@@ -38,7 +38,7 @@
         <div class="form-group">
             @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="padding-left: 0px">
-                <div class="col-md-4">
+                <div class="col-md-4  entrada">
                     @Html.DropDownListFor(model => model.codPresentacion, null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control col-md-3" })
                     @Html.ValidationMessageFor(model => model.codPresentacion, "", new { @class = "text-danger" })
                 </div>
@@ -86,15 +86,17 @@
                 <h4 class="modal-title" id="myModalLabel">Nueva Categoría</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm())
+                @using(Html.BeginForm())
                 {
                     @Html.AntiForgeryToken()
                     <div class="form-horizontal">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
                             @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">
-                                @Html.Editor("categoria", new { htmlAttributes = new { @class = "form-control" } })
+                            <div class="col-md-10" id="entrada">
+                                @*@Html.Editor("categoria", new { htmlAttributes = new { @class = "form-control" } })*@
+                                <input class="form-control text-box single-line" id="categoria" name="categoria" type="text" value="" 
+                                onkeypress='return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)'/>
                             </div>
                         </div>
                     </div>
@@ -125,7 +127,9 @@
                         <div class="form-group">
                             @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("presentacion", new { htmlAttributes = new { @class = "form-control" } })
+                                @*@Html.Editor("presentacion", new { htmlAttributes = new { @class = "form-control" } })*@
+                                <input class="form-control text-box single-line" id="presentacion" name="presentacion" type="text" value="" 
+                                onkeypress='return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)'/>
                             </div>
                         </div>
                     </div>
@@ -140,9 +144,58 @@
 </div>
 
 @section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+ 
     <script>
+        $.validator.addMethod("soloLetras", function (value, element) {
+            return /^[a-zA-Z ]+$/i.test(value);
+        }, "Ingrese sólo Letras");
 
+        $("#formId").validate({
+            errorClass: 'help-block animation-slideDown',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('div.entrada').append(error);
+            },
+            highlight: function (e) {
+
+                $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+            },
+            success: function (e) {
+                e.closest('.entrada').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+            },
+            rules: {
+                producto: { required: true, soloLetras: true },
+                codCategoria: { required: true, number: true },
+                codPresentacion: { required: true, number: true },
+                dosis: { required: true, number: true },
+            },
+            messages: {
+                producto: {
+                    required: "Debe introducir su nombre",
+                    soloLetras: "Solo se admite texto"
+                },
+                codCategoria: {
+                    required: "Debe seleccionar una categoria"
+
+                },
+                codPresentacion: {
+                    required: "Debe seleccionar una presentacion"
+                },
+
+                dosis: {
+                    required: "Debe introducir una dosis",
+                    number: "Solo se admiten numeros"
+                }
+            }
+
+        });
+        //presentacion,categoria
         function crearCategoria() {
+            //validacion de categoria
+            if ($("#categoria").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
             var categoria = {
                 "categoria": document.getElementById("categoria").value,
                 "estado": true
@@ -153,7 +206,7 @@
                 dataType: "json",
                 data: { "categoria": categoria },
                 success: function (categoria) {
-                    alert(categoria.codCategoria + " " + categoria.categoria)
+                    //alert(categoria.codCategoria + " " + categoria.categoria)
                     var item = "<option value='" + categoria.codCategoria + "'>" + categoria.categoria + "</option>"
                     $('#codCategoria').append(item);
                     document.getElementById("codCategoria").value = categoria.codCategoria; $('#nuevaCategoria').modal('hide');
@@ -165,6 +218,8 @@
         }
 
         function crearPresentacion() {
+            // validacion de presentacion
+            if ($("#presentacion").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
             var presentacion = {
                 "presentacion": document.getElementById("presentacion").value,
                 "estado": true
