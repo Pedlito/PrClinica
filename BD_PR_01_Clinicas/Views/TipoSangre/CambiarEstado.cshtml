@@ -1,4 +1,4 @@
-﻿@model BD_PR_01_Clinicas.Models.tbCategoria
+﻿@model BD_PR_01_Clinicas.Models.tbTipoSangre
 
 @{
     ViewBag.Title = "CambiarEstado";
@@ -8,13 +8,13 @@
 {
     <h2>Deshabilitar</h2>
 
-    <h3>¿Realmente quieres deshabilitar esta categoría?</h3>
+    <h3>¿Realmente quieres deshabilitar este tipo de sangre?</h3>
 }
 else
 {
     <h2>Habilitar</h2>
 
-    <h3>¿Realmente quieres habilitar esta categoría?</h3>
+    <h3>¿Realmente quieres habilitar este tipo de sangre?</h3>
 }
 
 <div>
@@ -25,11 +25,12 @@ else
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.categoria)
+            @Html.DisplayFor(model => model.tipoSangre)
         </dd>
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
@@ -45,7 +46,7 @@ else
                     <span class="glyphicon glyphicon-record"></span> Habilitar
                 </button>
             }
-            <a class="btn btn-primary" href="/Categoria"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+            <a class="btn btn-primary" href="/TipoSangre"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
         </div>
     }
 </div>

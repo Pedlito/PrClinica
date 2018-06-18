@@ -54,6 +54,7 @@
       <Column Name="razaEtnia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="escolaridad" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="codTipoSangre" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbPaciente_tbConsulta" Member="tbConsulta" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbConsulta" />
       <Association Name="tbTipoSangre_tbPaciente" Member="tbTipoSangre" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbTipoSangre" IsForeignKey="true" />
     </Type>
   </Table>
@@ -97,13 +98,6 @@
       <Association Name="tbSalida_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbDetalleSalida" />
     </Type>
   </Table>
-  <Table Name="dbo.tbTipoSangre" Member="tbTipoSangre">
-    <Type Name="tbTipoSangre">
-      <Column Name="codTipoSangre" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="tipoSangre" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Association Name="tbTipoSangre_tbPaciente" Member="tbPaciente" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbPaciente" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbCategoria" Member="tbCategoria">
     <Type Name="tbCategoria">
       <Column Name="codCategoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -125,6 +119,25 @@
       <Column Name="codConfiguracion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="valor" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="descripcion" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbTipoSangre" Member="tbTipoSangre">
+    <Type Name="tbTipoSangre">
+      <Column Name="codTipoSangre" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="tipoSangre" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbTipoSangre_tbPaciente" Member="tbPaciente" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbPaciente" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbConsulta" Member="tbConsulta">
+    <Type Name="tbConsulta">
+      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codPaciente" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="motivoConsulta" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="HistoriaEnfermedad" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="fechaLlegada" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="atendido" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbPaciente_tbConsulta" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbPaciente>
+
+<ul class="list-group">
+    <li class="list-group-item list-group-item-heading list-group-item-info">
+        <div class="row">
+            <div class="col-xs-4 text-left">
+                <b>Nombre</b>
+            </div>
+            <div class="col-xs-2 text-left">
+                <b>Genero</b>
+            </div>
+            <div class="col-xs-2 text-left">
+                <b>Nacimiento</b>
+            </div>
+            <div class="col-xs-2 text-left">
+                <b>Residencia</b>
+            </div>
+            <div class="col-xs-2"></div>
+        </div>
+    </li>
+
+    @foreach (var item in Model)
+    {
+        //Contenido
+        <li class="list-group-item">
+
+            <div class="row">
+                <div class="col-xs-4 text-left">
+                    @item.nombre
+                </div>
+                @if (item.genero == true)
+                {
+                    <div class="col-xs-2 text-left">
+                        Masculino
+                    </div>
+                }
+                else
+                {
+                    <div class="col-xs-2 text-left">
+                        Femenino
+                    </div>
+                }
+                <div class="col-xs-2 text-left">
+                    @item.fechaNacimiento.Value.ToShortDateString()
+                </div>
+                <div class="col-xs-2 text-left">
+                    @item.residencia
+                </div>
+                <div class="col-xs-2 text-left">
+                    <button type="button" class="btn btn-xs btn-success" onclick="Asignar(@item.codPaciente, '@item.nombre')">
+                        <span class="glyphicon glyphicon-check"></span> Asignar
+                    </button>
+                </div>
+            </div>
+        </li>
+    }
+
+</ul>

@@ -1,0 +1,252 @@
+﻿@model BD_PR_01_Clinicas.Models.tbConsulta
+
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>Crear</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Consulta</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-5" style="padding-right: 85px">
+                <div class="input-group">
+                    <input type="text" placeholder="Nombre del paciente" id="paciente" class="form-control" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#listaPacientes" onclick="ListarPacientes()">
+                            <span class="glyphicon glyphicon-search">
+                            </span> Buscar</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Motivo de Consulta", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextArea("motivoConsulta", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", cols = "100" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Historia de Enfermedad", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextArea("HistoriaEnfermedad", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", cols = "100" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Crear" class="btn btn-success" onclick="Guardar()"/>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Regresar", "Index")
+</div>
+
+<!-- modal para Pacientes-->
+<div class="modal fade" id="listaPacientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Pacientes</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#nuvoPaciente" >
+                        <span class="glyphicon glyphicon-plus"></span> Nuevo
+                    </button> 
+                </div>
+                <div id="divPacientes">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para crear paciente-->
+<div class="modal fade" id="nuvoPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nuevo Paciente</h4>
+            </div>
+            <div class="modal-body">
+                
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("nombre", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Genero", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <label class="radio-inline"><input type="radio" name="genero" value="1">Masculino</label>
+                            <label class="radio-inline"><input type="radio" name="genero" value="0">Femenino</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <input type="date" id="fechaNacimiento" class="form-control" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Estado Civil", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            <label class="radio-inline"><input type="radio" name="estadoCivil" value="1">Soltero</label>
+                            <label class="radio-inline"><input type="radio" name="estadoCivil" value="0">Casado</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Residencia", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("residencia", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Procedencia", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("procedencia", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Religíon", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("religion", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Profesión", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("profesion", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Raza/Etnia", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("razaEtnia", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Escolaridad", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.Editor("escolaridad", new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Tipo de Sangre", htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.DropDownList("codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="button" value="Crear" class="btn btn-success" onclick="CrearPaciente()" data-dismiss="modal" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        var paciente = 0;
+
+        //mostrar todos los pacientes
+        function ListarPacientes() {
+            var filtro = $("#paciente").val();
+            $.ajax({
+                url: '@Url.Action("Pacientes", "Atencion")',
+                data: { filtro },
+                success: function (response) {
+                    $('#divPacientes').html(response);
+                }
+            });
+        }
+
+        //asignar un paciente a la consulta
+        function Asignar(codPaciente, nombre) {
+            //$('#paciente').val(nombre);
+            $('#listaPacientes').modal('hide');
+            $('#paciente').val(nombre);
+            paciente = codPaciente;
+        }
+
+        function Guardar() {
+            var motivoConsulta = $('#motivoConsulta').val();
+            var HistoriaEnfermedad = $('#HistoriaEnfermedad').val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("Crear", "Atencion")',
+                data: { codPaciente: paciente, motivoConsulta: motivoConsulta, HistoriaEnfermedad: HistoriaEnfermedad },
+                success: function (response) {
+                    location.href = response;
+                }
+            });
+        }
+
+        function CrearPaciente() {
+            var paciente = {
+                "nombre": $('#nombre').val(),
+                "genero": ($('#genero').val() == "1") ? true : false,
+                "fechaNacimiento": $('#fechaNacimiento').val(),
+                "estadoCivil": ($('#estadoCivil').val() == "1") ? true : false,
+                "residencia": $('#residencia').val(),
+                "procedencia": $('#procedencia').val(),
+                "religion": $('#religion').val(),
+                "profesion": $('#profesion').val(),
+                "razaEtnia": $('#razaEtnia').val(),
+                "escolaridad": $('#escolaridad').val(),
+                "codTipoSangre": $('#codTipoSangre').val(),
+            };
+            $.ajax({
+                url: '@Url.Action("NuevoPaciente", "Atencion")',
+                type: "POST",
+                data: { "paciente" : paciente },
+                success: function (response) {
+                    console.log(response);
+                    Asignar(response.codPaciente, response.nombre);
+                }
+            });
+        }
+
+    </script>    
+}
+

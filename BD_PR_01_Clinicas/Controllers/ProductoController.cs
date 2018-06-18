@@ -19,7 +19,6 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult Index(int? accionActual, string filtro ,string filtroActual, int? accion , int? page)
         {
             List<tbProducto> lista = null;
-
             if (filtro != null)
             {
                 page = 1;
@@ -28,15 +27,10 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 filtro = filtroActual;
                 accion = accionActual;
-
             }
-
             ViewBag.filtroActual = filtro;
             ViewBag.accionActual = accion;
 
-          
-
-        
             if (!String.IsNullOrEmpty(filtro))
             {
                 if (accion == 1)
@@ -53,8 +47,7 @@ namespace BD_PR_01_Clinicas.Controllers
 
             }
          
-
-            int pageSize = 3;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
 
             return View(lista.ToPagedList(pageNumber, pageSize));
