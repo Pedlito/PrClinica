@@ -6,30 +6,43 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.Editor("nProducto", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @*@Html.Editor("nProducto", new { htmlAttributes = new { @class = "form-control" } })*@
+                <input class="form-control text-box single-line" id="nProducto" name="nProducto" type="text" value="" onkeypress='return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)'/>
+
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("nCodCategoria", null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="padding-left: 0px">
+                <div class="col-md-9">
+                    @Html.DropDownList("nCodCategoria", null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <button class="btn btn-info" style="display:inline" type="button" data-toggle="modal" data-target="#nuevaCategoria">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("nCodPresentacion", null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9" style="padding-left: 0px">
+                <div class="col-md-9">
+                    @Html.DropDownList("nCodPresentacion", null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+                </div>
+                <button class="btn btn-info" style="display:inline" type="button" data-toggle="modal" data-target="#nuevaPresentacion">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Dosis", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-2">
-                @Html.Editor("nDosis", new { htmlAttributes = new { @class = "form-control" } })
+        <div class="form-group form-inline">
+            @Html.Label("Dosis", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @*@Html.Editor("nDosis", new { htmlAttributes = new { @class = "form-control" } })*@
+                <input class="form-control text-box single-line" id="nDosis" name="nDosis" type="text" value="" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
             </div>
             <div class="col-md-2">
                 @Html.DropDownList("nCodVolumen", null, htmlAttributes: new { @class = "form-control" })

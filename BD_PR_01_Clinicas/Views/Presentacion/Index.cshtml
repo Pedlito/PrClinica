@@ -13,7 +13,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">Buscar por nombre de Presentación</div>
         <div class="panel-body">
             <div class="form-horizontal">
@@ -32,8 +32,9 @@
     </div>
 }
 
-<table class="table table-striped table-hover table-bordered">
-    <tr>
+<table class="table table-striped table-hover">
+    <thead>
+    <tr class="info">
         <th>
             @Html.DisplayName("Presentación")
         </th>
@@ -42,7 +43,7 @@
         </th>
         <th></th>
     </tr>
-
+    </thead>
 @foreach (var item in Model) {
     <tr>
         <td>

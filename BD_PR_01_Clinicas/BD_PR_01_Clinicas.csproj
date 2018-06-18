@@ -199,8 +199,8 @@
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\ModelosDeSalidas.cs" />
     <Compile Include="Models\Rotaciones.cs" />
+    <Compile Include="Models\Salida.cs" />
     <Compile Include="Models\TipoUsuario.cs" />
     <Compile Include="Models\Volumen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -325,6 +325,7 @@
     <Content Include="Views\Salida\Crear.cshtml" />
     <Content Include="Views\Salida\_Detalle.cshtml" />
     <Content Include="Views\Salida\_Productos.cshtml" />
+    <Content Include="Views\Entrada\_NuevoProducto.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

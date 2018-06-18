@@ -1,39 +1,96 @@
-﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbDetalleEntrada>
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
 
 @{
     ViewBag.Title = "Detalles";
 }
 
-<h2>Detalles</h2>
+<h2>Entrada</h2>
+<div>
+    <dl class="dl-horizontal">
+        <dt><h4>@Html.DisplayName("Descripción:")</h4></dt>
+        <dd><h4>@ViewBag.descripcion</h4></dd>
+        <dt><h4>@Html.DisplayName("Fecha:")</h4></dt>
+        <dd><h4>@ViewBag.fechaEntrada</h4></dd>
+    </dl>
+</div>
+<hr />
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Producto")
-        </th>
-        <th>
-            @Html.DisplayName("Presentación")
-        </th>
-        <th>
-            @Html.DisplayName("Cantidad")
-        </th>
-    </tr>
+<ul class="list-group">
+    @*Fila de titulos*@
+    <li class="list-group-item list-group-item-heading list-group-item-info">
+        <div class="row">
+            <div class="col-xs-4 text-left">
+                <b>Producto</b>
+            </div>
+            <div class="col-xs-2 text-left">
+                <b>Categoría</b>
+            </div>
+            <div class="col-xs-2 text-left">
+                <b>Presentación</b>
+            </div>
+            <div class="col-xs-2 text-left">
+                <b>Dosis</b>
+            </div>
+            <div class="col-xs-2">
+                <b>Cantidad</b>
+            </div>
+        </div>
+    </li>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbProducto.producto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbProducto.tbPresentacion.presentacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidad)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        //Contenido
+        <li class="list-group-item">
 
-</table>
+            <div class="row">
+                <div class="col-xs-4 text-left">
+                    @item.nombre
+                </div>
+                <div class="col-xs-2 text-left">
+                    @item.categoria
+                </div>
+                <div class="col-xs-2 text-left">
+                    @item.presentacion
+                </div>
+                <div class="col-xs-2 text-left">
+                    @item.dosis
+                </div>
+                <div class="col-xs-2 text-left">
+                    @item.cantidad
+                </div>
+            </div>
+        </li>
+    }
+
+</ul>
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Producto")
+            </th>
+            <th>
+                @Html.DisplayName("Presentación")
+            </th>
+            <th>
+                @Html.DisplayName("Cantidad")
+            </th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbProducto.producto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tbProducto.tbPresentacion.presentacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cantidad)
+            </td>
+        </tr>
+    }
+
+    </table>*@
 
 <div>
     @Html.ActionLink("Regresar", "Index")

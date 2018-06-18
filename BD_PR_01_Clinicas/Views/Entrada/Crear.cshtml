@@ -50,7 +50,7 @@
         </div>
     </div>
 }
-
+@*onclick="cerrar()"*@
 <div>
     @*@Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })*@
     <a class="btn btn-danger" href="/Entrada/Index" role="button"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
@@ -67,7 +67,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <input type="button" class="btn btn-info" onclick="cerrar()" value="Nuevo Producto" data-toggle="modal" data-target="#nuevo" />
+                    <input type="button" class="btn btn-info"  value="Nuevo Producto" data-toggle="modal" data-target="#nuevo" data-dismiss="modal"/>
                 </div>
                 <div id="cuerpoModal">
                 @* en el body no hay nada, pero tiene el id = cuerpoModal puesto que con el codigo javascript voy a insertar aqui
@@ -101,6 +101,68 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-primary" onclick="crearProducto()">Crear y Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para categoría-->
+<div class="modal fade" id="nuevaCategoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Categoría</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("categoria", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearCategoria()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para Presentación-->
+<div class="modal fade" id="nuevaPresentacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Presentación</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.Editor("presentacion", new { htmlAttributes = new { @class = "form-control" } })
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearPresentacion()">Crear y Asignar</button>
             </div>
         </div>
     </div>
@@ -234,7 +296,94 @@
             })
         }
 
+        function crearProducto() {
+            //valida categoria y presentacion 
+            if ($("#nProducto").val().length <= 2)
+            {
+                alert("Ingrese un nombre de producto, 3 caracteres como minimo"); return;
+               
+            }
+            else if ($("#nCodCategoria").val() == "") {
+                
+                alert("Seleccione una categoria"); return;
+            } else if ($("#nCodPresentacion").val() == "") {
+                alert("Seleccione  una presentacion"); return;
+            } else if ($("#nDosis").val()=="") { alert("Ingrese una dosis"); return; }
+            //ingreso de un producto
+            var producto = {    
+                "codProducto": null,
+                "producto": document.getElementById("nProducto").value,
+                "codCategoria": parseInt(document.getElementById("nCodCategoria").value),
+                "codPresentacion": parseInt(document.getElementById("nCodPresentacion").value),
+                "dosis": parseFloat(document.getElementById("nDosis").value),
+                "codVolumen": parseInt(document.getElementById("nCodVolumen").value),
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("CrearProducto", "Entrada")',
+                type: "POST",
+                dataType: "json",
+                data: { "producto":producto },
+                success: function (response) {
+                    agregar(response);
+                    $('#nuevo').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
 
+
+        function crearCategoria() {
+                //validacion categoria 
+            if (!$("#categoria").val().match(/^[a-zA-Z]{2}[a-zA-Z ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            var categoria = {
+                "categoria": document.getElementById("categoria").value,
+                "estado": true
+            };
+            console.log(categoria);
+            $.ajax({
+                url: '@Url.Action("NuevaCategoria", "Entrada")',
+                type: "POST",
+                dataType: "json",
+                data: { "categoria": categoria },
+                success: function (categoria) {
+                    alert(categoria.codCategoria + " " + categoria.categoria)
+                    var item = "<option value='" + categoria.codCategoria + "'>" + categoria.categoria + "</option>"
+                    $('#nCodCategoria').append(item);
+                    document.getElementById("nCodCategoria").value = categoria.codCategoria; $('#nuevaCategoria').modal('hide');
+                },
+                error: function (response) {
+                    alert("error de categoria");
+                }
+            })
+        }
+
+        function crearPresentacion() {
+            //validacion presentacion
+            if (!$("#presentacion").val().match(/^[a-zA-Z]{2}[a-zA-Z ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            var presentacion = {
+                "presentacion": document.getElementById("presentacion").value,
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("NuevaPresentacion", "Entrada")',
+                type: "POST",
+                dataType: "json",
+                data: { "presentacion": presentacion },
+                success: function (presentacion) {
+                    alert(presentacion.codPresentacion + " " + presentacion.presentacion)
+                    var item = "<option value='" + presentacion.codPresentacion + "'>" + presentacion.presentacion + "</option>"
+                    $('#nCodPresentacion').append(item);
+                    document.getElementById("nCodPresentacion").value = presentacion.codPresentacion;
+                    $('#nuevaPresentacion').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
 
     </script>
 }
