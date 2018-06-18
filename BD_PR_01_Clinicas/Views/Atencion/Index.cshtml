@@ -50,10 +50,10 @@
             @Html.DisplayFor(modelItem => item.residencia)
         </td>
         <td>
-            @Html.ActionLink("Atender", "Atender", new { id = item.codPaciente }) |
-            @Html.ActionLink("Editar", "Editar", new { id=item.codPaciente }) |
-            @Html.ActionLink("Detalles", "Detalles", new { id=item.codPaciente }) |
-            @Html.ActionLink("Cancelar", "Cancelar", new { id=item.codPaciente })
+            @Html.ActionLink("Atender", "CrearHC", new { codConsulta = item.codPaciente }) |
+            @Html.ActionLink("Editar", "Editar", new { codConsulta = item.codPaciente }) |
+            @Html.ActionLink("Detalles", "Detalles", new { codConsulta = item.codPaciente }) |
+            @Html.ActionLink("Cancelar", "Cancelar", new { codConsulta = item.codPaciente })
         </td>
     </tr>
 }

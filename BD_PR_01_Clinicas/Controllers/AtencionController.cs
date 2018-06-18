@@ -27,6 +27,7 @@ namespace BD_PR_01_Clinicas.Controllers
             return View();
         }
 
+        #region Crear
         // GET: Atencion/Crear
         public ActionResult Crear()
         {
@@ -58,8 +59,10 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 return Url.Action("Crear", "Atencion");
             }
-        }
+        } 
+        #endregion
 
+        //Envia lista de pacientes
         public ActionResult Pacientes(string filtro = "")
         {
             //este es el codigo que se ejecuta cuando se habre el modal apachando el boton buscar, tiene un filtro como cualquier otro
@@ -83,7 +86,7 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
 
-        // GET: Atencion/Edit/5
+        // GET: Atencion/NuevoPaciente
         public JsonResult NuevoPaciente(tbPaciente paciente)
         {
             db.tbPaciente.InsertOnSubmit(paciente);
@@ -91,6 +94,7 @@ namespace BD_PR_01_Clinicas.Controllers
             return Json(new { codPaciente = paciente.codPaciente, nombre = paciente.nombre });
         }
 
+        #region Editar
         // GET: Atencion/Edit/5
         public ActionResult Edit(int id)
         {
@@ -112,7 +116,9 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View();
             }
         }
+        #endregion
 
+        #region Eliminar
         // GET: Atencion/Delete/5
         public ActionResult Delete(int id)
         {
@@ -134,5 +140,31 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View();
             }
         }
+        #endregion
+
+        #region HC
+        // GET: Atencion/CrearHC
+        public ActionResult CrearHC(int codConsulta)
+        {
+            tbConsulta consulta = (from t in db.tbConsulta where t.codConsulta == codConsulta select t).SingleOrDefault();
+            return View(consulta);
+        }
+
+        // POST: Atencion/CrearHC
+        [HttpPost]
+        public ActionResult CrearHC(int codConsulta, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+        #endregion
     }
 }

@@ -149,7 +149,7 @@
         <elementListCompartment Id="0326b1ed-db61-4aea-b9d3-18b54fc6c09a" absoluteBounds="14.14, 15.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(13.8437495 : 13.7420068359375); (13.8437495 : 16.64349609375); (14.125 : 16.64349609375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(13.8437495 : 13.7420068359375); (13.8437495 : 16.64349609375); (14.125 : 16.64349609375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClasesDataContext/tbPaciente/tbPaciente_tbConsulta" />
       <nodes>
         <classShapeMoniker Id="ccba4b31-d038-49b2-a360-ec1f219fc712" />

@@ -334,6 +334,7 @@
     <Content Include="Views\Atencion\Index.cshtml" />
     <Content Include="Views\Atencion\Crear.cshtml" />
     <Content Include="Views\Atencion\_Pacientes.cshtml" />
+    <Content Include="Views\Atencion\CrearHC.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
