@@ -210,28 +210,208 @@
                         <div class="form-group">
                             @Html.Label("Desarrollo", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <table class="table">
-                                    <tr>
-                                        <th>
-                                            @Html.DisplayName("Edad")
-                                        </th>
-                                        <th>
-                                            @Html.DisplayName("Hito")
-                                        </th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            1 Mes
-                                        </td>
-                                        <td>
-                                            <p>Intenta agarra objetos, pero no lo consigue</p>
-                                        </td>
-                                        <td>
-                                            <label class="radio-inline"><input type="radio" name="1mes" value="1">Si</label>
-                                            <label class="radio-inline"><input type="radio" name="2meses" value="0">No</label>
-                                        </td>
-                                    </tr>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayName("Edad")
+                                            </th>
+                                            <th>
+                                                @Html.DisplayName("Hito")
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                1 Mes
+                                            </td>
+                                            <td>
+                                                <p>Intenta agarrar objetos, pero no lo consigue</p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="uno" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="uno" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                2 Meses
+                                            </td>
+                                            <td>
+                                                <p>Se sostiene sentado, pero no lo consigue</p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="dos" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="dos" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                3 Meses
+                                            </td>
+                                            <td>
+                                                <p>Se sostiene sentado, pero no lo consigue</p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="tres" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="tres" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                4 Meses
+                                            </td>
+                                            <td>
+                                                <p>Se sostiene sentado, pero no lo consigue</p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="cuatro" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="cuatro" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                5 Meses
+                                            </td>
+                                            <td>
+                                                <p>agarra objetos</p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="cinco" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="cinco" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                6 Meses
+                                            </td>
+                                            <td>
+                                                <p>Aguanta sentado en una silla y aguanta objetos con mayor precisión</p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="seis" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="seis" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                7 Meses
+                                            </td>
+                                            <td>
+                                                <p>Aguanta sentado en una silla y aguanta objetos con mayor precisión,
+                                                   Se Destapa,
+                                                   Se pasa los objetos de mano y manipula,
+                                                   Si alguien lo sienta se mantiene sentado,
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="siete" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="siete" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                8 Meses
+                                            </td>
+                                            <td>
+                                                <p>Gatea,
+                                                   Juega a lanzar objetos,
+                                                   Extiende los brazos para que lo Levanten
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="ocho" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="ocho" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                9 Meses
+                                            </td>
+                                            <td>
+                                                <p>Se pone de pie con apoyo,
+                                                   Juega a taparse y destaparse,
+                                                   Imita gestos con las manos
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="nueve" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="nueve" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                10 Meses
+                                            </td>
+                                            <td>
+                                                <p>Se pone de pie apoyándose,
+                                                   Hace una pinza con índice y pulgar,
+                                                   Mete y saca un objeto de un recipiente
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="diez" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="diez" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                11 Meses
+                                            </td>
+                                            <td>
+                                                <p>Realiza los primeros pasos apoyándose,
+                                                   Señala con el índice y entiende algunas palabras,
+                                                   Entrega objetos
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="once" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="once" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                12 Meses
+                                            </td>
+                                            <td>
+                                                <p>Se mantiene de pie sin apoyo,
+                                                   Baila al oír música,
+                                                   Mira su imagen en un espejo
+                                                </p>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="doce" value="1">Si</label>
+                                            </td>
+                                            <td>
+                                                <label class="radio-inline"><input type="radio" name="doce" value="0">No</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
