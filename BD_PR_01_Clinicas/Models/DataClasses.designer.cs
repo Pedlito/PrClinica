@@ -72,10 +72,13 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbConsulta(tbConsulta instance);
     partial void UpdatetbConsulta(tbConsulta instance);
     partial void DeletetbConsulta(tbConsulta instance);
+    partial void InserttbPaciente1(tbPaciente1 instance);
+    partial void UpdatetbPaciente1(tbPaciente1 instance);
+    partial void DeletetbPaciente1(tbPaciente1 instance);
     #endregion
 		
 		public DataClasesDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString1"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -213,6 +216,14 @@ namespace BD_PR_01_Clinicas.Models
 			get
 			{
 				return this.GetTable<tbConsulta>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbPaciente1> tbPaciente1
+		{
+			get
+			{
+				return this.GetTable<tbPaciente1>();
 			}
 		}
 		
@@ -2641,6 +2652,8 @@ namespace BD_PR_01_Clinicas.Models
 		
 		private EntitySet<tbPaciente> _tbPaciente;
 		
+		private EntitySet<tbPaciente1> _tbPaciente1;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -2656,6 +2669,7 @@ namespace BD_PR_01_Clinicas.Models
 		public tbTipoSangre()
 		{
 			this._tbPaciente = new EntitySet<tbPaciente>(new Action<tbPaciente>(this.attach_tbPaciente), new Action<tbPaciente>(this.detach_tbPaciente));
+			this._tbPaciente1 = new EntitySet<tbPaciente1>(new Action<tbPaciente1>(this.attach_tbPaciente1), new Action<tbPaciente1>(this.detach_tbPaciente1));
 			OnCreated();
 		}
 		
@@ -2732,6 +2746,19 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbTipoSangre_tbPaciente1", Storage="_tbPaciente1", ThisKey="codTipoSangre", OtherKey="codTipoSangre")]
+		public EntitySet<tbPaciente1> tbPaciente1
+		{
+			get
+			{
+				return this._tbPaciente1;
+			}
+			set
+			{
+				this._tbPaciente1.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -2759,6 +2786,18 @@ namespace BD_PR_01_Clinicas.Models
 		}
 		
 		private void detach_tbPaciente(tbPaciente entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbTipoSangre = null;
+		}
+		
+		private void attach_tbPaciente1(tbPaciente1 entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbTipoSangre = this;
+		}
+		
+		private void detach_tbPaciente1(tbPaciente1 entity)
 		{
 			this.SendPropertyChanging();
 			entity.tbTipoSangre = null;
@@ -2963,6 +3002,373 @@ namespace BD_PR_01_Clinicas.Models
 						this._codPaciente = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("tbPaciente");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPaciente")]
+	public partial class tbPaciente1 : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _codPaciente;
+		
+		private string _nombre;
+		
+		private System.Nullable<bool> _genero;
+		
+		private System.Nullable<System.DateTime> _fechaNacimiento;
+		
+		private System.Nullable<bool> _estadoCivil;
+		
+		private string _residencia;
+		
+		private string _procedencia;
+		
+		private string _religion;
+		
+		private string _profesion;
+		
+		private string _razaEtnia;
+		
+		private string _escolaridad;
+		
+		private System.Nullable<int> _codTipoSangre;
+		
+		private EntityRef<tbTipoSangre> _tbTipoSangre;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodPacienteChanging(int value);
+    partial void OncodPacienteChanged();
+    partial void OnnombreChanging(string value);
+    partial void OnnombreChanged();
+    partial void OngeneroChanging(System.Nullable<bool> value);
+    partial void OngeneroChanged();
+    partial void OnfechaNacimientoChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaNacimientoChanged();
+    partial void OnestadoCivilChanging(System.Nullable<bool> value);
+    partial void OnestadoCivilChanged();
+    partial void OnresidenciaChanging(string value);
+    partial void OnresidenciaChanged();
+    partial void OnprocedenciaChanging(string value);
+    partial void OnprocedenciaChanged();
+    partial void OnreligionChanging(string value);
+    partial void OnreligionChanged();
+    partial void OnprofesionChanging(string value);
+    partial void OnprofesionChanged();
+    partial void OnrazaEtniaChanging(string value);
+    partial void OnrazaEtniaChanged();
+    partial void OnescolaridadChanging(string value);
+    partial void OnescolaridadChanged();
+    partial void OncodTipoSangreChanging(System.Nullable<int> value);
+    partial void OncodTipoSangreChanged();
+    #endregion
+		
+		public tbPaciente1()
+		{
+			this._tbTipoSangre = default(EntityRef<tbTipoSangre>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codPaciente", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int codPaciente
+		{
+			get
+			{
+				return this._codPaciente;
+			}
+			set
+			{
+				if ((this._codPaciente != value))
+				{
+					this.OncodPacienteChanging(value);
+					this.SendPropertyChanging();
+					this._codPaciente = value;
+					this.SendPropertyChanged("codPaciente");
+					this.OncodPacienteChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_nombre", DbType="VarChar(50)")]
+		public string nombre
+		{
+			get
+			{
+				return this._nombre;
+			}
+			set
+			{
+				if ((this._nombre != value))
+				{
+					this.OnnombreChanging(value);
+					this.SendPropertyChanging();
+					this._nombre = value;
+					this.SendPropertyChanged("nombre");
+					this.OnnombreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_genero", DbType="Bit")]
+		public System.Nullable<bool> genero
+		{
+			get
+			{
+				return this._genero;
+			}
+			set
+			{
+				if ((this._genero != value))
+				{
+					this.OngeneroChanging(value);
+					this.SendPropertyChanging();
+					this._genero = value;
+					this.SendPropertyChanged("genero");
+					this.OngeneroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaNacimiento", DbType="Date")]
+		public System.Nullable<System.DateTime> fechaNacimiento
+		{
+			get
+			{
+				return this._fechaNacimiento;
+			}
+			set
+			{
+				if ((this._fechaNacimiento != value))
+				{
+					this.OnfechaNacimientoChanging(value);
+					this.SendPropertyChanging();
+					this._fechaNacimiento = value;
+					this.SendPropertyChanged("fechaNacimiento");
+					this.OnfechaNacimientoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estadoCivil", DbType="Bit")]
+		public System.Nullable<bool> estadoCivil
+		{
+			get
+			{
+				return this._estadoCivil;
+			}
+			set
+			{
+				if ((this._estadoCivil != value))
+				{
+					this.OnestadoCivilChanging(value);
+					this.SendPropertyChanging();
+					this._estadoCivil = value;
+					this.SendPropertyChanged("estadoCivil");
+					this.OnestadoCivilChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_residencia", DbType="VarChar(50)")]
+		public string residencia
+		{
+			get
+			{
+				return this._residencia;
+			}
+			set
+			{
+				if ((this._residencia != value))
+				{
+					this.OnresidenciaChanging(value);
+					this.SendPropertyChanging();
+					this._residencia = value;
+					this.SendPropertyChanged("residencia");
+					this.OnresidenciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_procedencia", DbType="VarChar(50)")]
+		public string procedencia
+		{
+			get
+			{
+				return this._procedencia;
+			}
+			set
+			{
+				if ((this._procedencia != value))
+				{
+					this.OnprocedenciaChanging(value);
+					this.SendPropertyChanging();
+					this._procedencia = value;
+					this.SendPropertyChanged("procedencia");
+					this.OnprocedenciaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_religion", DbType="VarChar(50)")]
+		public string religion
+		{
+			get
+			{
+				return this._religion;
+			}
+			set
+			{
+				if ((this._religion != value))
+				{
+					this.OnreligionChanging(value);
+					this.SendPropertyChanging();
+					this._religion = value;
+					this.SendPropertyChanged("religion");
+					this.OnreligionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_profesion", DbType="VarChar(50)")]
+		public string profesion
+		{
+			get
+			{
+				return this._profesion;
+			}
+			set
+			{
+				if ((this._profesion != value))
+				{
+					this.OnprofesionChanging(value);
+					this.SendPropertyChanging();
+					this._profesion = value;
+					this.SendPropertyChanged("profesion");
+					this.OnprofesionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_razaEtnia", DbType="VarChar(50)")]
+		public string razaEtnia
+		{
+			get
+			{
+				return this._razaEtnia;
+			}
+			set
+			{
+				if ((this._razaEtnia != value))
+				{
+					this.OnrazaEtniaChanging(value);
+					this.SendPropertyChanging();
+					this._razaEtnia = value;
+					this.SendPropertyChanged("razaEtnia");
+					this.OnrazaEtniaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_escolaridad", DbType="VarChar(50)")]
+		public string escolaridad
+		{
+			get
+			{
+				return this._escolaridad;
+			}
+			set
+			{
+				if ((this._escolaridad != value))
+				{
+					this.OnescolaridadChanging(value);
+					this.SendPropertyChanging();
+					this._escolaridad = value;
+					this.SendPropertyChanged("escolaridad");
+					this.OnescolaridadChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codTipoSangre", DbType="Int")]
+		public System.Nullable<int> codTipoSangre
+		{
+			get
+			{
+				return this._codTipoSangre;
+			}
+			set
+			{
+				if ((this._codTipoSangre != value))
+				{
+					if (this._tbTipoSangre.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodTipoSangreChanging(value);
+					this.SendPropertyChanging();
+					this._codTipoSangre = value;
+					this.SendPropertyChanged("codTipoSangre");
+					this.OncodTipoSangreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbTipoSangre_tbPaciente1", Storage="_tbTipoSangre", ThisKey="codTipoSangre", OtherKey="codTipoSangre", IsForeignKey=true)]
+		public tbTipoSangre tbTipoSangre
+		{
+			get
+			{
+				return this._tbTipoSangre.Entity;
+			}
+			set
+			{
+				tbTipoSangre previousValue = this._tbTipoSangre.Entity;
+				if (((previousValue != value) 
+							|| (this._tbTipoSangre.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbTipoSangre.Entity = null;
+						previousValue.tbPaciente1.Remove(this);
+					}
+					this._tbTipoSangre.Entity = value;
+					if ((value != null))
+					{
+						value.tbPaciente1.Add(this);
+						this._codTipoSangre = value.codTipoSangre;
+					}
+					else
+					{
+						this._codTipoSangre = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("tbTipoSangre");
 				}
 			}
 		}
