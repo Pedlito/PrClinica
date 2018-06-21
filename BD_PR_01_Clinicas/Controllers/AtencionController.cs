@@ -166,5 +166,65 @@ namespace BD_PR_01_Clinicas.Controllers
             }
         }
         #endregion
+
+        public ActionResult Filtrar(string filtro = "")
+        {
+            List<RegistroProducto> lista = null;
+            if (filtro == "")
+            {
+                lista = (from t in db.tbProducto
+                         where t.estado == true
+                         orderby t.producto
+                         select new RegistroProducto
+                         {
+                             codProducto = t.codProducto,
+                             nombre = t.producto,
+                             categoria = t.tbCategoria.categoria,
+                             presentacion = t.tbPresentacion.presentacion,
+                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                         }).Take(10).ToList();
+            }
+            else
+            {
+                lista = (from t in db.tbProducto
+                         where t.producto.Contains(filtro) && t.estado == true//cambiado de & a && (no evalua la segunda expr si la 1era ea false)
+                         orderby t.producto
+                         select new RegistroProducto
+                         {
+                             codProducto = t.codProducto,
+                             nombre = t.producto,
+                             categoria = t.tbCategoria.categoria,
+                             presentacion = t.tbPresentacion.presentacion,
+                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                         }).Take(10).ToList();
+            }
+            return PartialView("_Medicamentos", lista);
+        }
+
+        public ActionResult DetalleReceta(IEnumerable<Item> detalle)
+        {
+            List<RegistroProducto> lista = new List<RegistroProducto>();
+            if (detalle != null)
+            {
+                foreach (Item item in detalle)
+                {
+                    //por cada item dentro de la lista detalle creo un registroProducto
+                    lista.Add((from t in db.tbProducto
+                               where t.codProducto == item.codProducto
+                               orderby t.producto
+                               select new RegistroProducto
+                               {
+                                   codProducto = t.codProducto,
+                                   nombre = t.producto,
+                                   categoria = t.tbCategoria.categoria,
+                                   presentacion = t.tbPresentacion.presentacion,
+                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   cantidad = item.cantidad
+                               }).SingleOrDefault());
+                }
+            }
+            //el retorno sera el html creado en la vista parcial _detalle pasandole como modelo la lista
+            return PartialView("_Detalle", lista);
+        }
     }
 }

@@ -241,7 +241,6 @@
                 type: "POST",
                 data: { "paciente" : paciente },
                 success: function (response) {
-                    console.log(response);
                     Asignar(response.codPaciente, response.nombre);
                 }
             });

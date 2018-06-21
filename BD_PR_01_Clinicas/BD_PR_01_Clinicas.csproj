@@ -335,6 +335,8 @@
     <Content Include="Views\Atencion\Crear.cshtml" />
     <Content Include="Views\Atencion\_Pacientes.cshtml" />
     <Content Include="Views\Atencion\CrearHC.cshtml" />
+    <Content Include="Views\Atencion\_Medicamentos.cshtml" />
+    <Content Include="Views\Atencion\_Detalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
