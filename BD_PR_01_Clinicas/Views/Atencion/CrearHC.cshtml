@@ -258,7 +258,7 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.Label("Para Mujeres", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label("Gineco-Obstetricos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
                                 <button type="button" class="btn btn-info" data-toggle="modal" data-target="#mujeres">Llenar Formulario</button>
                             </div>
@@ -397,91 +397,91 @@
                     <div class="form-group">
                         @Html.Label("Peso", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("peso", new { htmlAttributes = new { @class = "form-control", onkeypress = "numerico(event)" } })
+                            @Html.Editor("peso", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Talla", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("talla", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("talla", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Indice de Masa Corporal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("indiceMasaCorporal", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("indiceMasaCorporal", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Presión Arterial", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("presionArterial", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("presionArterial", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Cardiaca", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("frecuenciaCardiaca", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("frecuenciaCardiaca", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Respiratoria", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("frecuenciaRespiratoria", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("frecuenciaRespiratoria", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Temperatura", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("temperatura", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("temperatura", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Cefálica", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("circCefalica", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("circCefalica", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Abdominal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("circAbdominal", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("circAbdominal", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Foco Fetal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("focoFetal", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("focoFetal", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Altura de Fondo Uterino", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("alturaFondoUterino", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("alturaFondoUterino", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Pulso", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("pulso", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("pulso", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Saturación de Oxigeno", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("saturacionOxigeno", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("saturacionOxigeno", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
                 </div>
@@ -493,8 +493,10 @@
             <form>
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#agregarProblema">Agregar</button>
+                    <div class="form-group" style="margin-left: 20px">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#agregarProblema">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar Problema
+                        </button>
                     </div>
 
                     <div id="listaProblemas">
@@ -606,7 +608,9 @@
 </div>
 
 <div class="form-group">
-    <button type="button" onclick="guardar()" class="btn btn-success btn-lg">Guardar Historia Clinica</button>
+    <button type="button" onclick="guardar()" class="btn btn-success btn-lg">
+        <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Guardar Historia Clinica
+    </button>
 </div>
 
 <!-- modal para formulario de meses-->
@@ -854,7 +858,7 @@
                     <div class="form-group">
                         @Html.Label("Menarquia", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("menarquia", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("menarquia", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
@@ -876,42 +880,42 @@
                     <div class="form-group">
                         @Html.Label("Número Gestas", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("numGestas", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("numGestas", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Partos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("partos", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("partos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Cesareas", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("cesareas", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("cesareas", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Abortos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("abortos", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("abortos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Hijos Vivos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("hijosVivos", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("hijosVivos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Hijos Muertos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("hijosMuertos", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("hijosMuertos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
@@ -1015,26 +1019,26 @@
                 <div class="form-horizontal">
                     
                     <div class="form-group">
-                        @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
                             @Html.TextArea("problema", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
                             @Html.TextArea("subjetivos", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
                             @Html.TextArea("objetivos", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
+                        @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
                             @Html.TextArea("analisis", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
@@ -1298,9 +1302,16 @@
         }
 
         function numerico(event){
-
+            var n = event.charCode;
+            var respuesta = ((n >= 48 && n <= 57) || n == 0);
+            return respuesta;
         }
 
+        function decimal(event){
+            var n = event.charCode;
+            var respuesta = ((n >= 48 && n <= 57) || n == 46 || n == 0);
+            return respuesta;
+        }
 
     </script>
 }
