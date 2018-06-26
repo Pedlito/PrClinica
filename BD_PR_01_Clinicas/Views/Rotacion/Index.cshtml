@@ -25,14 +25,14 @@
         {
             <tr>
                 <td>
-                    @item.fechaInicio.Value.ToLongDateString();
+                    @item.fechaInicio.Value.ToLongDateString()
                 </td>
                 <td>
-                    @item.fechaFinal.Value.ToLongDateString();
+                    @item.fechaFinal.Value.ToLongDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Integrantes", "Integrantes", new { codRotacion = item.codRotacion }) |
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Integrantes", "Integrantes", new { id = item.codRotacion }) |
+                    @Html.ActionLink("Archivar", "Delete", new { /* id=item.codRotacion*/ })
                 </td>
             </tr>
         }

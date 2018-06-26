@@ -1,58 +1,194 @@
-﻿@model BD_PR_01_Clinicas.Models.tbRotacion
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbUsuario>
 
 @{
     ViewBag.Title = "Crear";
 }
 
-<h2>Crear</h2>
-
-@using (Html.BeginForm()) 
+<h2>Crear rotacion</h2>
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Rotación</h4>
+
+    <div class="form-inline">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.fechaInicio, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control"/>
-                @Html.ValidationMessageFor(model => model.fechaInicio, "", new { @class = "text-danger" })
+
+            <label class="control-label col-md-4" for="fechaInicio">fechaInicio</label>
+            <div class="col-md-2">
+                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" value="@ViewBag.fechaInicio" />
+
+                @Html.ValidationMessage("fechaInicio", "", new { @class = "text-danger" })
+
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.fechaFinal, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input type="date" id="fechaFinal" name="fechaFinal" class="form-control" />
-                @Html.ValidationMessageFor(model => model.fechaFinal, "", new { @class = "text-danger" })
+
+            <label class="control-label col-md-4" for="fechaFinal">fechaFinal</label>
+
+            <div class="col-md-2">
+                <input type="date" id="fechaFinal" name="fechaFinal" class="form-control" value="@ViewBag.fechaFinal" />
+                @Html.ValidationMessage("fechaFinal", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <hr />
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Doctores</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="Nombre">Nombre</label>
+
+                    <div class="col-md-6">
+                        @Html.DropDownList("codDoctor", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessage("codDoctor", null, new { @class = "label label-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-2">
+                        @*<input type="submit" value="Agregar" class="btn btn-success" name="btn" />*@
+                        <button type="submit" class="btn btn-success" value="AgregarD" name="btn">
+                            <span class="glyphicon glyphicon-plus"></span> Agregar doctor
+                        </button>
+                    </div>
+                </div>
+
+
+                <h2>Listado</h2>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Nombre")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Carnet")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Usuario")
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.codTipoUsuario == 1)
+                        {
+                        <tr>
+                           
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.carnet)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.usuario)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Descartar", "Descartar", new { id = item.codUsuario })
+                            </td>
+                        </tr>
+                        }
+                    }
+                </table>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @*<input type="submit" value="Crear" class="btn btn-default" />*@
-                <button type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-plus"></span> Crear
-                </button>
+
+
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Estudiantes</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    @*@Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })*@
+                    <label class="control-label col-md-4" for="Nombre">Nombre</label>
+
+                    <div class="col-md-6">
+                        @Html.DropDownList("codEstudiante", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessage("codEstudiante", null, new { @class = "label label-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-2">
+                        @*<input type="submit" value="Agregar" class="btn btn-success" name="btn" />*@
+                        @*<button class="btn btn-danger btn-xs btn-block btn-retirar" type="submit" value="retirar_producto" name="action">
+                            <i class="glyphicon glyphicon-remove"></i>
+                        </button>*@
+                        <button type="submit" class="btn btn-success" value="AgregarE" name="btn">
+                            <span class="glyphicon glyphicon-plus"></span> Agregar Estudiante
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+              
+
+                <h2>Listado</h2>
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Nombre")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Carnet")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Usuario")
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.codTipoUsuario == 2)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.carnet)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.usuario)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Descartar", "Descartar", new { id = item.codUsuario })
+                            </td>
+                        </tr>
+                        }
+                    }
+                </table>
             </div>
         </div>
-    </div>
+
+            <br />
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Guardar" class="btn btn-primary" name="btn" id="save" />
+                    <input type="submit" value="Cancelar" class="btn btn-danger" name="btn" />
+                </div>
+            </div>
+</div>
 }
 
-<div>
-    @Html.ActionLink("Regresar", "Index")
-</div>
+
 @section Scripts {
     <script>
-        $("form").submit(
+        $("#save").click(
                     function validar(event) {
-                        var date;
+
 
                         if ($("#fechaInicio").val() >= $("#fechaFinal").val()) { alert("error fecha inicio debe ser menor a fecha finalizacion"); event.preventDefault(); }
                         else {
-                       
+
 
                         }
 

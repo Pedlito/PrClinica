@@ -85,7 +85,7 @@ namespace BD_PR_01_Clinicas.Controllers
             //return View();
             tbConfiguracion tc = (from v in db.tbConfiguracion where v.codConfiguracion == 1 select v).SingleOrDefault();
             //new configuracioInicial().RegistroHabilitado
-            if (tc.valor)
+            if ((tc!=null)&&(tc.valor))
             {
                 return View();
             }

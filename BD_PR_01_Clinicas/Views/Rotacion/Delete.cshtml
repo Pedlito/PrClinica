@@ -1,0 +1,29 @@
+﻿@model BD_PR_01_Clinicas.Models.tbRotacionUsuario
+
+@{
+    ViewBag.Title = "Quitar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Quitar</h2>
+
+<h3>Esta seguro de realizar esta accion?</h3>
+<div>
+    <h4>Quitar usuario</h4>
+    <hr />
+    <div >
+             
+          <h3>@ViewBag.usuario</h3>     
+    </div>
+
+    @using (Html.BeginForm("Delete", "Rotacion", FormMethod.Post, new { @id = "formId", @class = "form-inline", role = "form" })) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.codRotacion)
+        @Html.HiddenFor(model => model.codUsuario)
+        <div class="form-actions no-color">
+    
+            <input type="submit" value="Eliminar" class="btn btn-danger" /> 
+            @Html.ActionLink("Cancelar", "Integrantes", "Rotacion", new { id=@Model.codRotacion}, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>
+    }
+</div>
