@@ -1,0 +1,208 @@
+﻿@model BD_PR_01_Clinicas.Models.HistoriaClinica
+
+@{
+    ViewBag.Title = "HistoriaClinica";
+}
+
+<div class="page-header">
+    <h1>Historia Clinica <small>@Model.paciente.nombre</small></h1>
+</div>
+
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#paciente" role="tab" data-toggle="tab">Paciente</a></li>
+        <li role="presentation"><a href="#patologicos" role="tab" data-toggle="tab">Patológicos</a></li>
+        <li role="presentation"><a href="#nPatologicos" role="tab" data-toggle="tab">No Patológicos</a></li>
+        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
+        <li role="presentation"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
+        <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
+        <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
+        <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
+        <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active" id="paciente">
+            <h2>Datos Generales del Paciente</h2>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayName("Nombre")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.paciente.nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Genero")
+                </dt>
+
+                @if (Model.paciente.genero == true)
+                {
+                    <dd>
+                        Masculino
+                    </dd>
+                }
+                else
+                {
+                    <dd>
+                        Femenino
+                    </dd>
+                }
+
+                <dt>
+                    @Html.DisplayName("Fecha Nacimiento")
+                </dt>
+
+                <dd>
+                    @Model.paciente.fechaNacimiento.Value.ToShortDateString()
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Estado Civil")
+                </dt>
+
+                @if (Model.paciente.estadoCivil == true)
+                {
+                    <dd>
+                        Soltero
+                    </dd>
+                }
+                else
+                {
+                    <dd>
+                        Casado
+                    </dd>
+                }
+
+                <dt>
+                    @Html.DisplayName("Residencia")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.paciente.residencia)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Procedencia")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.paciente.procedencia)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Religíon")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.paciente.religion)
+                </dd>
+            </dl>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="patologicos">
+            <h2>Antecedentes Patológicos</h2>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayName("Padre")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.padre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Madre")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.madre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Médicos")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.medicos)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Quirurgicos")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.quirurgicos)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Traumaticos")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.traumaticos)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Alérgicos")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.alergicos)
+                </dd>
+
+                <dt>
+                    @Html.DisplayName("Vicios y Manías")
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.patologicos.viciosManias)
+                </dd>
+            </dl>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="nPatologicos">
+            <h2>Antecedentes No Patológicos</h2>
+            
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="revision">
+            <h2>Revisión por Sistemas</h2>
+            
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="perfil">
+            <h2>Perfil Social</h2>
+            
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="signos">
+            <h2>Signos Vitales</h2>
+            
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="problemas">
+            <h2>Listado de Problemas</h2>
+            
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="planes">
+            <h2>Plan y Diagnostico Diferencial</h2>
+            
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="diagnostico">
+            <h2>Diagnostico Final</h2>
+            
+        </div>
+    </div>
+
+</div>
+
+<p>
+    @Html.ActionLink("Regresar", "Index")
+</p>

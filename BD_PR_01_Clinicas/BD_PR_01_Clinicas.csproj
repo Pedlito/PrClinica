@@ -341,12 +341,13 @@
     <Content Include="Views\Atencion\_Detalle.cshtml" />
     <Content Include="Views\Atencion\_DatosPaciente.cshtml" />
     <Content Include="Views\Atencion\_Problemas.cshtml" />
+    <Content Include="Views\Pacientes\Index.cshtml" />
+    <Content Include="Views\Pacientes\HistoriaClinica.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
     <Folder Include="Scripts\jquery-ui\" />
-    <Folder Include="Views\Pacientes\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

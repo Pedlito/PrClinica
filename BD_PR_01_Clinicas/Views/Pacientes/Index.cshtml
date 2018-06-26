@@ -1,0 +1,56 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbPaciente>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Listado de Pacientes</h2>
+
+<table class="table">
+    <tr>
+    <th>
+        @Html.DisplayName("Nombre")
+    </th>
+    <th>
+        @Html.DisplayName("Fecha Nacimiento")
+    </th>
+    <th>
+        @Html.DisplayName("Estado Civil")
+    </th>
+    <th>
+        @Html.DisplayName("Residencia")
+    </th>
+    <th></th>
+</tr>
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @item.fechaNacimiento.Value.ToShortDateString()
+        </td>
+        @if (item.estadoCivil.Value)
+        {
+            <td>
+                Soltero
+            </td>
+        }
+        else
+        {
+            <td>
+                Casado
+            </td>
+        }
+        <td>
+            @Html.DisplayFor(modelItem => item.residencia)
+        </td>
+        <td>
+            @Html.ActionLink("Historia Clinica", "HistoriaClinica", new { codPaciente = item.codPaciente })
+        </td>
+    </tr>
+}
+
+</table>
