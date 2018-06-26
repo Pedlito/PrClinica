@@ -105,6 +105,9 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbDiagnostico(tbDiagnostico instance);
     partial void UpdatetbDiagnostico(tbDiagnostico instance);
     partial void DeletetbDiagnostico(tbDiagnostico instance);
+    partial void InserttbPlanes(tbPlanes instance);
+    partial void UpdatetbPlanes(tbPlanes instance);
+    partial void DeletetbPlanes(tbPlanes instance);
     #endregion
 		
 		public DataClasesDataContext() : 
@@ -329,19 +332,19 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<tbPlanes> tbPlanes
-		{
-			get
-			{
-				return this.GetTable<tbPlanes>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tbDiagnostico> tbDiagnostico
 		{
 			get
 			{
 				return this.GetTable<tbDiagnostico>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbPlanes> tbPlanes
+		{
+			get
+			{
+				return this.GetTable<tbPlanes>();
 			}
 		}
 		
@@ -1489,6 +1492,8 @@ namespace BD_PR_01_Clinicas.Models
 		
 		private EntityRef<tbDiagnostico> _tbDiagnostico;
 		
+		private EntityRef<tbPlanes> _tbPlanes;
+		
 		private EntityRef<tbPaciente> _tbPaciente;
 		
     #region Definiciones de métodos de extensibilidad
@@ -1517,6 +1522,7 @@ namespace BD_PR_01_Clinicas.Models
 			this._tbRevisionSistemas = default(EntityRef<tbRevisionSistemas>);
 			this._tbSignosVitales = default(EntityRef<tbSignosVitales>);
 			this._tbDiagnostico = default(EntityRef<tbDiagnostico>);
+			this._tbPlanes = default(EntityRef<tbPlanes>);
 			this._tbPaciente = default(EntityRef<tbPaciente>);
 			OnCreated();
 		}
@@ -1783,6 +1789,35 @@ namespace BD_PR_01_Clinicas.Models
 						value.tbConsulta = this;
 					}
 					this.SendPropertyChanged("tbDiagnostico");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbPlanes", Storage="_tbPlanes", ThisKey="codConsulta", OtherKey="codConsulta", IsUnique=true, IsForeignKey=false)]
+		public tbPlanes tbPlanes
+		{
+			get
+			{
+				return this._tbPlanes.Entity;
+			}
+			set
+			{
+				tbPlanes previousValue = this._tbPlanes.Entity;
+				if (((previousValue != value) 
+							|| (this._tbPlanes.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbPlanes.Entity = null;
+						previousValue.tbConsulta = null;
+					}
+					this._tbPlanes.Entity = value;
+					if ((value != null))
+					{
+						value.tbConsulta = this;
+					}
+					this.SendPropertyChanged("tbPlanes");
 				}
 			}
 		}
@@ -6364,105 +6399,6 @@ namespace BD_PR_01_Clinicas.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPlanes")]
-	public partial class tbPlanes
-	{
-		
-		private System.Nullable<int> _codConsulta;
-		
-		private string _planInicial;
-		
-		private string _planDiagnostico;
-		
-		private string _diagnosticoDiferencial;
-		
-		private string _planEducacional;
-		
-		public tbPlanes()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codConsulta", DbType="Int")]
-		public System.Nullable<int> codConsulta
-		{
-			get
-			{
-				return this._codConsulta;
-			}
-			set
-			{
-				if ((this._codConsulta != value))
-				{
-					this._codConsulta = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_planInicial", DbType="VarChar(700)")]
-		public string planInicial
-		{
-			get
-			{
-				return this._planInicial;
-			}
-			set
-			{
-				if ((this._planInicial != value))
-				{
-					this._planInicial = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_planDiagnostico", DbType="VarChar(700)")]
-		public string planDiagnostico
-		{
-			get
-			{
-				return this._planDiagnostico;
-			}
-			set
-			{
-				if ((this._planDiagnostico != value))
-				{
-					this._planDiagnostico = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_diagnosticoDiferencial", DbType="VarChar(700)")]
-		public string diagnosticoDiferencial
-		{
-			get
-			{
-				return this._diagnosticoDiferencial;
-			}
-			set
-			{
-				if ((this._diagnosticoDiferencial != value))
-				{
-					this._diagnosticoDiferencial = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_planEducacional", DbType="VarChar(700)")]
-		public string planEducacional
-		{
-			get
-			{
-				return this._planEducacional;
-			}
-			set
-			{
-				if ((this._planEducacional != value))
-				{
-					this._planEducacional = value;
-				}
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbDiagnostico")]
 	public partial class tbDiagnostico : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6654,6 +6590,205 @@ namespace BD_PR_01_Clinicas.Models
 						this._codUsuario = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("tbUsuario");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPlanes")]
+	public partial class tbPlanes : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _codConsulta;
+		
+		private string _planInicial;
+		
+		private string _planDiagnostico;
+		
+		private string _diagnosticoDiferencial;
+		
+		private string _planEducacional;
+		
+		private EntityRef<tbConsulta> _tbConsulta;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodConsultaChanging(int value);
+    partial void OncodConsultaChanged();
+    partial void OnplanInicialChanging(string value);
+    partial void OnplanInicialChanged();
+    partial void OnplanDiagnosticoChanging(string value);
+    partial void OnplanDiagnosticoChanged();
+    partial void OndiagnosticoDiferencialChanging(string value);
+    partial void OndiagnosticoDiferencialChanged();
+    partial void OnplanEducacionalChanging(string value);
+    partial void OnplanEducacionalChanged();
+    #endregion
+		
+		public tbPlanes()
+		{
+			this._tbConsulta = default(EntityRef<tbConsulta>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codConsulta", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int codConsulta
+		{
+			get
+			{
+				return this._codConsulta;
+			}
+			set
+			{
+				if ((this._codConsulta != value))
+				{
+					if (this._tbConsulta.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodConsultaChanging(value);
+					this.SendPropertyChanging();
+					this._codConsulta = value;
+					this.SendPropertyChanged("codConsulta");
+					this.OncodConsultaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_planInicial", DbType="VarChar(700)")]
+		public string planInicial
+		{
+			get
+			{
+				return this._planInicial;
+			}
+			set
+			{
+				if ((this._planInicial != value))
+				{
+					this.OnplanInicialChanging(value);
+					this.SendPropertyChanging();
+					this._planInicial = value;
+					this.SendPropertyChanged("planInicial");
+					this.OnplanInicialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_planDiagnostico", DbType="VarChar(700)")]
+		public string planDiagnostico
+		{
+			get
+			{
+				return this._planDiagnostico;
+			}
+			set
+			{
+				if ((this._planDiagnostico != value))
+				{
+					this.OnplanDiagnosticoChanging(value);
+					this.SendPropertyChanging();
+					this._planDiagnostico = value;
+					this.SendPropertyChanged("planDiagnostico");
+					this.OnplanDiagnosticoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_diagnosticoDiferencial", DbType="VarChar(700)")]
+		public string diagnosticoDiferencial
+		{
+			get
+			{
+				return this._diagnosticoDiferencial;
+			}
+			set
+			{
+				if ((this._diagnosticoDiferencial != value))
+				{
+					this.OndiagnosticoDiferencialChanging(value);
+					this.SendPropertyChanging();
+					this._diagnosticoDiferencial = value;
+					this.SendPropertyChanged("diagnosticoDiferencial");
+					this.OndiagnosticoDiferencialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_planEducacional", DbType="VarChar(700)")]
+		public string planEducacional
+		{
+			get
+			{
+				return this._planEducacional;
+			}
+			set
+			{
+				if ((this._planEducacional != value))
+				{
+					this.OnplanEducacionalChanging(value);
+					this.SendPropertyChanging();
+					this._planEducacional = value;
+					this.SendPropertyChanged("planEducacional");
+					this.OnplanEducacionalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbPlanes", Storage="_tbConsulta", ThisKey="codConsulta", OtherKey="codConsulta", IsForeignKey=true)]
+		public tbConsulta tbConsulta
+		{
+			get
+			{
+				return this._tbConsulta.Entity;
+			}
+			set
+			{
+				tbConsulta previousValue = this._tbConsulta.Entity;
+				if (((previousValue != value) 
+							|| (this._tbConsulta.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbConsulta.Entity = null;
+						previousValue.tbPlanes = null;
+					}
+					this._tbConsulta.Entity = value;
+					if ((value != null))
+					{
+						value.tbPlanes = this;
+						this._codConsulta = value.codConsulta;
+					}
+					else
+					{
+						this._codConsulta = default(int);
+					}
+					this.SendPropertyChanged("tbConsulta");
 				}
 			}
 		}

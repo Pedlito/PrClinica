@@ -397,7 +397,7 @@
                     <div class="form-group">
                         @Html.Label("Peso", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("peso", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("peso", new { htmlAttributes = new { @class = "form-control", onkeypress = "numerico(event)" } })
                         </div>
                     </div>
 
@@ -1118,6 +1118,7 @@
 
         function guardar() {
             var paciente = {
+                "codPaciente": codPaciente,
                 "nombre": $('#tbPaciente_nombre').val(),
                 "genero": ($('#genero').val() == "1") ? true : false,
                 "fechaNacimiento": $('#fechaNacimiento').val(),
@@ -1296,6 +1297,9 @@
             });
         }
 
+        function numerico(event){
+
+        }
 
 
     </script>

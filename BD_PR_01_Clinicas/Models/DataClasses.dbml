@@ -69,8 +69,8 @@
       <Association Name="tbConsulta_tbReceta" Member="tbReceta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbReceta" />
       <Association Name="tbConsulta_tbRevisionSistemas" Member="tbRevisionSistemas" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbRevisionSistemas" Cardinality="One" />
       <Association Name="tbConsulta_tbSignosVitales" Member="tbSignosVitales" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbSignosVitales" Cardinality="One" />
-      <Association Name="tbConsulta_tbPlanes" Member="tbPlanes" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbPlanes" />
       <Association Name="tbConsulta_tbDiagnostico" Member="tbDiagnostico" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbDiagnostico" Cardinality="One" />
+      <Association Name="tbConsulta_tbPlanes" Member="tbPlanes" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbPlanes" Cardinality="One" />
       <Association Name="tbPaciente_tbConsulta" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
@@ -289,16 +289,6 @@
       <Association Name="tbTipoSangre_tbPaciente" Member="tbPaciente" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbPaciente" />
     </Type>
   </Table>
-  <Table Name="dbo.tbPlanes" Member="tbPlanes">
-    <Type Name="tbPlanes">
-      <Column Name="codConsulta" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="planInicial" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="planDiagnostico" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="diagnosticoDiferencial" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="planEducacional" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Association Name="tbConsulta_tbPlanes" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbDiagnostico" Member="tbDiagnostico">
     <Type Name="tbDiagnostico">
       <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -307,6 +297,16 @@
       <Column Name="codUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="tbConsulta_tbDiagnostico" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
       <Association Name="tbUsuario_tbDiagnostico" Member="tbUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbPlanes" Member="tbPlanes">
+    <Type Name="tbPlanes">
+      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="planInicial" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="planDiagnostico" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="diagnosticoDiferencial" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="planEducacional" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Association Name="tbConsulta_tbPlanes" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

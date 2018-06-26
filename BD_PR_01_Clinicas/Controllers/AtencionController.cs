@@ -155,17 +155,46 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // POST: Atencion/GuardarHC
-        public ActionResult GuardarHC(HistoriaClinica historia)
+        public string GuardarHC(HistoriaClinica historia)
         {
             try
             {
                 // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                tbPaciente paciente = (from t in db.tbPaciente where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+                tbConsulta consulta = (from t in db.tbConsulta where t.codConsulta == historia.codConsulta select t).SingleOrDefault();
+                consulta.atendido = true;
+                paciente.nombre = historia.paciente.nombre;
+                paciente.genero = historia.paciente.genero;
+                paciente.fechaNacimiento = historia.paciente.fechaNacimiento;
+                paciente.estadoCivil = historia.paciente.estadoCivil;
+                paciente.residencia = historia.paciente.residencia;
+                paciente.procedencia = historia.paciente.procedencia;
+                paciente.religion = historia.paciente.religion;
+                paciente.profesion = historia.paciente.profesion;
+                paciente.razaEtnia = historia.paciente.razaEtnia;
+                paciente.escolaridad = historia.paciente.escolaridad;
+                paciente.codTipoSangre = historia.paciente.codTipoSangre;
+                db.tbAntecedentesPatologicos.InsertOnSubmit(historia.patologicos);
+                db.tbAntecedentesNoPatologicos.InsertOnSubmit(historia.noPatologicos);
+                db.tbDesarrollo.InsertOnSubmit(historia.desarrollo);
+                db.tbPerfilSocial.InsertOnSubmit(historia.perfilSocial);
+                if (paciente.genero == false)
+                {
+                    db.tbMujeres.InsertOnSubmit(historia.mujeres);
+                }
+                db.tbRevisionSistemas.InsertOnSubmit(historia.revision);
+                db.tbPlanes.InsertOnSubmit(historia.planes);
+                db.tbDiagnostico.InsertOnSubmit(historia.diagnostico);
+                db.tbPlanTerapeutico.InsertOnSubmit(historia.terapeutico);
+                db.tbProblema.InsertAllOnSubmit(historia.problemas);
+                db.tbReceta.InsertAllOnSubmit(historia.receta);
+                db.tbSignosVitales.InsertOnSubmit(historia.signos);
+                db.SubmitChanges();
+                return Url.Action("Index", "Atencion");
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return Url.Action("CrearHC", "Atencion");
             }
         }
         #endregion
