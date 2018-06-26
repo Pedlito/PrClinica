@@ -30,6 +30,7 @@ else
                         @*@Html.ValidationMessage("mensaje", null, new { @class = "label label-danger" })*@
                         @*@Html.ValidationMessage("mensaje", null, new { @class = "text-danger" })*@
                     </div>
+                    @Html.ValidationMessage("mensajeus", null, new { @class = "label label-danger" })
                 </div>
 
                 <div class="form-group">
@@ -40,46 +41,101 @@ else
                         </button>
                     </div>
                 </div>
-                @Html.ValidationMessage("mensaje", null, new { @class = "label label-danger" })
+              
             </div>
         }
     </section>
 }
 <hr />
 <h2>Rotación  @ViewBag.fechaInicio  -  @ViewBag.fechaFinal</h2>
-<h2>Integrantes</h2>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Nombre")
-        </th>
-        <th>
-            @Html.DisplayName("Carnet")
-        </th>
-        <th>
-            @Html.DisplayName("Usuario")
-        </th>
-        <th></th>
-    </tr>
+@*<h2>Integrantes</h2>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
-        </td>
-        <td>
-            @Html.ActionLink("Quitar", "Delete", new { idRotacion=item.codRotacion, idUsuario=item.codUsuario })
-        </td>
-    </tr>
-}
+@*<div class="panel panel-default">
+    <div class="panel-heading">Doctores</div>
+    <div class="panel-body">
 
-</table>
-<div>
-    @Html.ActionLink("Regresar", "Index", "Rotacion", null, htmlAttributes: new { @class = "btn btn-primary" })
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Nombre")
+                </th>
+                <th>
+                    @Html.DisplayName("Carnet")
+                </th>
+                <th>
+                    @Html.DisplayName("Usuario")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.tbUsuario.codTipoUsuario == 1)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Quitar", "Delete", new { idRotacion = item.codRotacion, idUsuario = item.codUsuario })
+                    </td>
+                </tr>
+                }
+            }
+        </table>
+    </div>
+</div>*@
+
+<div class="panel panel-default">
+    <div class="panel-heading">Estudiantes</div>
+    <div class="panel-body">
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Nombre")
+                </th>
+                <th>
+                    @Html.DisplayName("Carnet")
+                </th>
+                <th>
+                    @Html.DisplayName("Usuario")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.tbUsuario.codTipoUsuario == 2)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Quitar", "Delete", new { idRotacion = item.codRotacion, idUsuario = item.codUsuario })
+                    </td>
+                </tr>
+                }
+            }
+        </table>
+        </div>
 </div>
+
+
+
+        <div>
+            @Html.ActionLink("Regresar", "Index", "Rotacion", null, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>

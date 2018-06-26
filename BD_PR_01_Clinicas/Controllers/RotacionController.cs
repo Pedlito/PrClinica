@@ -121,13 +121,13 @@ namespace BD_PR_01_Clinicas.Controllers
                 ViewBag.fechaInicio = rotacion.fechaInicio.Value.ToString("dd/MM/yyyy");
                 ViewBag.fechaFinal = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy");
                 //lista de usuarios en la vista.
-                //List<tbUsuario> usuariosValidos = (from u in db.tbUsuario where u.estado == true select u).ToList();
-                ViewBag.codUsuario = new SelectList(db.tbUsuario, "codUsuario", "nombre");
+                List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.codTipoUsuario==2 select u).ToList();
+                ViewBag.codUsuario = new SelectList(estudiantes, "codUsuario", "nombre");
                 if (error!="") { ModelState.AddModelError("mensaje", "Ya ha sido agregado"); }
                 return View(lista);
             }
             else {
-
+              
                 return HttpNotFound();
             }
         }

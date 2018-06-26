@@ -31,8 +31,9 @@
                     @item.fechaFinal.Value.ToLongDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Integrantes", "Integrantes", new { id = item.codRotacion }) |
-                    @Html.ActionLink("Archivar", "Delete", new { /* id=item.codRotacion*/ })
+                    @Html.ActionLink("Integrantes", "Integrantes", new { id = item.codRotacion }) 
+                    @*|
+                    @Html.ActionLink("Archivar", "Delete", new { /* id=item.codRotacion*/ })*@
                 </td>
             </tr>
         }
