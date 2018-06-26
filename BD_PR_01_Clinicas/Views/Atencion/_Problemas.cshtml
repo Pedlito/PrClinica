@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbProblema>
+
+@if (Model != null)
+{
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayName("Problema")
+            </th>
+            <th>
+                @Html.DisplayName("Datos Subjetivos")
+            </th>
+            <th>
+                @Html.DisplayName("Datos Objetivos")
+            </th>
+            <th>
+                @Html.DisplayName("Analisis")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.problema)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.subjetivos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.objetivos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.analisis)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="quitar('@item.problema')">Eliminar</button>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
