@@ -224,7 +224,7 @@
 
         function CrearPaciente() {
             var paciente = {
-                "nombre": $('#nombre').val(),
+                "nombre": (document.getElementById("nombre").value == "1") ? true : false,
                 "genero": ($('#genero').val() == "1") ? true : false,
                 "fechaNacimiento": $('#fechaNacimiento').val(),
                 "estadoCivil": ($('#estadoCivil').val() == "1") ? true : false,

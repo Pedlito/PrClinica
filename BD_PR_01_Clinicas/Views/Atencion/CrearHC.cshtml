@@ -9,7 +9,6 @@
 </div>
 
 <div>
-
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#paciente" role="tab" data-toggle="tab">Paciente</a></li>
@@ -18,7 +17,7 @@
         <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
         <li role="presentation"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
         <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
-        <li role="presentation"><a href="#datos" role="tab" data-toggle="tab">Datos</a></li>
+        <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
         <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
         <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
     </ul>
@@ -37,79 +36,95 @@
                         <div class="form-group">
                             @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("nombre", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.nombre, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Genero", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <label class="radio-inline"><input type="radio" name="genero" value="1">Masculino</label>
-                                <label class="radio-inline"><input type="radio" name="genero" value="0">Femenino</label>
+                                @if (Model.tbPaciente.genero.Value == true)
+                                {
+                                    <label class="radio-inline"><input type="radio" name="genero" value="1" checked>Masculino</label>
+                                    <label class="radio-inline"><input type="radio" name="genero" value="0">Femenino</label>
+                                }
+                                else
+                                {
+                                    <label class="radio-inline"><input type="radio" name="genero" value="1">Masculino</label>
+                                    <label class="radio-inline"><input type="radio" name="genero" value="0" checked>Femenino</label>
+                                }
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <input type="date" id="fechaNacimiento" class="form-control" />
+                                <input type="date" id="fechaNacimiento" class="form-control" value="@Model.tbPaciente.fechaNacimiento"/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Estado Civil", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <label class="radio-inline"><input type="radio" name="estadoCivil" value="1">Soltero</label>
-                                <label class="radio-inline"><input type="radio" name="estadoCivil" value="0">Casado</label>
+                                @if (Model.tbPaciente.estadoCivil.Value == true)
+                                {
+                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="1" checked>Soltero</label>
+                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="0">Casado</label>
+                                }
+                                else
+                                {
+                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="1">Soltero</label>
+                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="0" checked>Casado</label>
+                                }
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Residencia", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("residencia", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.residencia, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Procedencia", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("procedencia", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.procedencia, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Religíon", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("religion", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.religion, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Profesión", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("profesion", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.profesion, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Raza/Etnia", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("razaEtnia", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.razaEtnia, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Escolaridad", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("escolaridad", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.tbPaciente.escolaridad, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Tipo de Sangre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.Editor("tipoSangre", new { htmlAttributes = new { @class = "form-control" } })
+                               @Html.DropDownList("codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -126,51 +141,58 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
                         <div class="form-group">
-                            @Html.Label("Familiares", htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Label("Padre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("familiares", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("padre", new { @class = "form-control", rows = "4" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Madre", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextArea("madre", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Médicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("medicos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("medicos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Quirúrgicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("quirurgicos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("quirurgicos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Traumáticos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("traumaticos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("traumaticos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Alérgicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("alergicos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("alergicos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Gineco-Obstétricos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("ginecoObstetricos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("ginecoObstetricos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Vicios y Manias", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("vicios", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("viciosManias", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
                     </div>
@@ -189,21 +211,21 @@
                         <div class="form-group">
                             @Html.Label("Prenatal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("prenatal", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("prenatal", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Natal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("natal", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("natal", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Posnatal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("posnatal", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("posnatal", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
@@ -217,21 +239,21 @@
                         <div class="form-group">
                             @Html.Label("Inmunizaciónes", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("inmunizaciones", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("inmunizaciones", new { @class = "form-control",  rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Alimentación", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("alimentacion", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("alimentacion", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Hábitos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("habitos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("habitos", new { @class = "form-control",  rows = "4" })
                             </div>
                         </div>
 
@@ -258,49 +280,49 @@
                         <div class="form-group">
                             @Html.Label("Conducta", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("conducta", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("conducta", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Piel y faneras", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("pielFaneras", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("piel", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Cabeza", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("cabez", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("cabeza", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Ojos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("ojos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("ojos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Oídos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("oidos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("oidos", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("nariz", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("ginecoObstetricos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("nariz", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Vicios y Manias", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("vicios", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                                @Html.TextArea("vicios", new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
                     </div>
@@ -308,7 +330,7 @@
             </form>
         </div>
 
-        <div role="tabpanel" class="tab-pane active" id="perfil">
+        <div role="tabpanel" class="tab-pane" id="perfil">
             <h2>Perfil Social</h2>
             <form>
                 <div class="form-horizontal">
@@ -317,49 +339,49 @@
                     <div class="form-group">
                         @Html.Label("Estilo de Vida", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("estiloVida", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("estiloVida", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Vivienda", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("vivienda", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("vivienda", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Situacion Familiar", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("situacionFamiliar", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("situacionFamiliar", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Ingreso Económico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("ingresoEconomico", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("ingresoEconomico", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Animales", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("animales", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("animales", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Tendencia Sexual", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("tendenciaSexual", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("tendenciaSexual", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Punto de vista", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("puntoVista", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("puntoVista", new { @class = "form-control", placeholder = "Punto de vista acerca de su estado de salud", rows = "4" })
                         </div>
                     </div>
                 </div>
@@ -389,28 +411,28 @@
                     <div class="form-group">
                         @Html.Label("Indice de Masa Corporal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("indiceMasa", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("indiceMasaCorporal", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Presión Arterial", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("presion", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("presionArterial", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Cardiaca", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("frecCardiaca", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("frecuenciaCardiaca", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Respiratoria", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("frecRespiratoria", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("frecuenciaRespiratoria", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
@@ -424,14 +446,14 @@
                     <div class="form-group">
                         @Html.Label("Circunferencia Cefálica", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("circunCefalica", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("circCefalica", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Abdominal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("circunAbdominal", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.Editor("circAbdominal", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
@@ -466,30 +488,24 @@
             </form>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="datos">
-            <h2>Datos</h2>
+        <div role="tabpanel" class="tab-pane" id="problemas">
+            <h2>Listado de Problemas</h2>
             <form>
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
                     <div class="form-group">
-                        @Html.Label("Subjetivos", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextArea("subjetivos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
-                        </div>
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#agregarProblema">Agregar</button>
                     </div>
 
-                    <div class="form-group">
-                        @Html.Label("Objetivos", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextArea("objetivos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
-                        </div>
+                    <div id="listaProblemas">
+
                     </div>
                 </div>
             </form>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="planes">
+            <h2>Plan y Diagnostico Diferencial</h2>
             <form>
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -497,14 +513,28 @@
                     <div class="form-group">
                         @Html.Label("Plan Inicial", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("planInicial", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("planInicial", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Plan Diagnostico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("planDiagnostico", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("planDiagnostico", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Diagnostico Diferencial", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("diagnosticoDiferencial", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Plan Educacional", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("planEducacional", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
@@ -514,21 +544,35 @@
                     <div class="form-group">
                         @Html.Label("Actividad", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("actividad", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("actividad", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Dieta", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("dieta", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("dieta", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Medicamentos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Label("Receta", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#receta">Crear Receta</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Controles Especificos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("controlesEspecificos", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Otras Terapias", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("otrasTerapias", new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
                 </div>
@@ -536,10 +580,33 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="diagnostico">
+            <h2>Diagnostico Final</h2>
+            <form>
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+                    <div class="form-group">
+                        @Html.Label("Impresión Clínica", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("impresion", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Médico", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("codUsuario", null, "Seleccione una Médico", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
+</div>
+
+<div class="form-group">
+    <button type="button" onclick="guardar()" class="btn btn-success btn-lg">Guardar Historia Clinica</button>
 </div>
 
 <!-- modal para formulario de meses-->
@@ -574,7 +641,7 @@
                                 <p>Intenta agarrar objetos, pero no lo consigue</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="uno" value="1">Si</label>
+                                <label class="radio-inline"><input type="radio" name="uno" value ="1">Si</label>
                             </td>
                             <td>
                                 <label class="radio-inline"><input type="radio" name="uno" value="0">No</label>
@@ -588,10 +655,10 @@
                                 <p>Se sostiene sentado, pero no lo consigue</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="dos" value="1">Si</label>
+                                <label class="radio-inline"><input type="radio" id="dos" name="dos" value="1">Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="dos" value="0">No</label>
+                                <label class="radio-inline"><input type="radio" id="dos" name="dos" value="0">No</label>
                             </td>
                         </tr>
                         <tr>
@@ -794,15 +861,15 @@
                     <div class="form-group">
                         @Html.Label("Ritmo", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <label class="radio-inline"><input type="radio" name="genero" value="1">Regular</label>
-                            <label class="radio-inline"><input type="radio" name="genero" value="0">Irregular</label>
+                            <label class="radio-inline"><input type="radio" name="ritmo" value="1">Regular</label>
+                            <label class="radio-inline"><input type="radio" name="ritmo" value="0">Irregular</label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("FUR", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <input type="date" id="fur" class="form-control" />
+                            <input type="date" id="ultimaRegla" class="form-control" />
                         </div>
                     </div>
 
@@ -821,7 +888,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("CSTP", htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.Label("Cesareas", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
                             @Html.Editor("cesareas", new { htmlAttributes = new { @class = "form-control" } })
                         </div>
@@ -851,7 +918,7 @@
                     <div class="form-group">
                         @Html.Label("Método Planificación", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.TextArea("habitos", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextArea("metodoPlanificacion", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
                         </div>
                     </div>
                 </div>
@@ -891,7 +958,7 @@
     </div>
 </div>
 
-<!-- modal para Crear Receta-->
+<!-- modal para lista de medicamentos-->
 <div class="modal fade" id="listaMedicamentos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -902,7 +969,7 @@
             <div class="modal-body" id="medicamentos">
 
                 <div class="form-group">
-                    <input type="text" id="filtro" placeholder="Nombre del medicamento" onkeypress="filtrar()" class="form-control" autocomplete="off"/>
+                    <input type="text" id="filtro" placeholder="Nombre del medicamento" onkeyup="filtrar()" class="form-control" autocomplete="off"/>
                 </div>
                 <div id="listado">
 
@@ -915,10 +982,82 @@
     </div>
 </div>
 
+<!-- modal para pedir prescripcion-->
+<div class="modal fade" id="prescripcion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Label("Prescripcion", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("descripcion", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="cambiarDescripcion()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para Crear Problemas-->
+<div class="modal fade" id="agregarProblema" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Problema</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    
+                    <div class="form-group">
+                        @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("problema", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("subjetivos", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("objetivos", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextArea("analisis", new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="agregarProblema()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section scripts{
     <script>
+        var codConsulta = @Model.codConsulta;
+        var codPaciente = @Model.codPaciente;
+        var receta = [];
+        var problemas = [];
+        var paraReceta = null;
 
-        var detalle = [];
+        window.onload = function () {
+            $('#fechaNacimiento').val('@Model.tbPaciente.fechaNacimiento');
+        }
 
         function filtrar() {
             var filtro = $('#filtro').val();
@@ -933,25 +1072,231 @@
         }
 
         function agregar(codProducto) {
-            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            var index = receta.findIndex(function (element) { return element.codProducto == codProducto });
             if (index == -1) {
-                detalle.push({ codProducto: parseInt(codProducto), cantidad: 1 })
-                $.ajax({
-                    traditional: true,
-                    url: '@Url.Action("DetalleReceta", "Atencion")',
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(detalle),
-                    success: function (response) {
-                        $('#listaMedicamentos').modal('hide')
-                        $('#detalle').html(response);
-                    }
-                });
+                paraReceta = { codConsulta: codConsulta, codProducto: parseInt(codProducto), descripcion: "" };
+                $('#prescripcion').modal('show');
             }
             else {
                 alert("El Articulo seleccionado ya ha sido agregado");
             }
         }
+
+        function cambiarDescripcion(){
+            paraReceta.descripcion = $('#descripcion').val(),
+            receta.push(paraReceta);
+            paraReceta = null;
+            //var index = receta.findIndex(function (element) { return element.codProducto == codProducto });
+            //receta[index].descripcion = entrada.value;
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("DetalleReceta", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(receta),
+                success: function (response) {
+                    $('#listaMedicamentos').modal('hide');
+                    $('#detalle').html(response);
+                }
+            });
+        }
+
+        function quitarReceta(codProducto){
+            var index = receta.findIndex(function (element) { return element.codProducto == codProducto });
+            receta.splice(index,1);
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("DetalleReceta", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(receta),
+                success: function (response) {
+                    $('#detalle').html(response);
+                }
+            });
+        }
+
+        function guardar() {
+            var paciente = {
+                "nombre": $('#tbPaciente_nombre').val(),
+                "genero": ($('#genero').val() == "1") ? true : false,
+                "fechaNacimiento": $('#fechaNacimiento').val(),
+                "estadoCivil": ($('#estadoCivil').val() == "1") ? true : false,
+                "residencia": $('#tbPaciente_residencia').val(),
+                "procedencia": $('#tbPaciente_procedencia').val(),
+                "religion": $('#tbPaciente_religion').val(),
+                "profesion": $('#tbPaciente_profesion').val(),
+                "razaEtnia": $('#tbPaciente_razaEtnia').val(),
+                "escolaridad": $('#tbPaciente_escolaridad').val(),
+                "codTipoSangre": $('#codTipoSangre').val(),
+            };
+            var patologicos = {
+                "codPaciente": codPaciente,
+                "padre": $('#padre').val(),
+                "madre": $('#madre').val(),
+                "medicos": $('#medicos').val(),
+                "quirurgicos": $('#quirurgicos').val(),
+                "traumaticos": $('#traumaticos').val(),
+                "alergicos": $('#alergicos').val(),
+                "ginecoObstetricos": $('#ginecoObstetricos').val(),
+                "viciosManias": $('#viciosManias').val(),
+            };
+            var noPatologicos = {
+                "codPaciente": codPaciente,
+                "prenatal": $('#prenatal').val(),
+                "natal": $('#natal').val(),
+                "posnatal": $('#posnatal').val(),
+                "inmunizaciones": $('#inmunizaciones').val(),
+                "alimentacion": $('#alimentacion').val(),
+                "habitos": $('#habitos').val(),
+            };
+            var desarrollo = {
+                "codPaciente": codPaciente,
+                "uno": ($('input[name=uno]:checked').val() == "1") ? true : false,
+                "dos": ($('input[name=dos]:checked').val() == "1") ? true : false,
+                "tres": ($('input[name=tres]:checked').val() == "1") ? true : false,
+                "cuatro": ($('input[name=cuatro]:checked').val() == "1") ? true : false,
+                "cinco": ($('input[name=cinco]:checked').val() == "1") ? true : false,
+                "seis": ($('input[name=seis]:checked').val() == "1") ? true : false,
+                "siete": ($('input[name=siete]:checked').val() == "1") ? true : false,
+                "ocho": ($('input[name=ocho]:checked').val() == "1") ? true : false,
+                "nueve": ($('input[name=nueve]:checked').val() == "1") ? true : false,
+                "diez": ($('input[name=diez]:checked').val() == "1") ? true : false,
+                "oncee": ($('input[name=once]:checked').val() == "1") ? true : false,
+                "doce": ($('input[name=doce]:checked').val() == "1") ? true : false,
+            };
+            var mujeres = {
+                "codPaciente": codPaciente,
+                "menarquia": $('#menarquia').val(),
+                "ritmo": ($('input[name=ritmo]:checked').val() == "1") ? true : false,
+                "ultimaRegla": $('#ultimaRegla').val(),
+                "numGestas": $('#numGestas').val(),
+                "partos": $('#partos').val(),
+                "cesareas": $('#cesareas').val(),
+                "abortos": $('#abortos').val(),
+                "hijosVivos": $('#hijosVivos').val(),
+                "hijosMuertos": $('#hijosMuertos').val(),
+                "metodoPlanificacion": $('#metodoPlanificacion').val(),
+            };
+            var perfilSocial = {
+                "codPaciente": codPaciente,
+                "estiloVida": $('#estiloVida').val(),
+                "vivienda": $('#vivienda').val(),
+                "situacionFamiliar": $('#situacionFamiliar').val(),
+                "ingresoEconomico": $('#ingresoEconomico').val(),
+                "animales": $('#animales').val(),
+                "tendenciaSexual": $('#tendenciaSexual').val(),
+                "puntoVista": $('#puntoVista').val()
+            };
+            var revision = {
+                "codConsulta": codConsulta,
+                "conducta": $('#conducta').val(),
+                "piel": $('#piel').val(),
+                "cabeza": $('#cabeza').val(),
+                "ojos": $('#ojos').val(),
+                "oidos": $('#oidos').val(),
+                "nariz": $('#nariz').val(),
+                "vicios": $('#vicios').val()
+            }
+            var signos = {
+                "codConsulta": codConsulta,
+                "peso": $('#peso').val(),
+                "talla": $('#talla').val(),
+                "indiceMasaCorporal": $('#indiceMasaCorporal').val(),
+                "presionArterial": $('#presionArterial').val(),
+                "frecuenciaCardiaca": $('#frecuenciaCardiaca').val(),
+                "frecuenciaRespiratoria": $('#frecuenciaRespiratoria').val(),
+                "temperatura": $('#temperatura').val(),
+                "circCefalica": $('#circCefalica').val(),
+                "circAbdominal": $('#circAbdominal').val(),
+                "focoFetal": $('#focoFetal').val(),
+                "alturaFondoUterino": $('#alturaFondoUterino').val(),
+                "pulso": $('#pulso').val(),
+                "saturacionOxigeno": $('#saturacionOxigeno').val(),
+            };
+            var planes = {
+                "codConsulta": codConsulta,
+                "planInicial": $('#planInicial').val(),
+                "planDiagnostico": $('#planDiagnostico').val(),
+                "diagnosticoDiferencial": $('#diagnosticoDiferencial').val(),
+                "planEducacional": $('#planEducacional').val(),
+            };
+            var terapeutico = {
+                "codConsulta": codConsulta,
+                "actividad": $('#actividad').val(),
+                "dieta": $('#dieta').val(),
+                "controlesEspecificos": $('#controlesEspecificos').val(),
+                "otrasTerapias": $('#otrasTerapias').val(),
+            };
+            var diagnostico = {
+                "codConsulta": codConsulta,
+                "impresionClinica": $('#impresion').val(),
+                "codUsuario": $('#codUsuario').val()
+            };
+            var historia = {
+                "codConsulta": codConsulta,
+                "paciente": paciente,
+                "patologicos": patologicos,
+                "noPatologicos": noPatologicos,
+                "desarrollo": desarrollo,
+                "perfilSocial": perfilSocial,
+                "mujeres": mujeres,
+                "revision": revision,
+                "signos": signos,
+                "problemas": problemas,
+                "planes": planes,
+                "terapeutico": terapeutico,
+                "receta": receta,
+                "diagnostico": diagnostico
+            }
+            $.ajax({
+                url: '@Url.Action("GuardarHC", "Atencion")',
+                type: "POST",
+                dataType: "json",
+                data: { "historia": historia },
+                success: function (response) {
+
+                }
+            });
+        }
+
+        function agregarProblema() {
+            problemas.push({
+                codConsulta: codConsulta,
+                problema: $('#problema').val(),
+                subjetivos: $('#subjetivos').val(),
+                objetivos: $('#objetivos').val(),
+                analisis: $('#analisis').val()
+            });
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Problemas", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(problemas),
+                success: function (response) {
+                    $('#listaMedicamentos').modal('hide');
+                    $('#listaProblemas').html(response);
+                }
+            });
+        }
+
+        function quitar(problema) {
+            var index = problemas.findIndex(function (element) { return element.problema == problema });
+            problemas.splice(index, 1);
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Problemas", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(problemas),
+                success: function (response) {
+                    $('#listaProblemas').html(response);
+                }
+            });
+        }
+
+
 
     </script>
 }

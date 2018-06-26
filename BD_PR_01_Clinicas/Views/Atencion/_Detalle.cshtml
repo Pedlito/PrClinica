@@ -20,7 +20,7 @@
                     <b>Dosis</b>
                 </div>
                 <div class="col-xs-2 text-center">
-                    <b>Cantidad</b>
+                    <b>Prescripción</b>
                 </div>
                 <div class="col-xs-2"></div>
             </div>
@@ -30,26 +30,24 @@
             <li class="list-group-item">
                 <div class="row">
                     <div class="col-xs-2 text-left">
-                        <label class="btn">@item.nombre</label>
+                        @item.nombre
                     </div>
                     <div class="col-xs-2 text-left">
-                        <label class="btn">@item.categoria</label>
+                        @item.categoria
                     </div>
                     <div class="col-xs-2 text-left">
-                        <label class="btn">@item.presentacion</label>
+                        @item.presentacion
                     </div>
                     <div class="col-xs-2 text-left">
-                        <label class="btn">@item.dosis</label>
+                        @item.dosis
                     </div>
                     <div class="col-xs-2 text-left">
-                        @* es importante tomar en cuenta que agregue un evento onchange a la funcion cantidad(codigoProducto, el valor cambiado)
-                            que se realiza cuando cambian el numero del input (el usuario cambia la cantidad default por otra) para ir a cambiarlo en el array *@
-                        <input type="number" class="form-control input-sm cant" value="@item.cantidad" onchange="cantidad(@item.codProducto,this)" />
+                       @item.descripcion
                     </div>
                     <div class="col-xs-2 text-center">
                         @* el boton quitar tiene un evento a la funcion quitar y le manda como parametro el codigo del producto *@
                         @*<input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />*@
-                        <button type="button" class="btn btn-danger" onclick="quitar(@item.codProducto, event)">
+                        <button type="button" class="btn btn-danger btn-xs" onclick="quitarReceta(@item.codProducto)">
                             <span class="glyphicon glyphicon-remove"></span> Quitar
                         </button>
                     </div>

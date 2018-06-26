@@ -198,6 +198,7 @@
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\Entrada.cs" />
+    <Compile Include="Models\HistoriaClinica.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Rotaciones.cs" />
@@ -337,6 +338,8 @@
     <Content Include="Views\Atencion\CrearHC.cshtml" />
     <Content Include="Views\Atencion\_Medicamentos.cshtml" />
     <Content Include="Views\Atencion\_Detalle.cshtml" />
+    <Content Include="Views\Atencion\_DatosPaciente.cshtml" />
+    <Content Include="Views\Atencion\_Problemas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

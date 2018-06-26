@@ -144,15 +144,18 @@ namespace BD_PR_01_Clinicas.Controllers
 
         #region HC
         // GET: Atencion/CrearHC
-        public ActionResult CrearHC(int codConsulta)
+        public ActionResult CrearHC(int codPaciente)
         {
-            tbConsulta consulta = (from t in db.tbConsulta where t.codConsulta == codConsulta select t).SingleOrDefault();
+            List<tbTipoSangre> codTipoSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
+            ViewBag.codTipoSangre = new SelectList(codTipoSangre, "codTipoSangre", "tipoSangre");
+            List<tbUsuario> medicos = (from t in db.tbUsuario where t.codTipoUsuario == 1 && t.estado == true orderby t.nombre select t).ToList();
+            ViewBag.codUsuario = new SelectList(medicos, "codUsuario", "nombre");
+            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.atendido == false select t).SingleOrDefault();
             return View(consulta);
         }
 
-        // POST: Atencion/CrearHC
-        [HttpPost]
-        public ActionResult CrearHC(int codConsulta, FormCollection collection)
+        // POST: Atencion/GuardarHC
+        public ActionResult GuardarHC(HistoriaClinica historia)
         {
             try
             {
@@ -201,12 +204,12 @@ namespace BD_PR_01_Clinicas.Controllers
             return PartialView("_Medicamentos", lista);
         }
 
-        public ActionResult DetalleReceta(IEnumerable<Item> detalle)
+        public ActionResult DetalleReceta(IEnumerable<tbReceta> detalle)
         {
             List<RegistroProducto> lista = new List<RegistroProducto>();
             if (detalle != null)
             {
-                foreach (Item item in detalle)
+                foreach (tbReceta item in detalle)
                 {
                     //por cada item dentro de la lista detalle creo un registroProducto
                     lista.Add((from t in db.tbProducto
@@ -219,12 +222,17 @@ namespace BD_PR_01_Clinicas.Controllers
                                    categoria = t.tbCategoria.categoria,
                                    presentacion = t.tbPresentacion.presentacion,
                                    dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
-                                   cantidad = item.cantidad
+                                   descripcion = item.descripcion
                                }).SingleOrDefault());
                 }
             }
             //el retorno sera el html creado en la vista parcial _detalle pasandole como modelo la lista
             return PartialView("_Detalle", lista);
+        }
+
+        public ActionResult Problemas(List<tbProblema> problemas)
+        {
+            return PartialView("_Problemas", problemas);
         }
     }
 }

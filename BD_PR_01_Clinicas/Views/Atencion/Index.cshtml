@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de Pacientes</h2>
 
 <p>
     @Html.ActionLink("Nueva Consulta", "Crear")
@@ -50,7 +50,7 @@
             @Html.DisplayFor(modelItem => item.residencia)
         </td>
         <td>
-            @Html.ActionLink("Atender", "CrearHC", new { codConsulta = item.codPaciente }) |
+            @Html.ActionLink("Atender", "CrearHC", new { codPaciente = item.codPaciente }) |
             @Html.ActionLink("Editar", "Editar", new { codConsulta = item.codPaciente }) |
             @Html.ActionLink("Detalles", "Detalles", new { codConsulta = item.codPaciente }) |
             @Html.ActionLink("Cancelar", "Cancelar", new { codConsulta = item.codPaciente })

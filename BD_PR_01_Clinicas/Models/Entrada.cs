@@ -29,6 +29,7 @@ namespace BD_PR_01_Clinicas.Models
         public string dosis { get; set; }
         public int cantidad { get; set; }
         public int existencia { get; set; }
+        public string descripcion { get; set; }
     }
         public class Item
     {
