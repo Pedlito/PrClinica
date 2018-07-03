@@ -7,7 +7,9 @@
 <h2>Rotaciones</h2>
 
 <p>
+ @Html.ActionLink("Archivados", "Archivados")  |
     @Html.ActionLink("Nueva", "Crear")
+    
 </p>
 <table class="table table-striped table-hover">
     <thead>
@@ -31,9 +33,12 @@
                     @item.fechaFinal.Value.ToLongDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Integrantes", "Integrantes", new { id = item.codRotacion }) 
-                    @*|
-                    @Html.ActionLink("Archivar", "Delete", new { /* id=item.codRotacion*/ })*@
+                    @Html.ActionLink("Integrantes", "Integrantes", new { id = item.codRotacion }) |
+                    @Html.ActionLink("Editar", "Editar", new { id=item.codRotacion}) |
+               
+                    <a onclick="preguntar(@item.codRotacion)">Archivar</a>
+
+    
                 </td>
             </tr>
         }
@@ -42,3 +47,30 @@
 <div>
     @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
 </div>
+@section Scripts{
+    <script>
+        function preguntar(cod) {
+
+            if (confirm('¿Está seguro de archivar esta rotacion?')) {
+                var cd = { id: cod };             
+                $.ajax({
+                    traditional: true,
+                    url: '@Url.Action("Archivar", "Rotacion")',
+                    contentType: "application/json",
+                    type: "POST",
+                    data: JSON.stringify(cd),
+                    success: function (response) {
+                        if (response.length == 0) { location.href = '@Url.Action("Index", "Rotacion")'; }
+                        else { alert("Error al realizar la operacion: " + response); }
+                  
+                    },
+                    error: function (response) {
+                        alert("No se pudo realizar la accion");
+                    }
+                })
+            }
+        }
+
+    </script>
+    
+    }

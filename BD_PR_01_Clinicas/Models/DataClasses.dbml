@@ -237,21 +237,13 @@
       <Association Name="tbConsulta_tbRevisionSistemas" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tbRotacion" Member="tbRotacion">
-    <Type Name="tbRotacion">
-      <Column Name="codRotacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="fechaInicio" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="fechaFinal" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacionUsuario" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbRotacionUsuario" Member="tbRotacionUsuario">
     <Type Name="tbRotacionUsuario">
       <Column Name="codRotacion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="codUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacion" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacion" IsForeignKey="true" />
       <Association Name="tbUsuario_tbRotacionUsuario" Member="tbUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
+      <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacion" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacion" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.tbSalida" Member="tbSalida">
@@ -307,6 +299,15 @@
       <Column Name="diagnosticoDiferencial" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
       <Column Name="planEducacional" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
       <Association Name="tbConsulta_tbPlanes" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbRotacion" Member="tbRotacion">
+    <Type Name="tbRotacion">
+      <Column Name="codRotacion" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="fechaInicio" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="fechaFinal" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacionUsuario" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

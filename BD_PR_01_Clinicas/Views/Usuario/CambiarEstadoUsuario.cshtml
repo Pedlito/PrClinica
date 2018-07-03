@@ -1,0 +1,107 @@
+﻿@model BD_PR_01_Clinicas.Models.tbUsuario
+
+@{
+    ViewBag.Title = "Archivar usuario";
+}
+
+@if (Model.estado == true)
+{
+    <h2>Deshabilitar</h2>
+
+    <h3>¿Realmente quieres deshabilitar este usuario?</h3>
+}
+else
+{
+    <h2>Habilitar</h2>
+
+    <h3>¿Realmente quieres habilitar este usuario?</h3>
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Rol")
+        </dt>
+
+       @if (Model.codTipoUsuario == 1)
+       {
+            <dd>
+               Doctor           
+            </dd>
+       }
+       else
+       {
+            <dd>
+                Estudiante          
+            </dd>
+        }
+        <dt>
+            @Html.DisplayName("Nombre")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("DPI")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dpi)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Carnet")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.carnet)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Fecha de Nacimiento")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fechaNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Usuario")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.codUsuario)
+
+        <div class="form-actions no-color">
+            @if (Model.estado == true)
+            {
+               
+                @*<input type="submit" value="Deshabilitar" class="btn btn-danger" />*@
+                <button type="submit" class="btn btn-danger" value="deshabilitar" name="btn">
+                    <span class="glyphicon glyphicon-trash"></span> Archivar
+                </button>
+            }
+            else
+            {
+                @*<input type="submit" value="Habilitar" class="btn btn-danger" />*@
+                <button type="submit" class="btn btn-info" value="habilitar" name="btn">
+                    <span class="glyphicon glyphicon-record"></span> Habilitar
+                </button>
+            }
+            @*@Html.ActionLink("Regresar", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })*@
+            <a class="btn btn-primary" href="/Usuario/Index"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+
+        </div>
+    }
+</div>
+

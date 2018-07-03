@@ -87,9 +87,6 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbRevisionSistemas(tbRevisionSistemas instance);
     partial void UpdatetbRevisionSistemas(tbRevisionSistemas instance);
     partial void DeletetbRevisionSistemas(tbRevisionSistemas instance);
-    partial void InserttbRotacion(tbRotacion instance);
-    partial void UpdatetbRotacion(tbRotacion instance);
-    partial void DeletetbRotacion(tbRotacion instance);
     partial void InserttbRotacionUsuario(tbRotacionUsuario instance);
     partial void UpdatetbRotacionUsuario(tbRotacionUsuario instance);
     partial void DeletetbRotacionUsuario(tbRotacionUsuario instance);
@@ -108,6 +105,9 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbPlanes(tbPlanes instance);
     partial void UpdatetbPlanes(tbPlanes instance);
     partial void DeletetbPlanes(tbPlanes instance);
+    partial void InserttbRotacion(tbRotacion instance);
+    partial void UpdatetbRotacion(tbRotacion instance);
+    partial void DeletetbRotacion(tbRotacion instance);
     #endregion
 		
 		public DataClasesDataContext() : 
@@ -292,14 +292,6 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<tbRotacion> tbRotacion
-		{
-			get
-			{
-				return this.GetTable<tbRotacion>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tbRotacionUsuario> tbRotacionUsuario
 		{
 			get
@@ -345,6 +337,14 @@ namespace BD_PR_01_Clinicas.Models
 			get
 			{
 				return this.GetTable<tbPlanes>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbRotacion> tbRotacion
+		{
+			get
+			{
+				return this.GetTable<tbRotacion>();
 			}
 		}
 		
@@ -5378,144 +5378,6 @@ namespace BD_PR_01_Clinicas.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbRotacion")]
-	public partial class tbRotacion : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _codRotacion;
-		
-		private System.Nullable<System.DateTime> _fechaInicio;
-		
-		private System.Nullable<System.DateTime> _fechaFinal;
-		
-		private EntitySet<tbRotacionUsuario> _tbRotacionUsuario;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncodRotacionChanging(int value);
-    partial void OncodRotacionChanged();
-    partial void OnfechaInicioChanging(System.Nullable<System.DateTime> value);
-    partial void OnfechaInicioChanged();
-    partial void OnfechaFinalChanging(System.Nullable<System.DateTime> value);
-    partial void OnfechaFinalChanged();
-    #endregion
-		
-		public tbRotacion()
-		{
-			this._tbRotacionUsuario = new EntitySet<tbRotacionUsuario>(new Action<tbRotacionUsuario>(this.attach_tbRotacionUsuario), new Action<tbRotacionUsuario>(this.detach_tbRotacionUsuario));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codRotacion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int codRotacion
-		{
-			get
-			{
-				return this._codRotacion;
-			}
-			set
-			{
-				if ((this._codRotacion != value))
-				{
-					this.OncodRotacionChanging(value);
-					this.SendPropertyChanging();
-					this._codRotacion = value;
-					this.SendPropertyChanged("codRotacion");
-					this.OncodRotacionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaInicio", DbType="Date")]
-		public System.Nullable<System.DateTime> fechaInicio
-		{
-			get
-			{
-				return this._fechaInicio;
-			}
-			set
-			{
-				if ((this._fechaInicio != value))
-				{
-					this.OnfechaInicioChanging(value);
-					this.SendPropertyChanging();
-					this._fechaInicio = value;
-					this.SendPropertyChanged("fechaInicio");
-					this.OnfechaInicioChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaFinal", DbType="Date")]
-		public System.Nullable<System.DateTime> fechaFinal
-		{
-			get
-			{
-				return this._fechaFinal;
-			}
-			set
-			{
-				if ((this._fechaFinal != value))
-				{
-					this.OnfechaFinalChanging(value);
-					this.SendPropertyChanging();
-					this._fechaFinal = value;
-					this.SendPropertyChanged("fechaFinal");
-					this.OnfechaFinalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRotacion_tbRotacionUsuario", Storage="_tbRotacionUsuario", ThisKey="codRotacion", OtherKey="codRotacion")]
-		public EntitySet<tbRotacionUsuario> tbRotacionUsuario
-		{
-			get
-			{
-				return this._tbRotacionUsuario;
-			}
-			set
-			{
-				this._tbRotacionUsuario.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_tbRotacionUsuario(tbRotacionUsuario entity)
-		{
-			this.SendPropertyChanging();
-			entity.tbRotacion = this;
-		}
-		
-		private void detach_tbRotacionUsuario(tbRotacionUsuario entity)
-		{
-			this.SendPropertyChanging();
-			entity.tbRotacion = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbRotacionUsuario")]
 	public partial class tbRotacionUsuario : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -5528,9 +5390,9 @@ namespace BD_PR_01_Clinicas.Models
 		
 		private System.Nullable<bool> _estado;
 		
-		private EntityRef<tbRotacion> _tbRotacion;
-		
 		private EntityRef<tbUsuario> _tbUsuario;
+		
+		private EntityRef<tbRotacion> _tbRotacion;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -5546,8 +5408,8 @@ namespace BD_PR_01_Clinicas.Models
 		
 		public tbRotacionUsuario()
 		{
-			this._tbRotacion = default(EntityRef<tbRotacion>);
 			this._tbUsuario = default(EntityRef<tbUsuario>);
+			this._tbRotacion = default(EntityRef<tbRotacion>);
 			OnCreated();
 		}
 		
@@ -5619,40 +5481,6 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRotacion_tbRotacionUsuario", Storage="_tbRotacion", ThisKey="codRotacion", OtherKey="codRotacion", IsForeignKey=true)]
-		public tbRotacion tbRotacion
-		{
-			get
-			{
-				return this._tbRotacion.Entity;
-			}
-			set
-			{
-				tbRotacion previousValue = this._tbRotacion.Entity;
-				if (((previousValue != value) 
-							|| (this._tbRotacion.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tbRotacion.Entity = null;
-						previousValue.tbRotacionUsuario.Remove(this);
-					}
-					this._tbRotacion.Entity = value;
-					if ((value != null))
-					{
-						value.tbRotacionUsuario.Add(this);
-						this._codRotacion = value.codRotacion;
-					}
-					else
-					{
-						this._codRotacion = default(int);
-					}
-					this.SendPropertyChanged("tbRotacion");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbUsuario_tbRotacionUsuario", Storage="_tbUsuario", ThisKey="codUsuario", OtherKey="codUsuario", IsForeignKey=true)]
 		public tbUsuario tbUsuario
 		{
@@ -5683,6 +5511,40 @@ namespace BD_PR_01_Clinicas.Models
 						this._codUsuario = default(int);
 					}
 					this.SendPropertyChanged("tbUsuario");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRotacion_tbRotacionUsuario", Storage="_tbRotacion", ThisKey="codRotacion", OtherKey="codRotacion", IsForeignKey=true)]
+		public tbRotacion tbRotacion
+		{
+			get
+			{
+				return this._tbRotacion.Entity;
+			}
+			set
+			{
+				tbRotacion previousValue = this._tbRotacion.Entity;
+				if (((previousValue != value) 
+							|| (this._tbRotacion.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbRotacion.Entity = null;
+						previousValue.tbRotacionUsuario.Remove(this);
+					}
+					this._tbRotacion.Entity = value;
+					if ((value != null))
+					{
+						value.tbRotacionUsuario.Add(this);
+						this._codRotacion = value.codRotacion;
+					}
+					else
+					{
+						this._codRotacion = default(int);
+					}
+					this.SendPropertyChanged("tbRotacion");
 				}
 			}
 		}
@@ -6811,6 +6673,168 @@ namespace BD_PR_01_Clinicas.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbRotacion")]
+	public partial class tbRotacion : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _codRotacion;
+		
+		private System.Nullable<System.DateTime> _fechaInicio;
+		
+		private System.Nullable<System.DateTime> _fechaFinal;
+		
+		private System.Nullable<bool> _estado;
+		
+		private EntitySet<tbRotacionUsuario> _tbRotacionUsuario;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodRotacionChanging(int value);
+    partial void OncodRotacionChanged();
+    partial void OnfechaInicioChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaInicioChanged();
+    partial void OnfechaFinalChanging(System.Nullable<System.DateTime> value);
+    partial void OnfechaFinalChanged();
+    partial void OnestadoChanging(System.Nullable<bool> value);
+    partial void OnestadoChanged();
+    #endregion
+		
+		public tbRotacion()
+		{
+			this._tbRotacionUsuario = new EntitySet<tbRotacionUsuario>(new Action<tbRotacionUsuario>(this.attach_tbRotacionUsuario), new Action<tbRotacionUsuario>(this.detach_tbRotacionUsuario));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codRotacion", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int codRotacion
+		{
+			get
+			{
+				return this._codRotacion;
+			}
+			set
+			{
+				if ((this._codRotacion != value))
+				{
+					this.OncodRotacionChanging(value);
+					this.SendPropertyChanging();
+					this._codRotacion = value;
+					this.SendPropertyChanged("codRotacion");
+					this.OncodRotacionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaInicio", DbType="Date")]
+		public System.Nullable<System.DateTime> fechaInicio
+		{
+			get
+			{
+				return this._fechaInicio;
+			}
+			set
+			{
+				if ((this._fechaInicio != value))
+				{
+					this.OnfechaInicioChanging(value);
+					this.SendPropertyChanging();
+					this._fechaInicio = value;
+					this.SendPropertyChanged("fechaInicio");
+					this.OnfechaInicioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_fechaFinal", DbType="Date")]
+		public System.Nullable<System.DateTime> fechaFinal
+		{
+			get
+			{
+				return this._fechaFinal;
+			}
+			set
+			{
+				if ((this._fechaFinal != value))
+				{
+					this.OnfechaFinalChanging(value);
+					this.SendPropertyChanging();
+					this._fechaFinal = value;
+					this.SendPropertyChanged("fechaFinal");
+					this.OnfechaFinalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estado", DbType="Bit")]
+		public System.Nullable<bool> estado
+		{
+			get
+			{
+				return this._estado;
+			}
+			set
+			{
+				if ((this._estado != value))
+				{
+					this.OnestadoChanging(value);
+					this.SendPropertyChanging();
+					this._estado = value;
+					this.SendPropertyChanged("estado");
+					this.OnestadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRotacion_tbRotacionUsuario", Storage="_tbRotacionUsuario", ThisKey="codRotacion", OtherKey="codRotacion")]
+		public EntitySet<tbRotacionUsuario> tbRotacionUsuario
+		{
+			get
+			{
+				return this._tbRotacionUsuario;
+			}
+			set
+			{
+				this._tbRotacionUsuario.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tbRotacionUsuario(tbRotacionUsuario entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbRotacion = this;
+		}
+		
+		private void detach_tbRotacionUsuario(tbRotacionUsuario entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbRotacion = null;
 		}
 	}
 	

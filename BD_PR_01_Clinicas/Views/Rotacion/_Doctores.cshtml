@@ -1,0 +1,22 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbUsuario>
+
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dpi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.usuario)
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="descartarDoc(@item.codUsuario, event)">
+                    <span class="glyphicon glyphicon-remove"></span> Descartar
+                </button>
+            </td>
+        </tr>  
+}
+

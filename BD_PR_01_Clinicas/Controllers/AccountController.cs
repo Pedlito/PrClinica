@@ -58,6 +58,8 @@ namespace BD_PR_01_Clinicas.Controllers
                         var logindetails = loginInfo.First();
                         // Login In.    
                         SignInUser(logindetails.usuario, false);
+                        //id del usuario
+                        Session["UserId"] = loginInfo.ElementAt(0).codUsuario;
                         // Info.    
                         return RedirectToLocal(returnUrl);
                     }
@@ -78,6 +80,31 @@ namespace BD_PR_01_Clinicas.Controllers
             return this.View(model);
         }
 
+        public JsonResult autenticar(string usuario, string contrasenia) {
+            string resultado = "";
+
+            if (usuario != null && contrasenia != null)
+            {
+
+                var loginInfo = db.Logiar(usuario, contrasenia).ToList();
+                
+                if (loginInfo != null && loginInfo.Count() > 0)
+                {
+
+
+                    resultado = "ok";
+                   
+
+                }
+                else
+                {
+                    resultado = "contraseña invalida";
+                }
+
+            }
+
+            return Json(resultado);
+        }
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
@@ -167,6 +194,7 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 // Setting    
                 claims.Add(new Claim(ClaimTypes.Name, username));
+            
                 var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
                 var ctx = Request.GetOwinContext();
                 var authenticationManager = ctx.Authentication;
@@ -188,5 +216,78 @@ namespace BD_PR_01_Clinicas.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public ActionResult DatosUsuario(int? codUsuario) {
+
+            if (codUsuario!=null) {
+                using (var context = new DataClasesDataContext())
+                {
+                    tbUsuario item = (from t in context.tbUsuario
+                                      where t.usuario == User.Identity.GetUserName()
+                                      select t).SingleOrDefault();
+                    return View(item);
+
+                }
+
+
+
+            }
+            else
+            {
+                ViewBag.errores = "Por favor reinicie sesion";
+                return View("VistaDeErrores");
+            }
+
+
+
+        }
+   
+        public ActionResult EditarUsuario(int? id) {
+          
+            try
+            {
+                using (var context = new DataClasesDataContext())
+                {
+                    tbUsuario item = (from t in context.tbUsuario
+                                      where t.codUsuario == id
+                                      select t).SingleOrDefault();
+                    return View(item);
+                }
+
+            }
+            catch(Exception e)
+            {
+                ViewBag.errores = "Error: "+e.Message;
+                return View("VistaDeErrores");
+            }
+        }
+        [HttpPost]
+        public ActionResult EditarUsuario(tbUsuario user)
+        {
+
+            if (user != null)
+            {
+                using (var contexto = new DataClasesDataContext())
+                {
+                    tbUsuario item = (from t in contexto.tbUsuario
+                                      where t.codUsuario == user.codUsuario
+                                      select t).SingleOrDefault();
+
+                    item.nombre = user.nombre;
+                    item.dpi = user.dpi;
+                    item.carnet = user.carnet;
+                    item.fechaNacimiento = user.fechaNacimiento;
+                    item.usuario = user.usuario;
+                    contexto.SubmitChanges();
+                    return RedirectToAction("DatosUsuario",routeValues: new { codUsuario=user.codUsuario});
+                }
+            }
+            else
+            {
+                ViewBag.errores = "Error: No se puedo guardar los cambios";
+                return View("VistaDeErrores");
+            }
+        }
     }
+
+    
 }

@@ -1,25 +1,18 @@
-﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbUsuario>
-
-@{
+﻿@{
     ViewBag.Title = "Crear";
 }
 
 <h2>Crear rotacion</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+
 
     <div class="form-inline">
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*@Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
         <div class="form-group">
 
             <label class="control-label col-md-4" for="fechaInicio">fechaInicio</label>
             <div class="col-md-2">
-                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control" value="@ViewBag.fechaInicio" />
-
-                @Html.ValidationMessage("fechaInicio", "", new { @class = "text-danger" })
-
+                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control"  />
             </div>
         </div>
 
@@ -28,172 +21,215 @@
             <label class="control-label col-md-4" for="fechaFinal">fechaFinal</label>
 
             <div class="col-md-2">
-                <input type="date" id="fechaFinal" name="fechaFinal" class="form-control" value="@ViewBag.fechaFinal" />
-                @Html.ValidationMessage("fechaFinal", "", new { @class = "text-danger" })
+                <input type="date" id="fechaFinal" name="fechaFinal" class="form-control"  />
+            
             </div>
         </div>
         <hr />
 
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">Doctores</div>
             <div class="panel-body">
-                <div class="form-group">
-                    <label class="control-label col-md-4" for="Nombre">Nombre</label>
-
-                    <div class="col-md-6">
-                        @Html.DropDownList("codDoctor", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessage("codDoctor", null, new { @class = "label label-danger" })
-                    </div>
-                </div>
 
                 <div class="form-group">
-                    <div class="col-md-offset-3 col-md-2">
-                        @*<input type="submit" value="Agregar" class="btn btn-success" name="btn" />*@
-                        <button type="submit" class="btn btn-success" value="AgregarD" name="btn">
-                            <span class="glyphicon glyphicon-plus"></span> Agregar doctor
-                        </button>
-                    </div>
+                        <div class="col-md-3">
+                            <label class="control-label col-md-4" for="Nombre">Nombre</label>
+                        </div>
+
+                        <div class="col-md-6">
+
+                            
+                            @Html.DropDownList("codDoctor", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success" onclick="agregarDocs()">
+                                <span class="glyphicon glyphicon-plus"></span> Agregar
+                            </button>
+                        </div>              
                 </div>
-
-
                 <h2>Listado</h2>
                 <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Nombre")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Carnet")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Usuario")
-                        </th>
-                        <th></th>
-                    </tr>
 
-                    @foreach (var item in Model)
-                    {
-                        if (item.codTipoUsuario == 1)
-                        {
+                    <thead>
                         <tr>
-                           
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.carnet)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.usuario)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Descartar", "Descartar", new { id = item.codUsuario })
-                            </td>
+                            <th>
+                                @Html.DisplayName("Nombre")
+                            </th>
+                            <th>
+                                @Html.DisplayName("DPI")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Usuario")
+                            </th>
+                            <th></th>
                         </tr>
-                        }
-                    }
+                    </thead>
+
+                    <tbody id="doctores">
+
+                    </tbody>
                 </table>
+
             </div>
         </div>
 
-
-
-
-
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">Estudiantes</div>
             <div class="panel-body">
+
                 <div class="form-group">
-                    @*@Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })*@
-                    <label class="control-label col-md-4" for="Nombre">Nombre</label>
+                    <div class="col-md-3">
+                        <label class="control-label col-md-3" for="Nombre">Nombre</label>
+                    </div>
 
                     <div class="col-md-6">
-                        @Html.DropDownList("codEstudiante", null, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessage("codEstudiante", null, new { @class = "label label-danger" })
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-offset-3 col-md-2">
-                        @*<input type="submit" value="Agregar" class="btn btn-success" name="btn" />*@
-                        @*<button class="btn btn-danger btn-xs btn-block btn-retirar" type="submit" value="retirar_producto" name="action">
-                            <i class="glyphicon glyphicon-remove"></i>
-                        </button>*@
-                        <button type="submit" class="btn btn-success" value="AgregarE" name="btn">
-                            <span class="glyphicon glyphicon-plus"></span> Agregar Estudiante
+
+                        @Html.DropDownList("codEstudiante", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-success" onclick="agregarEstus()">
+                            <span class="glyphicon glyphicon-plus"></span> Agregar
                         </button>
                     </div>
                 </div>
+           
+                    <h2>Listado</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Nombre")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Carnet")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Usuario")
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
+                        <tbody id="estudiantes">
 
-
+                        </tbody>
+                    </table>
 
               
-
-                <h2>Listado</h2>
-                <table class="table">
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Nombre")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Carnet")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Usuario")
-                        </th>
-                        <th></th>
-                    </tr>
-
-                    @foreach (var item in Model)
-                    {
-                        if (item.codTipoUsuario == 2)
-                        {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.nombre)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.carnet)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.usuario)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Descartar", "Descartar", new { id = item.codUsuario })
-                            </td>
-                        </tr>
-                        }
-                    }
-                </table>
-            </div>
         </div>
-
+</div>
             <br />
             <div class="form-group">
                 <div class="col-md-12">
-                    <input type="submit" value="Guardar" class="btn btn-primary" name="btn" id="save" />
-                    <input type="submit" value="Cancelar" class="btn btn-danger" name="btn" />
+                    <input type="button" value="Guardar" class="btn btn-primary" name="btn" onclick="guardar()" />
+                   
+                        @Html.ActionLink("Cancelar", "Index", "Rotacion", null, htmlAttributes: new { @class = "btn btn-danger" })
+                   
                 </div>
             </div>
 </div>
-}
+
 
 
 @section Scripts {
     <script>
-        $("#save").click(
-                    function validar(event) {
 
+        var listaDocs = [];
+        var listaEstus = [];
 
-                        if ($("#fechaInicio").val() >= $("#fechaFinal").val()) { alert("error fecha inicio debe ser menor a fecha finalizacion"); event.preventDefault(); }
-                        else {
+        function agregarDocs() {
+            if (!$("#codDoctor").val()) { alert("Seleccione un usurio valido"); return;}
+            var codDoc = parseInt($("#codDoctor").val());
+            var index = listaDocs.findIndex(function (element) { return element.codUser == codDoc });
+            if (index == -1) {
+                listaDocs.push({ codUser: codDoc });
+                cargarDocs(listaDocs);
+            }
+            else {
 
+                alert("Ya ha sido agregado");
+            }
+        }
 
-                        }
+        function descartarDoc(codUsuario) {
+            var index = listaDocs.findIndex(function (element) { return element.codUser == codUsuario });
+            listaDocs.splice(index, 1);
+           cargarDocs(listaDocs);
+        }
 
-                    }
+        function agregarEstus() {
+            if (!$("#codEstudiante").val()) { alert("Seleccione un usurio valido"); return; }
+            var codEstu = parseInt($("#codEstudiante").val());
+            var index = listaEstus.findIndex(function (element) { return element.codUser == codEstu });
+            if (index == -1) {
+            listaEstus.push({ codUser: codEstu });
+            cargarEstus(listaEstus);
+            }
+            else {
+                alert("Ya ha sido agregado");
+            }
+        }
 
-            );
+        function descartarEstu(codUsuario) {
+            var index = listaEstus.findIndex(function (element) { return element.codUser == codUsuario });
+            listaEstus.splice(index, 1);
+            cargarEstus(listaEstus);
+        }
+
+        function cargarDocs(listaDocs) {
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("AgregarDocs", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(listaDocs),
+                success: function (response) {
+                    $('#doctores').html(response);
+                },
+                error: function (response) {
+                    alert("Error al realizar la operacion");
+                }
+            });
+        }
+
+        function cargarEstus(listaEstus) {
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("AgregarEstus", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(listaEstus),
+                success: function (response) {
+
+                    $('#estudiantes').html(response);
+                },
+                error: function (response) {
+                    alert("Error al realizar la operacion");
+                }
+            });
+        }
+
+        function guardar() {
+            if (!($("#fechaInicio").val()) || ($("#fechaInicio").val() >= $("#fechaFinal").val())) { alert("Debe asignar un rango de fechas valido"); return; }
+            var integrantes = listaDocs.concat(listaEstus);
+    
+            var rotacion = { "fechaIni": $("#fechaInicio").val(), "fechaFin": $("#fechaFinal").val(), "integrantes": integrantes }
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Crear", "Rotacion")',
+                contentType: "application/json",
+                type: "POST",
+                data: JSON.stringify(rotacion),
+                success: function (response) {
+                    if (response.length == 0) { location.href = '@Url.Action("Index", "Rotacion")'; }
+                    else { alert("Error al realizar la operacion: " + response); }
+                  
+                },
+                error: function (response) {
+                    alert("No se pudo realizar la accion");
+                }
+            })
+        }
     </script>
 }
