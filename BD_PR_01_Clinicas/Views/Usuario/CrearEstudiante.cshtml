@@ -6,7 +6,7 @@
 
 <h2>Crear Estudiante</h2>
 
-@using (Html.BeginForm(Html.BeginForm("CrearEstudiante", "Usuario", FormMethod.Post, new { @id = "formIdEst", @class = "form-horizontal", role = "form" })))
+@using (Html.BeginForm("CrearEstudiante", "Usuario", FormMethod.Post, new { @id = "formIdEst", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -87,80 +87,80 @@
     @Html.ActionLink("Regresar", "Index")
 </div>
 @section scripts{
-@Scripts.Render("~/bundles/jqueryval")
-<script>
-    /*TODO: falta la validadion del usuario, forma facil cambiar modelo de tbUsuario a RegisterViewModel, opcion 2 hacerlo con jquery*/
-    $("#fechaNacimiento").datepicker({
-        changeMonth: true,
-        changeYear: true,
-        autoclose: true,
-        yearRange: '-80:-17',
-        defaultDate: '20/10/2000'
-    });
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        /*TODO: falta la validadion del usuario, forma facil cambiar modelo de tbUsuario a RegisterViewModel, opcion 2 hacerlo con jquery*/
+        $("#fechaNacimiento").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-80:-17',
+            defaultDate: '20/10/2000'
+        });
 
-    $.validator.addMethod("soloNumeros", function (value, element) {
-        return /^[0-9]+$/i.test(value);
-    }, "Ingrese sólo numeros");
+        $.validator.addMethod("soloNumeros", function (value, element) {
+            return /^[0-9]+$/i.test(value);
+        }, "Ingrese sólo numeros");
 
-    $.validator.addMethod("soloLetras", function (value, element) {
-        return /^[a-zA-Z ]+$/i.test(value);
-    }, "Ingrese sólo Letras");
+        $.validator.addMethod("soloLetras", function (value, element) {
+            return /^[a-zA-Z ]+$/i.test(value);
+        }, "Ingrese sólo Letras");
 
-    $("#formIdEst").validate({
-        errorClass: 'help-block animation-slideDown',
-        errorElement: 'div',
-        errorPlacement: function (error, e) {
-            e.parents('.form-group > div').append(error);
-        },
-        highlight: function (e) {
-
-            $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
-            $(e).closest('.help-block').remove();
-        },
-        success: function (e) {
-            e.closest('.entrada').removeClass('has-success has-error');
-            e.closest('.help-block').remove();
-        },
-        rules: {
-            nombre: { required: true, soloLetras: true, minlength: 3 },
-            dpi: { required: true, soloNumeros: true, minlength: 12 },
-            carnet:{required:true,soloNumeros:true, minlength: 8},
-            fechaNacimiento: { required: true },
-            usuario: { required: true, minlength: 3 },
-            password: { required: true, minlength: 4 },
-            repetir: { required: true, equalTo: '#password' }
-
-        },
-        messages: {
-            nombre: {
-                required: "Debe introducir su nombre",
-                minlength: "Tres caracteres como minimo"
+        $("#formIdEst").validate({
+            errorClass: 'help-block animation-slideDown',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.form-group > div').append(error);
             },
+            highlight: function (e) {
 
-            dpi: {
-                required: "Debe introducir un numero de identificacion",
-                minlength: "12 caracteres minimo"
+                $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
             },
-            carnet: {
-                required: "Debe introducir un numero de identificacion",
-                minlength: "8 caracteres minimo"
+            success: function (e) {
+                e.closest('.entrada').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
             },
-            fechaNacimiento: "Fecha nacimiento requerida",
+            rules: {
+                nombre: { required: true, soloLetras: true, minlength: 3 },
+                dpi: { required: true, soloNumeros: true, minlength: 12 },
+                carnet: { required: true, soloNumeros: true, minlength: 8 },
+                fechaNacimiento: { required: true },
+                usuario: { required: true, minlength: 3 },
+                password: { required: true, minlength: 4 },
+                repetir: { required: true, equalTo: '#password' }
 
-            usuario: {
-                required: "Debe introducir un nombre de usuario",
-                minlength: "3 caracteres como minimo"
             },
-            password: {
-                required: "Debe introducir una contraseña",
-                minlength: "4 caracteres como minimo"
-            },
-            repetir: {
-                required: "Repita su contraseña",
-                equalTo: "Las contraseñas no coinciden"
+            messages: {
+                nombre: {
+                    required: "Debe introducir su nombre",
+                    minlength: "Tres caracteres como minimo"
+                },
+
+                dpi: {
+                    required: "Debe introducir un numero de identificacion",
+                    minlength: "12 caracteres minimo"
+                },
+                carnet: {
+                    required: "Debe introducir un numero de identificacion",
+                    minlength: "8 caracteres minimo"
+                },
+                fechaNacimiento: "Fecha nacimiento requerida",
+
+                usuario: {
+                    required: "Debe introducir un nombre de usuario",
+                    minlength: "3 caracteres como minimo"
+                },
+                password: {
+                    required: "Debe introducir una contraseña",
+                    minlength: "4 caracteres como minimo"
+                },
+                repetir: {
+                    required: "Repita su contraseña",
+                    equalTo: "Las contraseñas no coinciden"
+                }
             }
-        }
 
-    });
-</script>
+        });
+    </script>
 }

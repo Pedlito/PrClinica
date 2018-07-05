@@ -55,11 +55,11 @@ namespace BD_PR_01_Clinicas.Controllers
                                            where lista.Contains(prod.codProducto) && db.existencias(prod.codProducto) > 0
                                            orderby prod.producto
                                            select new Inventario
-                                           {  
+                                           {
                                                producto = prod.producto,
                                                categoria = cat.categoria,
-                                               presentacion = pres.presentacion +" "+
-                                               Convert.ToString(prod.dosis.Value)+" "+(prod.codVolumen.Value==1?"mg":"ml"),
+                                               presentacion = pres.presentacion + " " +
+                                               Convert.ToString(prod.dosis.Value) + " " + (prod.codVolumen.Value == 1 ? "mg" : "ml"),
                                                existencia = db.existencias(prod.codProducto).Value
                                            }).ToList();
 
@@ -74,6 +74,17 @@ namespace BD_PR_01_Clinicas.Controllers
             stream.Seek(0, SeekOrigin.Begin);
             return File(stream, "aplication/pdf", "Inventario.pdf");
         }
+        //solo para hacer pruebas
+       //public List<Inventario> obtenerDatos()
+       // {
+       //     List<Inventario> inv = new List<Inventario>();
+       //     for (int i = 1; i <= 100; i++)
+       //     {
+       //         inv.Add(new Inventario { producto = "jkjkjkjkjkjf", categoria = "fdfdfdffdfffffffff", presentacion = "fffffffffff", existencia = 2125 });
+       //     }
+       //     return inv;
+       // }
+
         // GET: Inventario/Details/5
         public ActionResult Details(int id)
         {

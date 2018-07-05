@@ -203,10 +203,9 @@
     </Compile>
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\HistoriaClinica.cs" />
-    <Compile Include="Models\inventa.cs" />
+    <Compile Include="Models\HttpUsuario.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\inventarioReporte.cs" />
     <Compile Include="Models\Rotaciones.cs" />
     <Compile Include="Models\Salida.cs" />
     <Compile Include="Models\TipoUsuario.cs" />

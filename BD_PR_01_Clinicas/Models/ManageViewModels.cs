@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using System.Security.Claims;
 
 namespace BD_PR_01_Clinicas.Models
 {
@@ -83,4 +84,11 @@ namespace BD_PR_01_Clinicas.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+
+    public class CurrentUser {
+    public int UserId { get; set; }
+    public string UserName { get; set; }                   
+    }
+
+
 }

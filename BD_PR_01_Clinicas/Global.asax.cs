@@ -18,7 +18,8 @@ namespace BD_PR_01_Clinicas
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.Name;
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.UserData;//cambiado a userData
+       
         }
     }
 }

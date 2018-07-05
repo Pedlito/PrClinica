@@ -230,17 +230,26 @@ namespace BD_PR_01_Clinicas.Controllers
         public JsonResult Archivar(int? id)
         {
             string resultado = "";
-
-            tbRotacion Rot = (from r in db.tbRotacion where (r.codRotacion == id) select r).SingleOrDefault();
-            if (Rot != null)
+            if (id != null)
             {
-                Rot.estado = false;
-                foreach (var item in Rot.tbRotacionUsuario.ToList())
+                try
                 {
-                    tbUsuario us = (from u in db.tbUsuario where u.codUsuario == item.codUsuario select u).SingleOrDefault();
-                    us.estado = false;
+                    tbRotacion Rot = (from r in db.tbRotacion where (r.codRotacion == id) select r).SingleOrDefault();
+                    Rot.estado = false;
+
+                    foreach (var item in Rot.tbRotacionUsuario.ToList())
+                    {
+                        tbUsuario us = (from u in db.tbUsuario where u.codUsuario == item.codUsuario select u).SingleOrDefault();
+                        if (us.codTipoUsuario == 2) { us.estado = false; }
+
+                    }
+                    db.SubmitChanges();
                 }
-                db.SubmitChanges();
+                catch (Exception)
+                {
+
+                    resultado = "Error: Operacion fallida";
+                }
             }
             else
             {
