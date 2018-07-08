@@ -3,41 +3,139 @@
 @{
     ViewBag.Title = "Integrantes";
 }
-
-<h2>Rotación @ViewBag.fechaInicio - @ViewBag.fechaFinal</h2>
-
-<p>
-    @Html.ActionLink("Agregar Integrante", "AgregarIntegrante", new { idRotacion = (int)ViewBag.idRotacion })
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Nombre")
-        </th>
-        <th>
-            @Html.DisplayName("Carnet")
-        </th>
-        <th>
-            @Html.DisplayName("Usuario")
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
-        </td>
-        <td>
-            @Html.ActionLink("Quitar", "Delete", new { idRotacion=item.codRotacion, idUsuario=item.codUsuario })
-        </td>
-    </tr>
+@if (!ViewBag.mostrar)
+{
+    <hr />
+    <div>
+        <a href="/Rotacion/Integrantes?id=@ViewBag.idRotacion&accion=1">Agregar integrante</a>
+    </div>
 }
+else
+{
+    <section>
+        @*action="/Rotacion/Integrantes?id=1&amp;accion=1" method="post"*@
+        @using (Html.BeginForm("AgregarIntegrante", "Rotacion", FormMethod.Post, new { @id = "formId", @class = "form-inline", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
 
-</table>
+            <div class="form-inline">
+                <h4>Agregar integrante</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.Hidden("codRotacion", ViewBag.idRotacion as int?)
+                <div class="form-group">
+                    @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-4">
+                        @Html.DropDownList("codUsuario", null, htmlAttributes: new { @class = "form-control" })
+                        @*@Html.ValidationMessage("mensaje", null, new { @class = "label label-danger" })*@
+                        @*@Html.ValidationMessage("mensaje", null, new { @class = "text-danger" })*@
+                    </div>
+                    @Html.ValidationMessage("mensajeus", null, new { @class = "label label-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-4">
+                        @*<input type="submit" value="Guardar" class="btn btn-default" />*@
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span> Agregar
+                        </button>
+                    </div>
+                </div>
+              
+            </div>
+        }
+    </section>
+}
+<hr />
+<h2>Rotación  @ViewBag.fechaInicio  -  @ViewBag.fechaFinal</h2>
+@*<h2>Integrantes</h2>*@
+
+@*<div class="panel panel-default">
+    <div class="panel-heading">Doctores</div>
+    <div class="panel-body">
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Nombre")
+                </th>
+                <th>
+                    @Html.DisplayName("Carnet")
+                </th>
+                <th>
+                    @Html.DisplayName("Usuario")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.tbUsuario.codTipoUsuario == 1)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Quitar", "Delete", new { idRotacion = item.codRotacion, idUsuario = item.codUsuario })
+                    </td>
+                </tr>
+                }
+            }
+        </table>
+    </div>
+</div>*@
+
+<div class="panel panel-default">
+    <div class="panel-heading">Estudiantes</div>
+    <div class="panel-body">
+
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayName("Nombre")
+                </th>
+                <th>
+                    @Html.DisplayName("Carnet")
+                </th>
+                <th>
+                    @Html.DisplayName("Usuario")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                if (item.tbUsuario.codTipoUsuario == 2)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Quitar", "Delete", new { idRotacion = item.codRotacion, idUsuario = item.codUsuario })
+                    </td>
+                </tr>
+                }
+            }
+        </table>
+        </div>
+</div>
+
+
+
+        <div>
+            @Html.ActionLink("Regresar", "Index", "Rotacion", null, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>
