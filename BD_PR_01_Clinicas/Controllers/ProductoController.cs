@@ -55,7 +55,7 @@ namespace BD_PR_01_Clinicas.Controllers
             }
          
 
-            int pageSize = 3;
+            int pageSize = 20;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
             return View(lista.ToPagedList(pageNumber, pageSize));

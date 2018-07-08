@@ -11,13 +11,22 @@ namespace BD_PR_01_Clinicas.Controllers
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Pacientes
-        public ActionResult Index()
+        public ActionResult Index(string filtro = "")
         {
-            List<tbPaciente> lista = (from pac in db.tbPaciente
-                                      join cons in db.tbConsulta on pac.codPaciente equals cons.codPaciente
-                                      where cons.atendido == true
-                                      orderby pac.nombre
-                                      select pac).ToList();
+            List<tbPaciente> lista = null;
+            if (filtro == "")
+            {
+                lista = (from t in db.tbPaciente
+                         orderby t.nombre
+                         select t).ToList();
+            }
+            else
+            {
+                lista = (from t in db.tbPaciente
+                         orderby t.nombre where t.nombre.Contains(filtro)
+                         select t).ToList();
+            }
+
             return View(lista);
         }
 
@@ -25,17 +34,35 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult HistoriaClinica(int codPaciente)
         {
             HistoriaClinica historia = new Models.HistoriaClinica();
+            historia.consultas = (from t in db.tbConsulta where t.codPaciente == codPaciente select t).ToList();
             historia.paciente = (from t in db.tbPaciente where t.codPaciente == codPaciente select t).SingleOrDefault();
             historia.patologicos = (from t in db.tbAntecedentesPatologicos where t.codPaciente == codPaciente select t).SingleOrDefault();
             historia.noPatologicos = (from t in db.tbAntecedentesNoPatologicos where t.codPaciente == codPaciente select t).SingleOrDefault();
             historia.desarrollo = (from t in db.tbDesarrollo where t.codPaciente == codPaciente select t).SingleOrDefault();
+            historia.perfilSocial = (from t in db.tbPerfilSocial where t.codPaciente == codPaciente select t).SingleOrDefault();
+            if (historia.paciente.genero == false)
+            {
+                historia.mujeres = (from t in db.tbMujeres where t.codPaciente == codPaciente select t).SingleOrDefault();
+            }
+            historia.perfilSocial = (from t in db.tbPerfilSocial where t.codPaciente == codPaciente select t).SingleOrDefault();
+            //historia.revision = (from t in db.tbRevisionSistemas where t.codConsulta == codPaciente select t).SingleOrDefault(); para despues
             return View(historia);
         }
 
-        // GET: Pacientes/Create
-        public ActionResult Create()
+        // GET: Pacientes/VerConsulta
+        public ActionResult VerConsulta(int codConsulta)
         {
-            return View();
+            consultas consulta = new consultas();
+            consulta.consulta = (from t in db.tbConsulta where t.codConsulta == codConsulta select t).SingleOrDefault();
+            consulta.codPaciente = consulta.consulta.codPaciente.Value;
+            consulta.revision = (from t in db.tbRevisionSistemas where t.codConsulta == codConsulta select t).SingleOrDefault();
+            consulta.signos = (from t in db.tbSignosVitales where t.codConsulta == codConsulta select t).SingleOrDefault();
+            consulta.problemas = (from t in db.tbProblema where t.codConsulta == codConsulta select t).ToList();
+            consulta.planes = (from t in db.tbPlanes where t.codConsulta == codConsulta select t).SingleOrDefault();
+            consulta.terapeutico = (from t in db.tbPlanTerapeutico where t.codConsulta == codConsulta select t).SingleOrDefault();
+            consulta.receta = (from t in db.tbReceta where t.codConsulta == codConsulta select t).ToList();
+            consulta.diagnostico = (from t in db.tbDiagnostico where t.codConsulta == codConsulta select t).SingleOrDefault();
+            return View(consulta);
         }
 
         // POST: Pacientes/Create

@@ -343,6 +343,7 @@
     <Content Include="Views\Atencion\_Problemas.cshtml" />
     <Content Include="Views\Pacientes\Index.cshtml" />
     <Content Include="Views\Pacientes\HistoriaClinica.cshtml" />
+    <Content Include="Views\Pacientes\VerConsulta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

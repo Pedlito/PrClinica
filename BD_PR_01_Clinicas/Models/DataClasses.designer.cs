@@ -96,9 +96,6 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbSalida(tbSalida instance);
     partial void UpdatetbSalida(tbSalida instance);
     partial void DeletetbSalida(tbSalida instance);
-    partial void InserttbSignosVitales(tbSignosVitales instance);
-    partial void UpdatetbSignosVitales(tbSignosVitales instance);
-    partial void DeletetbSignosVitales(tbSignosVitales instance);
     partial void InserttbTipoSangre(tbTipoSangre instance);
     partial void UpdatetbTipoSangre(tbTipoSangre instance);
     partial void DeletetbTipoSangre(tbTipoSangre instance);
@@ -108,10 +105,13 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbPlanes(tbPlanes instance);
     partial void UpdatetbPlanes(tbPlanes instance);
     partial void DeletetbPlanes(tbPlanes instance);
+    partial void InserttbSignosVitales(tbSignosVitales instance);
+    partial void UpdatetbSignosVitales(tbSignosVitales instance);
+    partial void DeletetbSignosVitales(tbSignosVitales instance);
     #endregion
 		
 		public DataClasesDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["dbClinicaConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -316,14 +316,6 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<tbSignosVitales> tbSignosVitales
-		{
-			get
-			{
-				return this.GetTable<tbSignosVitales>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tbTipoSangre> tbTipoSangre
 		{
 			get
@@ -345,6 +337,14 @@ namespace BD_PR_01_Clinicas.Models
 			get
 			{
 				return this.GetTable<tbPlanes>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbSignosVitales> tbSignosVitales
+		{
+			get
+			{
+				return this.GetTable<tbSignosVitales>();
 			}
 		}
 		
@@ -1488,11 +1488,11 @@ namespace BD_PR_01_Clinicas.Models
 		
 		private EntityRef<tbRevisionSistemas> _tbRevisionSistemas;
 		
-		private EntityRef<tbSignosVitales> _tbSignosVitales;
-		
 		private EntityRef<tbDiagnostico> _tbDiagnostico;
 		
 		private EntityRef<tbPlanes> _tbPlanes;
+		
+		private EntityRef<tbSignosVitales> _tbSignosVitales;
 		
 		private EntityRef<tbPaciente> _tbPaciente;
 		
@@ -1520,9 +1520,9 @@ namespace BD_PR_01_Clinicas.Models
 			this._tbProblema = new EntitySet<tbProblema>(new Action<tbProblema>(this.attach_tbProblema), new Action<tbProblema>(this.detach_tbProblema));
 			this._tbReceta = new EntitySet<tbReceta>(new Action<tbReceta>(this.attach_tbReceta), new Action<tbReceta>(this.detach_tbReceta));
 			this._tbRevisionSistemas = default(EntityRef<tbRevisionSistemas>);
-			this._tbSignosVitales = default(EntityRef<tbSignosVitales>);
 			this._tbDiagnostico = default(EntityRef<tbDiagnostico>);
 			this._tbPlanes = default(EntityRef<tbPlanes>);
+			this._tbSignosVitales = default(EntityRef<tbSignosVitales>);
 			this._tbPaciente = default(EntityRef<tbPaciente>);
 			OnCreated();
 		}
@@ -1735,35 +1735,6 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbSignosVitales", Storage="_tbSignosVitales", ThisKey="codConsulta", OtherKey="codConsulta", IsUnique=true, IsForeignKey=false)]
-		public tbSignosVitales tbSignosVitales
-		{
-			get
-			{
-				return this._tbSignosVitales.Entity;
-			}
-			set
-			{
-				tbSignosVitales previousValue = this._tbSignosVitales.Entity;
-				if (((previousValue != value) 
-							|| (this._tbSignosVitales.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tbSignosVitales.Entity = null;
-						previousValue.tbConsulta = null;
-					}
-					this._tbSignosVitales.Entity = value;
-					if ((value != null))
-					{
-						value.tbConsulta = this;
-					}
-					this.SendPropertyChanged("tbSignosVitales");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbDiagnostico", Storage="_tbDiagnostico", ThisKey="codConsulta", OtherKey="codConsulta", IsUnique=true, IsForeignKey=false)]
 		public tbDiagnostico tbDiagnostico
 		{
@@ -1818,6 +1789,35 @@ namespace BD_PR_01_Clinicas.Models
 						value.tbConsulta = this;
 					}
 					this.SendPropertyChanged("tbPlanes");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbSignosVitales", Storage="_tbSignosVitales", ThisKey="codConsulta", OtherKey="codConsulta", IsUnique=true, IsForeignKey=false)]
+		public tbSignosVitales tbSignosVitales
+		{
+			get
+			{
+				return this._tbSignosVitales.Entity;
+			}
+			set
+			{
+				tbSignosVitales previousValue = this._tbSignosVitales.Entity;
+				if (((previousValue != value) 
+							|| (this._tbSignosVitales.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbSignosVitales.Entity = null;
+						previousValue.tbConsulta = null;
+					}
+					this._tbSignosVitales.Entity = value;
+					if ((value != null))
+					{
+						value.tbConsulta = this;
+					}
+					this.SendPropertyChanged("tbSignosVitales");
 				}
 			}
 		}
@@ -5846,421 +5846,6 @@ namespace BD_PR_01_Clinicas.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbSignosVitales")]
-	public partial class tbSignosVitales : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _codConsulta;
-		
-		private System.Nullable<decimal> _peso;
-		
-		private System.Nullable<decimal> _talla;
-		
-		private System.Nullable<decimal> _indiceMasaCorporal;
-		
-		private System.Nullable<int> _presionArterial;
-		
-		private System.Nullable<int> _frecuenciaCardiaca;
-		
-		private System.Nullable<int> _frecuenciaRespiratoria;
-		
-		private System.Nullable<decimal> _temperatura;
-		
-		private System.Nullable<decimal> _circCefalica;
-		
-		private System.Nullable<decimal> _circAbdominal;
-		
-		private System.Nullable<decimal> _focoFetal;
-		
-		private System.Nullable<decimal> _alturaFondoUterino;
-		
-		private System.Nullable<int> _pulso;
-		
-		private System.Nullable<decimal> _saturacionOxigeno;
-		
-		private EntityRef<tbConsulta> _tbConsulta;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncodConsultaChanging(int value);
-    partial void OncodConsultaChanged();
-    partial void OnpesoChanging(System.Nullable<decimal> value);
-    partial void OnpesoChanged();
-    partial void OntallaChanging(System.Nullable<decimal> value);
-    partial void OntallaChanged();
-    partial void OnindiceMasaCorporalChanging(System.Nullable<decimal> value);
-    partial void OnindiceMasaCorporalChanged();
-    partial void OnpresionArterialChanging(System.Nullable<int> value);
-    partial void OnpresionArterialChanged();
-    partial void OnfrecuenciaCardiacaChanging(System.Nullable<int> value);
-    partial void OnfrecuenciaCardiacaChanged();
-    partial void OnfrecuenciaRespiratoriaChanging(System.Nullable<int> value);
-    partial void OnfrecuenciaRespiratoriaChanged();
-    partial void OntemperaturaChanging(System.Nullable<decimal> value);
-    partial void OntemperaturaChanged();
-    partial void OncircCefalicaChanging(System.Nullable<decimal> value);
-    partial void OncircCefalicaChanged();
-    partial void OncircAbdominalChanging(System.Nullable<decimal> value);
-    partial void OncircAbdominalChanged();
-    partial void OnfocoFetalChanging(System.Nullable<decimal> value);
-    partial void OnfocoFetalChanged();
-    partial void OnalturaFondoUterinoChanging(System.Nullable<decimal> value);
-    partial void OnalturaFondoUterinoChanged();
-    partial void OnpulsoChanging(System.Nullable<int> value);
-    partial void OnpulsoChanged();
-    partial void OnsaturacionOxigenoChanging(System.Nullable<decimal> value);
-    partial void OnsaturacionOxigenoChanged();
-    #endregion
-		
-		public tbSignosVitales()
-		{
-			this._tbConsulta = default(EntityRef<tbConsulta>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codConsulta", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int codConsulta
-		{
-			get
-			{
-				return this._codConsulta;
-			}
-			set
-			{
-				if ((this._codConsulta != value))
-				{
-					if (this._tbConsulta.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncodConsultaChanging(value);
-					this.SendPropertyChanging();
-					this._codConsulta = value;
-					this.SendPropertyChanged("codConsulta");
-					this.OncodConsultaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_peso", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> peso
-		{
-			get
-			{
-				return this._peso;
-			}
-			set
-			{
-				if ((this._peso != value))
-				{
-					this.OnpesoChanging(value);
-					this.SendPropertyChanging();
-					this._peso = value;
-					this.SendPropertyChanged("peso");
-					this.OnpesoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_talla", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> talla
-		{
-			get
-			{
-				return this._talla;
-			}
-			set
-			{
-				if ((this._talla != value))
-				{
-					this.OntallaChanging(value);
-					this.SendPropertyChanging();
-					this._talla = value;
-					this.SendPropertyChanged("talla");
-					this.OntallaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_indiceMasaCorporal", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> indiceMasaCorporal
-		{
-			get
-			{
-				return this._indiceMasaCorporal;
-			}
-			set
-			{
-				if ((this._indiceMasaCorporal != value))
-				{
-					this.OnindiceMasaCorporalChanging(value);
-					this.SendPropertyChanging();
-					this._indiceMasaCorporal = value;
-					this.SendPropertyChanged("indiceMasaCorporal");
-					this.OnindiceMasaCorporalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_presionArterial", DbType="Int")]
-		public System.Nullable<int> presionArterial
-		{
-			get
-			{
-				return this._presionArterial;
-			}
-			set
-			{
-				if ((this._presionArterial != value))
-				{
-					this.OnpresionArterialChanging(value);
-					this.SendPropertyChanging();
-					this._presionArterial = value;
-					this.SendPropertyChanged("presionArterial");
-					this.OnpresionArterialChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_frecuenciaCardiaca", DbType="Int")]
-		public System.Nullable<int> frecuenciaCardiaca
-		{
-			get
-			{
-				return this._frecuenciaCardiaca;
-			}
-			set
-			{
-				if ((this._frecuenciaCardiaca != value))
-				{
-					this.OnfrecuenciaCardiacaChanging(value);
-					this.SendPropertyChanging();
-					this._frecuenciaCardiaca = value;
-					this.SendPropertyChanged("frecuenciaCardiaca");
-					this.OnfrecuenciaCardiacaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_frecuenciaRespiratoria", DbType="Int")]
-		public System.Nullable<int> frecuenciaRespiratoria
-		{
-			get
-			{
-				return this._frecuenciaRespiratoria;
-			}
-			set
-			{
-				if ((this._frecuenciaRespiratoria != value))
-				{
-					this.OnfrecuenciaRespiratoriaChanging(value);
-					this.SendPropertyChanging();
-					this._frecuenciaRespiratoria = value;
-					this.SendPropertyChanged("frecuenciaRespiratoria");
-					this.OnfrecuenciaRespiratoriaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temperatura", DbType="Decimal(4,2)")]
-		public System.Nullable<decimal> temperatura
-		{
-			get
-			{
-				return this._temperatura;
-			}
-			set
-			{
-				if ((this._temperatura != value))
-				{
-					this.OntemperaturaChanging(value);
-					this.SendPropertyChanging();
-					this._temperatura = value;
-					this.SendPropertyChanged("temperatura");
-					this.OntemperaturaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_circCefalica", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> circCefalica
-		{
-			get
-			{
-				return this._circCefalica;
-			}
-			set
-			{
-				if ((this._circCefalica != value))
-				{
-					this.OncircCefalicaChanging(value);
-					this.SendPropertyChanging();
-					this._circCefalica = value;
-					this.SendPropertyChanged("circCefalica");
-					this.OncircCefalicaChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_circAbdominal", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> circAbdominal
-		{
-			get
-			{
-				return this._circAbdominal;
-			}
-			set
-			{
-				if ((this._circAbdominal != value))
-				{
-					this.OncircAbdominalChanging(value);
-					this.SendPropertyChanging();
-					this._circAbdominal = value;
-					this.SendPropertyChanged("circAbdominal");
-					this.OncircAbdominalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_focoFetal", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> focoFetal
-		{
-			get
-			{
-				return this._focoFetal;
-			}
-			set
-			{
-				if ((this._focoFetal != value))
-				{
-					this.OnfocoFetalChanging(value);
-					this.SendPropertyChanging();
-					this._focoFetal = value;
-					this.SendPropertyChanged("focoFetal");
-					this.OnfocoFetalChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_alturaFondoUterino", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> alturaFondoUterino
-		{
-			get
-			{
-				return this._alturaFondoUterino;
-			}
-			set
-			{
-				if ((this._alturaFondoUterino != value))
-				{
-					this.OnalturaFondoUterinoChanging(value);
-					this.SendPropertyChanging();
-					this._alturaFondoUterino = value;
-					this.SendPropertyChanged("alturaFondoUterino");
-					this.OnalturaFondoUterinoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pulso", DbType="Int")]
-		public System.Nullable<int> pulso
-		{
-			get
-			{
-				return this._pulso;
-			}
-			set
-			{
-				if ((this._pulso != value))
-				{
-					this.OnpulsoChanging(value);
-					this.SendPropertyChanging();
-					this._pulso = value;
-					this.SendPropertyChanged("pulso");
-					this.OnpulsoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_saturacionOxigeno", DbType="Decimal(5,2)")]
-		public System.Nullable<decimal> saturacionOxigeno
-		{
-			get
-			{
-				return this._saturacionOxigeno;
-			}
-			set
-			{
-				if ((this._saturacionOxigeno != value))
-				{
-					this.OnsaturacionOxigenoChanging(value);
-					this.SendPropertyChanging();
-					this._saturacionOxigeno = value;
-					this.SendPropertyChanged("saturacionOxigeno");
-					this.OnsaturacionOxigenoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbSignosVitales", Storage="_tbConsulta", ThisKey="codConsulta", OtherKey="codConsulta", IsForeignKey=true)]
-		public tbConsulta tbConsulta
-		{
-			get
-			{
-				return this._tbConsulta.Entity;
-			}
-			set
-			{
-				tbConsulta previousValue = this._tbConsulta.Entity;
-				if (((previousValue != value) 
-							|| (this._tbConsulta.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tbConsulta.Entity = null;
-						previousValue.tbSignosVitales = null;
-					}
-					this._tbConsulta.Entity = value;
-					if ((value != null))
-					{
-						value.tbSignosVitales = this;
-						this._codConsulta = value.codConsulta;
-					}
-					else
-					{
-						this._codConsulta = default(int);
-					}
-					this.SendPropertyChanged("tbConsulta");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbTipoSangre")]
 	public partial class tbTipoSangre : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6782,6 +6367,421 @@ namespace BD_PR_01_Clinicas.Models
 					if ((value != null))
 					{
 						value.tbPlanes = this;
+						this._codConsulta = value.codConsulta;
+					}
+					else
+					{
+						this._codConsulta = default(int);
+					}
+					this.SendPropertyChanged("tbConsulta");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbSignosVitales")]
+	public partial class tbSignosVitales : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _codConsulta;
+		
+		private System.Nullable<decimal> _peso;
+		
+		private System.Nullable<decimal> _talla;
+		
+		private System.Nullable<decimal> _indiceMasaCorporal;
+		
+		private System.Nullable<int> _presionArterial;
+		
+		private System.Nullable<int> _frecuenciaCardiaca;
+		
+		private System.Nullable<int> _frecuenciaRespiratoria;
+		
+		private System.Nullable<decimal> _temperatura;
+		
+		private System.Nullable<decimal> _circCefalica;
+		
+		private System.Nullable<decimal> _circAbdominal;
+		
+		private System.Nullable<decimal> _focoFetal;
+		
+		private System.Nullable<decimal> _alturaFondoUterino;
+		
+		private System.Nullable<int> _pulso;
+		
+		private System.Nullable<decimal> _saturacionOxigeno;
+		
+		private EntityRef<tbConsulta> _tbConsulta;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodConsultaChanging(int value);
+    partial void OncodConsultaChanged();
+    partial void OnpesoChanging(System.Nullable<decimal> value);
+    partial void OnpesoChanged();
+    partial void OntallaChanging(System.Nullable<decimal> value);
+    partial void OntallaChanged();
+    partial void OnindiceMasaCorporalChanging(System.Nullable<decimal> value);
+    partial void OnindiceMasaCorporalChanged();
+    partial void OnpresionArterialChanging(System.Nullable<int> value);
+    partial void OnpresionArterialChanged();
+    partial void OnfrecuenciaCardiacaChanging(System.Nullable<int> value);
+    partial void OnfrecuenciaCardiacaChanged();
+    partial void OnfrecuenciaRespiratoriaChanging(System.Nullable<int> value);
+    partial void OnfrecuenciaRespiratoriaChanged();
+    partial void OntemperaturaChanging(System.Nullable<decimal> value);
+    partial void OntemperaturaChanged();
+    partial void OncircCefalicaChanging(System.Nullable<decimal> value);
+    partial void OncircCefalicaChanged();
+    partial void OncircAbdominalChanging(System.Nullable<decimal> value);
+    partial void OncircAbdominalChanged();
+    partial void OnfocoFetalChanging(System.Nullable<decimal> value);
+    partial void OnfocoFetalChanged();
+    partial void OnalturaFondoUterinoChanging(System.Nullable<decimal> value);
+    partial void OnalturaFondoUterinoChanged();
+    partial void OnpulsoChanging(System.Nullable<int> value);
+    partial void OnpulsoChanged();
+    partial void OnsaturacionOxigenoChanging(System.Nullable<decimal> value);
+    partial void OnsaturacionOxigenoChanged();
+    #endregion
+		
+		public tbSignosVitales()
+		{
+			this._tbConsulta = default(EntityRef<tbConsulta>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codConsulta", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int codConsulta
+		{
+			get
+			{
+				return this._codConsulta;
+			}
+			set
+			{
+				if ((this._codConsulta != value))
+				{
+					if (this._tbConsulta.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodConsultaChanging(value);
+					this.SendPropertyChanging();
+					this._codConsulta = value;
+					this.SendPropertyChanged("codConsulta");
+					this.OncodConsultaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_peso", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> peso
+		{
+			get
+			{
+				return this._peso;
+			}
+			set
+			{
+				if ((this._peso != value))
+				{
+					this.OnpesoChanging(value);
+					this.SendPropertyChanging();
+					this._peso = value;
+					this.SendPropertyChanged("peso");
+					this.OnpesoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_talla", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> talla
+		{
+			get
+			{
+				return this._talla;
+			}
+			set
+			{
+				if ((this._talla != value))
+				{
+					this.OntallaChanging(value);
+					this.SendPropertyChanging();
+					this._talla = value;
+					this.SendPropertyChanged("talla");
+					this.OntallaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_indiceMasaCorporal", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> indiceMasaCorporal
+		{
+			get
+			{
+				return this._indiceMasaCorporal;
+			}
+			set
+			{
+				if ((this._indiceMasaCorporal != value))
+				{
+					this.OnindiceMasaCorporalChanging(value);
+					this.SendPropertyChanging();
+					this._indiceMasaCorporal = value;
+					this.SendPropertyChanged("indiceMasaCorporal");
+					this.OnindiceMasaCorporalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_presionArterial", DbType="Int")]
+		public System.Nullable<int> presionArterial
+		{
+			get
+			{
+				return this._presionArterial;
+			}
+			set
+			{
+				if ((this._presionArterial != value))
+				{
+					this.OnpresionArterialChanging(value);
+					this.SendPropertyChanging();
+					this._presionArterial = value;
+					this.SendPropertyChanged("presionArterial");
+					this.OnpresionArterialChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_frecuenciaCardiaca", DbType="Int")]
+		public System.Nullable<int> frecuenciaCardiaca
+		{
+			get
+			{
+				return this._frecuenciaCardiaca;
+			}
+			set
+			{
+				if ((this._frecuenciaCardiaca != value))
+				{
+					this.OnfrecuenciaCardiacaChanging(value);
+					this.SendPropertyChanging();
+					this._frecuenciaCardiaca = value;
+					this.SendPropertyChanged("frecuenciaCardiaca");
+					this.OnfrecuenciaCardiacaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_frecuenciaRespiratoria", DbType="Int")]
+		public System.Nullable<int> frecuenciaRespiratoria
+		{
+			get
+			{
+				return this._frecuenciaRespiratoria;
+			}
+			set
+			{
+				if ((this._frecuenciaRespiratoria != value))
+				{
+					this.OnfrecuenciaRespiratoriaChanging(value);
+					this.SendPropertyChanging();
+					this._frecuenciaRespiratoria = value;
+					this.SendPropertyChanged("frecuenciaRespiratoria");
+					this.OnfrecuenciaRespiratoriaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_temperatura", DbType="Decimal(4,2)")]
+		public System.Nullable<decimal> temperatura
+		{
+			get
+			{
+				return this._temperatura;
+			}
+			set
+			{
+				if ((this._temperatura != value))
+				{
+					this.OntemperaturaChanging(value);
+					this.SendPropertyChanging();
+					this._temperatura = value;
+					this.SendPropertyChanged("temperatura");
+					this.OntemperaturaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_circCefalica", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> circCefalica
+		{
+			get
+			{
+				return this._circCefalica;
+			}
+			set
+			{
+				if ((this._circCefalica != value))
+				{
+					this.OncircCefalicaChanging(value);
+					this.SendPropertyChanging();
+					this._circCefalica = value;
+					this.SendPropertyChanged("circCefalica");
+					this.OncircCefalicaChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_circAbdominal", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> circAbdominal
+		{
+			get
+			{
+				return this._circAbdominal;
+			}
+			set
+			{
+				if ((this._circAbdominal != value))
+				{
+					this.OncircAbdominalChanging(value);
+					this.SendPropertyChanging();
+					this._circAbdominal = value;
+					this.SendPropertyChanged("circAbdominal");
+					this.OncircAbdominalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_focoFetal", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> focoFetal
+		{
+			get
+			{
+				return this._focoFetal;
+			}
+			set
+			{
+				if ((this._focoFetal != value))
+				{
+					this.OnfocoFetalChanging(value);
+					this.SendPropertyChanging();
+					this._focoFetal = value;
+					this.SendPropertyChanged("focoFetal");
+					this.OnfocoFetalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_alturaFondoUterino", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> alturaFondoUterino
+		{
+			get
+			{
+				return this._alturaFondoUterino;
+			}
+			set
+			{
+				if ((this._alturaFondoUterino != value))
+				{
+					this.OnalturaFondoUterinoChanging(value);
+					this.SendPropertyChanging();
+					this._alturaFondoUterino = value;
+					this.SendPropertyChanged("alturaFondoUterino");
+					this.OnalturaFondoUterinoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pulso", DbType="Int")]
+		public System.Nullable<int> pulso
+		{
+			get
+			{
+				return this._pulso;
+			}
+			set
+			{
+				if ((this._pulso != value))
+				{
+					this.OnpulsoChanging(value);
+					this.SendPropertyChanging();
+					this._pulso = value;
+					this.SendPropertyChanged("pulso");
+					this.OnpulsoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_saturacionOxigeno", DbType="Decimal(5,2)")]
+		public System.Nullable<decimal> saturacionOxigeno
+		{
+			get
+			{
+				return this._saturacionOxigeno;
+			}
+			set
+			{
+				if ((this._saturacionOxigeno != value))
+				{
+					this.OnsaturacionOxigenoChanging(value);
+					this.SendPropertyChanging();
+					this._saturacionOxigeno = value;
+					this.SendPropertyChanged("saturacionOxigeno");
+					this.OnsaturacionOxigenoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbConsulta_tbSignosVitales", Storage="_tbConsulta", ThisKey="codConsulta", OtherKey="codConsulta", IsForeignKey=true)]
+		public tbConsulta tbConsulta
+		{
+			get
+			{
+				return this._tbConsulta.Entity;
+			}
+			set
+			{
+				tbConsulta previousValue = this._tbConsulta.Entity;
+				if (((previousValue != value) 
+							|| (this._tbConsulta.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbConsulta.Entity = null;
+						previousValue.tbSignosVitales = null;
+					}
+					this._tbConsulta.Entity = value;
+					if ((value != null))
+					{
+						value.tbSignosVitales = this;
 						this._codConsulta = value.codConsulta;
 					}
 					else

@@ -14,12 +14,8 @@
         <li role="presentation" class="active"><a href="#paciente" role="tab" data-toggle="tab">Paciente</a></li>
         <li role="presentation"><a href="#patologicos" role="tab" data-toggle="tab">Patológicos</a></li>
         <li role="presentation"><a href="#nPatologicos" role="tab" data-toggle="tab">No Patológicos</a></li>
-        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
         <li role="presentation"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
-        <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
-        <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
-        <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
-        <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
+        <li role="presentation"><a href="#consultas" role="tab" data-toggle="tab">Consultas</a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -27,182 +23,847 @@
 
         <div role="tabpanel" class="tab-pane active" id="paciente">
             <h2>Datos Generales del Paciente</h2>
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayName("Nombre")
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.paciente.nombre)
-                </dd>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Nombre</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.nombre)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Genero")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Genero</label>
+                        </div>
+                        @if (Model.paciente.genero == true)
+                        {
+                            <div class="col-md-9 text-left">
+                                Masculino
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-9 text-left">
+                                Femenino
+                            </div>
+                        }
+                    </div>
+                </li>
 
-                @if (Model.paciente.genero == true)
-                {
-                    <dd>
-                        Masculino
-                    </dd>
-                }
-                else
-                {
-                    <dd>
-                        Femenino
-                    </dd>
-                }
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Fecha de Nacimiento</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Model.paciente.fechaNacimiento.Value.ToLongDateString()
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Fecha Nacimiento")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Estado Civil</label>
+                        </div>
+                        @if (Model.paciente.genero == true)
+                        {
+                            <div class="col-md-9 text-left">
+                                Soltero
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-9 text-left">
+                                Casado
+                            </div>
+                        }
+                    </div>
+                </li>
 
-                <dd>
-                    @Model.paciente.fechaNacimiento.Value.ToShortDateString()
-                </dd>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Residencia</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.residencia)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Estado Civil")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Procedencia</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.procedencia)
+                        </div>
+                    </div>
+                </li>
 
-                @if (Model.paciente.estadoCivil == true)
-                {
-                    <dd>
-                        Soltero
-                    </dd>
-                }
-                else
-                {
-                    <dd>
-                        Casado
-                    </dd>
-                }
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Religíon</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.religion)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Residencia")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Profesión</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.profesion)
+                        </div>
+                    </div>
+                </li>
 
-                <dd>
-                    @Html.DisplayFor(model => model.paciente.residencia)
-                </dd>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Raza/Etnia</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.razaEtnia)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Procedencia")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Escolaridad</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.escolaridad)
+                        </div>
+                    </div>
+                </li>
 
-                <dd>
-                    @Html.DisplayFor(model => model.paciente.procedencia)
-                </dd>
-
-                <dt>
-                    @Html.DisplayName("Religíon")
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.paciente.religion)
-                </dd>
-            </dl>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Tipo de Sangre</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.tbTipoSangre.tipoSangre)
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="patologicos">
             <h2>Antecedentes Patológicos</h2>
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayName("Padre")
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.padre)
-                </dd>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Padre</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.padre)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Madre")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Madre</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.madre)
+                        </div>
+                    </div>
+                </li>
 
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.madre)
-                </dd>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Médicos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.medicos)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Médicos")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Quirurgicos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.quirurgicos)
+                        </div>
+                    </div>
+                </li>
 
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.medicos)
-                </dd>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Traumaticos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.traumaticos)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Quirurgicos")
-                </dt>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Alérgicos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.alergicos)
+                        </div>
+                    </div>
+                </li>
 
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.quirurgicos)
-                </dd>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Gineco-Obstetricos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.ginecoObstetricos)
+                        </div>
+                    </div>
+                </li>
 
-                <dt>
-                    @Html.DisplayName("Traumaticos")
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.traumaticos)
-                </dd>
-
-                <dt>
-                    @Html.DisplayName("Alérgicos")
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.alergicos)
-                </dd>
-
-                <dt>
-                    @Html.DisplayName("Vicios y Manías")
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.patologicos.viciosManias)
-                </dd>
-            </dl>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Vicios y Manías</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.patologicos.viciosManias)
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="nPatologicos">
             <h2>Antecedentes No Patológicos</h2>
-            
-        </div>
 
-        <div role="tabpanel" class="tab-pane" id="revision">
-            <h2>Revisión por Sistemas</h2>
-            
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Prenatal</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.noPatologicos.prenatal)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Natal</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.noPatologicos.natal)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Posnatal</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.noPatologicos.posnatal)
+                        </div>
+                    </div>
+                </li>
+
+                @if (Model.desarrollo != null)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Desarrollo</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#desarrollo">
+                                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver Desarrollo
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                }
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Inmunizaciones</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.noPatologicos.inmunizaciones)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Alimentación</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.noPatologicos.alimentacion)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Hábitos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.noPatologicos.habitos)
+                        </div>
+                    </div>
+                </li>
+
+                @if (Model.paciente.genero == false && Model.mujeres != null)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Menarquia</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.menarquia)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Ritmo</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @if (Model.mujeres.ritmo != null)
+                                {
+                                    if (Model.mujeres.ritmo == true)
+                                    {
+                                        <p>Regular</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Irregular</p>
+                                    }
+                                }
+                                else
+                                {
+                                    <p>nulo</p>
+                                }
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>FUR</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.ultimaRegla)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Número Gestas</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.numGestas)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Partos</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.partos)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Cesareas</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.cesareas)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Abortos</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.abortos)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Hijos Vivos</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.hijosVivos)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Hijos Muertos</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.hijosMuertos)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Método Planificación</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.mujeres.metodoPlanificacion)
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="perfil">
             <h2>Perfil Social</h2>
-            
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Estilo de vida</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.estiloVida)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Vivienda</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.vivienda)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Situación Familiar</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.situacionFamiliar)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Ingreso Económico</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.ingresoEconomico)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Animales</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.animales)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Tendencia Sexual</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.tendenciaSexual)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Punto de Vista</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.perfilSocial.puntoVista)
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="signos">
-            <h2>Signos Vitales</h2>
+        <div role="tabpanel" class="tab-pane" id="consultas">
+            <h2>Consultas</h2>
             
-        </div>
+            <ul id="facturador-detalle" class="list-group">
+                <li class="list-group-item list-group-item-heading list-group-item-info">
+                    <div class="row">
+                        <div class="col-xs-2 text-left">
+                            <b>Motivo de Consulta</b>
+                        </div>
+                        <div class="col-xs-2 text-left">
+                            <b>Fecha de Atención</b>
+                        </div>
+                        <div class="col-xs-2"></div>
+                    </div>
+                </li>
+                @foreach (var item in Model.consultas)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-2 text-left">
+                                @item.motivoConsulta
+                            </div>
+                            <div class="col-xs-2 text-left">
+                                @item.fechaLlegada.Value.ToLongDateString()
+                            </div>
+                            <div class="col-xs-2 text-center">
+                                <a href="@Url.Action("VerConsulta", new { codConsulta = item.codConsulta })" class="btn btn-info btn-xs">
+                                    <span class="glyphicon glyphicon-eye-open"></span> Ver
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                }
 
-        <div role="tabpanel" class="tab-pane" id="problemas">
-            <h2>Listado de Problemas</h2>
-            
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="planes">
-            <h2>Plan y Diagnostico Diferencial</h2>
-            
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="diagnostico">
-            <h2>Diagnostico Final</h2>
-            
+            </ul>
         </div>
     </div>
-
 </div>
 
-<p>
-    @Html.ActionLink("Regresar", "Index")
-</p>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>
+
+
+<!-- modal para lista de desarrollo-->
+<div class="modal fade" id="desarrollo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Desarrollo</h4>
+            </div>
+            <div class="modal-body" id="medicamentos">
+                <!--Body-->
+                @if (Model.desarrollo != null)
+                {
+                    <ul class="list-group">
+                        @*Fila de titulos*@
+                        <li class="list-group-item list-group-item-heading list-group-item-info">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>Edad (Meses)</b>
+                                </div>
+                                <div class="col-md-10 text-center">
+                                    <b>Hito</b>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>1</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>Levanta la cabeza</p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.uno == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>2</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>Eleva el torax</p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.dos == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>3</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>Intenta agarrar objetos, pero no lo consigue</p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.tres == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>4</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>Se sostiene sentado, pero no lo consigue</p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.cuatro == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>5</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>agarra objetos</p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.cinco == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>6</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>Aguanta sentado en una silla y aguanta objetos con mayor precisión</p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.seis == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>7</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>
+                                        Aguanta sentado en una silla y aguanta objetos con mayor precisión,
+                                        Se Destapa,
+                                        Se pasa los objetos de mano y manipula,
+                                        Si alguien lo sienta se mantiene sentado,
+                                    </p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.siete == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>8</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>
+                                        Gatea,
+                                        Juega a lanzar objetos,
+                                        Extiende los brazos para que lo Levanten
+                                    </p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.ocho == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>9</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>
+                                        Se pone de pie con apoyo,
+                                        Juega a taparse y destaparse,
+                                        Imita gestos con las manos
+                                    </p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.nueve == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>10</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>
+                                        Se pone de pie apoyándose,
+                                        Hace una pinza con índice y pulgar,
+                                        Mete y saca un objeto de un recipiente
+                                    </p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.diez == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>11</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>
+                                        Realiza los primeros pasos apoyándose,
+                                        Señala con el índice y entiende algunas palabras,
+                                        Entrega objetos
+                                    </p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.oncee == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-1 text-center">
+                                    <b>12</b>
+                                </div>
+                                <div class="col-md-10 text-left">
+                                    <p>
+                                        Se mantiene de pie sin apoyo,
+                                        Baila al oír música,
+                                        Mira su imagen en un espejo
+                                    </p>
+                                </div>
+                                <div class="col-md-1">
+                                    @if (Model.desarrollo.doce == true)
+                                    { <p>Si</p> }
+                                    else
+                                    { <p> No </p> }
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

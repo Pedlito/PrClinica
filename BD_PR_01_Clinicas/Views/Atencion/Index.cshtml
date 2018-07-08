@@ -7,55 +7,70 @@
 <h2>Lista de Pacientes</h2>
 
 <p>
-    @Html.ActionLink("Nueva Consulta", "Crear")
+    <a href="@Url.Action("Crear")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span> Nueva Consulta
+    </a>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Nombre")
-        </th>
-        <th> 
-            @Html.DisplayName("Fecha Nacimiento")
-        </th>                
-        <th>                 
-            @Html.DisplayName("Estado Civil")
-        </th> 
-        <th> 
-            @Html.DisplayName("Residencia")
-        </th>
-        <th></th>
-    </tr>
+<table class="table table-hover">
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Nombre")
+            </th>
+            <th>
+                @Html.DisplayName("Fecha Nacimiento")
+            </th>
+            <th>
+                @Html.DisplayName("Estado Civil")
+            </th>
+            <th>
+                @Html.DisplayName("Residencia")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.nombre)
-        </td>
-        <td>
-            @item.fechaNacimiento.Value.ToShortDateString()
-        </td>
-            @if (item.estadoCivil.Value)
-            {
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
                 <td>
-                    Soltero
+                    @Html.DisplayFor(modelItem => item.nombre)
                 </td>
-            }
-            else
-            {
                 <td>
-                    Casado
+                    @item.fechaNacimiento.Value.ToShortDateString()
                 </td>
-            }
-        <td>
-            @Html.DisplayFor(modelItem => item.residencia)
-        </td>
-        <td>
-            @Html.ActionLink("Atender", "CrearHC", new { codPaciente = item.codPaciente }) |
-            @Html.ActionLink("Editar", "Editar", new { codConsulta = item.codPaciente }) |
-            @Html.ActionLink("Detalles", "Detalles", new { codConsulta = item.codPaciente }) |
-            @Html.ActionLink("Cancelar", "Cancelar", new { codConsulta = item.codPaciente })
-        </td>
-    </tr>
-}
+                @if (item.estadoCivil.Value)
+                {
+                    <td>
+                        Soltero
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Casado
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.residencia)
+                </td>
+                <td>
+                    <a href="@Url.Action("CrearHC", new { codPaciente = item.codPaciente })" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-copy"></span> Atender
+                    </a>
+                    <a href="@Url.Action("Cancelar", new { codConsulta = item.codPaciente })" class="btn btn-danger btn-xs">
+                        <span class="glyphicon glyphicon-trash"></span> Cancelar
+                    </a>
+                </td>
+            </tr>
+        }
+</tbody>
 
 </table>
+
+<p>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</p>

@@ -43,14 +43,18 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Crear" class="btn btn-success" onclick="Guardar()"/>
+                <button type="button" class="btn btn-success" onclick="Guardar()">
+                    <span class="glyphicon glyphicon-plus"></span> Crear
+                </button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>
 
 <!-- modal para Pacientes-->
@@ -101,7 +105,7 @@
                     <div class="form-group">
                         @Html.Label("Genero", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <label class="radio-inline"><input type="radio" name="genero" value="1">Masculino</label>
+                            <label class="radio-inline"><input type="radio" name="genero" value="1">Masculino </label>
                             <label class="radio-inline"><input type="radio" name="genero" value="0">Femenino</label>
                         </div>
                     </div>
@@ -116,7 +120,7 @@
                     <div class="form-group">
                         @Html.Label("Estado Civil", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <label class="radio-inline"><input type="radio" name="estadoCivil" value="1">Soltero</label>
+                            <label class="radio-inline"><input type="radio" name="estadoCivil" value="1">Soltero </label>
                             <label class="radio-inline"><input type="radio" name="estadoCivil" value="0">Casado</label>
                         </div>
                     </div>
@@ -224,10 +228,10 @@
 
         function CrearPaciente() {
             var paciente = {
-                "nombre": (document.getElementById("nombre").value == "1") ? true : false,
-                "genero": ($('#genero').val() == "1") ? true : false,
+                "nombre": $('#nombre').val(),
+                "genero": ($('input[name=genero]:checked').val() == "1") ? true : false,
                 "fechaNacimiento": $('#fechaNacimiento').val(),
-                "estadoCivil": ($('#estadoCivil').val() == "1") ? true : false,
+                "estadoCivil": ($('input[name=estadoCivil]:checked').val() == "1") ? true : false,
                 "residencia": $('#residencia').val(),
                 "procedencia": $('#procedencia').val(),
                 "religion": $('#religion').val(),

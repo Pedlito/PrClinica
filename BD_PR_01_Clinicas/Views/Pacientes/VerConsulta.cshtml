@@ -1,0 +1,513 @@
+﻿@model BD_PR_01_Clinicas.Models.consultas
+
+@{
+    ViewBag.Title = "VerConsulta";
+}
+
+<div class="page-header">
+    <h1>Consulta <small>@Model.consulta.tbPaciente.nombre</small></h1>
+</div>
+
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#consulta" role="tab" data-toggle="tab">Consulta</a></li>
+        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
+        <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
+        <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
+        <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
+        <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active" id="consulta">
+            <h2>Datos de la Consulta</h2>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Motivo de la Consulta</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.consulta.motivoConsulta)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Historia de la Enfermedad</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.consulta.HistoriaEnfermedad)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Fecha de Consulta</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Model.consulta.fechaLlegada.Value.ToLongDateString()
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="revision">
+            <h2>Revision por Sistemas</h2>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Conducta</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.conducta)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Piel y Faneras</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.piel)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Cabeza</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.cabeza)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Ojos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.ojos)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Oídos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.oidos)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Nariz</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.nariz)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Vicios y Manias</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.revision.vicios)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="signos">
+            <h2>Signos Vitales</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Peso</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.peso)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Talla</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.talla)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Indice de Masa Corporal</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.indiceMasaCorporal)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Presión Arterial</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.presionArterial)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Frecuencia Cardiaca</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.frecuenciaCardiaca)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Frecuencia Respiratoria</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.frecuenciaRespiratoria)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Temperatura</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.temperatura)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Circunferencia Cefálica</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.circCefalica)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Circunferencia Abdominal</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.circAbdominal)
+                        </div>
+                    </div>
+                </li>
+
+                @if (Model.consulta.tbPaciente.genero == false)
+                {
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Foco Fetal</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.signos.focoFetal)
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                <label>Altura de Fondo Uterino</label>
+                            </div>
+                            <div class="col-md-9 text-left">
+                                @Html.DisplayFor(model => model.signos.alturaFondoUterino)
+                            </div>
+                        </div>
+                    </li>
+                }
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Pulso</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.pulso)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Saturación de Oxigeno</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.signos.saturacionOxigeno)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="problemas">
+            <h2>Listado de Problemas</h2>
+
+            <ul class="list-group">
+                @*Fila de titulos*@
+                <li class="list-group-item list-group-item-heading list-group-item-info">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <b>Problema</b>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <b>Datos Subjetivos</b>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <b>Datos Objetivos</b>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <b>Analisis</b>
+                        </div>
+                    </div>
+                </li>
+
+                @foreach (var item in Model.problemas)
+                {
+                    //Contenido
+                    <li class="list-group-item">
+
+                        <div class="row">
+                            <div class="col-md-3 text-left">
+                                @Html.DisplayFor(modelItem => item.problema)
+                            </div>
+                            <div class="col-md-3 text-left">
+                                @Html.DisplayFor(modelItem => item.subjetivos)
+                            </div>
+                            <div class="col-md-3 text-left">
+                                @Html.DisplayFor(modelItem => item.objetivos)
+                            </div>
+                            <div class="col-md-3 text-left">
+                                @Html.DisplayFor(modelItem => item.analisis)
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="planes">
+            <h2>Plan y Diagnostico Diferencial</h2>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Plan Inicial</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.planes.planInicial)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Plan Diagnostico</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.planes.planDiagnostico)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Diagnostico Diferencial</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.planes.diagnosticoDiferencial)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Plan Educacional</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.planes.planEducacional)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+
+            <hr />
+
+            <h3>Plan Terapeutico</h3>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Actividad</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.terapeutico.actividad)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Dieta</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.terapeutico.dieta)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Receta</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            <button type="button" class="btn btn-xs btn-info">
+                                <span class="glyphicon glyphicon-eye-open"></span> Ver Receta
+                            </button>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Controles Especificos</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.terapeutico.controlesEspecificos)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Otras Terapias</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.terapeutico.otrasTerapias)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="diagnostico">
+            <h2>Diagnostico Final</h2>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Impresión Clínica</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.diagnostico.impresionClinica)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Médico</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.diagnostico.tbUsuario.nombre)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Fecha</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Model.diagnostico.fecha.Value.ToLongDateString()
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Hora</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Model.diagnostico.fecha.Value.ToShortTimeString()
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("HistoriaClinica", new { codPaciente = Model.codPaciente })" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar a Paciente
+    </a>
+</div>
+

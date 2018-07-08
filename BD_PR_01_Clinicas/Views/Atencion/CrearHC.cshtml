@@ -1,21 +1,22 @@
-﻿@model BD_PR_01_Clinicas.Models.tbConsulta
+﻿@model BD_PR_01_Clinicas.Models.HistoriaClinica
 
 @{
     ViewBag.Title = "Crear";
 }
 @*@Model.tbPaciente.nombre*@
 <div class="page-header">
-    <h1>Historia Clinica <small>nombre del paciente</small></h1>
+    <h1>Historia Clinica <small>@Model.paciente.nombre</small></h1>
 </div>
 
 <div>
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#paciente" role="tab" data-toggle="tab">Paciente</a></li>
+        <li role="presentation"><a href="#consulta" role="tab" data-toggle="tab">Consulta</a></li>
         <li role="presentation"><a href="#patologicos" role="tab" data-toggle="tab">Patológicos</a></li>
         <li role="presentation"><a href="#nPatologicos" role="tab" data-toggle="tab">No Patológicos</a></li>
-        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
         <li role="presentation"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
+        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
         <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
         <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
         <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
@@ -36,96 +37,117 @@
                         <div class="form-group">
                             @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.nombre, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Genero", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @if (Model.tbPaciente.genero.Value == true)
-                                {
-                                    <label class="radio-inline"><input type="radio" name="genero" value="1" checked>Masculino</label>
-                                    <label class="radio-inline"><input type="radio" name="genero" value="0">Femenino</label>
-                                }
-                                else
-                                {
-                                    <label class="radio-inline"><input type="radio" name="genero" value="1">Masculino</label>
-                                    <label class="radio-inline"><input type="radio" name="genero" value="0" checked>Femenino</label>
-                                }
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.paciente.genero, true)Masculino</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.paciente.genero, false)Femenino</label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                <input type="date" id="fechaNacimiento" class="form-control" value="@Model.tbPaciente.fechaNacimiento"/>
+                                <input type="date" id="fechaNacimiento" class="form-control" value='@Model.paciente.fechaNacimiento.Value.ToString("yyy-MM-dd")'/>
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Estado Civil", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @if (Model.tbPaciente.estadoCivil.Value == true)
-                                {
-                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="1" checked>Soltero</label>
-                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="0">Casado</label>
-                                }
-                                else
-                                {
-                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="1">Soltero</label>
-                                    <label class="radio-inline"><input type="radio" name="estadoCivil" value="0" checked>Casado</label>
-                                }
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.paciente.estadoCivil, true)Soltero</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.paciente.estadoCivil, false)Casado</label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Residencia", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.residencia, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.residencia, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Procedencia", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.procedencia, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.procedencia, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Religíon", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.religion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.religion, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Profesión", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.profesion, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.profesion, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Raza/Etnia", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.razaEtnia, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.razaEtnia, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Escolaridad", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.EditorFor(model => model.tbPaciente.escolaridad, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(model => model.paciente.escolaridad, new { htmlAttributes = new { @class = "form-control" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Tipo de Sangre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                               @Html.DropDownList("codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
+                               @Html.DropDownList("paciente_codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="consulta">
+            <h2>Consulta</h2>
+            <form>
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        @Html.Label("Motivo de Consulta", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.consulta.motivoConsulta, new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Historia Enfermedad", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.consulta.HistoriaEnfermedad, new { @class = "form-control", rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Fecha Llegada", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="date" id="fechaLlegada" value="@Model.consulta.fechaLlegada.Value.ToString("yyy-MM-dd")" readonly class="form-control"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.Label("Hora Llegada", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="time" id="fechaLlegada" value="@Model.consulta.fechaLlegada.Value.ToShortTimeString()" readonly class="form-control" />
                         </div>
                     </div>
                 </div>
@@ -143,56 +165,56 @@
                         <div class="form-group">
                             @Html.Label("Padre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("padre", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.padre, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Madre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("madre", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.madre, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Médicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("medicos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.medicos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Quirúrgicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("quirurgicos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.quirurgicos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Traumáticos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("traumaticos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.traumaticos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Alérgicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("alergicos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.alergicos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Gineco-Obstétricos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("ginecoObstetricos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.ginecoObstetricos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Vicios y Manias", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("viciosManias", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.viciosManias, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
                     </div>
@@ -211,21 +233,21 @@
                         <div class="form-group">
                             @Html.Label("Prenatal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("prenatal", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.prenatal, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Natal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("natal", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.natal, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Posnatal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("posnatal", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.posnatal, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
@@ -239,25 +261,25 @@
                         <div class="form-group">
                             @Html.Label("Inmunizaciónes", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("inmunizaciones", new { @class = "form-control",  rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.inmunizaciones, new { @class = "form-control",  rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Alimentación", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("alimentacion", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.alimentacion, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Hábitos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("habitos", new { @class = "form-control",  rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.habitos, new { @class = "form-control",  rows = "4" })
                             </div>
                         </div>
 
-                        @if (Model.tbPaciente.genero == false)
+                        @if (Model.paciente.genero == false)
                         {
                             <div class="form-group">
                                 @Html.Label("Gineco-Obstetricos", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -282,49 +304,49 @@
                         <div class="form-group">
                             @Html.Label("Conducta", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("conducta", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.conducta, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Piel y faneras", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("piel", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.piel, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Cabeza", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("cabeza", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.cabeza, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Ojos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("ojos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.ojos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Oídos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("oidos", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.oidos, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("nariz", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("nariz", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.nariz, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Vicios y Manias", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextArea("vicios", new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.vicios, new { @class = "form-control", rows = "4" })
                             </div>
                         </div>
                     </div>
@@ -341,49 +363,49 @@
                     <div class="form-group">
                         @Html.Label("Estilo de Vida", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("estiloVida", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.estiloVida, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Vivienda", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("vivienda", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.vivienda, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Situacion Familiar", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("situacionFamiliar", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.situacionFamiliar, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Ingreso Económico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("ingresoEconomico", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.ingresoEconomico, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Animales", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("animales", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.animales, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Tendencia Sexual", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("tendenciaSexual", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.tendenciaSexual, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Punto de vista", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("puntoVista", new { @class = "form-control", placeholder = "Punto de vista acerca de su estado de salud", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.puntoVista, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
                 </div>
@@ -399,91 +421,94 @@
                     <div class="form-group">
                         @Html.Label("Peso", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("peso", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.peso, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Talla", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("talla", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.talla, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Indice de Masa Corporal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("indiceMasaCorporal", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.indiceMasaCorporal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Presión Arterial", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("presionArterial", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.presionArterial, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Cardiaca", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("frecuenciaCardiaca", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.frecuenciaCardiaca, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Respiratoria", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("frecuenciaRespiratoria", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.frecuenciaRespiratoria, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Temperatura", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("temperatura", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.temperatura, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Cefálica", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("circCefalica", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.circCefalica, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Abdominal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("circAbdominal", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.circAbdominal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        @Html.Label("Foco Fetal", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.Editor("focoFetal", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                    @if (Model.paciente.genero == false)
+                    {
+                        <div class="form-group">
+                            @Html.Label("Foco Fetal", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.signos.focoFetal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        @Html.Label("Altura de Fondo Uterino", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.Editor("alturaFondoUterino", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                        <div class="form-group">
+                            @Html.Label("Altura de Fondo Uterino", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.EditorFor(model => model.signos.alturaFondoUterino, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            </div>
                         </div>
-                    </div>
+                    }
 
                     <div class="form-group">
                         @Html.Label("Pulso", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("pulso", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.pulso, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Saturación de Oxigeno", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.Editor("saturacionOxigeno", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.saturacionOxigeno, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
                 </div>
@@ -517,28 +542,28 @@
                     <div class="form-group">
                         @Html.Label("Plan Inicial", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("planInicial", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.planInicial, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Plan Diagnostico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("planDiagnostico", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.planDiagnostico, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Diagnostico Diferencial", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("diagnosticoDiferencial", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.diagnosticoDiferencial, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Plan Educacional", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("planEducacional", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.planEducacional, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
@@ -548,14 +573,14 @@
                     <div class="form-group">
                         @Html.Label("Actividad", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("actividad", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.actividad, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Dieta", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("dieta", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.dieta, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
@@ -569,14 +594,14 @@
                     <div class="form-group">
                         @Html.Label("Controles Especificos", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("controlesEspecificos", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.controlesEspecificos, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Otras Terapias", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("otrasTerapias", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.otrasTerapias, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
                 </div>
@@ -592,14 +617,14 @@
                     <div class="form-group">
                         @Html.Label("Impresión Clínica", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("impresion", new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.diagnostico.impresionClinica, new { @class = "form-control", rows = "4" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Médico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("codUsuario", null, "Seleccione una Médico", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("diagnostico_codUsuario", null, "Seleccione una Médico", htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -609,10 +634,19 @@
 
 </div>
 
-<div class="form-group">
-    <button type="button" onclick="guardar()" class="btn btn-success btn-lg">
-        <span class="glyphicon glyphicon-save" aria-hidden="true"></span> Guardar Historia Clinica
-    </button>
+
+<div class="form-inline">
+    <div class="form-group">
+        <button type="button" onclick="guardar()" class="btn btn-success btn-lg">
+            <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> Guardar Historia Clinica
+        </button>
+    </div>
+
+    <div class="form-group">
+        <a href="@Url.Action("Index")" class="btn btn-danger btn-lg">
+            <span class="glyphicon glyphicon-floppy-remove"></span> Cancelar
+        </a>
+    </div>
 </div>
 
 <!-- modal para formulario de meses-->
@@ -644,13 +678,13 @@
                                 1
                             </td>
                             <td>
-                                <p>Intenta agarrar objetos, pero no lo consigue</p>
+                                <p>Levanta la cabeza</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="uno" value ="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.uno, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="uno" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.uno, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -658,13 +692,13 @@
                                 2
                             </td>
                             <td>
-                                <p>Se sostiene sentado, pero no lo consigue</p>
+                                <p>Eleva el torax</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" id="dos" name="dos" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.dos, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" id="dos" name="dos" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.dos, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -672,13 +706,13 @@
                                 3 
                             </td>
                             <td>
-                                <p>Se sostiene sentado, pero no lo consigue</p>
+                                <p>Intenta agarra objetos, pero no lo consigue</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="tres" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.tres, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="tres" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.tres, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -689,10 +723,10 @@
                                 <p>Se sostiene sentado, pero no lo consigue</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="cuatro" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.cuatro, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="cuatro" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.cuatro, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -703,10 +737,10 @@
                                 <p>agarra objetos</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="cinco" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.cinco, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="cinco" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.cinco, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -717,10 +751,10 @@
                                 <p>Aguanta sentado en una silla y aguanta objetos con mayor precisión</p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="seis" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.seis, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="seis" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.seis, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -736,10 +770,10 @@
                                 </p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="siete" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.siete, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="siete" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.siete, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -754,10 +788,10 @@
                                 </p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="ocho" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.ocho, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="ocho" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.ocho, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -772,10 +806,10 @@
                                 </p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="nueve" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.nueve, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="nueve" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.nueve, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -790,10 +824,10 @@
                                 </p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="diez" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.diez, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="diez" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.diez, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -808,10 +842,10 @@
                                 </p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="once" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.oncee, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="once" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.oncee, false)No</label>
                             </td>
                         </tr>
                         <tr>
@@ -826,10 +860,10 @@
                                 </p>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="doce" value="1">Si</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.doce, true)Si</label>
                             </td>
                             <td>
-                                <label class="radio-inline"><input type="radio" name="doce" value="0">No</label>
+                                <label class="radio-inline">@Html.RadioButtonFor(model => model.desarrollo.doce, false)No</label>
                             </td>
                         </tr>
                     </tbody>
@@ -842,7 +876,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- modal para datos de mujeres-->
 <div class="modal fade" id="mujeres" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -860,71 +893,81 @@
                     <div class="form-group">
                         @Html.Label("Menarquia", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("menarquia", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.menarquia, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Ritmo", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <label class="radio-inline"><input type="radio" name="ritmo" value="1">Regular</label>
-                            <label class="radio-inline"><input type="radio" name="ritmo" value="0">Irregular</label>
+                            <label class="radio-inline">@Html.RadioButtonFor(model => model.mujeres.ritmo, true) Regular </label>
+                            <label class="radio-inline">@Html.RadioButtonFor(model => model.mujeres.ritmo, false)Irregular</label>
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("FUR", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            <input type="date" id="ultimaRegla" class="form-control" />
+                            @if (Model.mujeres != null)
+                            {
+                                if (Model.mujeres.ultimaRegla != null)
+                                {
+                                    <input type="date" id="ultimaRegla" class="form-control" value='@Model.mujeres.ultimaRegla.Value.ToString("yyy-MM-dd")' />
+                                }
+                            }
+                            else
+                            {
+                                <input type="date" id="ultimaRegla" class="form-control" />
+                            }
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Número Gestas", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("numGestas", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.numGestas, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Partos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("partos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.partos, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Cesareas", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("cesareas", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.cesareas, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Abortos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("abortos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.abortos, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Hijos Vivos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("hijosVivos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.hijosVivos, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Hijos Muertos", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.Editor("hijosMuertos", new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.mujeres.hijosMuertos, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Método Planificación", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.TextArea("metodoPlanificacion", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextAreaFor(model => model.mujeres.metodoPlanificacion, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
                         </div>
                     </div>
                 </div>
@@ -1055,15 +1098,11 @@
 
 @section scripts{
     <script>
-        var codConsulta = @Model.codConsulta;
-        var codPaciente = @Model.codPaciente;
+        var codConsulta = @Model.consulta.codConsulta;
+        var codPaciente = @Model.paciente.codPaciente;
         var receta = [];
         var problemas = [];
         var paraReceta = null;
-
-        window.onload = function () {
-            $('#fechaNacimiento').val('@Model.tbPaciente.fechaNacimiento');
-        }
 
         function filtrar() {
             var filtro = $('#filtro').val();
@@ -1125,123 +1164,128 @@
         function guardar() {
             var paciente = {
                 "codPaciente": codPaciente,
-                "nombre": $('#tbPaciente_nombre').val(),
-                "genero": ($('#genero').val() == "1") ? true : false,
+                "nombre": $('#paciente_nombre').val(),
+                "genero": $('input[id=paciente_genero]:checked').val(),
                 "fechaNacimiento": $('#fechaNacimiento').val(),
-                "estadoCivil": ($('#estadoCivil').val() == "1") ? true : false,
-                "residencia": $('#tbPaciente_residencia').val(),
-                "procedencia": $('#tbPaciente_procedencia').val(),
-                "religion": $('#tbPaciente_religion').val(),
-                "profesion": $('#tbPaciente_profesion').val(),
-                "razaEtnia": $('#tbPaciente_razaEtnia').val(),
-                "escolaridad": $('#tbPaciente_escolaridad').val(),
-                "codTipoSangre": $('#codTipoSangre').val(),
+                "estadoCivil": $('input[id=paciente_estadoCivil]:checked').val(),
+                "residencia": $('#paciente_residencia').val(),
+                "procedencia": $('#paciente_procedencia').val(),
+                "religion": $('#paciente_religion').val(),
+                "profesion": $('#paciente_profesion').val(),
+                "razaEtnia": $('#paciente_razaEtnia').val(),
+                "escolaridad": $('#paciente_escolaridad').val(),
+                "codTipoSangre": $('#paciente_codTipoSangre').val(),
             };
             var patologicos = {
                 "codPaciente": codPaciente,
-                "padre": $('#padre').val(),
-                "madre": $('#madre').val(),
-                "medicos": $('#medicos').val(),
-                "quirurgicos": $('#quirurgicos').val(),
-                "traumaticos": $('#traumaticos').val(),
-                "alergicos": $('#alergicos').val(),
-                "ginecoObstetricos": $('#ginecoObstetricos').val(),
-                "viciosManias": $('#viciosManias').val(),
+                "padre": $('#patologicos_padre').val(),
+                "madre": $('#patologicos_madre').val(),
+                "medicos": $('#patologicos_medicos').val(),
+                "quirurgicos": $('#patologicos_quirurgicos').val(),
+                "traumaticos": $('#patologicos_traumaticos').val(),
+                "alergicos": $('#patologicos_alergicos').val(),
+                "ginecoObstetricos": $('#patologicos_ginecoObstetricos').val(),
+                "viciosManias": $('#patologicos_viciosManias').val(),
             };
             var noPatologicos = {
                 "codPaciente": codPaciente,
-                "prenatal": $('#prenatal').val(),
-                "natal": $('#natal').val(),
-                "posnatal": $('#posnatal').val(),
-                "inmunizaciones": $('#inmunizaciones').val(),
-                "alimentacion": $('#alimentacion').val(),
-                "habitos": $('#habitos').val(),
+                "prenatal": $('#noPatologicos_prenatal').val(),
+                "natal": $('#noPatologicos_natal').val(),
+                "posnatal": $('#noPatologicos_posnatal').val(),
+                "inmunizaciones": $('#noPatologicos_inmunizaciones').val(),
+                "alimentacion": $('#noPatologicos_alimentacion').val(),
+                "habitos": $('#noPatologicos_habitos').val(),
             };
             var desarrollo = {
                 "codPaciente": codPaciente,
-                "uno": ($('input[name=uno]:checked').val() == "1") ? true : false,
-                "dos": ($('input[name=dos]:checked').val() == "1") ? true : false,
-                "tres": ($('input[name=tres]:checked').val() == "1") ? true : false,
-                "cuatro": ($('input[name=cuatro]:checked').val() == "1") ? true : false,
-                "cinco": ($('input[name=cinco]:checked').val() == "1") ? true : false,
-                "seis": ($('input[name=seis]:checked').val() == "1") ? true : false,
-                "siete": ($('input[name=siete]:checked').val() == "1") ? true : false,
-                "ocho": ($('input[name=ocho]:checked').val() == "1") ? true : false,
-                "nueve": ($('input[name=nueve]:checked').val() == "1") ? true : false,
-                "diez": ($('input[name=diez]:checked').val() == "1") ? true : false,
-                "oncee": ($('input[name=once]:checked').val() == "1") ? true : false,
-                "doce": ($('input[name=doce]:checked').val() == "1") ? true : false,
+                "uno": $('input[id=desarrollo_uno]:checked').val(),
+                "dos": $('input[id=desarrollo_dos]:checked').val(),
+                "tres": $('input[id=desarrollo_tres]:checked').val(),
+                "cuatro": $('input[id=desarrollo_cuatro]:checked').val(),
+                "cinco": $('input[id=desarrollo_cinco]:checked').val(),
+                "seis": $('input[id=desarrollo_seis]:checked').val(),
+                "siete": $('input[id=desarrollo_siete]:checked').val(),
+                "ocho": $('input[id=desarrollo_ocho]:checked').val(),
+                "nueve": $('input[id=desarrollo_nueve]:checked').val(),
+                "diez": $('input[id=desarrollo_diez]:checked').val(),
+                "oncee": $('input[id=desarrollo_once]:checked').val(),
+                "doce": $('input[id=desarrollo_doce]:checked').val(),
             };
             var mujeres = {
                 "codPaciente": codPaciente,
-                "menarquia": $('#menarquia').val(),
-                "ritmo": ($('input[name=ritmo]:checked').val() == "1") ? true : false,
+                "menarquia": $('#mujeres_menarquia').val(),
+                "ritmo": $('input[id=mujeres_ritmo]:checked').val(),
                 "ultimaRegla": $('#ultimaRegla').val(),
-                "numGestas": $('#numGestas').val(),
-                "partos": $('#partos').val(),
-                "cesareas": $('#cesareas').val(),
-                "abortos": $('#abortos').val(),
-                "hijosVivos": $('#hijosVivos').val(),
-                "hijosMuertos": $('#hijosMuertos').val(),
-                "metodoPlanificacion": $('#metodoPlanificacion').val(),
+                "numGestas": $('#mujeres_numGestas').val(),
+                "partos": $('#mujeres_partos').val(),
+                "cesareas": $('#mujeres_cesareas').val(),
+                "abortos": $('#mujeres_abortos').val(),
+                "hijosVivos": $('#mujeres_hijosVivos').val(),
+                "hijosMuertos": $('#mujeres_hijosMuertos').val(),
+                "metodoPlanificacion": $('#mujeres_metodoPlanificacion').val(),
             };
             var perfilSocial = {
                 "codPaciente": codPaciente,
-                "estiloVida": $('#estiloVida').val(),
-                "vivienda": $('#vivienda').val(),
-                "situacionFamiliar": $('#situacionFamiliar').val(),
-                "ingresoEconomico": $('#ingresoEconomico').val(),
-                "animales": $('#animales').val(),
-                "tendenciaSexual": $('#tendenciaSexual').val(),
-                "puntoVista": $('#puntoVista').val()
+                "estiloVida": $('#perfilSocial_estiloVida').val(),
+                "vivienda": $('#perfilSocial_vivienda').val(),
+                "situacionFamiliar": $('#perfilSocial_situacionFamiliar').val(),
+                "ingresoEconomico": $('#perfilSocial_ingresoEconomico').val(),
+                "animales": $('#perfilSocial_animales').val(),
+                "tendenciaSexual": $('#perfilSocial_tendenciaSexual').val(),
+                "puntoVista": $('#perfilSocial_puntoVista').val()
             };
             var revision = {
                 "codConsulta": codConsulta,
-                "conducta": $('#conducta').val(),
-                "piel": $('#piel').val(),
-                "cabeza": $('#cabeza').val(),
-                "ojos": $('#ojos').val(),
-                "oidos": $('#oidos').val(),
-                "nariz": $('#nariz').val(),
-                "vicios": $('#vicios').val()
+                "conducta": $('#revision_conducta').val(),
+                "piel": $('#revision_piel').val(),
+                "cabeza": $('#revision_cabeza').val(),
+                "ojos": $('#revision_ojos').val(),
+                "oidos": $('#revision_oidos').val(),
+                "nariz": $('#revision_nariz').val(),
+                "vicios": $('#revision_vicios').val()
             }
             var signos = {
                 "codConsulta": codConsulta,
-                "peso": $('#peso').val(),
-                "talla": $('#talla').val(),
-                "indiceMasaCorporal": $('#indiceMasaCorporal').val(),
-                "presionArterial": $('#presionArterial').val(),
-                "frecuenciaCardiaca": $('#frecuenciaCardiaca').val(),
-                "frecuenciaRespiratoria": $('#frecuenciaRespiratoria').val(),
-                "temperatura": $('#temperatura').val(),
-                "circCefalica": $('#circCefalica').val(),
-                "circAbdominal": $('#circAbdominal').val(),
-                "focoFetal": $('#focoFetal').val(),
-                "alturaFondoUterino": $('#alturaFondoUterino').val(),
-                "pulso": $('#pulso').val(),
-                "saturacionOxigeno": $('#saturacionOxigeno').val(),
+                "peso": $('#signos_peso').val(),
+                "talla": $('#signos_talla').val(),
+                "indiceMasaCorporal": $('#signos_indiceMasaCorporal').val(),
+                "presionArterial": $('#signos_presionArterial').val(),
+                "frecuenciaCardiaca": $('#signos_frecuenciaCardiaca').val(),
+                "frecuenciaRespiratoria": $('#signos_frecuenciaRespiratoria').val(),
+                "temperatura": $('#signos_temperatura').val(),
+                "circCefalica": $('#signos_circCefalica').val(),
+                "circAbdominal": $('#signos_circAbdominal').val(),
+                "focoFetal": $('#signos_focoFetal').val(),
+                "alturaFondoUterino": $('#signos_alturaFondoUterino').val(),
+                "pulso": $('#signos_pulso').val(),
+                "saturacionOxigeno": $('#signos_saturacionOxigeno').val(),
             };
             var planes = {
                 "codConsulta": codConsulta,
-                "planInicial": $('#planInicial').val(),
-                "planDiagnostico": $('#planDiagnostico').val(),
-                "diagnosticoDiferencial": $('#diagnosticoDiferencial').val(),
-                "planEducacional": $('#planEducacional').val(),
+                "planInicial": $('#planes_planInicial').val(),
+                "planDiagnostico": $('#planes_planDiagnostico').val(),
+                "diagnosticoDiferencial": $('#planes_diagnosticoDiferencial').val(),
+                "planEducacional": $('#planes_planEducacional').val(),
             };
             var terapeutico = {
                 "codConsulta": codConsulta,
-                "actividad": $('#actividad').val(),
-                "dieta": $('#dieta').val(),
-                "controlesEspecificos": $('#controlesEspecificos').val(),
-                "otrasTerapias": $('#otrasTerapias').val(),
+                "actividad": $('#terapeutico_actividad').val(),
+                "dieta": $('#terapeutico_dieta').val(),
+                "controlesEspecificos": $('#terapeutico_controlesEspecificos').val(),
+                "otrasTerapias": $('#terapeutico_otrasTerapias').val(),
             };
             var diagnostico = {
                 "codConsulta": codConsulta,
-                "impresionClinica": $('#impresion').val(),
-                "codUsuario": $('#codUsuario').val()
+                "impresionClinica": $('#diagnostico_impresionClinica').val(),
+                "codUsuario": $('#diagnostico_codUsuario').val()
+            };
+            var consulta = {
+                "codConsulta": codConsulta,
+                "motivoConsulta": $('#consulta_motivoConsulta').val(),
+                "HistoriaEnfermedad": $('#consulta_HistoriaEnfermedad').val()
             };
             var historia = {
-                "codConsulta": codConsulta,
+                "consulta": consulta,
                 "paciente": paciente,
                 "patologicos": patologicos,
                 "noPatologicos": noPatologicos,
@@ -1255,14 +1299,13 @@
                 "terapeutico": terapeutico,
                 "receta": receta,
                 "diagnostico": diagnostico
-            }
+            };
             $.ajax({
                 url: '@Url.Action("GuardarHC", "Atencion")',
                 type: "POST",
-                dataType: "json",
                 data: { "historia": historia },
                 success: function (response) {
-
+                    window.location.href = response;
                 }
             });
         }
@@ -1313,6 +1356,22 @@
             var n = event.charCode;
             var respuesta = ((n >= 48 && n <= 57) || n == 46 || n == 0);
             return respuesta;
+        }
+
+        window.onload = function (){
+            $('#paciente_codTipoSangre > option[value="@Model.paciente.codTipoSangre"]').attr('selected', 'selected');
+        }
+
+        function vacio(input, nab){
+            if (input.val() == "") {
+                alert("Existe uno o varios campos vacios")
+                $(nab).tab('show');
+                input.focus();
+                return false;
+            }
+            else{
+                return true;
+            }
         }
 
     </script>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbClinica" Class="DataClasesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=PCASUS\SQLEXPRESS;Initial Catalog=dbClinica;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-R30TL5S;Initial Catalog=dbClinica;User ID=uPedro" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbAntecedentesNoPatologicos" Member="tbAntecedentesNoPatologicos">
     <Type Name="tbAntecedentesNoPatologicos">
       <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -68,9 +68,9 @@
       <Association Name="tbConsulta_tbProblema" Member="tbProblema" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbProblema" />
       <Association Name="tbConsulta_tbReceta" Member="tbReceta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbReceta" />
       <Association Name="tbConsulta_tbRevisionSistemas" Member="tbRevisionSistemas" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbRevisionSistemas" Cardinality="One" />
-      <Association Name="tbConsulta_tbSignosVitales" Member="tbSignosVitales" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbSignosVitales" Cardinality="One" />
       <Association Name="tbConsulta_tbDiagnostico" Member="tbDiagnostico" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbDiagnostico" Cardinality="One" />
       <Association Name="tbConsulta_tbPlanes" Member="tbPlanes" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbPlanes" Cardinality="One" />
+      <Association Name="tbConsulta_tbSignosVitales" Member="tbSignosVitales" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbSignosVitales" Cardinality="One" />
       <Association Name="tbPaciente_tbConsulta" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
@@ -262,25 +262,6 @@
       <Association Name="tbSalida_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbDetalleSalida" />
     </Type>
   </Table>
-  <Table Name="dbo.tbSignosVitales" Member="tbSignosVitales">
-    <Type Name="tbSignosVitales">
-      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="peso" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="talla" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="indiceMasaCorporal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="presionArterial" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="frecuenciaCardiaca" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="frecuenciaRespiratoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="temperatura" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
-      <Column Name="circCefalica" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="circAbdominal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="focoFetal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="alturaFondoUterino" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="pulso" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="saturacionOxigeno" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Association Name="tbConsulta_tbSignosVitales" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbTipoSangre" Member="tbTipoSangre">
     <Type Name="tbTipoSangre">
       <Column Name="codTipoSangre" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -307,6 +288,25 @@
       <Column Name="diagnosticoDiferencial" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
       <Column Name="planEducacional" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
       <Association Name="tbConsulta_tbPlanes" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbSignosVitales" Member="tbSignosVitales">
+    <Type Name="tbSignosVitales">
+      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="peso" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="talla" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="indiceMasaCorporal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="presionArterial" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="frecuenciaCardiaca" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="frecuenciaRespiratoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="temperatura" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
+      <Column Name="circCefalica" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="circAbdominal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="focoFetal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="alturaFondoUterino" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Column Name="pulso" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="saturacionOxigeno" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
+      <Association Name="tbConsulta_tbSignosVitales" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

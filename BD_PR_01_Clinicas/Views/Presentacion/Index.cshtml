@@ -7,7 +7,9 @@
 <h2>Presentaciones</h2>
 
 <p>
-    @Html.ActionLink("Nueva Presentación", "Crear")
+    <a href="@Url.Action("Crear")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span> Nueva Presentación
+    </a>
 </p>
 
 @using (Html.BeginForm())
@@ -69,5 +71,7 @@
 
 </table>
 <div>
-    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+    <a href="@Url.Action("Administracion","Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>

@@ -146,56 +146,163 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/CrearHC
         public ActionResult CrearHC(int codPaciente)
         {
-            List<tbTipoSangre> codTipoSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
-            ViewBag.codTipoSangre = new SelectList(codTipoSangre, "codTipoSangre", "tipoSangre");
+            List<tbTipoSangre> paciente_codTipoSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
+            ViewBag.paciente_codTipoSangre = new SelectList(paciente_codTipoSangre, "codTipoSangre", "tipoSangre");
             List<tbUsuario> medicos = (from t in db.tbUsuario where t.codTipoUsuario == 1 && t.estado == true orderby t.nombre select t).ToList();
-            ViewBag.codUsuario = new SelectList(medicos, "codUsuario", "nombre");
+            ViewBag.diagnostico_codUsuario = new SelectList(medicos, "codUsuario", "nombre");
             tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.atendido == false select t).SingleOrDefault();
-            return View(consulta);
+            HistoriaClinica historia = new HistoriaClinica();
+            historia.consulta = consulta;
+            historia.paciente = consulta.tbPaciente;
+            historia.patologicos = consulta.tbPaciente.tbAntecedentesPatologicos;
+            historia.noPatologicos = consulta.tbPaciente.tbAntecedentesNoPatologicos;
+            historia.desarrollo = consulta.tbPaciente.tbDesarrollo;
+            historia.perfilSocial = consulta.tbPaciente.tbPerfilSocial;
+            if (consulta.tbPaciente.genero == false)
+            {
+                historia.mujeres = consulta.tbPaciente.tbMujeres;
+            }
+
+            return View(historia);
         }
 
         // POST: Atencion/GuardarHC
         public string GuardarHC(HistoriaClinica historia)
         {
-            try
+            
+            //actualizacion de datos para paciente
+            tbPaciente paciente = (from t in db.tbPaciente where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+            paciente.nombre = historia.paciente.nombre;
+            paciente.genero = historia.paciente.genero;
+            paciente.fechaNacimiento = historia.paciente.fechaNacimiento;
+            paciente.estadoCivil = historia.paciente.estadoCivil;
+            paciente.residencia = historia.paciente.residencia;
+            paciente.procedencia = historia.paciente.procedencia;
+            paciente.religion = historia.paciente.religion;
+            paciente.profesion = historia.paciente.profesion;
+            paciente.razaEtnia = historia.paciente.razaEtnia;
+            paciente.escolaridad = historia.paciente.escolaridad;
+            paciente.codTipoSangre = historia.paciente.codTipoSangre;
+
+            //actualizacion de datos para consulta
+            tbConsulta consulta = (from t in db.tbConsulta where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
+            consulta.motivoConsulta = historia.consulta.motivoConsulta;
+            consulta.HistoriaEnfermedad = historia.consulta.HistoriaEnfermedad;
+
+            //creacion o actualizacion de antecedentes patologicos
+            tbAntecedentesPatologicos patologicos = (from t in db.tbAntecedentesPatologicos where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+            if (patologicos == null)
             {
-                // TODO: Add delete logic here
-                tbPaciente paciente = (from t in db.tbPaciente where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
-                tbConsulta consulta = (from t in db.tbConsulta where t.codConsulta == historia.codConsulta select t).SingleOrDefault();
-                consulta.atendido = true;
-                paciente.nombre = historia.paciente.nombre;
-                paciente.genero = historia.paciente.genero;
-                paciente.fechaNacimiento = historia.paciente.fechaNacimiento;
-                paciente.estadoCivil = historia.paciente.estadoCivil;
-                paciente.residencia = historia.paciente.residencia;
-                paciente.procedencia = historia.paciente.procedencia;
-                paciente.religion = historia.paciente.religion;
-                paciente.profesion = historia.paciente.profesion;
-                paciente.razaEtnia = historia.paciente.razaEtnia;
-                paciente.escolaridad = historia.paciente.escolaridad;
-                paciente.codTipoSangre = historia.paciente.codTipoSangre;
                 db.tbAntecedentesPatologicos.InsertOnSubmit(historia.patologicos);
+            }
+            else
+            {
+                patologicos.padre = historia.patologicos.padre;
+                patologicos.madre = historia.patologicos.madre;
+                patologicos.medicos = historia.patologicos.medicos;
+                patologicos.quirurgicos = historia.patologicos.quirurgicos;
+                patologicos.traumaticos = historia.patologicos.traumaticos;
+                patologicos.alergicos = historia.patologicos.alergicos;
+                patologicos.ginecoObstetricos = historia.patologicos.ginecoObstetricos;
+                patologicos.viciosManias = historia.patologicos.viciosManias;
+            }
+
+            //creacion o actualizacion de antecedentes no patologicos
+            tbAntecedentesNoPatologicos noPatologicos = (from t in db.tbAntecedentesNoPatologicos where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+            if (noPatologicos == null)
+            {
                 db.tbAntecedentesNoPatologicos.InsertOnSubmit(historia.noPatologicos);
-                db.tbDesarrollo.InsertOnSubmit(historia.desarrollo);
+            }
+            else
+            {
+                noPatologicos.prenatal = historia.noPatologicos.prenatal;
+                noPatologicos.natal = historia.noPatologicos.natal;
+                noPatologicos.posnatal = historia.noPatologicos.posnatal;
+                noPatologicos.inmunizaciones = historia.noPatologicos.inmunizaciones;
+                noPatologicos.alimentacion = historia.noPatologicos.alimentacion;
+                noPatologicos.habitos = historia.noPatologicos.habitos;
+            }
+
+            //creacion o actualizacion de desarrollo
+            tbDesarrollo desarrollo = (from t in db.tbDesarrollo where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+            if (desarrollo == null)
+            {
+                if (historia.desarrollo.uno != null && historia.desarrollo.dos != null && historia.desarrollo.tres != null && historia.desarrollo.cuatro != null && historia.desarrollo.cinco != null &&
+                    historia.desarrollo.seis != null && historia.desarrollo.siete != null && historia.desarrollo.ocho != null && historia.desarrollo.nueve != null && historia.desarrollo.diez != null)
+                {
+                    db.tbDesarrollo.InsertOnSubmit(historia.desarrollo);
+                }
+            }
+            else
+            {
+                desarrollo.uno = historia.desarrollo.uno;
+                desarrollo.dos = historia.desarrollo.dos;
+                desarrollo.tres = historia.desarrollo.tres;
+                desarrollo.cuatro = historia.desarrollo.cuatro;
+                desarrollo.cinco= historia.desarrollo.cinco;
+                desarrollo.seis = historia.desarrollo.seis;
+                desarrollo.siete = historia.desarrollo.siete;
+                desarrollo.ocho = historia.desarrollo.ocho;
+                desarrollo.nueve = historia.desarrollo.nueve;
+                desarrollo.diez = historia.desarrollo.diez;
+                desarrollo.oncee = historia.desarrollo.oncee;
+                desarrollo.doce = historia.desarrollo.doce;
+            }
+
+            //creacion o actualizacion del perfil social
+            tbPerfilSocial perfil = (from t in db.tbPerfilSocial where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+            if (perfil == null)
+            {
                 db.tbPerfilSocial.InsertOnSubmit(historia.perfilSocial);
-                if (paciente.genero == false)
+            }
+            else
+            {
+                perfil.estiloVida = historia.perfilSocial.estiloVida;
+                perfil.vivienda = historia.perfilSocial.vivienda;
+                perfil.situacionFamiliar = historia.perfilSocial.situacionFamiliar;
+                perfil.ingresoEconomico = historia.perfilSocial.ingresoEconomico;
+                perfil.animales = historia.perfilSocial.animales;
+                perfil.tendenciaSexual = historia.perfilSocial.tendenciaSexual;
+                perfil.puntoVista = historia.perfilSocial.puntoVista;
+            }
+
+            //creacion o actualizacion de mujeres
+            if (paciente.genero == false)
+            {
+                tbMujeres mujeres = (from t in db.tbMujeres where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
+                if (mujeres == null)
                 {
                     db.tbMujeres.InsertOnSubmit(historia.mujeres);
                 }
-                db.tbRevisionSistemas.InsertOnSubmit(historia.revision);
-                db.tbPlanes.InsertOnSubmit(historia.planes);
-                db.tbDiagnostico.InsertOnSubmit(historia.diagnostico);
-                db.tbPlanTerapeutico.InsertOnSubmit(historia.terapeutico);
-                db.tbProblema.InsertAllOnSubmit(historia.problemas);
-                db.tbReceta.InsertAllOnSubmit(historia.receta);
-                db.tbSignosVitales.InsertOnSubmit(historia.signos);
-                db.SubmitChanges();
-                return Url.Action("Index", "Atencion");
+                else
+                {
+                    mujeres.menarquia = historia.mujeres.menarquia;
+                    mujeres.ritmo = historia.mujeres.ritmo;
+                    mujeres.ultimaRegla = historia.mujeres.ultimaRegla;
+                    mujeres.numGestas = historia.mujeres.numGestas;
+                    mujeres.partos = historia.mujeres.partos;
+                    mujeres.cesareas = historia.mujeres.cesareas;
+                    mujeres.abortos = historia.mujeres.abortos;
+                    mujeres.hijosVivos = historia.mujeres.hijosVivos;
+                    mujeres.hijosMuertos = historia.mujeres.hijosMuertos;
+                    mujeres.metodoPlanificacion = historia.mujeres.metodoPlanificacion;
+                }
             }
-            catch (Exception e)
+            db.tbRevisionSistemas.InsertOnSubmit(historia.revision);
+            db.tbPlanes.InsertOnSubmit(historia.planes);
+
+            historia.diagnostico.fecha = DateTime.Now;
+            db.tbDiagnostico.InsertOnSubmit(historia.diagnostico);
+            db.tbPlanTerapeutico.InsertOnSubmit(historia.terapeutico);
+            db.tbProblema.InsertAllOnSubmit(historia.problemas);
+            if (historia.receta != null)
             {
-                return Url.Action("CrearHC", "Atencion");
+                db.tbReceta.InsertAllOnSubmit(historia.receta);
             }
+            db.tbSignosVitales.InsertOnSubmit(historia.signos);
+            consulta.atendido = true;
+            db.SubmitChanges();
+            return Url.Action("Index", "Atencion");
         }
         #endregion
 
