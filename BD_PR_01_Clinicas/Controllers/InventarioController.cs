@@ -46,7 +46,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                            }).ToList();
             return View(inventario);
         }
-
+        [PermisoAttribute(Permiso = RolesPermisos.Generar_reporte)]
         public ActionResult ReporteDeInventario() {
             List<int> lista = (from t in db.tbDetalleEntrada group t by t.codProducto into g select g.Key).ToList();
             List<Inventario> inventario = (from cat in db.tbCategoria

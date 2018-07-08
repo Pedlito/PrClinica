@@ -54,6 +54,7 @@
                 }
 
                 <td>
+                    @Html.ActionLink("Editar", "EditarUsuario", new { id = item.codUsuario }) |
                     @Html.ActionLink("Detalles", "Detalles", new { codUsuario = item.codUsuario }) |
                     @if (item.estado == true)
                     {

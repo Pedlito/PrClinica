@@ -110,24 +110,49 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: Usuario/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditarUsuario(int? id)
         {
-            return View();
+            
+            if (id!=null) 
+                {
+                tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==id).SingleOrDefault();
+                tbRol t = new tbRol();
+                
+                  
+                List<tbRol> rols = db.tbRol.Where(s=>s.codTipoUsuario!=usuario.codTipoUsuario).ToList();
+                
+                List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();
+                
+                roles.Insert(0,(new SelectListItem {Text=usuario.tbRol.Rol,Value=usuario.tbRol.codTipoUsuario.ToString() }));
+                ViewBag.codTipoUsuario = roles;
+                if (usuario != null) { return View(usuario); } else { }
+            }
+
+            ViewBag.errores = "No existe el usuario"; 
+            return View("VistaDeErrores");
         }
 
         // POST: Usuario/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult EditarUsuario(tbUsuario usuar)
         {
             try
             {
-                // TODO: Add update logic here
-
+           tbUsuario usr =  db.tbUsuario.Where(x => x.codUsuario == usuar.codUsuario).SingleOrDefault();
+                usr.nombre = usuar.nombre;
+                usr.codTipoUsuario = usuar.codTipoUsuario;
+                usr.carnet = usuar.carnet;
+                usr.dpi = usuar.dpi;
+                usr.fechaNacimiento = usuar.fechaNacimiento;
+                usr.usuario = usuar.usuario;
+                usr.password = usuar.password;
+                db.SubmitChanges();   
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo terminar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
@@ -137,16 +162,11 @@ namespace BD_PR_01_Clinicas.Controllers
             if (codUsuario != null)
             {
                 tbUsuario cambiar = (from t in db.tbUsuario where t.codUsuario == codUsuario select t).SingleOrDefault();
-                return View(cambiar);
+                if (cambiar!=null) { return View(cambiar); }
             }
-            else
-            {
-                ViewBag.errores = "El indice del registro no es valido";
-                return View("VistaDeErrores");
-            }
-            
-
-           
+          
+                ViewBag.errores = "Usuario no encontrado";
+                return View("VistaDeErrores");  
         }
 
         // POST: Usuario/Deshabilitar/5
@@ -171,9 +191,9 @@ namespace BD_PR_01_Clinicas.Controllers
                     db.SubmitChanges();
                 return RedirectToAction("Index");
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                ViewBag.errores = "Error:"+e.Message;
+                ViewBag.errores = "No se pudo completar la operacion";
                 return View("VistaDeErrores");
             }
         }

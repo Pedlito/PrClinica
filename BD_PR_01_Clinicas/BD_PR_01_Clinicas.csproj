@@ -188,6 +188,7 @@
     <Compile Include="Controllers\PacientesController.cs" />
     <Compile Include="Controllers\PresentacionController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RotacionController.cs" />
     <Compile Include="Controllers\SalidaController.cs" />
     <Compile Include="Controllers\TipoSangreController.cs" />
@@ -202,8 +203,9 @@
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
     <Compile Include="Models\Entrada.cs" />
+    <Compile Include="Models\FrontUser.cs" />
     <Compile Include="Models\HistoriaClinica.cs" />
-    <Compile Include="Models\HttpUsuario.cs" />
+    <Compile Include="Models\SessionUsuario.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Rotaciones.cs" />
@@ -357,6 +359,14 @@
     <Content Include="Views\Shared\VistaDeErrores.cshtml" />
     <Content Include="Views\Account\DatosUsuario.cshtml" />
     <Content Include="Views\Account\EditarUsuario.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\CrearRol.cshtml" />
+    <Content Include="Views\Roles\EditarRol.cshtml" />
+    <Content Include="Views\Roles\DetallesRol.cshtml" />
+    <Content Include="Views\Roles\ArchivarRol.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CheckBoxPermiso.cshtml" />
+    <Content Include="Views\Roles\AgregarPermisos.cshtml" />
+    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -10,7 +10,7 @@ namespace BD_PR_01_Clinicas.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.usuario = Session["usuario"];
+            //ViewBag.usuario = Session["usuario"];
             return View();
         }
 

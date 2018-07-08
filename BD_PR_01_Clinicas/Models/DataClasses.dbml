@@ -25,6 +25,7 @@
       <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="tbUsuario_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbRotacionUsuario" />
       <Association Name="tbUsuario_tbDiagnostico" Member="tbDiagnostico" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbDiagnostico" />
+      <Association Name="tbRol_tbUsuario" Member="tbRol" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbRol" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.tbAntecedentesPatologicos" Member="tbAntecedentesPatologicos">
@@ -308,6 +309,32 @@
       <Column Name="fechaFinal" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="tbRotacion_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codRotacion" OtherKey="codRotacion" Type="tbRotacionUsuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbRolPermiso" Member="tbRolPermiso">
+    <Type Name="tbRolPermiso">
+      <Column Name="idPermiso" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="codTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="tbRol_tbRolPermiso" Member="tbRol" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbRol" IsForeignKey="true" />
+      <Association Name="tbPermiso_tbRolPermiso" Member="tbPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbPermiso" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbRol" Member="tbRol">
+    <Type Name="tbRol">
+      <Column Name="codTipoUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Rol" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbRol_tbUsuario" Member="tbUsuario" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbUsuario" />
+      <Association Name="tbRol_tbRolPermiso" Member="tbRolPermiso" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbRolPermiso" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbPermiso" Member="tbPermiso">
+    <Type Name="tbPermiso">
+      <Column Name="idPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Permiso" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Association Name="tbPermiso_tbRolPermiso" Member="tbRolPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbRolPermiso" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

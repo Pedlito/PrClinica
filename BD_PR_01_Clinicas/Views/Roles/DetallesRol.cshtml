@@ -1,0 +1,48 @@
+﻿@model BD_PR_01_Clinicas.Models.tbRol
+@using BD_PR_01_Clinicas.Models
+
+
+@{
+    ViewBag.Title = "Detalles de Rol";
+    List<tbPermiso> permisos = ViewBag.permisos;
+}
+<h2>Detalles de rol</h2>
+
+<div>
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Nombre")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rol)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Descripcion")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+        </dl>
+        <h3> Permisos </h3>
+    <dl class="dl-horizontal">
+        @foreach (var item in permisos) {
+        <dt>
+            @(permisos.IndexOf(item)+1).
+            
+        </dt>
+
+        <dd>
+            @item.Permiso
+        </dd>
+        }
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.codTipoUsuario }) |*@
+    @Html.ActionLink("Regresar", "Index")
+</p>

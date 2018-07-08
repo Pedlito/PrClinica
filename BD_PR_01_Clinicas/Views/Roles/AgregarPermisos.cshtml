@@ -1,0 +1,35 @@
+﻿@model BD_PR_01_Clinicas.Models.ModeloPermisosRol
+
+@{
+    ViewBag.Title = "Permisos";
+}
+
+<h2>Agregar permisos a @Model.NombreRol</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.HiddenFor(model => model.codRol)
+
+        <div>
+            @Html.EditorFor(x => x.permisos)
+        </div>
+        <div class="form-group">
+            <div class="col-md-1">
+                <input type="submit" value="Guardar" class="btn btn-success" />
+            </div>
+            <div class="col-md-11">
+                @Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

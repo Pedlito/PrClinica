@@ -15,6 +15,7 @@
         <li role="presentation"><a href="#medicamentos" aria-controls="second" role="tab" data-toggle="tab">Medicamentos</a></li>
         <li role="presentation"><a href="#rotaciones" aria-controls="third" role="tab" data-toggle="tab">Rotaciones</a></li>
         <li role="presentation"><a href="#informacion" aria-controls="fourth" role="tab" data-toggle="tab">Información</a></li>
+        <li role="presentation"><a href="#roles" aria-controls="fifth" role="tab" data-toggle="tab">Roles</a></li>
     </ul>
 
     <div class="tab-content">
@@ -86,6 +87,23 @@
                 <p>ve.</p>
             </div>
         </div>
+        <div role="tabpanel" class="tab-pane" id="roles">
+            <!-- poner aqui la segunda pagina de administración-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><p>@Html.ActionLink("Roles", "Index", "Roles")</p></h2>
+                    <p>Administracion de las roles </p>
+                </div>
+
+                @*<div class="col-md-6">
+                    <h2><p>@Html.ActionLink("Permisos", "AgregarPermisos", "Roles")</p></h2>
+                    <p>Asignacion de permisos a los roles.</p>
+                </div>*@
+
+
+            </div>
+        </div>
+
     </div>
 
 </div>

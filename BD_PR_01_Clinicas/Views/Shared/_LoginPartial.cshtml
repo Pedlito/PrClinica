@@ -9,7 +9,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/Account/DatosUsuario" title="Manage"><span class="glyphicon glyphicon-user"></span> @HttpUsuario.Get.UserName</a>              
+                <a href="/Account/DatosUsuario" title="Manage"><span class="glyphicon glyphicon-user"></span> @SessionUsuario.Get.UserName</a>              
                     @*@Html.ActionLink(HttpUsuario.Get.UserName, "DatosUsuario", "Account", null, htmlAttributes: new { title = "Manage" })*@
 </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>

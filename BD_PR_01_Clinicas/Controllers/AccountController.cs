@@ -21,14 +21,12 @@ namespace BD_PR_01_Clinicas.Controllers
         
 
         DataClasesDataContext db = new DataClasesDataContext();
-        public AccountController()
-        {
 
-        }
 
-      
-   
-        [AllowAnonymous]
+
+
+        //[AllowAnonymous]
+        [NoLoginAttribute]
         public ActionResult Login(string returnUrl)
         {
 
@@ -161,6 +159,11 @@ namespace BD_PR_01_Clinicas.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
+            //if (!FrontUser.TienePermiso(RolesPermisos.Activar_registro))
+            //{
+            //    return Redirect("~/home");
+            //}
             //return View();
             tbConfiguracion tc = (from v in db.tbConfiguracion where v.codConfiguracion == 1 select v).SingleOrDefault();
             //new configuracioInicial().RegistroHabilitado
@@ -290,7 +293,7 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
+        [AutenticadoAttribute]
         public ActionResult DatosUsuario() {
 
             if (Request.IsAuthenticated)
@@ -301,7 +304,7 @@ namespace BD_PR_01_Clinicas.Controllers
                     {
 
                         tbUsuario item = (from t in context.tbUsuario
-                                          where t.codUsuario == HttpUsuario.Get.UserId
+                                          where t.codUsuario == SessionUsuario.Get.UserId
                                           select t).SingleOrDefault();
                         return View(item);
                     }
@@ -321,7 +324,9 @@ namespace BD_PR_01_Clinicas.Controllers
 
 
         }
-  
+
+    
+        [PermisoAttribute(Permiso = RolesPermisos.Consultar_rotaciones)]
         public ActionResult EditarUsuario(int? id) {
 
             if (Request.IsAuthenticated&&autorizado)

@@ -108,6 +108,15 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbRotacion(tbRotacion instance);
     partial void UpdatetbRotacion(tbRotacion instance);
     partial void DeletetbRotacion(tbRotacion instance);
+    partial void InserttbRolPermiso(tbRolPermiso instance);
+    partial void UpdatetbRolPermiso(tbRolPermiso instance);
+    partial void DeletetbRolPermiso(tbRolPermiso instance);
+    partial void InserttbRol(tbRol instance);
+    partial void UpdatetbRol(tbRol instance);
+    partial void DeletetbRol(tbRol instance);
+    partial void InserttbPermiso(tbPermiso instance);
+    partial void UpdatetbPermiso(tbPermiso instance);
+    partial void DeletetbPermiso(tbPermiso instance);
     #endregion
 		
 		public DataClasesDataContext() : 
@@ -345,6 +354,30 @@ namespace BD_PR_01_Clinicas.Models
 			get
 			{
 				return this.GetTable<tbRotacion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbRolPermiso> tbRolPermiso
+		{
+			get
+			{
+				return this.GetTable<tbRolPermiso>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbRol> tbRol
+		{
+			get
+			{
+				return this.GetTable<tbRol>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbPermiso> tbPermiso
+		{
+			get
+			{
+				return this.GetTable<tbPermiso>();
 			}
 		}
 		
@@ -637,6 +670,8 @@ namespace BD_PR_01_Clinicas.Models
 		
 		private EntitySet<tbDiagnostico> _tbDiagnostico;
 		
+		private EntityRef<tbRol> _tbRol;
+		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -665,6 +700,7 @@ namespace BD_PR_01_Clinicas.Models
 		{
 			this._tbRotacionUsuario = new EntitySet<tbRotacionUsuario>(new Action<tbRotacionUsuario>(this.attach_tbRotacionUsuario), new Action<tbRotacionUsuario>(this.detach_tbRotacionUsuario));
 			this._tbDiagnostico = new EntitySet<tbDiagnostico>(new Action<tbDiagnostico>(this.attach_tbDiagnostico), new Action<tbDiagnostico>(this.detach_tbDiagnostico));
+			this._tbRol = default(EntityRef<tbRol>);
 			OnCreated();
 		}
 		
@@ -699,6 +735,10 @@ namespace BD_PR_01_Clinicas.Models
 			{
 				if ((this._codTipoUsuario != value))
 				{
+					if (this._tbRol.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OncodTipoUsuarioChanging(value);
 					this.SendPropertyChanging();
 					this._codTipoUsuario = value;
@@ -871,6 +911,40 @@ namespace BD_PR_01_Clinicas.Models
 			set
 			{
 				this._tbDiagnostico.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRol_tbUsuario", Storage="_tbRol", ThisKey="codTipoUsuario", OtherKey="codTipoUsuario", IsForeignKey=true)]
+		public tbRol tbRol
+		{
+			get
+			{
+				return this._tbRol.Entity;
+			}
+			set
+			{
+				tbRol previousValue = this._tbRol.Entity;
+				if (((previousValue != value) 
+							|| (this._tbRol.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbRol.Entity = null;
+						previousValue.tbUsuario.Remove(this);
+					}
+					this._tbRol.Entity = value;
+					if ((value != null))
+					{
+						value.tbUsuario.Add(this);
+						this._codTipoUsuario = value.codTipoUsuario;
+					}
+					else
+					{
+						this._codTipoUsuario = default(int);
+					}
+					this.SendPropertyChanged("tbRol");
+				}
 			}
 		}
 		
@@ -6835,6 +6909,502 @@ namespace BD_PR_01_Clinicas.Models
 		{
 			this.SendPropertyChanging();
 			entity.tbRotacion = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbRolPermiso")]
+	public partial class tbRolPermiso : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPermiso;
+		
+		private int _codTipoUsuario;
+		
+		private EntityRef<tbRol> _tbRol;
+		
+		private EntityRef<tbPermiso> _tbPermiso;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPermisoChanging(int value);
+    partial void OnidPermisoChanged();
+    partial void OncodTipoUsuarioChanging(int value);
+    partial void OncodTipoUsuarioChanged();
+    #endregion
+		
+		public tbRolPermiso()
+		{
+			this._tbRol = default(EntityRef<tbRol>);
+			this._tbPermiso = default(EntityRef<tbPermiso>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPermiso", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idPermiso
+		{
+			get
+			{
+				return this._idPermiso;
+			}
+			set
+			{
+				if ((this._idPermiso != value))
+				{
+					if (this._tbPermiso.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnidPermisoChanging(value);
+					this.SendPropertyChanging();
+					this._idPermiso = value;
+					this.SendPropertyChanged("idPermiso");
+					this.OnidPermisoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codTipoUsuario", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int codTipoUsuario
+		{
+			get
+			{
+				return this._codTipoUsuario;
+			}
+			set
+			{
+				if ((this._codTipoUsuario != value))
+				{
+					if (this._tbRol.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncodTipoUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._codTipoUsuario = value;
+					this.SendPropertyChanged("codTipoUsuario");
+					this.OncodTipoUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRol_tbRolPermiso", Storage="_tbRol", ThisKey="codTipoUsuario", OtherKey="codTipoUsuario", IsForeignKey=true)]
+		public tbRol tbRol
+		{
+			get
+			{
+				return this._tbRol.Entity;
+			}
+			set
+			{
+				tbRol previousValue = this._tbRol.Entity;
+				if (((previousValue != value) 
+							|| (this._tbRol.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbRol.Entity = null;
+						previousValue.tbRolPermiso.Remove(this);
+					}
+					this._tbRol.Entity = value;
+					if ((value != null))
+					{
+						value.tbRolPermiso.Add(this);
+						this._codTipoUsuario = value.codTipoUsuario;
+					}
+					else
+					{
+						this._codTipoUsuario = default(int);
+					}
+					this.SendPropertyChanged("tbRol");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbPermiso_tbRolPermiso", Storage="_tbPermiso", ThisKey="idPermiso", OtherKey="idPermiso", IsForeignKey=true)]
+		public tbPermiso tbPermiso
+		{
+			get
+			{
+				return this._tbPermiso.Entity;
+			}
+			set
+			{
+				tbPermiso previousValue = this._tbPermiso.Entity;
+				if (((previousValue != value) 
+							|| (this._tbPermiso.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbPermiso.Entity = null;
+						previousValue.tbRolPermiso.Remove(this);
+					}
+					this._tbPermiso.Entity = value;
+					if ((value != null))
+					{
+						value.tbRolPermiso.Add(this);
+						this._idPermiso = value.idPermiso;
+					}
+					else
+					{
+						this._idPermiso = default(int);
+					}
+					this.SendPropertyChanged("tbPermiso");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbRol")]
+	public partial class tbRol : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _codTipoUsuario;
+		
+		private string _Rol;
+		
+		private string _descripcion;
+		
+		private System.Nullable<bool> _estado;
+		
+		private EntitySet<tbUsuario> _tbUsuario;
+		
+		private EntitySet<tbRolPermiso> _tbRolPermiso;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncodTipoUsuarioChanging(int value);
+    partial void OncodTipoUsuarioChanged();
+    partial void OnRolChanging(string value);
+    partial void OnRolChanged();
+    partial void OndescripcionChanging(string value);
+    partial void OndescripcionChanged();
+    partial void OnestadoChanging(System.Nullable<bool> value);
+    partial void OnestadoChanged();
+    #endregion
+		
+		public tbRol()
+		{
+			this._tbUsuario = new EntitySet<tbUsuario>(new Action<tbUsuario>(this.attach_tbUsuario), new Action<tbUsuario>(this.detach_tbUsuario));
+			this._tbRolPermiso = new EntitySet<tbRolPermiso>(new Action<tbRolPermiso>(this.attach_tbRolPermiso), new Action<tbRolPermiso>(this.detach_tbRolPermiso));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_codTipoUsuario", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int codTipoUsuario
+		{
+			get
+			{
+				return this._codTipoUsuario;
+			}
+			set
+			{
+				if ((this._codTipoUsuario != value))
+				{
+					this.OncodTipoUsuarioChanging(value);
+					this.SendPropertyChanging();
+					this._codTipoUsuario = value;
+					this.SendPropertyChanged("codTipoUsuario");
+					this.OncodTipoUsuarioChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Rol", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string Rol
+		{
+			get
+			{
+				return this._Rol;
+			}
+			set
+			{
+				if ((this._Rol != value))
+				{
+					this.OnRolChanging(value);
+					this.SendPropertyChanging();
+					this._Rol = value;
+					this.SendPropertyChanged("Rol");
+					this.OnRolChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_descripcion", DbType="VarChar(50)")]
+		public string descripcion
+		{
+			get
+			{
+				return this._descripcion;
+			}
+			set
+			{
+				if ((this._descripcion != value))
+				{
+					this.OndescripcionChanging(value);
+					this.SendPropertyChanging();
+					this._descripcion = value;
+					this.SendPropertyChanged("descripcion");
+					this.OndescripcionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estado", DbType="Bit")]
+		public System.Nullable<bool> estado
+		{
+			get
+			{
+				return this._estado;
+			}
+			set
+			{
+				if ((this._estado != value))
+				{
+					this.OnestadoChanging(value);
+					this.SendPropertyChanging();
+					this._estado = value;
+					this.SendPropertyChanged("estado");
+					this.OnestadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRol_tbUsuario", Storage="_tbUsuario", ThisKey="codTipoUsuario", OtherKey="codTipoUsuario")]
+		public EntitySet<tbUsuario> tbUsuario
+		{
+			get
+			{
+				return this._tbUsuario;
+			}
+			set
+			{
+				this._tbUsuario.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRol_tbRolPermiso", Storage="_tbRolPermiso", ThisKey="codTipoUsuario", OtherKey="codTipoUsuario")]
+		public EntitySet<tbRolPermiso> tbRolPermiso
+		{
+			get
+			{
+				return this._tbRolPermiso;
+			}
+			set
+			{
+				this._tbRolPermiso.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tbUsuario(tbUsuario entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbRol = this;
+		}
+		
+		private void detach_tbUsuario(tbUsuario entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbRol = null;
+		}
+		
+		private void attach_tbRolPermiso(tbRolPermiso entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbRol = this;
+		}
+		
+		private void detach_tbRolPermiso(tbRolPermiso entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbRol = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPermiso")]
+	public partial class tbPermiso : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPermiso;
+		
+		private string _Permiso;
+		
+		private bool _estado;
+		
+		private EntitySet<tbRolPermiso> _tbRolPermiso;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPermisoChanging(int value);
+    partial void OnidPermisoChanged();
+    partial void OnPermisoChanging(string value);
+    partial void OnPermisoChanged();
+    partial void OnestadoChanging(bool value);
+    partial void OnestadoChanged();
+    #endregion
+		
+		public tbPermiso()
+		{
+			this._tbRolPermiso = new EntitySet<tbRolPermiso>(new Action<tbRolPermiso>(this.attach_tbRolPermiso), new Action<tbRolPermiso>(this.detach_tbRolPermiso));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPermiso", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int idPermiso
+		{
+			get
+			{
+				return this._idPermiso;
+			}
+			set
+			{
+				if ((this._idPermiso != value))
+				{
+					this.OnidPermisoChanging(value);
+					this.SendPropertyChanging();
+					this._idPermiso = value;
+					this.SendPropertyChanged("idPermiso");
+					this.OnidPermisoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Permiso", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Permiso
+		{
+			get
+			{
+				return this._Permiso;
+			}
+			set
+			{
+				if ((this._Permiso != value))
+				{
+					this.OnPermisoChanging(value);
+					this.SendPropertyChanging();
+					this._Permiso = value;
+					this.SendPropertyChanged("Permiso");
+					this.OnPermisoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estado", DbType="Bit NOT NULL")]
+		public bool estado
+		{
+			get
+			{
+				return this._estado;
+			}
+			set
+			{
+				if ((this._estado != value))
+				{
+					this.OnestadoChanging(value);
+					this.SendPropertyChanging();
+					this._estado = value;
+					this.SendPropertyChanged("estado");
+					this.OnestadoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbPermiso_tbRolPermiso", Storage="_tbRolPermiso", ThisKey="idPermiso", OtherKey="idPermiso")]
+		public EntitySet<tbRolPermiso> tbRolPermiso
+		{
+			get
+			{
+				return this._tbRolPermiso;
+			}
+			set
+			{
+				this._tbRolPermiso.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tbRolPermiso(tbRolPermiso entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbPermiso = this;
+		}
+		
+		private void detach_tbRolPermiso(tbRolPermiso entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbPermiso = null;
 		}
 	}
 	
