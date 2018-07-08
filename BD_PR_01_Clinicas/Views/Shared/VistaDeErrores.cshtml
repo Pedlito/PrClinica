@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Errores";
+}
+
+<h2 class="text-warning">Se han producido los siguientes errores:</h2>
+<hr />
+<h3 class="text-danger">@ViewBag.errores</h3>
+<h3>@Html.ValidationMessage("error", "", new { @class = "text-danger" }) </h3>
+<hr />
+<a href="javascript:history.back()">Regresar</a>
+
+

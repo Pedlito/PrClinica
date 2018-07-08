@@ -15,220 +15,283 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Rotacion
         public ActionResult Index()
         {
-            List<tbRotacion> lista = (from t in db.tbRotacion select t).ToList();
+            List<tbRotacion> lista = (from t in db.tbRotacion where t.estado == true select t).ToList();
      
             return View(lista);
         }
 
-        // GET: Rotacion/Crear
-        static tbRotacion rot = new tbRotacion();
-       static List<tbUsuario> miembros = new List<tbUsuario>();
+
       
         public ActionResult Crear()
         {
-            // List<tbUsuario> usuariosValidos = (from u in db.tbUsuario where u.estado == true select u).ToList();
-            if (rot.fechaInicio!=null) {
-                ViewBag.fechaInicio = rot.fechaInicio.Value.ToString("yyyy-MM-dd");
-                ViewBag.fechaFinal = rot.fechaFinal.Value.ToString("yyyy-MM-dd");
-            }
-            List<tbUsuario> doctores = (from u in db.tbUsuario where u.codTipoUsuario == 1 select u).ToList();
-            List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.codTipoUsuario==2 select u).ToList();
-
+   
+            List<tbUsuario> doctores = (from u in db.tbUsuario where  u.estado == true && u.codTipoUsuario == 1 select u).ToList();
+            List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true  && u.codTipoUsuario == 2 select u).ToList();
+            
             ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");
             ViewBag.codEstudiante = new SelectList(estudiantes, "codUsuario", "nombre");
-            return View(miembros);
-        }
-
-        // POST: Rotacion/Crear
-        [HttpPost]
-        public ActionResult Crear(FormCollection collection)
-        {
-
-            if (collection["fechaInicio"] !="")
-            {
-                rot.fechaInicio = DateTime.Parse(collection["fechaInicio"]);
-                rot.fechaFinal = DateTime.Parse(collection["fechaFinal"]);
-            }
-      
-            string str = Request.Params["btn"];
-
-            if (str == "AgregarD")
-            {
-
-                tbUsuario usuar = (from u in db.tbUsuario where u.codUsuario == int.Parse(collection["codDoctor"]) select u).SingleOrDefault();
-   
-                if (!miembros.Any(x => x.codUsuario == usuar.codUsuario)) { miembros.Add(usuar); } else { /*mesaje de repetidos */}
-
-                return RedirectToAction("Crear");
-            }
-            if (str == "AgregarE")
-            {
-
-                tbUsuario usuar = (from u in db.tbUsuario where u.codUsuario == int.Parse(collection["codEstudiante"]) select u).SingleOrDefault();
-
-                if (!miembros.Any(x => x.codUsuario == usuar.codUsuario)) { miembros.Add(usuar); } else { /*mesaje de repetidos */}
-
-                return RedirectToAction("Crear");
-            }
-            if (str == "Guardar")
-            {
-                try
-                {
-                    tbRotacion rotacion = new tbRotacion()
-                    {
-                        fechaInicio = DateTime.Parse(collection["fechaInicio"]),
-                        fechaFinal = DateTime.Parse(collection["fechaFinal"])
-                    };
-
-                    foreach (var d in miembros) {
-                        rotacion.tbRotacionUsuario.Add(new tbRotacionUsuario{
-                          codUsuario = d.codUsuario,
-                          estado = true
-                        });
-                    }
-                    db.tbRotacion.InsertOnSubmit(rotacion);
-                    db.SubmitChanges();
-                    miembros.Clear();
-                    rot.fechaInicio = null; rot.fechaFinal = null;
-                    return RedirectToAction("Index");
-                }
-                catch
-                {
-                    return RedirectToAction("Index");
-                }
-
-            }
-            if (str == "Cancelar")
-            {
-                miembros.Clear();
-                rot.fechaInicio = null; rot.fechaFinal = null;
-                return RedirectToAction("Index");
-
-            }
-            return RedirectToAction("Index");
-
-        }
-
-        // GET: Rotacion/Integrantes/5
-        public ActionResult Integrantes(int? id , int? accion, string error="")
-        {
-            if (accion == 1) { ViewBag.mostrar = true; } else { ViewBag.mostrar = false; }
-            if (id != null)
-            {
-                List<tbRotacionUsuario> lista = (from t in db.tbRotacionUsuario where t.codRotacion == id && t.estado == true select t).ToList();
-                tbRotacion rotacion = (from t in db.tbRotacion where t.codRotacion == id select t).SingleOrDefault();
-                ViewBag.idRotacion = id;
-                ViewBag.fechaInicio = rotacion.fechaInicio.Value.ToString("dd/MM/yyyy");
-                ViewBag.fechaFinal = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy");
-                //lista de usuarios en la vista.
-                List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.codTipoUsuario==2 select u).ToList();
-                ViewBag.codUsuario = new SelectList(estudiantes, "codUsuario", "nombre");
-                if (error!="") { ModelState.AddModelError("mensaje", "Ya ha sido agregado"); }
-                return View(lista);
-            }
-            else {
-              
-                return HttpNotFound();
-            }
-        }
-
-        // GET: Rotacion/AgregarIntegrante
-        public ActionResult AgregarIntegrante(int idRotacion)
-        {
-            ViewBag.codUsuario = new SelectList(db.tbUsuario, "codUsuario", "nombre");
-            ViewBag.idRotacion = idRotacion;
             return View();
         }
 
-        // POST: Rotacion/AgregarIntegrante
+
         [HttpPost]
-        public ActionResult AgregarIntegrante(FormCollection collection)
-        {
-
-            tbRotacionUsuario tbru = (from r in db.tbRotacionUsuario where r.codUsuario == int.Parse(collection["codUsuario"]) && r.codRotacion == int.Parse(collection["codRotacion"]) select r).SingleOrDefault();
-            if (tbru != null){ return RedirectToAction("Integrantes", "Rotacion", new { id = int.Parse(collection["codRotacion"]), accion = 1, error ="Repeticion"}); }
+        public JsonResult Crear(Rotaciones rotacion) {
+            String resultado = "";
             try
+            {
+                tbRotacion nuevaRotacion = new tbRotacion()
                 {
-                    // TODO: Add insert logic here
-                    tbRotacionUsuario nuevo = new tbRotacionUsuario
+                    fechaInicio = DateTime.Parse(rotacion.fechaIni),
+                    fechaFinal = DateTime.Parse(rotacion.fechaFin),
+                    estado = true
+                };
+
+                    foreach (var d in rotacion.integrantes)
                     {
-                        codRotacion = int.Parse(collection["codRotacion"]),
-                        codUsuario = int.Parse(collection["codUsuario"]),
-                        estado = true
-                    };
-                    db.tbRotacionUsuario.InsertOnSubmit(nuevo);
-                    db.SubmitChanges();
-                    //int? id = nuevo.codRotacion;
+                        nuevaRotacion.tbRotacionUsuario.Add(new tbRotacionUsuario
+                        {
+                            codUsuario = d.codUser,
+                            estado = true
+                        });
+                    }  
+              
+                db.tbRotacion.InsertOnSubmit(nuevaRotacion);
 
-                    return RedirectToAction("Integrantes", "Rotacion", new { id = nuevo.codRotacion, accion = 1 });
-                    //return RedirectToAction("Index", "Home", new { id = 2 });
-                    //return RedirectToAction("/Rotacion/Integrantes/");
-                }
-                catch
-                {
-                    return View();
-                }
-          
+            }
+            catch (Exception e)
+            {
+
+                resultado = e.Message;
+            }
+
+            try { db.SubmitChanges(); } catch (Exception ex) { resultado += " ERROR: " + ex.Message; }
+
+            return Json(resultado);
         }
-
-        // GET: Rotacion/Edit/5
-        public ActionResult Descartar(int? id)
+        // GET: Rotacion/Integrantes/5
+        public ActionResult Integrantes(int? id)
         {
-         var us =   miembros.Find(m => m.codUsuario == id);
-            miembros.Remove(us);
-            return RedirectToAction("Crear");
+                tbRotacion rotacion = (from t in db.tbRotacion where t.codRotacion == id select t).SingleOrDefault();
+
+            if (rotacion == null)
+            {
+                @ViewBag.errores = "La accion anterior no esta permitida";
+                return View("VistaDeErrores");
+            }
+          
+             
+          
+
+            ViewBag.fechaInicio = rotacion.fechaInicio.Value.ToString("dd/MM/yyyy");
+            ViewBag.fechaFinal = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy");
+  
+            return View(rotacion.tbRotacionUsuario.ToList());
         }
 
-        // POST: Rotacion/Edit/5
-        //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        public ActionResult AgregarDocs(IEnumerable<ItemUser> listUser)
+        {
+            List<tbUsuario> lista = new List<tbUsuario>();
+            
+            if (listUser != null)
+            {
+
+                foreach (ItemUser item in listUser)
+                {
+                    //por cada item dentro de la lista detalle creo un registroProducto
+                    tbUsuario nuevoUs =new  tbUsuario();
+                    var tbu = (from t in db.tbUsuario where t.codUsuario == item.codUser
+                               orderby t.codUsuario select t).SingleOrDefault();
+
+                        nuevoUs.codUsuario = tbu.codUsuario;
+                        nuevoUs.nombre = tbu.nombre;
+                        nuevoUs.dpi = tbu.dpi;
+                        nuevoUs.usuario = tbu.usuario;
+
+                    lista.Add(nuevoUs);
+                }
+            }
+
+            return PartialView("_Doctores", lista);
+        }
+
+        public ActionResult AgregarEstus(IEnumerable<ItemUser> listUser)
+        {
+            List<tbUsuario> lista = new List<tbUsuario>();
+         
+            if (listUser != null)
+            {
+
+                foreach (ItemUser item in listUser)
+                {
+                    
+                    tbUsuario nuevoUs = new tbUsuario();
+                    var tbu = (from t in db.tbUsuario where t.codUsuario == item.codUser
+                               orderby t.codUsuario select t).SingleOrDefault();
+                    nuevoUs.codUsuario = tbu.codUsuario;
+                    nuevoUs.nombre = tbu.nombre;
+                    nuevoUs.carnet = tbu.carnet;
+                    nuevoUs.usuario = tbu.usuario;
+
+                    lista.Add(nuevoUs);
+                }
+            }
+
+            return PartialView("_Estudiantes", lista);
+        }
+    
+
+        // GET: Rotacion/Editar/5, permite editar una rotacion
+        public ActionResult Editar(int? id)
+        {
+
+                tbRotacion rotacion = (from t in db.tbRotacion where t.codRotacion == id select t).SingleOrDefault();
+           if (rotacion != null)
+            {
+                //muestra las fechas en grande
+                ViewBag.fechaInicio = rotacion.fechaInicio.Value.ToString("dd/MM/yyyy");
+                ViewBag.fechaFinal = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy");
+                //para editarlo
+                ViewBag.fechaIni = rotacion.fechaInicio.Value.ToString("yyyy-MM-dd");
+                ViewBag.fechaFin = rotacion.fechaFinal.Value.ToString("yyyy-MM-dd");
+                //id de la rotacion actual
+                ViewBag.id = rotacion.codRotacion;
+                //estudiantes y doctores por separado, si se agregan nuevos se obtiene la lista competa, en la vista se validan repetidos.
+                List<tbUsuario> doctores = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 1 select u).ToList();
+                List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 2 select u).ToList();
+                //combox seleccionar usuarios
+                ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");
+                ViewBag.codEstudiante = new SelectList(estudiantes, "codUsuario", "nombre");
+                //lista de usuarios de la rotacion
+                return View(rotacion.tbRotacionUsuario.ToList());
+            }
+            else
+            {
+                @ViewBag.errores = "Operacion invalida";
+                return View("VistaDeErrores");
+            }
+        }
+
+        //POST: Rotacion/Edit/5
+        [HttpPost]
+        public JsonResult Editar(Rotaciones rotacion)
+        {
+            String resultado="";
+
+            try
+            {
+                tbRotacion RotAmod = (from R in db.tbRotacion where R.codRotacion == rotacion.rotacionId select R).SingleOrDefault();
+                List<tbRotacionUsuario> origin = (from det in RotAmod.tbRotacionUsuario select det).ToList();
+
+                if (RotAmod.fechaInicio != DateTime.Parse(rotacion.fechaIni)) { RotAmod.fechaInicio = DateTime.Parse(rotacion.fechaIni); }
+                if (RotAmod.fechaFinal != DateTime.Parse(rotacion.fechaFin)) { RotAmod.fechaFinal = DateTime.Parse(rotacion.fechaFin); }
+
+                //romover de la base los removidos en la  vista
+           
+                    foreach (var d in origin)
+                    {
+                        if (!rotacion.integrantes.Any(x => x.codUser == d.codUsuario))
+                        {
+                            tbRotacionUsuario tbru = (from r in db.tbRotacionUsuario where r.codUsuario == d.codUsuario && r.codRotacion == rotacion.rotacionId select r).SingleOrDefault();
+                            db.tbRotacionUsuario.DeleteOnSubmit(tbru);
+
+                        }
+                    }
+                    //agregar en la base los agragados en la vista.
+                    foreach (var d in rotacion.integrantes)
+                    {
+                        if (!RotAmod.tbRotacionUsuario.Any(x => x.codUsuario == d.codUser))
+                        {
+                            tbRotacionUsuario rn = new tbRotacionUsuario
+                            {
+                                codRotacion = rotacion.rotacionId,
+                                codUsuario = d.codUser,
+                                estado = true
+                            };
+                            db.tbRotacionUsuario.InsertOnSubmit(rn);
+                        }
+                    } 
+              
+            }
+            catch (Exception e)
+            {
+
+                resultado = e.Message;
+            }
+
+
+            if (resultado=="") { db.SubmitChanges(); }
+           
+
+            return Json(resultado);
+        }
 
         // GET: Rotacion/Delete/5
-        public ActionResult Delete(int? idRotacion, int? idUsuario)
+        public JsonResult Archivar(int? id)
         {
-            //ModeloRotacionUsuario usuario = (from rot in db.tbRotacionUsuario
-            //                       join  us in db.tbUsuario on rot.codUsuario equals us.codUsuario where rot.codRotacion == idRotacion
-            //                       select new ModeloRotacionUsuario { idRotacion = rot.codRotacion, idUsuario=us.codUsuario, nombreUs = us.nombre}).SingleOrDefault();
-     
-            tbRotacionUsuario Rot = (from r in db.tbRotacionUsuario where (r.codUsuario == idUsuario && r.codRotacion == idRotacion) select r).SingleOrDefault();
-            ViewBag.usuario =(from t in db.tbUsuario where t.codUsuario == idUsuario select t.nombre).SingleOrDefault();
-    
-            return View(Rot);
+            string resultado = "";
+            if (id != null)
+            {
+                try
+                {
+                    tbRotacion Rot = (from r in db.tbRotacion where (r.codRotacion == id) select r).SingleOrDefault();
+                    Rot.estado = false;
+
+                    foreach (var item in Rot.tbRotacionUsuario.ToList())
+                    {
+                        tbUsuario us = (from u in db.tbUsuario where u.codUsuario == item.codUsuario select u).SingleOrDefault();
+                        if (us.codTipoUsuario == 2) { us.estado = false; }
+
+                    }
+                    db.SubmitChanges();
+                }
+                catch (Exception)
+                {
+
+                    resultado = "Error: Operacion fallida";
+                }
+            }
+            else
+            {
+                resultado = "No se pudo realizar la accion";
+            }
+          
+
+            return Json(resultado);
         }
+        public ActionResult Archivados(int? anios) {
+            List<tbRotacion> lista = db.tbRotacion.OrderByDescending(x=>x.fechaInicio).Where(x=>x.estado==false).Take(10).ToList();
+            var an = db.tbRotacion.Select(x => x.fechaInicio.Value.Year).Distinct();
+            ViewBag.anios = new SelectList(an);
 
-        // POST: Rotacion/Delete/5
-        [HttpPost]
-        public ActionResult Delete(FormCollection col)
+            if (anios != null)
+            {
+                lista = lista.Where(x => x.fechaInicio.Value.Year == anios).ToList();
+            }
+            return View(lista);
+        }
+        public ActionResult Restablecer(int? id)
         {
-   
 
-            tbRotacionUsuario tbru = (from r in db.tbRotacionUsuario where r.codUsuario == int.Parse(col["codUsuario"]) && r.codRotacion == int.Parse(col["codRotacion"]) select r).SingleOrDefault();
-            try
-            {
-            
-         
-                db.tbRotacionUsuario.DeleteOnSubmit(tbru);
-                db.SubmitChanges();
-                return RedirectToAction("Integrantes", "Rotacion", new { id = tbru.codRotacion});
-            }
-            catch(Exception)
-            {
-                
-                
-                return View();
-            }
+            tbRotacion Rot = (from r in db.tbRotacion where (r.codRotacion == id) select r).SingleOrDefault();
+            Rot.estado = true;
+            db.SubmitChanges();
+
+
+            return RedirectToAction("Index");
+        }
+   
+        [HttpPost]
+        public JsonResult ObtenerDocs(int? id) {
+
+   
+            List<ItemUser> codsDocs = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 1 select new ItemUser{ codUser = R.codUsuario }).ToList();
+
+            return Json(codsDocs.ToArray()); 
+        }
+        public JsonResult ObtenerEstus(int? id) {
+            List<ItemUser> codsEstus = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 2 select new ItemUser{codUser = R.codUsuario }).ToList();
+            return Json(codsEstus.ToArray());
         }
         [AllowAnonymous]
         public ActionResult ActivarDesacivarRegistro()
@@ -236,6 +299,9 @@ namespace BD_PR_01_Clinicas.Controllers
             tbConfiguracion tc = (from v in db.tbConfiguracion where v.codConfiguracion == 1 select v).SingleOrDefault();
             return View(tc);
         }
+
+
+        
         [HttpPost]
         [AllowAnonymous]
         public ActionResult ActivarDesacivarRegistro(tbConfiguracion confi)
@@ -270,6 +336,8 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View();
             }
         }
+
+
         [AllowAnonymous]
         public ActionResult MensajeDeRegistro()
         {

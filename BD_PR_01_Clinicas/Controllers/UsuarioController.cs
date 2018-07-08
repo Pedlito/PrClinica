@@ -110,71 +110,116 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: Usuario/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult EditarUsuario(int? id)
         {
-            return View();
+            
+            if (id!=null) 
+                {
+                tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==id).SingleOrDefault();
+                tbRol t = new tbRol();
+                
+                  
+                List<tbRol> rols = db.tbRol.Where(s=>s.codTipoUsuario!=usuario.codTipoUsuario).ToList();
+                
+                List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();
+                
+                roles.Insert(0,(new SelectListItem {Text=usuario.tbRol.Rol,Value=usuario.tbRol.codTipoUsuario.ToString() }));
+                ViewBag.codTipoUsuario = roles;
+                if (usuario != null) { return View(usuario); } else { }
+            }
+
+            ViewBag.errores = "No existe el usuario"; 
+            return View("VistaDeErrores");
         }
 
         // POST: Usuario/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult EditarUsuario(tbUsuario usuar)
         {
             try
             {
-                // TODO: Add update logic here
-
+           tbUsuario usr =  db.tbUsuario.Where(x => x.codUsuario == usuar.codUsuario).SingleOrDefault();
+                usr.nombre = usuar.nombre;
+                usr.codTipoUsuario = usuar.codTipoUsuario;
+                usr.carnet = usuar.carnet;
+                usr.dpi = usuar.dpi;
+                usr.fechaNacimiento = usuar.fechaNacimiento;
+                usr.usuario = usuar.usuario;
+                usr.password = usuar.password;
+                db.SubmitChanges();   
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo terminar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
-        // GET: Usuario/Deshabilitar/5
-        public ActionResult Deshabilitar(int codUsuario)
+        // GET: Usuario/Deshabilitar,Habilitar/5
+        public ActionResult CambiarEstadoUsuario(int? codUsuario)
         {
-            tbUsuario deshabilitar = (from t in db.tbUsuario where t.codUsuario == codUsuario select t).SingleOrDefault();
-            return View(deshabilitar);
+            if (codUsuario != null)
+            {
+                tbUsuario cambiar = (from t in db.tbUsuario where t.codUsuario == codUsuario select t).SingleOrDefault();
+                if (cambiar!=null) { return View(cambiar); }
+            }
+          
+                ViewBag.errores = "Usuario no encontrado";
+                return View("VistaDeErrores");  
         }
 
         // POST: Usuario/Deshabilitar/5
         [HttpPost]
-        public ActionResult Deshabilitar(int codUsuario, FormCollection collection)
+        public ActionResult CambiarEstadoUsuario(FormCollection collection)
         {
             try
             {
-                // TODO: Add Deshabilitar logic here
 
+                tbUsuario usuario = (from user in db.tbUsuario where user.codUsuario == int.Parse(collection["codUsuario"]) select user).SingleOrDefault();
+                string str = Request.Params["btn"];
+
+                if (str == "deshabilitar")
+                {
+                    usuario.estado = false;
+                }
+                else
+                {
+                    usuario.estado = true;
+                }
+                         
+                    db.SubmitChanges();
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception)
             {
-                return View();
+                ViewBag.errores = "No se pudo completar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
-        // GET: Usuario/Habilitar/5
-        public ActionResult Habilitar(int id)
-        {
-            return View();
-        }
+        //// GET: Usuario/Habilitar/5
+        //public ActionResult Habilitar(int codUsuario, bool estado)
+        //{
+        //    tbUsuario habilitar = (from t in db.tbUsuario where t.codUsuario == codUsuario select t).SingleOrDefault();
+        //    return View(habilitar);
+        //}
 
-        // POST: Usuario/Habilitar/5
-        [HttpPost]
-        public ActionResult Habilitar(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add Habilitar logic here
+        //// POST: Usuario/Habilitar/5
+        //[HttpPost]
+        //public ActionResult Habilitar(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add Habilitar logic here
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: Usuario/Delete/5
         public ActionResult Delete(int id)

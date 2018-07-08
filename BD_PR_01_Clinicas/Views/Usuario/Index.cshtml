@@ -54,14 +54,15 @@
                 }
 
                 <td>
+                    @Html.ActionLink("Editar", "EditarUsuario", new { id = item.codUsuario }) |
                     @Html.ActionLink("Detalles", "Detalles", new { codUsuario = item.codUsuario }) |
                     @if (item.estado == true)
                     {
-                        @Html.ActionLink("Deshabilitar", "Deshabilitar", new { codUsuario = item.codUsuario })
+                        @Html.ActionLink("Deshabilitar", "CambiarEstadoUsuario",new { codUsuario = item.codUsuario })
                     }
                     else
                     {
-                        @Html.ActionLink("Habilitar", "Habilitar", new { codUsuario = item.codUsuario })
+                        @Html.ActionLink("Habilitar", "CambiarEstadoUsuario", new { codUsuario = item.codUsuario })
                     }
 
                 </td>

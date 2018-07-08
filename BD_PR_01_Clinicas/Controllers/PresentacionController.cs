@@ -7,11 +7,12 @@ using BD_PR_01_Clinicas.Models;
 
 namespace BD_PR_01_Clinicas.Controllers
 { 
-    [Authorize]
+   // [Authorize]
     public class PresentacionController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Presentacion
+        [AutenticadoAttribute]
         public ActionResult Index(string presentacion = "")
         {
             List<tbPresentacion> lista = null;
@@ -25,10 +26,11 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             return View(lista);
         }
-
+     
         // GET: Presentacion/Crear
         public ActionResult Crear()
         {
+            
             return View();
         }
 
@@ -104,5 +106,6 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View();
             }
         }
+
     }
 }

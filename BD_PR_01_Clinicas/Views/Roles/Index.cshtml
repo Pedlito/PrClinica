@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbRol>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Roles</h2>
+
+<p>
+    @Html.ActionLink("Crear un rol", "CrearRol")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rol)
+        </th>
+        <th>
+            @Html.DisplayName("Descripcion")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rol)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descripcion)
+        </td>
+        <td>
+            <div class="btn-group">
+                <button class="btn btn-default btn-xs dropdown-toggle"
+                        type="button" data-toggle="dropdown">
+                    Opciones <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("Editar", "EditarRol", new { id = item.codTipoUsuario })</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Detalles", "DetallesRol", new { id = item.codTipoUsuario })</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Archivar", "ArchivarRol", new { id = item.codTipoUsuario })</li>
+                    <li class="divider"></li>
+                    <li>@Html.ActionLink("Permisos", "AgregarPermisos", new { id = item.codTipoUsuario })</li>
+                </ul>
+            </div>
+
+         </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    <p>
+
+        @Html.ActionLink("Regresar", "Administracion","Home",null,htmlAttributes:new { @class="btn btn-primary"})
+    </p>
+</div>

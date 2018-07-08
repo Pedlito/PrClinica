@@ -1,0 +1,40 @@
+﻿@model BD_PR_01_Clinicas.Models.tbRol
+
+@{
+    ViewBag.Title = "Archivar Rol";
+}
+
+<h2>Archivar rol</h2>
+
+<h3>Esta seguro de que desea archivar este rol?</h3>
+<div>
+   
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Nombre")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rol)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Descripcion")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Archivar" class="btn btn-danger" /> 
+            @Html.ActionLink("Regresar", "Index", null, htmlAttributes: new { @class="btn btn-primary"})
+        </div>
+    }
+</div>
