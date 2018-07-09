@@ -7,39 +7,52 @@
 <h2>Tipos de Sangre</h2>
 
 <p>
-    @Html.ActionLink("Nuevo", "Crear")
+    <a href="@Url.Action("Crear")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span> Nuevo
+    </a>
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Tipo de Sangre")
-        </th>
-        <th>
-            @Html.DisplayName("Estado")
-        </th>
-        <th></th>
-    </tr>
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Tipo de Sangre")
+            </th>
+            <th>
+                @Html.DisplayName("Estado")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tipoSangre)
-        </td>
-        <td>
-            @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
-        </td>
-        <td>
-            <a class="btn btn-xs btn-primary" href="/TipoSangre/Editar?codTipoSangre=@item.codTipoSangre"><span class="glyphicon glyphicon-edit"></span> Editar</a>
-            @if (item.estado == true)
-            {
-                @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codTipoSangre = item.codTipoSangre, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
-            }
-            else
-            {
-                @Html.ActionLink("Habilitar", "CambiarEstado", new { codTipoSangre = item.codTipoSangre, estado = true }, htmlAttributes: new { @class = "btn btn-xs" })
-            }
-        </td>
-    </tr>
-}
-
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tipoSangre)
+                </td>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
+                </td>
+                <td>
+                    <a class="btn btn-xs btn-primary" href="/TipoSangre/Editar?codTipoSangre=@item.codTipoSangre"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    @if (item.estado == true)
+                    {
+                        @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codTipoSangre = item.codTipoSangre, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Habilitar", "CambiarEstado", new { codTipoSangre = item.codTipoSangre, estado = true }, htmlAttributes: new { @class = "btn btn-xs" })
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+<div>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>
+
