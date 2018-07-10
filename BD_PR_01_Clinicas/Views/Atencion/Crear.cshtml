@@ -76,7 +76,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> Cancelar
+                </button>
             </div>
         </div>
     </div>
@@ -175,15 +177,19 @@
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="button" value="Crear" class="btn btn-success" onclick="CrearPaciente()" data-dismiss="modal" />
+                        <div class="col-md-offset-4 col-md-8">
+                            <button type="button" class="btn btn-success" onclick="CrearPaciente()">
+                                <span class="glyphicon glyphicon-plus"></span> Crear y Asignar
+                            </button>
                         </div>
                     </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span> Cancelar
+                </button>
             </div>
         </div>
     </div>
@@ -214,16 +220,32 @@
         }
 
         function Guardar() {
-            var motivoConsulta = $('#motivoConsulta').val();
-            var HistoriaEnfermedad = $('#HistoriaEnfermedad').val();
-            $.ajax({
-                type: "POST",
-                url: '@Url.Action("Crear", "Atencion")',
-                data: { codPaciente: paciente, motivoConsulta: motivoConsulta, HistoriaEnfermedad: HistoriaEnfermedad },
-                success: function (response) {
-                    location.href = response;
-                }
-            });
+            var consulta = {
+                "codPaciente": paciente,
+                "motivoConsulta": $('#motivoConsulta').val(),
+                "HistoriaEnfermedad": $('#HistoriaEnfermedad').val()
+            }
+            if (consulta.codPaciente == 0) {
+                alert("No ha sido asignado un paciente a la consulta");
+            }
+            else if (consulta.motivoConsulta == "") {
+                alert("El motivo de la consulta es obligatorio");
+                $('#motivoConsulta').focus();
+            }
+            else if (consulta.HistoriaEnfermedad == "") {
+                alert("La historia de la enfermedad es obligatoria");
+                $('#HistoriaEnfermedad').focus();
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Crear", "Atencion")',
+                    data: { "consulta": consulta },
+                    success: function (response) {
+                        location.href = response;
+                    }
+                });
+            }
         }
 
         function CrearPaciente() {
@@ -240,14 +262,20 @@
                 "escolaridad": $('#escolaridad').val(),
                 "codTipoSangre": $('#codTipoSangre').val(),
             };
-            $.ajax({
-                url: '@Url.Action("NuevoPaciente", "Atencion")',
-                type: "POST",
-                data: { "paciente" : paciente },
-                success: function (response) {
-                    Asignar(response.codPaciente, response.nombre);
-                }
-            });
+            if (paciente.nombre == "") {
+                alert("el nombre del paciente es un campo obligatorio");
+            }
+            else {
+                $.ajax({
+                    url: '@Url.Action("NuevoPaciente", "Atencion")',
+                    type: "POST",
+                    data: { "paciente": paciente },
+                    success: function (response) {
+                        Asignar(response.codPaciente, response.nombre);
+                    }
+                });
+                $('#nuvoPaciente').modal('hide');
+            }
         }
 
     </script>    

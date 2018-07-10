@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Lista de Pacientes</h2>
+<h2>Consultas</h2>
 
 <p>
     <a href="@Url.Action("Crear")" class="btn btn-success">
@@ -38,19 +38,26 @@
                     @Html.DisplayFor(modelItem => item.nombre)
                 </td>
                 <td>
-                    @item.fechaNacimiento.Value.ToShortDateString()
+                    @try
+                    {
+                        @item.fechaNacimiento.Value.ToShortDateString()
+                    }
+                    catch
+                    {
+                        <p>Desconocida</p>
+                    }
                 </td>
-                @if (item.estadoCivil.Value)
+                @if (item.estadoCivil.Value == true)
                 {
-                    <td>
-                        Soltero
-                    </td>
+                    <td>Soltero</td>
+                }
+                else if (item.estadoCivil.Value == false)
+                {
+                    <td>Casado</td>
                 }
                 else
                 {
-                    <td>
-                        Casado
-                    </td>
+                    <td>Desconocido</td>
                 }
                 <td>
                     @Html.DisplayFor(modelItem => item.residencia)
@@ -59,7 +66,7 @@
                     <a href="@Url.Action("CrearHC", new { codPaciente = item.codPaciente })" class="btn btn-primary btn-xs">
                         <span class="glyphicon glyphicon-copy"></span> Atender
                     </a>
-                    <a href="@Url.Action("Cancelar", new { codConsulta = item.codPaciente })" class="btn btn-danger btn-xs">
+                    <a href="@Url.Action("Cancelar", new { codPaciente = item.codPaciente })" class="btn btn-danger btn-xs" onclick="return Confirmar()">
                         <span class="glyphicon glyphicon-trash"></span> Cancelar
                     </a>
                 </td>
@@ -74,3 +81,16 @@
         <span class="glyphicon glyphicon-arrow-left"></span> Regresar
     </a>
 </p>
+
+@section Scripts {
+    <script>
+        function Confirmar() {
+            if (confirm("¿Realmente desea cancelar esta consulta?")) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    </script>
+}

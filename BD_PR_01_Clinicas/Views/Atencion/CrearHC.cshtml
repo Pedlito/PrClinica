@@ -1300,14 +1300,20 @@
                 "receta": receta,
                 "diagnostico": diagnostico
             };
-            $.ajax({
-                url: '@Url.Action("GuardarHC", "Atencion")',
-                type: "POST",
-                data: { "historia": historia },
-                success: function (response) {
-                    window.location.href = response;
-                }
-            });
+            if (diagnostico.codUsuario == "") {
+                alert("Es obligatorio seleccionar un Médico en el Diagnostico");
+            }
+            else
+            {
+                $.ajax({
+                    url: '@Url.Action("GuardarHC", "Atencion")',
+                    type: "POST",
+                    data: { "historia": historia },
+                    success: function (response) {
+                        window.location.href = response;
+                    }
+                });
+            }
         }
 
         function agregarProblema() {

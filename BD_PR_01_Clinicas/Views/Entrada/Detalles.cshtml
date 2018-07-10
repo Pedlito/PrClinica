@@ -7,9 +7,9 @@
 <h2>Entrada</h2>
 <div>
     <dl class="dl-horizontal">
-        <dt><h4>@Html.DisplayName("Descripción:")</h4></dt>
+        <dt><h4><label>@Html.DisplayName("Descripción:")</label></h4></dt>
         <dd><h4>@ViewBag.descripcion</h4></dd>
-        <dt><h4>@Html.DisplayName("Fecha:")</h4></dt>
+        <dt><h4><label>@Html.DisplayName("Fecha:")</label></h4></dt>
         <dd><h4>@ViewBag.fechaEntrada</h4></dd>
     </dl>
 </div>
@@ -93,5 +93,7 @@
     </table>*@
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>

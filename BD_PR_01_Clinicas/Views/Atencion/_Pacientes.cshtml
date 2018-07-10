@@ -41,7 +41,14 @@
                     </div>
                 }
                 <div class="col-xs-2 text-left">
-                    @item.fechaNacimiento.Value.ToShortDateString()
+                    @try
+                    {
+                        @item.fechaNacimiento.Value.ToShortDateString()
+                    }
+                    catch
+                    {
+                        <p>Desconocida</p>
+                    }
                 </div>
                 <div class="col-xs-2 text-left">
                     @item.residencia

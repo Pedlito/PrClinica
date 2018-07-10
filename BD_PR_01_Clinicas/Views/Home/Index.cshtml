@@ -30,14 +30,21 @@
             Creación de nuevas consultas y el <br />
             listado de pacientes en espera.
         </p>
-        <p><a class="btn btn-default" href="/Atencion">Ver Consultas &raquo;</a></p>
+        <p>
+            <a href="@Url.Action("Index", "Atencion")" class="btn btn-primary">
+                Ver <span class="glyphicon glyphicon-menu-right"></span>
+            </a>
+        </p>
     </div>
     <div class="col-md-4">
         <h2>Pacientes</h2>
         <p>
             Ver pacientes y la historia clínica.
         </p>
-        <p><a class="btn btn-default" href="/Pacientes">Ver Pacientes &raquo;</a></p>
-
+        <p>
+            <a href="@Url.Action("Index", "Pacientes")" class="btn btn-primary">
+                Ver <span class="glyphicon glyphicon-menu-right"></span>
+            </a>
+        </p>
     </div>
 </div>

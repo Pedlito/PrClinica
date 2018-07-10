@@ -7,34 +7,41 @@
 <h2>Detalles</h2>
 
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Producto")
-        </th>
-        <th>
-            @Html.DisplayName("Presentación")
-        </th>
-        <th>
-            @Html.DisplayName("Cantidad")
-        </th>
-    </tr>
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Producto")
+            </th>
+            <th>
+                @Html.DisplayName("Presentación")
+            </th>
+            <th>
+                @Html.DisplayName("Cantidad")
+            </th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbProducto.producto)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tbProducto.tbPresentacion.presentacion)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.cantidad)
-        </td>
-    </tr>
-}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbProducto.producto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbProducto.tbPresentacion.presentacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>
