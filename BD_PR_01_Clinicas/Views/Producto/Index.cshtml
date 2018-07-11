@@ -7,11 +7,17 @@
 
 <h2>Productos</h2>
 
+    <p>
+        <a href="@Url.Action("Crear")" class="btn btn-success">
+            <span class="glyphicon glyphicon-plus"></span> Nuevo Producto
+        </a>
+    </p>
+
+
 <p>
-    <a href="@Url.Action("Crear")" class="btn btn-success">
-        <span class="glyphicon glyphicon-plus"></span> Nuevo Producto
-    </a>
+    @Html.ActionLink("Generar reporte", "ReporteDeCatalogo")
 </p>
+
 
 @using (Html.BeginForm())
 {

@@ -4,26 +4,35 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
+using PagedList;
 
 namespace BD_PR_01_Clinicas.Controllers
 {
+    [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_salidas)]
     public class SalidaController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
-        // GET: Salida
-        public ActionResult Index()
+
+
+        public ActionResult Index(int? page)
         {
             List<tbSalida> lista = (from t in db.tbSalida orderby t.fechaSalida select t).ToList();
-            return View(lista);
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Salida/Detalles/5
+   
         public ActionResult Detalles(int codSalida)
         {
             List<tbDetalleSalida> lista = (from t in db.tbDetalleSalida where t.codSalida == codSalida select t).ToList();
             return View(lista);
         }
         // GET: Salida/Crear
+   
         public ActionResult Crear()
         {
             return View(new Salida());

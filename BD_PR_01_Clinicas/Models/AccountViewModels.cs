@@ -65,6 +65,8 @@ namespace BD_PR_01_Clinicas.Models
   
     public class RegisterViewModel
     {
+       
+        public int codTipoUsuario { get; set; }
 
         [Required]
         [RegularExpression("^[A-Za-z][a-zA-Z ]+$",ErrorMessage ="Solo se admite texto con espacios")]

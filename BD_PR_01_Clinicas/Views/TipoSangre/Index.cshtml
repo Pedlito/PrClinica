@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbTipoSangre>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<BD_PR_01_Clinicas.Models.tbTipoSangre>
 
 @{
     ViewBag.Title = "Index";
@@ -43,3 +44,5 @@
 }
 
 </table>
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

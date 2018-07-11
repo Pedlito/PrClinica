@@ -4,19 +4,33 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
-{ 
-   // [Authorize]
+{
+    [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_presentaciones)]
     public class PresentacionController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Presentacion
         [AutenticadoAttribute]
-        public ActionResult Index(string presentacion = "")
+        public ActionResult Index(int? page, string presentacion, string filtroActual )
         {
             List<tbPresentacion> lista = null;
-            if (presentacion == "")
+
+            if (presentacion != null)
+            {
+                page = 1;
+
+            }
+            else
+            {
+                presentacion = filtroActual;
+            }
+
+            ViewBag.filtroActual = presentacion;
+
+            if (presentacion == null)
             {
                 lista = (from t in db.tbPresentacion orderby t.estado descending, t.presentacion select t).ToList();
             }
@@ -24,7 +38,11 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 lista = (from t in db.tbPresentacion where t.presentacion.Contains(presentacion) orderby t.estado descending, t.presentacion select t).ToList();
             }
-            return View(lista);
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
      
         // GET: Presentacion/Crear

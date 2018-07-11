@@ -25,19 +25,25 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Consultas</h2>
-        <p>
-            Creación de nuevas consultas y el <br />
-            listado de pacientes en espera.
-        </p>
-        <p><a class="btn btn-default" href="/Atencion">Ver Consultas &raquo;</a></p>
+        @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_pacientes))
+        {
+            <h2>Consultas</h2>
+            <p>
+                Creación de nuevas consultas y el <br />
+                listado de pacientes en espera.
+            </p>
+            <p><a class="btn btn-default" href="/Atencion">Ver Consultas &raquo;</a></p>
+        }
+
     </div>
     <div class="col-md-4">
-        <h2>Pacientes</h2>
-        <p>
-            Ver pacientes y la historia clínica.
-        </p>
-        <p><a class="btn btn-default" href="/Pacientes">Ver Pacientes &raquo;</a></p>
-
+        @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_consultas))
+        {
+            <h2>Pacientes</h2>
+            <p>
+                Ver pacientes y la historia clínica.
+            </p>
+            <p><a class="btn btn-default" href="/Pacientes">Ver Pacientes &raquo;</a></p>
+        }
     </div>
 </div>

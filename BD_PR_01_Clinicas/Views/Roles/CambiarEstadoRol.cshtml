@@ -1,0 +1,61 @@
+﻿@model BD_PR_01_Clinicas.Models.tbRol
+
+@{
+    ViewBag.Title = "CambiarEstadoRol";
+}
+
+@if (Model.estado == true)
+{
+    <h2>Archivar @Model.Rol</h2>
+
+    <h3>¿Quieres Archivar este rol?</h3>
+}
+else
+{
+    <h2>Habilitar @Model.Rol</h2>
+
+    <h3>¿Quieres habilitar este rol?</h3>
+}
+<div>
+ 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Nombre de rol")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rol)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Descripcion")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.codTipoUsuario)
+        <div class="form-actions no-color">
+            @if (Model.estado == true)
+            {
+                <button type="submit" class="btn btn-danger" value="Archivar" name="btn">
+                    <span class="glyphicon glyphicon-trash"></span> Archivar
+                </button>
+            }
+            else
+            {
+                <button type="submit" class="btn btn-info" value="Habilitar" name="btn">
+                    <span class="glyphicon glyphicon-record"></span> Habilitar
+                </button>
+            }
+            <a class="btn btn-primary" href="@Url.Action("Index")">
+                <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+            </a>
+        </div>
+    }
+</div>

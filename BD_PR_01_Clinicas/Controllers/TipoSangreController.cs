@@ -4,17 +4,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
+    [AutenticadoAttribute]
     public class TipoSangreController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: TipoSangre
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             List<tbTipoSangre> lista = (from t in db.tbTipoSangre orderby t.tipoSangre select t).ToList();
-            return View(lista);
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: TipoSangre/Crear

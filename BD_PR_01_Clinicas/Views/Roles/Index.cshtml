@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbRol>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<BD_PR_01_Clinicas.Models.tbRol>
 
 @{
     ViewBag.Title = "Index";
@@ -12,15 +13,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Rol)
+            @Html.DisplayName("Rol")
         </th>
         <th>
             @Html.DisplayName("Descripcion")
         </th>
+        <th>
+            @Html.DisplayName("Estado")
+        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Rol)
@@ -28,6 +33,20 @@
         <td>
             @Html.DisplayFor(modelItem => item.descripcion)
         </td>
+        @if ((bool)item.estado)
+        {
+            <td>
+            @Html.ActionLink("Habilitado", "CambiarEstadoRol", new { id = item.codTipoUsuario })
+            </td>
+        }
+        else
+        {
+
+            <td>
+               @Html.ActionLink("Archivado", "CambiarEstadoRol", new { id = item.codTipoUsuario })  
+            </td>
+        }
+  
         <td>
             <div class="btn-group">
                 <button class="btn btn-default btn-xs dropdown-toggle"
@@ -39,8 +58,6 @@
                     <li class="divider"></li>
                     <li>@Html.ActionLink("Detalles", "DetallesRol", new { id = item.codTipoUsuario })</li>
                     <li class="divider"></li>
-                    <li>@Html.ActionLink("Archivar", "ArchivarRol", new { id = item.codTipoUsuario })</li>
-                    <li class="divider"></li>
                     <li>@Html.ActionLink("Permisos", "AgregarPermisos", new { id = item.codTipoUsuario })</li>
                 </ul>
             </div>
@@ -50,7 +67,8 @@
 }
 
 </table>
-
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 <div>
     <p>
 
