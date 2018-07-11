@@ -195,6 +195,7 @@
     <Compile Include="Controllers\PacientesController.cs" />
     <Compile Include="Controllers\PresentacionController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ReportesController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\RotacionController.cs" />
     <Compile Include="Controllers\SalidaController.cs" />
@@ -213,6 +214,7 @@
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\FrontUser.cs" />
     <Compile Include="Models\HistoriaClinica.cs" />
+    <Compile Include="Models\Reportes.cs" />
     <Compile Include="Models\SessionUsuario.cs" />
     <Compile Include="Models\Inventario.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -384,6 +386,7 @@
     <Content Include="Views\EntregaMedicamento\_Detalle.cshtml" />
     <Content Include="Views\EntregaMedicamento\Entregar.cshtml" />
     <Content Include="Views\EntregaMedicamento\Detalles.cshtml" />
+    <Content Include="Views\Reportes\ConsultasFechas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
