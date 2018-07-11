@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<BD_PR_01_Clinicas.Models.tbRotacion>
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbRotacion>
 
 @{
     ViewBag.Title = "Archivados";
@@ -17,7 +16,7 @@
                 <div class="form-group">
                     @Html.Label("Seleccione año", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 form-inline">                    
-                        @Html.DropDownList("anios",null, htmlAttributes: new { @class = "form-control" })                   
+                        @Html.DropDownList("anios", null, htmlAttributes: new { @class = "form-control" })                   
                         <button type="submit" class="btn btn-info">
                             <span class="glyphicon glyphicon-search"></span> Buscar
                         </button>
@@ -29,40 +28,45 @@
 }
 
 <table class="table">
-    <tr>
-        <th>
-           
-            @Html.DisplayName("Fecha de inicio")
-        </th>
-        <th>
-            @Html.DisplayName("Fecha de finalizacion")
-        </th>
-        <th>
-            @Html.DisplayName("Estado")
-        </th>
-        <th></th>
-    </tr>
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayNameFor(model => model.fechaInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fechaFinal)
+            </th>
+            <th>
+                @Html.DisplayName("Estado")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @item.fechaInicio.Value.ToLongDateString() 
-        </td>
-        <td>
-            @item.fechaFinal.Value.ToLongDateString()        
-        </td>
-        <td>
-            @Html.DisplayName("Archivado")
-        </td>
-        <td>
-            @Html.ActionLink("Restablecer", "Restablecer", new { id=item.codRotacion }) |
-            @Html.ActionLink("Integrantes", "Integrantes", routeValues: new { id = item.codRotacion, origen = "Archivados"}) 
-        </td>
-    </tr>
-}
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.fechaInicio.Value.ToLongDateString()
+                </td>
+                <td>
+                    @item.fechaFinal.Value.ToLongDateString()
+                </td>
+                <td>
+                    @Html.DisplayName("Archivado")
+                </td>
+                <td>
+                    @Html.ActionLink("Restablecer", "Restablecer", new { id = item.codRotacion }) |
+                    @Html.ActionLink("Integrantes", "Integrantes", routeValues: new { id = item.codRotacion, origen = "Archivados" })
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
-
 <div>
-    @Html.ActionLink("Regresar", "Index", "Rotacion", null, htmlAttributes: new { @class = "btn btn-primary" })
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>

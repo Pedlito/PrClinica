@@ -13,33 +13,37 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h2>Permite que los usuarios se registren</h2>
+        <h4>Permite que los usuarios se registren</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.codConfiguracion)
 
         <div class="form-group">
            
-            <div class="col-md-2">
-                @Html.Label("Habilitar registro", htmlAttributes: new { @class = "control-label" })
+            <div class="col-xs-1">
+                @Html.LabelFor(model => model.valor, htmlAttributes: new { @class = "control-label" })
             </div>
-             <div class="checkbox col-md-1">                
-                    @Html.CheckBoxFor(model => model.valor)
-             </div>
-            <div class="col-md-2">
+                <div class="checkbox">                
+                    @Html.EditorFor(model => model.valor)
+                </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-4">
+                @*<input type="submit" value="Guardar cambios" class="btn btn-default" />*@
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-floppy-save"></span> Guardar cambios
                 </button>
             </div>
-            <div class="col-md-7">
-                <a class="btn btn-primary" href="/Home/Administracion"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>   
-            </div>
         </div>
-
     </div>
 }
 
-
+<div>
+    <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

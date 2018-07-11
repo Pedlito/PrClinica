@@ -643,7 +643,7 @@
     </div>
 
     <div class="form-group">
-        <a href="@Url.Action("Index")" class="btn btn-danger btn-lg">
+        <a href="@Url.Action("Index")" class="btn btn-danger btn-lg" onclick="return confirm('¿Realmente desea cancelar?')">
             <span class="glyphicon glyphicon-floppy-remove"></span> Cancelar
         </a>
     </div>
@@ -1300,14 +1300,20 @@
                 "receta": receta,
                 "diagnostico": diagnostico
             };
-            $.ajax({
-                url: '@Url.Action("GuardarHC", "Atencion")',
-                type: "POST",
-                data: { "historia": historia },
-                success: function (response) {
-                    window.location.href = response;
-                }
-            });
+            if (diagnostico.codUsuario == "") {
+                alert("Es obligatorio seleccionar un Médico en el Diagnostico");
+            }
+            else
+            {
+                $.ajax({
+                    url: '@Url.Action("GuardarHC", "Atencion")',
+                    type: "POST",
+                    data: { "historia": historia },
+                    success: function (response) {
+                        window.location.href = response;
+                    }
+                });
+            }
         }
 
         function agregarProblema() {

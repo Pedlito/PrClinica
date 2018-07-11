@@ -64,7 +64,9 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index")
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>
 @section Scripts {
     @*JqueriVal permite la validacion  escrita abajo*@

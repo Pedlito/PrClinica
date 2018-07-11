@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbSalida>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Lista de Entregas</h2>
+
+<p>
+    <a href="@Url.Action("Entregar")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span> Entregar Medicamento
+    </a>
+</p>
+
+
+    @Html.AntiForgeryToken()
+    <div class="panel panel-info">
+        <div class="panel-heading">Buscar</div>
+        <div class="panel-body">
+            @using (Html.BeginForm())
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10 form-inline">
+                            <input type="text" id="paciente" name="paciente" class="form-control" value="@ViewBag.paciente"/>
+                            <button type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-search"></span> Filtrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+
+<table class="table">
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Paciente")
+            </th>
+            <th>
+                @Html.DisplayName("Fecha")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tbPaciente.nombre)
+                </td>
+                <td>
+                    @try
+                    {
+                        @item.fechaSalida.Value.ToLongDateString()
+                    }
+                    catch
+                    {
+                        <p>Desconocida</p>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Detalles", new { codSalida = item.codSalida })" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-th-list"></span> Detalles
+                    </a>
+                </td>
+            </tr>
+        }
+</tbody>
+
+</table>
+
+<div>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>

@@ -62,7 +62,14 @@
                             <label>Fecha de Nacimiento</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Model.paciente.fechaNacimiento.Value.ToLongDateString()
+                            @try
+                            {
+                                @Model.paciente.fechaNacimiento.Value.ToLongDateString()
+                            }
+                            catch
+                            {
+                                <p>Desconocida</p>
+                            }
                         </div>
                     </div>
                 </li>

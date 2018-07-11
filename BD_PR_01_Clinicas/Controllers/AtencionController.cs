@@ -26,9 +26,12 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: Atencion/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Cancelar(int codPaciente)
         {
-            return View();
+            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.atendido == false select t).SingleOrDefault();
+            db.tbConsulta.DeleteOnSubmit(consulta);
+            db.SubmitChanges();
+            return RedirectToAction("Index");
         }
 
         #region Crear
@@ -42,20 +45,15 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Atencion/Crear
         [HttpPost]
-        public string Crear(int codPaciente, string motivoConsulta, string HistoriaEnfermedad)
+        //public string Crear(int codPaciente, string motivoConsulta, string HistoriaEnfermedad)
+        public string Crear(tbConsulta consulta)
         {
             try
             {
                 // TODO: Add insert logic here
-                tbConsulta nueva = new tbConsulta
-                {
-                    codPaciente = codPaciente,
-                    motivoConsulta = motivoConsulta,
-                    HistoriaEnfermedad = HistoriaEnfermedad,
-                    fechaLlegada = DateTime.Now,
-                    atendido = false
-                };
-                db.tbConsulta.InsertOnSubmit(nueva);
+                consulta.fechaLlegada = DateTime.Now;
+                consulta.atendido = false;
+                db.tbConsulta.InsertOnSubmit(consulta);
                 db.SubmitChanges();
                 return Url.Action("Index", "Atencion");
             }
@@ -77,14 +75,14 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 lista = (from t in db.tbPaciente
                          orderby t.nombre
-                         select t).ToList();
+                         select t).Take(15).ToList();
             }
             else
             {
                 lista = (from t in db.tbPaciente
                          where t.nombre.Contains(filtro)
                          orderby t.codPaciente
-                         select t).ToList();
+                         select t).Take(15).ToList();
             }
             return PartialView("_Pacientes", lista);
         }
@@ -298,7 +296,10 @@ namespace BD_PR_01_Clinicas.Controllers
             historia.diagnostico.fecha = DateTime.Now;
             db.tbDiagnostico.InsertOnSubmit(historia.diagnostico);
             db.tbPlanTerapeutico.InsertOnSubmit(historia.terapeutico);
-            db.tbProblema.InsertAllOnSubmit(historia.problemas);
+            if (historia.problemas != null)
+            {
+                db.tbProblema.InsertAllOnSubmit(historia.problemas);
+            }
             if (historia.receta != null)
             {
                 db.tbReceta.InsertAllOnSubmit(historia.receta);
