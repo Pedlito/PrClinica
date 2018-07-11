@@ -182,6 +182,7 @@
     <Compile Include="Controllers\AtencionController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\EntradaController.cs" />
+    <Compile Include="Controllers\EntregaMedicamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\PacientesController.cs" />
@@ -202,6 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClases.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetalleEntrega.cs" />
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\FrontUser.cs" />
     <Compile Include="Models\HistoriaClinica.cs" />
