@@ -4,17 +4,31 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
+    [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_pacientes)]
     public class PacientesController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Pacientes
-        public ActionResult Index(string filtro = "")
+        public ActionResult Index(int? page, string filtroActual, string filtro )
         {
             List<tbPaciente> lista = null;
-            if (filtro == "")
+            if (filtro!= null)
+            {
+                page = 1;
+
+            }
+            else
+            {
+                filtro = filtroActual;
+            }
+
+            ViewBag.filtroActual = filtro;
+
+            if (filtro == null)
             {
                 lista = (from t in db.tbPaciente
                          orderby t.nombre
@@ -26,8 +40,11 @@ namespace BD_PR_01_Clinicas.Controllers
                          orderby t.nombre where t.nombre.Contains(filtro)
                          select t).ToList();
             }
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
 
-            return View(lista);
         }
 
         // GET: Pacientes/Details/5

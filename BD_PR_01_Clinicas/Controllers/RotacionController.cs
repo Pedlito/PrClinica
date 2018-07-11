@@ -4,20 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
-    [Authorize]
+    [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_rotaciones)]
     public class RotacionController : Controller
     {
        
         DataClasesDataContext db = new DataClasesDataContext();
+
         // GET: Rotacion
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             List<tbRotacion> lista = (from t in db.tbRotacion where t.estado == true select t).ToList();
-     
-            return View(lista);
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
 
@@ -88,7 +93,26 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(rotacion.tbRotacionUsuario.ToList());
         }
 
+        public void ReporteDeRotacion(int? codR) {
 
+            //if (codR != null) {
+            //    tbRotacion rotacion = (from t in db.tbRotacion where t.codRotacion == codR select t).SingleOrDefault();
+
+            //}
+           
+
+            //ReportDocument rd = new ReportDocument();
+            //rd.Load(Path.Combine(Server.MapPath("~/Reportes"), "Productos.rpt"));
+            //rd.SetDataSource(inventario);
+            //Response.Buffer = false;
+            //Response.Clear();
+            //Response.ClearHeaders();
+
+            //Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            //stream.Seek(0, SeekOrigin.Begin);
+            //return File(stream, "aplication/pdf", "Inventario.pdf");
+            
+        }
         public ActionResult AgregarDocs(IEnumerable<ItemUser> listUser)
         {
             List<tbUsuario> lista = new List<tbUsuario>();
@@ -268,6 +292,7 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 lista = lista.Where(x => x.fechaInicio.Value.Year == anios).ToList();
             }
+
             return View(lista);
         }
         public ActionResult Restablecer(int? id)

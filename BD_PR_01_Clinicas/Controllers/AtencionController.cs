@@ -4,21 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
+    [AutenticadoAttribute]
     public class AtencionController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Atencion
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             List<tbPaciente> lista = (from cons in db.tbConsulta
                                       join pac in db.tbPaciente on cons.codPaciente equals pac.codPaciente
                                       where cons.atendido == false
                                       orderby cons.fechaLlegada
                                       select pac).ToList();
-            return View(lista);
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Atencion/Details/5

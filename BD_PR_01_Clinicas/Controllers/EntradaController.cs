@@ -4,22 +4,28 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
-{
+{ 
+      [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_entradas)]
     public class EntradaController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
-        // GET: Entrada
-        public ActionResult Index()
+
+        public ActionResult Index(int? page)
         {
             List<tbEntrada> lista = (from t in db.tbEntrada orderby t.fechaEntrada select t).ToList();
-            return View(lista);
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Entrada/Crear
+        
         public ActionResult Crear()
         {
             List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
@@ -121,6 +127,7 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: Entrada/Detalles/5
+     
         public ActionResult Detalles(int codEntrada)
         {
             List<RegistroProducto> lista = (from det in db.tbDetalleEntrada

@@ -7,9 +7,9 @@ using System.Web.Routing;
 
 namespace BD_PR_01_Clinicas.Models
 {
-   
-        public class FrontUser
-        {
+
+    public class FrontUser
+    {
         //RolesPermisos valor
         public static bool TienePermiso(RolesPermisos valor)
         {
@@ -31,15 +31,43 @@ namespace BD_PR_01_Clinicas.Models
             else { return false; }
 
         }
+
+        public static bool PuedeRegistrarse()
+        {
+            try
+            {
+                using (var mibase = new DataClasesDataContext())
+                {
+                    tbConfiguracion tc = mibase.tbConfiguracion.Where(x => x.codConfiguracion == 1).SingleOrDefault();
+                    if (!HttpContext.Current.User.Identity.IsAuthenticated && tc != null)
+                    {
+                        return tc.valor;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return false;
+        }
     }
     public enum RolesPermisos
     {
         #region permisos
-       Activar_registro = 1,
-       Generar_reporte = 2,
-        Consultar_rotaciones = 3,
-        Consultar_usuarios = 4,
-        Crear_presentaciones =5
+        consultar_existencia = 1,
+        administrar_entradas = 2,
+        administrar_salidas = 3,
+        administrar_catalogo_prod = 4,
+        administrar_categorias = 5,
+        administrar_presentaciones = 6,
+        administrar_usuarios = 7,
+        administrar_registro = 8,
+        administrar_roles = 9,
+        administrar_consultas = 10,
+        administrar_pacientes = 11,
+        administrar_rotaciones = 12,
+        administrar= 13
         #endregion
     }
 
@@ -63,7 +91,7 @@ namespace BD_PR_01_Clinicas.Models
         }
     }
 
-   // Si no estamos logeado, regresamos al login
+    // Si no estamos logeado, regresamos al login
     public class AutenticadoAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)

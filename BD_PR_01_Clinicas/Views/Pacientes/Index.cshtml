@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbPaciente>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<BD_PR_01_Clinicas.Models.tbPaciente>
 
 @{
     ViewBag.Title = "Index";
@@ -15,7 +16,7 @@
                 <div class="form-group">
                     @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 form-inline">
-                        @Html.TextBox("filtro", null, new { @class = "form-control" })
+                        @Html.TextBox("filtro", ViewBag.filtroActual as string, new { @class = "form-control" })
                         <button type="submit" class="btn btn-info">
                             <span class="glyphicon glyphicon-search"></span> Filtrar
                         </button>
@@ -86,7 +87,8 @@
         }
     </tbody>
 </table>
-
+Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, filtroActual = ViewBag.filtroActual }))
 <div>
     <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
         <span class="glyphicon glyphicon-arrow-left"></span> Regresar

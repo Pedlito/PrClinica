@@ -24,18 +24,31 @@
             <!-- poner aqui la primera pagina de administración-->
             <div class="row">
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Existencias", "Index", "Inventario")</p></h2>
-                    <p>Ver las existencias de cada medicamento.</p>
+                    @*valida si tiene permisos para ver esta opcion*@
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.consultar_existencia))
+                    {
+
+                        <h2><p>@Html.ActionLink("Existencias", "Index", "Inventario")</p></h2>
+                        <p>Ver las existencias de cada medicamento.</p>
+                    }
                 </div>
 
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Entradas", "Index", "Entrada")</p></h2>
-                    <p>Administracion de las entradas a bodega.</p>
+
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_entradas))
+                    {
+                        <h2><p>@Html.ActionLink("Entradas", "Index", "Entrada")</p></h2>
+                        <p>Administracion de las entradas a bodega.</p>
+                    }
                 </div>
 
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Salidas", "Index", "Salida")</p></h2>
-                    <p>Administracion de las Salidas de bodega.</p>
+
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_salidas))
+                    {
+                        <h2><p>@Html.ActionLink("Salidas", "Index", "Salida")</p></h2>
+                        <p>Administracion de las Salidas de bodega.</p>
+                    }
                 </div>
             </div>
         </div>
@@ -44,18 +57,27 @@
             <!-- poner aqui la primera pagina de administración-->
             <div class="row">
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Catalogo", "Index", "Producto")</p></h2>
-                    <p>Administracion de todos los medicamentos.</p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_catalogo_prod))
+                    {
+                        <h2><p>@Html.ActionLink("Catalogo", "Index", "Producto")</p></h2>
+                        <p>Administracion de todos los medicamentos.</p>
+                    }
                 </div>
 
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Categorias", "Index", "Categoria")</p></h2>
-                    <p>Administracion de las categorias aplicables a cada producto, tales como los analgesicos, antidiureicos, etc.</p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_categorias))
+                    {
+                        <h2><p>@Html.ActionLink("Categorias", "Index", "Categoria")</p></h2>
+                        <p>Administracion de las categorias aplicables a cada producto, tales como los analgesicos, antidiureicos, etc.</p>
+                    }
                 </div>
 
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Presentaciones", "Index", "Presentacion")</p></h2>
-                    <p>Administracion de las diferentes presentaciones aplicables a un producto.</p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_presentaciones))
+                    {
+                        <h2><p>@Html.ActionLink("Presentaciones", "Index", "Presentacion")</p></h2>
+                        <p>Administracion de las diferentes presentaciones aplicables a un producto.</p>
+                    }
                 </div>
             </div>
 
@@ -67,45 +89,55 @@
             </div>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="rotaciones">
-            <!-- poner aqui la segunda pagina de administración-->
+        <div role="tabpanel" class="tab-pane" id="rotaciones">     
             <div class="row">
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Rotaciones", "Index", "Rotacion")</p></h2>
-                    <p>Administracion de las rotaciones y asignacion de estudiantes.</p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_rotaciones))
+                    {
+                        <h2><p>@Html.ActionLink("Rotaciones", "Index", "Rotacion")</p></h2>
+                        <p>Administracion de las rotaciones y asignacion de estudiantes.</p>
+                    }
                 </div>
 
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Usuarios", "Index", "Usuario")</p></h2>
-                    <p>Administracion de los medicamentos existentes en inventario.</p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_usuarios))
+                    {
+                        <h2><p>@Html.ActionLink("Usuarios", "Index", "Usuario")</p></h2>
+                        <p>Administracion de los medicamentos existentes en inventario.</p>
+                    }
                 </div>
 
                 <div class="col-md-4">
-                    <h2><p>@Html.ActionLink("Registro", "ActivarDesacivarRegistro", "Rotacion")</p></h2>
-                    <p>Habilita el registro de los usuarios</p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_registro))
+                    {
+                        <h2><p>@Html.ActionLink("Registro", "ActivarDesacivarRegistro", "Rotacion")</p></h2>
+                        <p>Habilita el registro de los usuarios</p>
+                    }
                 </div>
             </div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="informacion">
-            <!-- poner aqui la tercera pagina de administración-->
+            @*if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.generar_reporte_existencia))
+            {
+
+            }*@
             <div class="col-md-4">
                 <h2><p>@Html.ActionLink("Inventario", "Index", "Inventario")</p></h2>
                 <p>ve.</p>
             </div>
         </div>
         <div role="tabpanel" class="tab-pane" id="roles">
-            <!-- poner aqui la segunda pagina de administración-->
             <div class="row">
                 <div class="col-md-12">
-                    <h2><p>@Html.ActionLink("Roles", "Index", "Roles")</p></h2>
-                    <p>Administracion de las roles </p>
+                    @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_roles))
+                    {
+                        <h2><p>@Html.ActionLink("Roles", "Index", "Roles")</p></h2>
+                        <p>Administracion de las roles </p>
+                    }
+
                 </div>
 
-                @*<div class="col-md-6">
-                    <h2><p>@Html.ActionLink("Permisos", "AgregarPermisos", "Roles")</p></h2>
-                    <p>Asignacion de permisos a los roles.</p>
-                </div>*@
 
 
             </div>

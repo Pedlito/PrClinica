@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-
 @using BD_PR_01_Clinicas.Models;
 @if (Request.IsAuthenticated)
 {
@@ -9,9 +8,10 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/Account/DatosUsuario" title="Manage"><span class="glyphicon glyphicon-user"></span> @SessionUsuario.Get.UserName</a>              
-                    @*@Html.ActionLink(HttpUsuario.Get.UserName, "DatosUsuario", "Account", null, htmlAttributes: new { title = "Manage" })*@
-</li>
+                <a href="/Account/DatosUsuario" title="Manage"><span class="glyphicon glyphicon-user"></span> @SessionUsuario.Get.UserName</a>  
+                            
+                @*@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+             </li>
             <li><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
         </ul>
     }
@@ -24,3 +24,4 @@ else
     </ul>
 }
 
+    

@@ -1,13 +1,13 @@
 ﻿@model BD_PR_01_Clinicas.Models.tbUsuario
 
 @{
-    ViewBag.Title = "DatosUsuario";
+    ViewBag.Title = "Datos";
 }
 
-<h2>Mis datos</h2>
+
 
 <div>
-    <h4>@Model.usuario</h4>
+    <h4>Usuario @Model.usuario</h4>
     <hr />
     <input type="hidden" id="userid" nombre="userid" value="@Model.codUsuario" />
     <dl class="dl-horizontal">
@@ -57,12 +57,19 @@
 
     </dl>
 </div>
-<p>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Solicitar">
-        <span class="glyphicon glyphicon-edit"></span> Editar
-    </button>
-  <a href="/Home/index">Regresar</a>
-</p>
+
+<div class="form-group">
+
+
+    <div class="col-md-2">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#Solicitar">
+            <span class="glyphicon glyphicon-edit"></span> Editar
+        </button>
+    </div>
+    <div class=" col-md-10">
+        <a href="/Home/index" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+    </div> 
+</div>
 
 <div class="modal fade" id="Solicitar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -102,7 +109,7 @@
 </div>
 
 @section Scripts {
-    @*@Scripts.Render("~/bundles/jqueryval")*@
+    
     <script>
 
         function autenticar() {
@@ -111,34 +118,19 @@
         var us= { usuario: $("#UserName").val(), contrasenia: $("#Password").val() };
         $.ajax({
             traditional: true,
-            url: '@Url.Action("autenticar", "Account")',
+            url: '@Url.Action("autenticarse", "Account")',
             type: "POST",
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(us),
             success: function (response) {
                 console.log(response);
-                if (response=="ok") { location.href = '/Account/EditarUsuario/' + $("#userid").val(); }
+                if (response=="ok") { location.href = '/Account/AutoEditarUsuario/' + $("#userid").val(); }
                 else { alert(response); }
             },
             error: function (response) { alert("Ha ocurrido un error"); }
         });
         }
 
-        @*function editar() {
-            var cod = { id: $("#userid").val() };
-            $.ajax({
-                traditional: true,
-                url: '@Url.Action("EditarUser", "Account")',
-                type: "POST",
-                contentType: "application/json; charset=utf-8",
-                data: JSON.stringify(cod),
-                success: function (response) {
-
-                },
-                error: function (response) { alert("Ha ocurrido un error"); }
-            });
-
-
-        }*@
+   
     </script>
 }

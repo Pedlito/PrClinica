@@ -4,26 +4,47 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
-
+using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
-    //[Authorize]
+    [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_categorias)]
     public class CategoriaController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Categoria
-        public ActionResult Index(string categoria = "")
+        public ActionResult Index(string filtroActual, int? page, string categoria )
         {
             List<tbCategoria> lista = null;
-            if (categoria == "")
+
+            if (categoria !=null)
+            {
+                page = 1;
+
+            }
+            else
+            {
+                categoria = filtroActual;   
+            }
+
+            ViewBag.filtroActual = categoria;
+
+            if (categoria == null)
             {
                 lista = (from t in db.tbCategoria orderby t.estado descending, t.categoria select t).ToList();
+   
             }
             else
             {
                 lista = (from t in db.tbCategoria where t.categoria.Contains(categoria) orderby t.estado descending, t.categoria select t).ToList();
             }
-            return View(lista);
+
+            
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Categoria/Crear

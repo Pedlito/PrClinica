@@ -11,22 +11,11 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayName("Tipo de Usuario")
+            @Html.DisplayName("Rol")
         </dt>
-
-        @if (Model.codTipoUsuario == 1)
-        {
             <dd>
-                Doctor
+                @Html.DisplayFor(model => model.tbRol.Rol)
             </dd>
-        }
-        else if (Model.codTipoUsuario == 2)
-        {
-            <dd>
-                Estudiante
-            </dd>
-        }
-
         <dt>
             @Html.DisplayName("Nombre")
         </dt>
@@ -53,7 +42,6 @@
                 @Html.DisplayFor(model => model.carnet)
             </dd>
         }
-
         <dt>
             @Html.DisplayName("Fecha de Nacimiento")
         </dt>

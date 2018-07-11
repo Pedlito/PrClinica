@@ -14,18 +14,14 @@ using Newtonsoft.Json;
 
 namespace BD_PR_01_Clinicas.Controllers
 {
-    
 
+   
     public class AccountController : Controller
     {
         
 
         DataClasesDataContext db = new DataClasesDataContext();
-
-
-
-
-        //[AllowAnonymous]
+  
         [NoLoginAttribute]
         public ActionResult Login(string returnUrl)
         {
@@ -34,50 +30,6 @@ namespace BD_PR_01_Clinicas.Controllers
             return View();
         }
 
-        //
-        // POST: /Account/Login
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Login(LoginViewModel model, string returnUrl)
-        //{
-
-        //    try
-        //    {
-        //        // Verification.    
-        //        if (ModelState.IsValid)
-        //        {
-        //            // Initialization.    
-        //            var loginInfo = db.Logiar(model.UserName, model.Password).ToList();
-        //            // Verification.    
-
-        //            if (loginInfo != null && loginInfo.Count() > 0)
-        //            {
-        //                // Initialization.    
-        //                var logindetails = loginInfo.First();
-        //                // Login In.    
-        //                SignInUser(logindetails.usuario, false);
-        //                //id del usuario
-        //                Session["UserId"] = loginInfo.ElementAt(0).codUsuario;
-        //                // Info.    
-        //                return RedirectToLocal(returnUrl);
-        //            }
-        //            else
-        //            {
-        //                Console.Write(loginInfo.ToString());
-        //                // Setting.    
-        //                ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // quitar esto es solo para prueba              
-        //        ModelState.AddModelError(string.Empty, ex.Message);
-        //    }
-
-        //    return this.View(model);
-        //}
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -129,49 +81,17 @@ namespace BD_PR_01_Clinicas.Controllers
             return this.View(model);
         }
 
-       private static bool autorizado = false;
-        public JsonResult autenticar(string usuario, string contrasenia) {
-            string resultado = "";
-
-            if (usuario != null && contrasenia != null)
-            {
-
-                var loginInfo = db.Logiar(usuario, contrasenia).ToList();
-                
-                if (loginInfo != null && loginInfo.Count() > 0)
-                {
-
-
-                    resultado = "ok";
-                    autorizado = true;
-
-                }
-                else
-                {
-                    resultado = "contraseña invalida";
-                }
-
-            }
-
-            return Json(resultado);
-        }
+      
         // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register()
-        {
-
-            //if (!FrontUser.TienePermiso(RolesPermisos.Activar_registro))
-            //{
-            //    return Redirect("~/home");
-            //}
-            //return View();
-            tbConfiguracion tc = (from v in db.tbConfiguracion where v.codConfiguracion == 1 select v).SingleOrDefault();
-            //new configuracioInicial().RegistroHabilitado
-            if ((tc!=null)&&(tc.valor))
+        { 
+            if (FrontUser.PuedeRegistrarse())
             {
                 return View();
             }
-            return RedirectToAction("MensajeDeRegistro", "Rotacion");
+           
+            return RedirectToAction("MensajeDeRegistro","Rotacion");
         }
 
         //
@@ -191,20 +111,18 @@ namespace BD_PR_01_Clinicas.Controllers
                   fechaNacimiento =  model.FechaNacimiento,
                   usuario = model.Usuario,
                   password = model.Password,
-                  codTipoUsuario = 2
-                };
+                  codTipoUsuario = 1
+             };
                 try
                 {
                     db.tbUsuario.InsertOnSubmit(NuevoUsuario);
                     db.SubmitChanges();
                 }
-                catch (Exception exs)
+                catch (Exception )
                 {
-                    ModelState.AddModelError(string.Empty, exs.Message);
+                    ModelState.AddModelError(string.Empty, "No se pudo realizar la operacion");
                     return View(model);
                 }
-
-
 
                return RedirectToAction("Login", "Account");
                 
@@ -221,8 +139,7 @@ namespace BD_PR_01_Clinicas.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            //return RedirectToAction("Index", "Home");
+           
             try
             {
                 // Setting.    
@@ -241,28 +158,7 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
 
-        //private void SignInUser(string username, bool isPersistent)
-        //{
-        //    // Initialization.    
-        //    var claims = new List<Claim>();
-        //    try
-        //    {
-        //        // Setting    
-        //        claims.Add(new Claim(ClaimTypes.Name, username));
-        //        //claims.Add(new Claim(ClaimTypes.UserData, username));
-
-        //        var claimIdenties = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-        //        var ctx = Request.GetOwinContext();
-        //        var authenticationManager = ctx.Authentication;
-        //        // Sign In.    
-        //        authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, claimIdenties);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Info    
-        //        throw ex;
-        //    }
-        //}
+    
         private void SignInUser(string datos, bool isPersistent)
         {
             // Initialization.    
@@ -293,11 +189,12 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
+
         [AutenticadoAttribute]
         public ActionResult DatosUsuario() {
 
-            if (Request.IsAuthenticated)
-            {
+    
                 try
                 {
                     using (var context = new DataClasesDataContext())
@@ -317,19 +214,43 @@ namespace BD_PR_01_Clinicas.Controllers
                     ViewBag.errores = "No se ha podido cargar los datos";
 
                 }
-            }
-            else { ViewBag.errores = "Error: Se ha cerrado sesion"; }
-
+      
             return View("VistaDeErrores");
 
+        }
+        private static bool autorizado = false;
+        [AutenticadoAttribute]
+        public JsonResult autenticarse(string usuario, string contrasenia)
+        {
+            string resultado = "";
 
+            if (usuario != null && contrasenia != null)
+            {
+
+                var loginInfo = db.Logiar(usuario, contrasenia).ToList();
+
+                if (loginInfo != null && loginInfo.Count() > 0)
+                {
+
+
+                    resultado = "ok";
+                    autorizado = true;
+
+                }
+                else
+                {
+                    resultado = "contraseña invalida";
+                }
+
+            }
+
+            return Json(resultado);
         }
 
-    
-        [PermisoAttribute(Permiso = RolesPermisos.Consultar_rotaciones)]
-        public ActionResult EditarUsuario(int? id) {
+        [AutenticadoAttribute]
+        public ActionResult AutoEditarUsuario(int? id) {
 
-            if (Request.IsAuthenticated&&autorizado)
+            if (autorizado)
             {
                 try
                 {
@@ -354,10 +275,11 @@ namespace BD_PR_01_Clinicas.Controllers
             return View("VistaDeErrores");
         }
         [HttpPost]
-        public ActionResult EditarUsuario(tbUsuario user)
+        [AutenticadoAttribute]
+        public ActionResult AutoEditarUsuario(tbUsuario user)
         {
 
-            if (user != null && Request.IsAuthenticated)
+            if (user != null)
             {
                 using (var contexto = new DataClasesDataContext())
                 {
@@ -373,6 +295,7 @@ namespace BD_PR_01_Clinicas.Controllers
                         item.carnet = user.carnet;
                         item.fechaNacimiento = user.fechaNacimiento;
                         item.usuario = user.usuario;
+                        item.password = user.password;
                         contexto.SubmitChanges();
                         return RedirectToAction("DatosUsuario");
                     }

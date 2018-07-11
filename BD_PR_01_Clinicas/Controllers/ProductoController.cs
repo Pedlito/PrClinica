@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
 using PagedList;
 using BD_PR_01_Clinicas.Models;
 
 namespace BD_PR_01_Clinicas.Controllers
 {
-    [Authorize]
+    [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_catalogo_prod)]
     public class ProductoController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
-        // GET: Producto
-        // public ActionResult Index(string filtro = "", int accion = 1)
+        // GET: Producto      
         public ActionResult Index(int? accionActual, string filtro, string filtroActual, int? accion, int? page)
         {
             List<tbProducto> lista = null;
@@ -55,13 +57,14 @@ namespace BD_PR_01_Clinicas.Controllers
             }
          
 
-            int pageSize = 20;
+            int pageSize = 15;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
             return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Producto/Crear
+   
         public ActionResult Crear()
         {
             List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
@@ -90,6 +93,7 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Producto/Crear
         [HttpPost]
+
         public ActionResult Crear(FormCollection collection)
         {
             try
@@ -115,6 +119,7 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: Producto/Editar/5
+      
         public ActionResult Editar(int codProducto)
         {
             tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
@@ -126,6 +131,7 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Producto/Editar/5
         [HttpPost]
+
         public ActionResult Editar(int codProducto, FormCollection collection)
         {
             try
@@ -155,6 +161,7 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Producto/CambiarEstado/5
         [HttpPost]
+    
         public ActionResult CambiarEstado(int codProducto, bool estado, FormCollection collection)
         {
             try
@@ -170,5 +177,27 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View();
             }
         }
+
+        public ActionResult ReporteDeCatalogo()
+        {
+            List<Inventario> lista = (from t in db.tbProducto orderby t.producto, t.producto select new Inventario {
+                producto = t.producto,
+                categoria = t.tbCategoria.categoria,
+                presentacion = t.tbPresentacion.presentacion + " " +Convert.ToString(t.dosis.Value) + " " + (t.codVolumen == 1 ? "mg" : "ml")
+            }).ToList();
+
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Reportes"), "catalogo.rpt"));
+            rd.SetDataSource(lista);
+            Response.Buffer = false;
+            Response.Clear();
+            Response.ClearHeaders();
+
+            Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+            stream.Seek(0, SeekOrigin.Begin);
+            return File(stream, "aplication/pdf", "Catalogo_de_productos.pdf");
+        }
+
+
     }
 }

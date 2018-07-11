@@ -4,16 +4,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
+using PagedList;
+
 namespace BD_PR_01_Clinicas.Controllers
 {
+    [AutenticadoAttribute]
+  //  [PermisoAttribute(Permiso = RolesPermisos.administrar_roles)]
     public class RolesController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Roles
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
-            
-            return View(db.tbRol.ToList());
+            List<tbRol> roles = db.tbRol.ToList();
+          
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (roles == null) { return View(); }
+            return View(roles.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Roles/Details/5
@@ -33,64 +41,95 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Roles/Create
         [HttpPost]
-        public ActionResult CrearRol(FormCollection collection)
+        public ActionResult CrearRol(tbRol rl)
         {
+
             try
             {
-                // TODO: Add insert logic here
 
+                tbRol rol = new tbRol()
+                {
+                    Rol = rl.Rol,
+                    descripcion = rl.descripcion,
+                    estado = true
+                };
+                db.tbRol.InsertOnSubmit(rol);
+                db.SubmitChanges();
                 return RedirectToAction("Index");
-            }
+
+             }
             catch
-            {
-                return View();
+             {
+                ModelState.AddModelError("Rol", "no se pudo crear el rol");
+                return View(rl);
             }
-        }
+}
 
         // GET: Roles/Edit/5
-        public ActionResult EditarRol(int id)
+        public ActionResult EditarRol(int? id)
         {
-            return View();
+           tbRol Rl = (from r in db.tbRol where r.codTipoUsuario == id select r).SingleOrDefault();
+            return View(Rl);
         }
 
         // POST: Roles/Edit/5
         [HttpPost]
-        public ActionResult EditarRol(tbRol rol)
+        public ActionResult EditarRol(FormCollection coleccion)
         {
+   
+         
             try
             {
-                db.tbRol.InsertOnSubmit(rol);
+
+                tbRol rl = db.tbRol.Where(x => x.codTipoUsuario == int.Parse(coleccion["codTipoUsuario"])).SingleOrDefault();
+                rl.Rol = coleccion["Rol"];
+                rl.descripcion = coleccion["descripcion"];
+
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo realizar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
         // GET: Roles/Delete/5
-        public ActionResult ArchivarRol(int id)
+        public ActionResult CambiarEstadoRol(int id)
         {
             var Rl = (from r in db.tbRol where r.codTipoUsuario == id select r).SingleOrDefault();
-          
+         
             return View(Rl);
         }
 
         // POST: Roles/Delete/5
         [HttpPost]
-        public ActionResult ArchivarRol(int id, FormCollection collection)
+        public ActionResult CambiarEstadoRol(FormCollection collection)
         {
+            int cod = int.Parse(collection["codTipoUsuario"]);
+
             try
             {
-                var Rl = (from r in db.tbRol where r.codTipoUsuario == id select r).SingleOrDefault();
-                Rl.estado = false;
+                var Rl = (from r in db.tbRol where r.codTipoUsuario == cod select r).SingleOrDefault();
+
+                string str = Request.Params["btn"];
+
+                if (str == "Archivar")
+                {
+                    Rl.estado = false;
+                }
+                else
+                {
+                    Rl.estado  = true;
+                }   
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo realizar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
@@ -132,17 +171,10 @@ namespace BD_PR_01_Clinicas.Controllers
         [HttpPost]
         public ActionResult AgregarPermisos(ModeloPermisosRol modelo)
         {
-            //var permisosSeleccionados = modelo.permisos.Where(x => x.IsChecked).Select(x => x.codPemiso).ToList();
-            //tbRol rol = db.tbRol.Where(x => x.codTipoUsuario == modelo.codRol).SingleOrDefault();
-            //rol.tbRolPermiso.Clear();
-
-       
-      
 
 
             tbRol Rol = db.tbRol.Where(x => x.codTipoUsuario == modelo.codRol).SingleOrDefault();
 
-    
 
             List<tbRolPermiso> tbRolPermisosAnt = Rol.tbRolPermiso.ToList();
 
@@ -172,8 +204,7 @@ namespace BD_PR_01_Clinicas.Controllers
             }
 
             db.SubmitChanges();
-            //ViewBag.errores =cod+" - "+tdo1+" - "+tdo3;
-            //return View();
+        
             return RedirectToAction("Index");
         }
 

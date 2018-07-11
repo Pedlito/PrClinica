@@ -1,27 +1,29 @@
 ﻿@model BD_PR_01_Clinicas.Models.tbUsuario
 
 @{
-    ViewBag.Title = "EditarUsuario";
+    ViewBag.Title = "Usuario";
 }
 
-<h2>Editar</h2>
+<h2>Usuario @Model.usuario</h2>
 
 
-@using (Html.BeginForm("EditarUsuario", "Account", FormMethod.Post, new { @id = "formIdEst", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("AutoEditarUsuario", "Account", FormMethod.Post, new { @id = "formAUsuario", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Usuario</h4>
+    
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
         @Html.HiddenFor(model => model.codUsuario)
+
+
 
         <div class="form-group">
             @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+            
             </div>
         </div>
 
@@ -29,7 +31,7 @@
             @Html.Label("DPI", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.dpi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.dpi, "", new { @class = "text-danger" })
+         
             </div>
         </div>
 
@@ -37,17 +39,15 @@
             @Html.Label("Carnet", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.carnet, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.carnet, "", new { @class = "text-danger" })
+        
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Fecha de nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Fecha de Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @*<input type="date" id="fechaNacimiento" name="fechaNacimiento" class="form-control" value="@Model.fechaNacimiento.ToString("yyyy-MM-dd")"/>*@
-                @*@Html.EditorFor(model => model.fechaNacimiento, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.TextBoxFor(model => model.fechaNacimiento, @Model.fechaNacimiento.ToShortDateString(), new { @class = "form-control", @ReadOnly = true  })
-                @Html.ValidationMessageFor(model => model.fechaNacimiento,"", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.fechaNacimiento, @Model.fechaNacimiento.ToShortDateString(), new { @class = "form-control", @ReadOnly = true })
+
             </div>
         </div>
 
@@ -55,27 +55,34 @@
             @Html.Label("Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.usuario, "", new { @class = "text-danger" })
+ 
             </div>
         </div>
+
         <div class="form-group">
             @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+         
             </div>
         </div>
+
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+            <div class="col-md-offset-2 col-md-2">
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-save"></span> Guardar cambios
+                </button>
+            </div>
+            <div class="col-md-8">
+                <a class="btn btn-primary" href="/Home">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+                </a>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Cancelar", "Index","Home")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -97,7 +104,7 @@
         return /^[a-zA-Z ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
-    $("#formIdEst").validate({
+    $("#formAUsuario").validate({
         errorClass: 'help-block animation-slideDown',
         errorElement: 'div',
         errorPlacement: function (error, e) {
@@ -119,7 +126,7 @@
             fechaNacimiento: { required: true },
             usuario: { required: true, minlength: 3 },
             password: { required: true, minlength: 4 },
-       
+
 
         },
         messages: {
@@ -145,7 +152,7 @@
             password: {
                 required: "Debe introducir una contraseña",
                 minlength: "4 caracteres como minimo"
-            },
+            }
 
         }
 

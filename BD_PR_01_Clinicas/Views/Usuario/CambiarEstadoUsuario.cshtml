@@ -23,19 +23,9 @@ else
         <dt>
             @Html.DisplayName("Rol")
         </dt>
-
-       @if (Model.codTipoUsuario == 1)
-       {
-            <dd>
-               Doctor           
-            </dd>
-       }
-       else
-       {
-            <dd>
-                Estudiante          
-            </dd>
-        }
+        <dd>
+            @Html.DisplayFor(model => model.tbRol.Rol)
+        </dd>
         <dt>
             @Html.DisplayName("Nombre")
         </dt>
@@ -52,13 +42,16 @@ else
             @Html.DisplayFor(model => model.dpi)
         </dd>
 
-        <dt>
-            @Html.DisplayName("Carnet")
-        </dt>
+        @if (Model.codTipoUsuario == 2)
+        {
+            <dt>
+                @Html.DisplayName("Carnet")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.carnet)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.carnet)
+            </dd>
+        }
 
         <dt>
             @Html.DisplayName("Fecha de Nacimiento")
