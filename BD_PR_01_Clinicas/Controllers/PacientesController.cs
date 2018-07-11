@@ -34,7 +34,7 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult HistoriaClinica(int codPaciente)
         {
             HistoriaClinica historia = new Models.HistoriaClinica();
-            historia.consultas = (from t in db.tbConsulta where t.codPaciente == codPaciente select t).ToList();
+            historia.consultas = (from t in db.tbConsulta where t.codPaciente == codPaciente orderby t.fechaLlegada descending select t).ToList();
             historia.paciente = (from t in db.tbPaciente where t.codPaciente == codPaciente select t).SingleOrDefault();
             historia.patologicos = (from t in db.tbAntecedentesPatologicos where t.codPaciente == codPaciente select t).SingleOrDefault();
             historia.noPatologicos = (from t in db.tbAntecedentesNoPatologicos where t.codPaciente == codPaciente select t).SingleOrDefault();

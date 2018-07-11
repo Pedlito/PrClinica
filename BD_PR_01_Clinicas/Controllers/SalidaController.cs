@@ -13,7 +13,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Salida
         public ActionResult Index()
         {
-            List<tbSalida> lista = (from t in db.tbSalida orderby t.fechaSalida select t).ToList();
+            List<tbSalida> lista = (from t in db.tbSalida where t.tipoSalida == true orderby t.fechaSalida select t).ToList();
             return View(lista);
         }
 
@@ -39,7 +39,8 @@ namespace BD_PR_01_Clinicas.Controllers
                 tbSalida Salida = new tbSalida
                 {
                     descripcion = datos.descripcion,
-                    fechaSalida = DateTime.Now
+                    fechaSalida = DateTime.Now,
+                    tipoSalida = true
                 };
                 foreach (Item item in datos.detalle)
                 {

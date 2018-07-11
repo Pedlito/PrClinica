@@ -189,6 +189,7 @@
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\CuentaController.cs" />
     <Compile Include="Controllers\EntradaController.cs" />
+    <Compile Include="Controllers\EntregaMedicamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioController.cs" />
     <Compile Include="Controllers\PacientesController.cs" />
@@ -208,6 +209,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DetalleEntrega.cs" />
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\FrontUser.cs" />
     <Compile Include="Models\HistoriaClinica.cs" />
@@ -376,6 +378,12 @@
     <Content Include="Views\Pacientes\Index.cshtml" />
     <Content Include="Views\Pacientes\HistoriaClinica.cshtml" />
     <Content Include="Views\Pacientes\VerConsulta.cshtml" />
+    <Content Include="Views\EntregaMedicamento\Index.cshtml" />
+    <Content Include="Views\EntregaMedicamento\_Pacientes.cshtml" />
+    <Content Include="Views\EntregaMedicamento\_Medicamentos.cshtml" />
+    <Content Include="Views\EntregaMedicamento\_Detalle.cshtml" />
+    <Content Include="Views\EntregaMedicamento\Entregar.cshtml" />
+    <Content Include="Views\EntregaMedicamento\Detalles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

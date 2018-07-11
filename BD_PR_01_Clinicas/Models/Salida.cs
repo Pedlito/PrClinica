@@ -15,4 +15,10 @@ namespace BD_PR_01_Clinicas.Models
         }
 
     }
+
+    public class EntregaMedicamento
+    {
+        public int codPaciente { get; set; }
+        public List<tbDetalleSalida> detalle { get; set; }
+    }
 }

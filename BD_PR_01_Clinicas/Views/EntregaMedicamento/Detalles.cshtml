@@ -1,0 +1,227 @@
+﻿@model BD_PR_01_Clinicas.Models.DetalleEntrega
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalle de Entrega</h2>
+
+<div>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#paciente" role="tab" data-toggle="tab">Paciente</a></li>
+        <li role="presentation"><a href="#entrega" role="tab" data-toggle="tab">Entrega</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane active" id="paciente">
+            <h2>Paciente</h2>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Nombre</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.nombre)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Genero</label>
+                        </div>
+                        @if (Model.paciente.genero == true)
+                        {
+                            <div class="col-md-9 text-left">
+                                Masculino
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-9 text-left">
+                                Femenino
+                            </div>
+                        }
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Fecha de Nacimiento</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @try
+                            {
+                                @Model.paciente.fechaNacimiento.Value.ToLongDateString()
+                            }
+                            catch
+                            {
+                                <p>Desconocida</p>
+                            }
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Estado Civil</label>
+                        </div>
+                        @if (Model.paciente.genero == true)
+                        {
+                            <div class="col-md-9 text-left">
+                                Soltero
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-md-9 text-left">
+                                Casado
+                            </div>
+                        }
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Residencia</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.residencia)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Procedencia</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.procedencia)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Religíon</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.religion)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Profesión</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.profesion)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Raza/Etnia</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.razaEtnia)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Escolaridad</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.escolaridad)
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col-md-3 text-left">
+                            <label>Tipo de Sangre</label>
+                        </div>
+                        <div class="col-md-9 text-left">
+                            @Html.DisplayFor(model => model.paciente.tbTipoSangre.tipoSangre)
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="entrega">
+            <h2>Medicamentos</h2>
+
+            <table class="table">
+                <thead>
+                    <tr class="info">
+                        <th>
+                            @Html.DisplayName("Producto")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Categoría")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Presentación")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Dosis")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Cantidad")
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model.detalle)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.categoria)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.presentacion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.dosis)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.cantidad)
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>

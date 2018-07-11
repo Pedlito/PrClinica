@@ -1,0 +1,219 @@
+﻿@model BD_PR_01_Clinicas.Models.tbSalida
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Entregar Medicamentos</h2>
+
+<div class="form-horizontal">
+    <div class="form-group">
+        @Html.Label("Paciente", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5" style="padding-right: 85px">
+            <div class="input-group">
+                <input type="text" placeholder="Nombre del paciente" id="paciente" class="form-control" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#busquedaPaciente" onclick="ListarPacientes()">
+                        <span class="glyphicon glyphicon-search">
+                        </span> Buscar
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Medicamento", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-5" style="padding-right: 85px">
+            <div class="input-group">
+                <input type="text" placeholder="Nombre del Medicamento" id="producto" class="form-control" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#busquedaMedicamento" onclick="BuscarMedicamentos()">
+                        <span class="glyphicon glyphicon-search">
+                        </span> Buscar
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div id="detalle">
+        @* aqui se va a insertar todo el codigo que retorna la vista parcial _Detalle *@
+    </div>
+</div>
+
+<div class="form-inline">
+    <div>
+        <button type="button" class="btn btn-success btn-lg" onclick="guardar()">
+            <span class="glyphicon glyphicon-floppy-save"></span> Guardar
+        </button>
+        <a href="@Url.Action("Index")" class="btn btn-danger btn-lg" onclick="return confirm('¿Realmente desea cancelar la entrega?')">
+            <span class="glyphicon glyphicon-floppy-remove"></span> Cancelar
+        </a>
+    </div>
+</div>
+
+<!--Modal para busqueda de medicamentos-->
+<div class="modal fade" id="busquedaMedicamento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Lista de Productos</h4>
+            </div>
+            <div class="modal-body" id="filtroMedicamento">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal para busqueda de Paciente-->
+<div class="modal fade" id="busquedaPaciente" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Lista de Productos</h4>
+            </div>
+            <div class="modal-body" id="filtroPacientes">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+    //variable que contentra el array de todos los productos agregados
+        var detalle = [];
+        var paciente = 0;
+
+        //mostrar medicamentos
+        function BuscarMedicamentos() {
+            var filtro = $("#producto").val();
+            $.ajax({
+                url: '@Url.Action("Filtrar", "EntregaMedicamento")',
+                data: { filtro },
+                success: function (response) {
+                    $('#filtroMedicamento').html(response);
+                }
+            });
+        }
+
+        //mostrar pacientes
+        function ListarPacientes() {
+            var filtro = $("#paciente").val();
+            $.ajax({
+                url: '@Url.Action("Pacientes", "EntregaMedicamento")',
+                data: { filtro },
+                success: function (response) {
+                    $('#filtroPacientes').html(response);
+                }
+            });
+        }
+
+        //asignar un paciente a la consulta
+        function Asignar(codPaciente, nombre) {
+            $('#busquedaPaciente').modal('hide');
+            $('#paciente').val(nombre);
+            paciente = codPaciente;
+        }
+
+        function agregar(codProducto) {
+            //evitar que se agregen productos repetidos
+            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            if (index == -1) {
+                detalle.push({
+                    codProducto: parseInt(codProducto),
+                    cantidad: 1
+                });
+                $.ajax({
+                    traditional: true,
+                    url: '@Url.Action("MostrarDetalle", "EntregaMedicamento")',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(detalle),
+                    success: function (response) {
+                        $('#detalle').html(response);
+                    }
+                });
+            }
+            else
+            {
+                alert("El Articulo seleccionado ya ha sido agregado");
+            }
+        }
+
+    function quitar(codProducto) {
+
+            var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+            detalle.splice(index, 1);
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("MostrarDetalle", "EntregaMedicamento")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(detalle),
+                success: function (response) {
+                    $('#detalle').html(response);
+                }
+            });
+        }
+
+        function cantidad(codProducto, entrada, existen) {
+            if (entrada.value != "") {
+                var index = detalle.findIndex(function (element) { return element.codProducto == codProducto });
+                if (existen >= parseInt(entrada.value)) {
+                    detalle[index].cantidad = entrada.value;
+                } else {
+                    $(entrada).val(existen);
+                    detalle[index].cantidad = existen;
+                }
+
+            }
+            else {
+                $(entrada).val(1);
+                detalle[index].cantidad = 1;
+            }
+        }
+
+        function guardar() {
+            var entrega = { "codPaciente": paciente, "detalle": detalle }
+            if (paciente == 0) {
+                alert("No se ha establecido un Paciente");
+                $('#paciente').focus();
+            }
+            else if (detalle.length == 0) {
+                alert("No se ha establecido ni un Medicamento");
+                $('#producto').focus();
+            }
+            else {
+                $.ajax({
+                    traditional: true,
+                    url: '@Url.Action("Crear", "EntregaMedicamento")',
+                    contentType: "application/json",
+                    type: "POST",
+                    data: JSON.stringify(entrega),
+                    success: function (response) {
+                        location.href = response;
+                    }
+                })
+            }
+        }
+
+        function numerico(event) {
+            var n = event.charCode;
+            var respuesta = ((n >= 48 && n <= 57) || n == 0);
+            return respuesta;
+        }
+    </script>
+}
