@@ -67,7 +67,9 @@ namespace BD_PR_01_Clinicas.Models
         administrar_consultas = 10,
         administrar_pacientes = 11,
         administrar_rotaciones = 12,
-        administrar= 13
+        administrar= 13,
+        entregar_medicamento = 14,
+        administrar_tipo_sangre=15
         #endregion
     }
 

@@ -33,7 +33,7 @@ namespace BD_PR_01_Clinicas.Controllers
             if (usuario == null)
             {
                
-                lista = (from t in db.tbUsuario orderby t.nombre select t).Take(90).ToList();
+                lista = (from t in db.tbUsuario orderby t.nombre select t).ToList();
 
             }
             else
@@ -42,7 +42,7 @@ namespace BD_PR_01_Clinicas.Controllers
                 lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.nombre select t).ToList();
             }
           
-            int pageSize = 2;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
             return View(lista.ToPagedList(pageNumber, pageSize));
@@ -79,6 +79,7 @@ namespace BD_PR_01_Clinicas.Controllers
                         fechaNacimiento = DateTime.Parse(collection["fechaNacimiento"]),
                         usuario = collection["usuario"],
                         password = collection["password"],
+                        estado = true
                         
                     };
                 db.tbUsuario.InsertOnSubmit(nuevo);
@@ -179,25 +180,19 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: Usuario/Edit/5
-        public ActionResult EditarUsuario(int? id)
+        public ActionResult EditarUsuario(int? codUsuario)
         {
             
-            if (id!=null) 
+            if (codUsuario!=null) 
                 {
-                tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==id).SingleOrDefault();
-            
-                
-                  
-                List<tbRol> rols = db.tbRol.Where(s=>s.codTipoUsuario!=usuario.codTipoUsuario).ToList();
-                
-                List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();
-                
+                tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==codUsuario).SingleOrDefault();       
+                List<tbRol> rols = db.tbRol.Where(s=>s.codTipoUsuario!=usuario.codTipoUsuario).ToList();        
+                List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();          
                 roles.Insert(0,(new SelectListItem {Text=usuario.tbRol.Rol,Value=usuario.tbRol.codTipoUsuario.ToString() }));
                 //el viewBag que lleva los roles
                 ViewBag.codTipoUsuario = roles;
                 if (usuario != null) { return View(usuario); } 
             }
-
             ViewBag.errores = "No existe el usuario"; 
             return View("VistaDeErrores");
         }

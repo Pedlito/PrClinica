@@ -173,14 +173,6 @@
       <Association Name="tbPaciente_tbPerfilSocial" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tbPermiso" Member="tbPermiso">
-    <Type Name="tbPermiso">
-      <Column Name="idPermiso" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Permiso" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="tbPermiso_tbRolPermiso" Member="tbRolPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbRolPermiso" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbPlanes" Member="tbPlanes">
     <Type Name="tbPlanes">
       <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -272,8 +264,8 @@
     <Type Name="tbRolPermiso">
       <Column Name="idPermiso" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="codTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="tbPermiso_tbRolPermiso" Member="tbPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbPermiso" IsForeignKey="true" />
       <Association Name="tbRol_tbRolPermiso" Member="tbRol" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbRol" IsForeignKey="true" />
+      <Association Name="tbPermiso_tbRolPermiso" Member="tbPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbPermiso" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.tbRotacion" Member="tbRotacion">
@@ -342,6 +334,13 @@
       <Column Name="codPaciente" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="tbSalida_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbDetalleSalida" />
       <Association Name="tbPaciente_tbSalida" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbPermiso" Member="tbPermiso">
+    <Type Name="tbPermiso">
+      <Column Name="idPermiso" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Permiso" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="tbPermiso_tbRolPermiso" Member="tbRolPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbRolPermiso" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

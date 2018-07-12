@@ -50,9 +50,18 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <label class="control-label col-md-2">Fecha Nacimiento</label>
+                            @*@Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })*@
                             <div class="col-md-10">
-                                <input type="date" id="fechaNacimiento" class="form-control" value='@Model.paciente.fechaNacimiento.Value.ToString("yyy-MM-dd")'/>
+                                @if (@Model.paciente.fechaNacimiento != null)
+                                {
+                                    <input type="date" id="fechaNacimiento" class="form-control" value='@Model.paciente.fechaNacimiento.Value.ToString("yyy-MM-dd")' />
+                                }
+                                else
+                                {
+                                    <input type="date" id="fechaNacimiento" class="form-control"/>
+
+                                }
                             </div>
                         </div>
 
@@ -126,14 +135,14 @@
                     <div class="form-group">
                         @Html.Label("Motivo de Consulta", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.consulta.motivoConsulta, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.consulta.motivoConsulta, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Historia Enfermedad", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.consulta.HistoriaEnfermedad, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.consulta.HistoriaEnfermedad, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
@@ -165,56 +174,56 @@
                         <div class="form-group">
                             @Html.Label("Padre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.padre, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.padre, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Madre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.madre, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.madre, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Médicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.medicos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.medicos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Quirúrgicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.quirurgicos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.quirurgicos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Traumáticos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.traumaticos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.traumaticos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Alérgicos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.alergicos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.alergicos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Gineco-Obstétricos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.ginecoObstetricos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.ginecoObstetricos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Vicios y Manias", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.patologicos.viciosManias, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.patologicos.viciosManias, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
                     </div>
@@ -233,21 +242,21 @@
                         <div class="form-group">
                             @Html.Label("Prenatal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.prenatal, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.prenatal, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Natal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.natal, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.natal, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Posnatal", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.posnatal, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.posnatal, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
@@ -261,21 +270,21 @@
                         <div class="form-group">
                             @Html.Label("Inmunizaciónes", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.inmunizaciones, new { @class = "form-control",  rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.inmunizaciones, new { @class = "form-control",  rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Alimentación", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.alimentacion, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.alimentacion, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Hábitos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.habitos, new { @class = "form-control",  rows = "4" })
+                                @Html.TextAreaFor(model => model.noPatologicos.habitos, new { @class = "form-control",  rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
@@ -304,49 +313,49 @@
                         <div class="form-group">
                             @Html.Label("Conducta", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.conducta, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.conducta, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Piel y faneras", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.piel, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.piel, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Cabeza", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.cabeza, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.cabeza, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Ojos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.ojos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.ojos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Oídos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.oidos, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.oidos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("nariz", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.nariz, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.nariz, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Vicios y Manias", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.revision.vicios, new { @class = "form-control", rows = "4" })
+                                @Html.TextAreaFor(model => model.revision.vicios, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
                     </div>
@@ -363,49 +372,49 @@
                     <div class="form-group">
                         @Html.Label("Estilo de Vida", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.estiloVida, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.estiloVida, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Vivienda", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.vivienda, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.vivienda, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Situacion Familiar", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.situacionFamiliar, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.situacionFamiliar, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Ingreso Económico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.ingresoEconomico, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.ingresoEconomico, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Animales", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.animales, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.animales, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Tendencia Sexual", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.tendenciaSexual, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.tendenciaSexual, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Punto de vista", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.perfilSocial.puntoVista, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.perfilSocial.puntoVista, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                 </div>
@@ -542,28 +551,28 @@
                     <div class="form-group">
                         @Html.Label("Plan Inicial", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.planes.planInicial, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.planInicial, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Plan Diagnostico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.planes.planDiagnostico, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.planDiagnostico, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Diagnostico Diferencial", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.planes.diagnosticoDiferencial, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.diagnosticoDiferencial, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Plan Educacional", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.planes.planEducacional, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.planes.planEducacional, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
@@ -573,14 +582,14 @@
                     <div class="form-group">
                         @Html.Label("Actividad", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.terapeutico.actividad, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.actividad, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Dieta", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.terapeutico.dieta, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.dieta, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
@@ -594,14 +603,14 @@
                     <div class="form-group">
                         @Html.Label("Controles Especificos", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.terapeutico.controlesEspecificos, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.controlesEspecificos, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Otras Terapias", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.terapeutico.otrasTerapias, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.terapeutico.otrasTerapias, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                 </div>
@@ -617,7 +626,7 @@
                     <div class="form-group">
                         @Html.Label("Impresión Clínica", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextAreaFor(model => model.diagnostico.impresionClinica, new { @class = "form-control", rows = "4" })
+                            @Html.TextAreaFor(model => model.diagnostico.impresionClinica, new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
 
@@ -967,7 +976,7 @@
                     <div class="form-group">
                         @Html.Label("Método Planificación", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
-                            @Html.TextAreaFor(model => model.mujeres.metodoPlanificacion, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4" })
+                            @Html.TextAreaFor(model => model.mujeres.metodoPlanificacion, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                 </div>
@@ -1040,7 +1049,7 @@
                     <div class="form-group">
                         @Html.Label("Prescripcion", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.TextArea("descripcion", new { @class = "form-control", rows = "4" })
+                            @Html.TextArea("descripcion", new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                 </div>
@@ -1066,25 +1075,25 @@
                     <div class="form-group">
                         @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.TextArea("problema", new { @class = "form-control", rows = "4" })
+                            @Html.TextArea("problema", new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.TextArea("subjetivos", new { @class = "form-control", rows = "4" })
+                            @Html.TextArea("subjetivos", new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.TextArea("objetivos", new { @class = "form-control", rows = "4" })
+                            @Html.TextArea("objetivos", new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                     <div class="form-group">
                         @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.TextArea("analisis", new { @class = "form-control", rows = "4" })
+                            @Html.TextArea("analisis", new { @class = "form-control", rows = "4", maxlength = "700" })
                         </div>
                     </div>
                 </div>

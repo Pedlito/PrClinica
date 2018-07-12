@@ -30,7 +30,7 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult Crear()
         {
    
-            List<tbUsuario> doctores = (from u in db.tbUsuario where  u.estado == true && u.codTipoUsuario == 1 select u).ToList();
+            List<tbUsuario> doctores = (from u in db.tbUsuario where  u.estado == true && u.codTipoUsuario == 3 select u).ToList();
             List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true  && u.codTipoUsuario == 2 select u).ToList();
             
             ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");

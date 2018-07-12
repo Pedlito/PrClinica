@@ -496,7 +496,15 @@
                             <label>Fecha</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Model.diagnostico.fecha.Value.ToLongDateString()
+                            @try
+                            {
+                                @Model.diagnostico.fecha.Value.ToLongDateString()
+
+                            }
+                            catch
+                            {
+                                <p>Desconocida</p>
+                            }
                         </div>
                     </div>
                 </li>
@@ -507,7 +515,14 @@
                             <label>Hora</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Model.diagnostico.fecha.Value.ToShortTimeString()
+                            @try
+                            {
+                                @Model.diagnostico.fecha.Value.ToShortTimeString()
+                            }
+                            catch
+                            {
+                                <p>desconocida</p>
+                            }
                         </div>
                     </div>
                 </li>

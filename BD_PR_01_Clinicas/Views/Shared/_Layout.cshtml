@@ -29,7 +29,10 @@
                         <ul class="nav navbar-nav">
                             <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
                             @*podemos quitar esto de aqui y agregarlo al login partial*@
-                            <li>@Html.ActionLink("Administración", "Administracion", "Home")</li>
+                            @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar))
+                            {
+                                <li>@Html.ActionLink("Administración", "Administracion", "Home")</li>
+                            }
                             <li>@Html.ActionLink("Acerca de", "About", "Home")</li>
                         </ul>
                     @Html.Partial("_LoginPartial")

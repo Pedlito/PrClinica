@@ -69,9 +69,6 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbPerfilSocial(tbPerfilSocial instance);
     partial void UpdatetbPerfilSocial(tbPerfilSocial instance);
     partial void DeletetbPerfilSocial(tbPerfilSocial instance);
-    partial void InserttbPermiso(tbPermiso instance);
-    partial void UpdatetbPermiso(tbPermiso instance);
-    partial void DeletetbPermiso(tbPermiso instance);
     partial void InserttbPlanes(tbPlanes instance);
     partial void UpdatetbPlanes(tbPlanes instance);
     partial void DeletetbPlanes(tbPlanes instance);
@@ -117,6 +114,9 @@ namespace BD_PR_01_Clinicas.Models
     partial void InserttbSalida(tbSalida instance);
     partial void UpdatetbSalida(tbSalida instance);
     partial void DeletetbSalida(tbSalida instance);
+    partial void InserttbPermiso(tbPermiso instance);
+    partial void UpdatetbPermiso(tbPermiso instance);
+    partial void DeletetbPermiso(tbPermiso instance);
     #endregion
 		
 		public DataClasesDataContext() : 
@@ -253,14 +253,6 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<tbPermiso> tbPermiso
-		{
-			get
-			{
-				return this.GetTable<tbPermiso>();
-			}
-		}
-		
 		public System.Data.Linq.Table<tbPlanes> tbPlanes
 		{
 			get
@@ -378,6 +370,14 @@ namespace BD_PR_01_Clinicas.Models
 			get
 			{
 				return this.GetTable<tbSalida>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tbPermiso> tbPermiso
+		{
+			get
+			{
+				return this.GetTable<tbPermiso>();
 			}
 		}
 		
@@ -4113,144 +4113,6 @@ namespace BD_PR_01_Clinicas.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPermiso")]
-	public partial class tbPermiso : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _idPermiso;
-		
-		private string _Permiso;
-		
-		private bool _estado;
-		
-		private EntitySet<tbRolPermiso> _tbRolPermiso;
-		
-    #region Definiciones de métodos de extensibilidad
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidPermisoChanging(int value);
-    partial void OnidPermisoChanged();
-    partial void OnPermisoChanging(string value);
-    partial void OnPermisoChanged();
-    partial void OnestadoChanging(bool value);
-    partial void OnestadoChanged();
-    #endregion
-		
-		public tbPermiso()
-		{
-			this._tbRolPermiso = new EntitySet<tbRolPermiso>(new Action<tbRolPermiso>(this.attach_tbRolPermiso), new Action<tbRolPermiso>(this.detach_tbRolPermiso));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPermiso", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int idPermiso
-		{
-			get
-			{
-				return this._idPermiso;
-			}
-			set
-			{
-				if ((this._idPermiso != value))
-				{
-					this.OnidPermisoChanging(value);
-					this.SendPropertyChanging();
-					this._idPermiso = value;
-					this.SendPropertyChanged("idPermiso");
-					this.OnidPermisoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Permiso", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
-		public string Permiso
-		{
-			get
-			{
-				return this._Permiso;
-			}
-			set
-			{
-				if ((this._Permiso != value))
-				{
-					this.OnPermisoChanging(value);
-					this.SendPropertyChanging();
-					this._Permiso = value;
-					this.SendPropertyChanged("Permiso");
-					this.OnPermisoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_estado", DbType="Bit NOT NULL")]
-		public bool estado
-		{
-			get
-			{
-				return this._estado;
-			}
-			set
-			{
-				if ((this._estado != value))
-				{
-					this.OnestadoChanging(value);
-					this.SendPropertyChanging();
-					this._estado = value;
-					this.SendPropertyChanged("estado");
-					this.OnestadoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbPermiso_tbRolPermiso", Storage="_tbRolPermiso", ThisKey="idPermiso", OtherKey="idPermiso")]
-		public EntitySet<tbRolPermiso> tbRolPermiso
-		{
-			get
-			{
-				return this._tbRolPermiso;
-			}
-			set
-			{
-				this._tbRolPermiso.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_tbRolPermiso(tbRolPermiso entity)
-		{
-			this.SendPropertyChanging();
-			entity.tbPermiso = this;
-		}
-		
-		private void detach_tbRolPermiso(tbRolPermiso entity)
-		{
-			this.SendPropertyChanging();
-			entity.tbPermiso = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPlanes")]
 	public partial class tbPlanes : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -6045,9 +5907,9 @@ namespace BD_PR_01_Clinicas.Models
 		
 		private int _codTipoUsuario;
 		
-		private EntityRef<tbPermiso> _tbPermiso;
-		
 		private EntityRef<tbRol> _tbRol;
+		
+		private EntityRef<tbPermiso> _tbPermiso;
 		
     #region Definiciones de métodos de extensibilidad
     partial void OnLoaded();
@@ -6061,8 +5923,8 @@ namespace BD_PR_01_Clinicas.Models
 		
 		public tbRolPermiso()
 		{
-			this._tbPermiso = default(EntityRef<tbPermiso>);
 			this._tbRol = default(EntityRef<tbRol>);
+			this._tbPermiso = default(EntityRef<tbPermiso>);
 			OnCreated();
 		}
 		
@@ -6114,40 +5976,6 @@ namespace BD_PR_01_Clinicas.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbPermiso_tbRolPermiso", Storage="_tbPermiso", ThisKey="idPermiso", OtherKey="idPermiso", IsForeignKey=true)]
-		public tbPermiso tbPermiso
-		{
-			get
-			{
-				return this._tbPermiso.Entity;
-			}
-			set
-			{
-				tbPermiso previousValue = this._tbPermiso.Entity;
-				if (((previousValue != value) 
-							|| (this._tbPermiso.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._tbPermiso.Entity = null;
-						previousValue.tbRolPermiso.Remove(this);
-					}
-					this._tbPermiso.Entity = value;
-					if ((value != null))
-					{
-						value.tbRolPermiso.Add(this);
-						this._idPermiso = value.idPermiso;
-					}
-					else
-					{
-						this._idPermiso = default(int);
-					}
-					this.SendPropertyChanged("tbPermiso");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbRol_tbRolPermiso", Storage="_tbRol", ThisKey="codTipoUsuario", OtherKey="codTipoUsuario", IsForeignKey=true)]
 		public tbRol tbRol
 		{
@@ -6178,6 +6006,40 @@ namespace BD_PR_01_Clinicas.Models
 						this._codTipoUsuario = default(int);
 					}
 					this.SendPropertyChanged("tbRol");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbPermiso_tbRolPermiso", Storage="_tbPermiso", ThisKey="idPermiso", OtherKey="idPermiso", IsForeignKey=true)]
+		public tbPermiso tbPermiso
+		{
+			get
+			{
+				return this._tbPermiso.Entity;
+			}
+			set
+			{
+				tbPermiso previousValue = this._tbPermiso.Entity;
+				if (((previousValue != value) 
+							|| (this._tbPermiso.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._tbPermiso.Entity = null;
+						previousValue.tbRolPermiso.Remove(this);
+					}
+					this._tbPermiso.Entity = value;
+					if ((value != null))
+					{
+						value.tbRolPermiso.Add(this);
+						this._idPermiso = value.idPermiso;
+					}
+					else
+					{
+						this._idPermiso = default(int);
+					}
+					this.SendPropertyChanged("tbPermiso");
 				}
 			}
 		}
@@ -7615,6 +7477,120 @@ namespace BD_PR_01_Clinicas.Models
 		{
 			this.SendPropertyChanging();
 			entity.tbSalida = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.tbPermiso")]
+	public partial class tbPermiso : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _idPermiso;
+		
+		private string _Permiso;
+		
+		private EntitySet<tbRolPermiso> _tbRolPermiso;
+		
+    #region Definiciones de métodos de extensibilidad
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidPermisoChanging(int value);
+    partial void OnidPermisoChanged();
+    partial void OnPermisoChanging(string value);
+    partial void OnPermisoChanged();
+    #endregion
+		
+		public tbPermiso()
+		{
+			this._tbRolPermiso = new EntitySet<tbRolPermiso>(new Action<tbRolPermiso>(this.attach_tbRolPermiso), new Action<tbRolPermiso>(this.detach_tbRolPermiso));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_idPermiso", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int idPermiso
+		{
+			get
+			{
+				return this._idPermiso;
+			}
+			set
+			{
+				if ((this._idPermiso != value))
+				{
+					this.OnidPermisoChanging(value);
+					this.SendPropertyChanging();
+					this._idPermiso = value;
+					this.SendPropertyChanged("idPermiso");
+					this.OnidPermisoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Permiso", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string Permiso
+		{
+			get
+			{
+				return this._Permiso;
+			}
+			set
+			{
+				if ((this._Permiso != value))
+				{
+					this.OnPermisoChanging(value);
+					this.SendPropertyChanging();
+					this._Permiso = value;
+					this.SendPropertyChanged("Permiso");
+					this.OnPermisoChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbPermiso_tbRolPermiso", Storage="_tbRolPermiso", ThisKey="idPermiso", OtherKey="idPermiso")]
+		public EntitySet<tbRolPermiso> tbRolPermiso
+		{
+			get
+			{
+				return this._tbRolPermiso;
+			}
+			set
+			{
+				this._tbRolPermiso.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_tbRolPermiso(tbRolPermiso entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbPermiso = this;
+		}
+		
+		private void detach_tbRolPermiso(tbRolPermiso entity)
+		{
+			this.SendPropertyChanging();
+			entity.tbPermiso = null;
 		}
 	}
 	
