@@ -25,7 +25,7 @@ namespace BD_PR_01_Clinicas.Controllers
         [NoLoginAttribute]
         public ActionResult Login(string returnUrl)
         {
-
+            ViewBag.registro = (from t in db.tbConfiguracion where t.codConfiguracion == 1 select t.valor).SingleOrDefault();
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -105,14 +105,16 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 tbUsuario NuevoUsuario = new tbUsuario
                 {
-                  nombre = model.Nombre,
-                  dpi = model.Dpi,
-                  carnet = model.Carnet,
-                  fechaNacimiento =  model.FechaNacimiento,
-                  usuario = model.Usuario,
-                  password = model.Password,
-                  codTipoUsuario = 1
-             };
+                    nombre = model.Nombre,
+                    dpi = model.Dpi,
+                    carnet = model.Carnet,
+                    fechaNacimiento = model.FechaNacimiento,
+                    usuario = model.Usuario,
+                    password = model.Password,
+                    codTipoUsuario = 1,
+                    estado = true
+                  
+                };
                 try
                 {
                     db.tbUsuario.InsertOnSubmit(NuevoUsuario);

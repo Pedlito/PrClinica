@@ -232,7 +232,6 @@
                 dataType: "json",
                 data: { "presentacion": presentacion },
                 success: function (presentacion) {
-                    alert(presentacion.codPresentacion + " " + presentacion.presentacion)
                     var item = "<option value='" + presentacion.codPresentacion + "'>" + presentacion.presentacion + "</option>"
                     $('#codPresentacion').append(item);
                     document.getElementById("codPresentacion").value = presentacion.codPresentacion;

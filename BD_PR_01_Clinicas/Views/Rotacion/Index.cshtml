@@ -37,9 +37,12 @@
                     @item.fechaFinal.Value.ToLongDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Integrantes", "Integrantes", new { id = item.codRotacion }) |
-                    @Html.ActionLink("Editar", "Editar", new { id=item.codRotacion}) |
-               
+                    <a href="@Url.Action("Integrantes", new { id = item.codRotacion })" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-th-list"></span> Integrantes
+                    </a>
+                    <a href="@Url.Action("Editar", new { id = item.codRotacion })" class="btn btn-primary btn-xs">
+                        <span class="glyphicon glyphicon-edit"></span> Editar
+                    </a>               
                     <a onclick="preguntar(@item.codRotacion)">Archivar</a>
 
     

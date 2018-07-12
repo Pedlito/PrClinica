@@ -10,6 +10,7 @@ namespace BD_PR_01_Clinicas.Controllers
     public class EntregaMedicamentoController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
+        [PermisoAttribute(Permiso = RolesPermisos.entregar_medicamento)]
         // GET: EntregaMedicamento
         public ActionResult Index(string paciente = "")
         {

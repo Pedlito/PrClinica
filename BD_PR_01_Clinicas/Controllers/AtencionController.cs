@@ -8,9 +8,11 @@ using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
     [AutenticadoAttribute]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_consultas)]
     public class AtencionController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
+
         // GET: Atencion
         public ActionResult Index(int? page)
         {
@@ -91,8 +93,8 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/NuevoPaciente
         public JsonResult NuevoPaciente(tbPaciente paciente)
         {
-            db.tbPaciente.InsertOnSubmit(paciente);
-            db.SubmitChanges();
+            //db.tbPaciente.InsertOnSubmit(paciente);
+            //db.SubmitChanges();
             return Json(new { codPaciente = paciente.codPaciente, nombre = paciente.nombre });
         }
 

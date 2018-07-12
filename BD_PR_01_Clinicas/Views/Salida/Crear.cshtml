@@ -199,7 +199,7 @@
             }
             //cuando precionan el boton guardar se ejecuta esta funcion
             //primero hago este json con lo que voy a enviar, la descripcion que la tomo del textbox con id = descripcion y el detalle que es el array
-            var datos = { "descripcion":$('#descripcion').value, "detalle": detalle }
+            var datos = { "descripcion":$('#descripcion').val(), "detalle": detalle }
             //con ajax mando a la accion crear y en data paso la variable datos
             $.ajax({
                 traditional: true,
