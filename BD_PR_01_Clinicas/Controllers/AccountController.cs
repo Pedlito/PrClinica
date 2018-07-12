@@ -75,7 +75,7 @@ namespace BD_PR_01_Clinicas.Controllers
             catch (Exception ex)
             {
                 // quitar esto es solo para prueba              
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(string.Empty, "Fallo en la conexion con la base de datos");
             }
 
             return this.View(model);
