@@ -1,17 +1,18 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Crear";
 }
 
 <h2>Crear rotacion</h2>
-
-
     <div class="form-inline">
         <hr />
+        @*min="@ViewBag.fechaFinRC"*@ 
+    
         <div class="form-group">
 
             <label class="control-label col-md-4" for="fechaInicio">fechaInicio</label>
             <div class="col-md-2">
-                <input type="date" id="fechaInicio" name="fechaInicio" class="form-control"  />
+                <input type="text" id="fechaInicio" name="fechaInicio" class="form-control" value="@ViewBag.fechaFinUR" readonly />
             </div>
         </div>
 
@@ -20,7 +21,7 @@
             <label class="control-label col-md-4" for="fechaFinal">fechaFinal</label>
 
             <div class="col-md-2">
-                <input type="date" id="fechaFinal" name="fechaFinal" class="form-control"  />
+                <input type="text" id="fechaFinal" name="fechaFinal" class="form-control" readonly/>
             
             </div>
         </div>
@@ -35,9 +36,7 @@
                             <label class="control-label col-md-4" for="Nombre">Nombre</label>
                         </div>
 
-                        <div class="col-md-6">
-
-                            
+                        <div class="col-md-6">         
                             @Html.DropDownList("codDoctor", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
                         </div>
                         <div class="col-md-3">
@@ -127,6 +126,7 @@
                    
                 </div>
             </div>
+ @* <input type="button" value="ver" onclick="ver()" />*@
 </div>
 
 
@@ -134,8 +134,44 @@
 @section Scripts {
     <script>
 
+        $("#fechaInicio").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-1:+10',
+            defaultDate: '01/01/2018',
+            beforeShowDay:$.datepicker.noWeekends
+        }
+
+        );
+        $("#fechaFinal").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-1:+10',
+            defaultDate: '01/01/2018',
+            beforeShowDay:$.datepicker.noWeekends
+        }
+
+        );
+
         var listaDocs = [];
         var listaEstus = [];
+        var fUR=$.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
+      
+        
+        //function ver() {
+        //   var fi=$.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
+        //   var ff=$.datepicker.parseDate('dd/mm/yy',$("#fechaFinal").val());
+
+        //   // if (!$("#fechaInicio").val()) {
+
+        //        if (fi > ff) { alert(fi.getDate()); } else { alert(ff.getFullYear());}
+        ////   }
+        //}
+
 
         function agregarDocs() {
             if (!$("#codDoctor").val()) { alert("Seleccione un usurio valido"); return;}
@@ -210,9 +246,17 @@
         }
 
         function guardar() {
-            if (!($("#fechaInicio").val()) || ($("#fechaInicio").val() >= $("#fechaFinal").val())) { alert("Debe asignar un rango de fechas valido"); return; }
-            var integrantes = listaDocs.concat(listaEstus);
-    
+
+
+            if (!($("#fechaInicio").val()) || !($("#fechaFinal").val())) { alert("Debe seleccionar las fechas"); return; }
+          
+            //else if (($("#fechaInicio").val()>fechaI && $("#fechaInicio").val()<fechaF)||($("#fechaFinal").val()>fechaI && $("#fechaFinal").val()<fechaF)) { alert("Rango invalido, ya existe una rotacion en ese rango de fechas"); return; }
+            //else if ($("#fechaInicio").val() < fechaI && $("#fechaFinal").val() > fechaF) { alert("Asignacion de fechas invalido" + fechaF.getDate() + "-" + fechaF.getMonth()); return; }
+                var fi = $.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
+                 var ff = $.datepicker.parseDate('dd/mm/yy',$("#fechaFinal").val());
+                 if (fi > ff) { alert("La fecha de inicio debe ser mayor a la fecha de finalizacion"); return; }
+                 else if (fi < fUR) { alert("Fecha de inicio invalido"); return;}
+                 var integrantes = listaDocs.concat(listaEstus);
             var rotacion = { "fechaIni": $("#fechaInicio").val(), "fechaFin": $("#fechaFinal").val(), "integrantes": integrantes }
             $.ajax({
                 traditional: true,
@@ -223,7 +267,7 @@
                 success: function (response) {
                     if (response.length == 0) { location.href = '@Url.Action("Index", "Rotacion")'; }
                     else { alert("Error al realizar la operacion: " + response); }
-                  
+
                 },
                 error: function (response) {
                     alert("No se pudo realizar la accion");

@@ -57,7 +57,7 @@
         <div class="form-group">
             @Html.Label("Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control"} })
             </div>
         </div>
 
@@ -101,7 +101,7 @@
             $("#carnet").prop('disabled', false)
             dp.rq = true;
             dp.lt = true;
-            dp.lg = 12;
+            dp.lg = 12;//logitud dpi
         }
         else {
             $('#carne').children('.help-block').html("");
@@ -131,6 +131,10 @@
         return /^[a-zA-Z ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
+    $.validator.addMethod("alfanumerico", function (value, element) {
+        return /^[a-zA-Z0-9 ]+$/i.test(value);
+    }, "Ingrese sólo Letras, numeros solo al final, sin espacios");
+
     $("#formUsuario").validate({
 
         errorClass: 'help-block',
@@ -156,7 +160,7 @@
             dpi: { required: dp.rq, soloNumeros: dp.lt, minlength: dp.lg },
             carnet: { required: true, soloNumeros: true, minlength: 8 },
             fechaNacimiento: { required: true },
-            usuario: { required: true, minlength: 3 },
+            usuario: { required: true, minlength: 3, alfanumerico: true },
             password: { required: true, minlength: 4 },
         },
         messages: {

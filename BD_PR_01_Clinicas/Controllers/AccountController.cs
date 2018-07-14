@@ -296,7 +296,7 @@ namespace BD_PR_01_Clinicas.Controllers
                         item.dpi = user.dpi;
                         item.carnet = user.carnet;
                         item.fechaNacimiento = user.fechaNacimiento;
-                        item.usuario = user.usuario;
+                       // item.usuario = user.usuario;
                         item.password = user.password;
                         contexto.SubmitChanges();
                         return RedirectToAction("DatosUsuario");

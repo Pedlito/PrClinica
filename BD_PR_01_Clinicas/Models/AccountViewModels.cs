@@ -69,17 +69,20 @@ namespace BD_PR_01_Clinicas.Models
         public int codTipoUsuario { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 3)]
         [RegularExpression("^[A-Za-z][a-zA-Z ]+$",ErrorMessage ="Solo se admite texto con espacios")]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 12)]
         [RegularExpression("^\\d+$",ErrorMessage = "Numero de identificacion debe ser numerico")]
         [Display(Name = "DPI")]
         public string Dpi { get; set; }
 
         [Required]
         [RegularExpression("^\\d+$", ErrorMessage = "Numero de Carnet debe ser numerico")]
+        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 8)]
         [Display(Name = "Carnet")]
         public string Carnet { get; set; }
        
@@ -91,7 +94,7 @@ namespace BD_PR_01_Clinicas.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Usuario")]
-        [RegularExpression("^[A-Za-z][a-zA-Z @0-9_]+$", ErrorMessage = "Se admite texto, numero, guion bajo y arroba")]
+        [RegularExpression("^[A-Za-z][a-zA-Z 0-9]+$", ErrorMessage = "Se admite texto, numero")]
         public string Usuario { get; set; }
 
         [Required]

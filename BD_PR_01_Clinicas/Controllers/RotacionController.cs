@@ -29,14 +29,41 @@ namespace BD_PR_01_Clinicas.Controllers
       
         public ActionResult Crear()
         {
-   
-            List<tbUsuario> doctores = (from u in db.tbUsuario where  u.estado == true && u.codTipoUsuario == 3 select u).ToList();
-            List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true  && u.codTipoUsuario == 2 select u).ToList();
-            
-            ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");
-            ViewBag.codEstudiante = new SelectList(estudiantes, "codUsuario", "nombre");
-            return View();
+            try
+            {    //se obtiene fecha inicio y fin de la ultima rotacion;
+            var ultimaRotacion = db.tbRotacion.Select(x=>x.fechaFinal).Max();
+           // var primeraRotacion = db.tbRotacion.Select(x => x.fechaInicio).Min();
+            var rotacionU = db.tbRotacion.Where(x => x.fechaFinal == ultimaRotacion).SingleOrDefault();
+            //var rotacionP = db.tbRotacion.Where(x => x.fechaInicio == primeraRotacion).SingleOrDefault();
+
+            if (rotacionU!=null)
+            {
+
+                ViewBag.fechaFinUR = rotacionU.fechaFinal.Value.ToString("dd/MM/yyyy");//limite superior
+                   // ViewBag.fechaInPR = rotacionP.fechaInicio.Value.ToString("dd/MM/yyyy"); //limite inferior
+            }
+            else
+            {
+                ViewBag.fechaFinUR = DateTime.Now.AddYears(-1).ToString("dd/mm/yyyy");
+              //  ViewBag.fechaInPR = DateTime.Now.AddYears(-1).ToString("dd/mm/yyyy");
+            }
+            //se envia la info a a vista
+
+            //lista de usuarios
+            List<tbUsuario> doctores = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 3 select u).ToList();
+                List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 2 select u).ToList();
+                //para los selects
+                ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");
+                ViewBag.codEstudiante = new SelectList(estudiantes, "codUsuario", "nombre");
+
+                return View();
         }
+            catch (Exception e){
+                ViewBag.errores += "Se genero un error en la conexion con la base de datos";
+            }
+
+            return View("VistaDeErrores");
+}
 
 
         [HttpPost]
@@ -163,25 +190,32 @@ namespace BD_PR_01_Clinicas.Controllers
 
             return PartialView("_Estudiantes", lista);
         }
-    
+
 
         // GET: Rotacion/Editar/5, permite editar una rotacion
         public ActionResult Editar(int? id)
         {
 
-                tbRotacion rotacion = (from t in db.tbRotacion where t.codRotacion == id select t).SingleOrDefault();
-           if (rotacion != null)
-            {
+
+            tbRotacion rotacion = (from t in db.tbRotacion where t.codRotacion == id select t).SingleOrDefault();
+            if (rotacion != null)
+            {   //consulta para validar las fechas inicio y fin
+                var ultimaRotacion = db.tbRotacion.Select(x => x.fechaFinal).Max();
+               // var primeraRotacion = db.tbRotacion.Select(x => x.fechaInicio).Min();
+                var rotacionU = db.tbRotacion.Where(x => x.fechaFinal == ultimaRotacion).SingleOrDefault();
+              //  var rotacionP = db.tbRotacion.Where(x => x.fechaInicio == primeraRotacion).SingleOrDefault();
+                ViewBag.fechaFinUR = rotacionU.fechaFinal.Value.ToString("dd/MM/yyyy");//limite superior
+               // ViewBag.fechaInPR = rotacionP.fechaInicio.Value.ToString("yyyy-MM-dd");//limite inferior
                 //muestra las fechas en grande
                 ViewBag.fechaInicio = rotacion.fechaInicio.Value.ToString("dd/MM/yyyy");
                 ViewBag.fechaFinal = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy");
                 //para editarlo
-                ViewBag.fechaIni = rotacion.fechaInicio.Value.ToString("yyyy-MM-dd");
-                ViewBag.fechaFin = rotacion.fechaFinal.Value.ToString("yyyy-MM-dd");
+                ViewBag.fechaIni = rotacion.fechaInicio.Value.ToString("dd/MM/yyyy"); ;
+                ViewBag.fechaFin = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy"); ;
                 //id de la rotacion actual
                 ViewBag.id = rotacion.codRotacion;
                 //estudiantes y doctores por separado, si se agregan nuevos se obtiene la lista competa, en la vista se validan repetidos.
-                List<tbUsuario> doctores = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 1 select u).ToList();
+                List<tbUsuario> doctores = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 3 select u).ToList();
                 List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 2 select u).ToList();
                 //combox seleccionar usuarios
                 ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");
@@ -195,6 +229,7 @@ namespace BD_PR_01_Clinicas.Controllers
                 return View("VistaDeErrores");
             }
         }
+
 
         //POST: Rotacion/Edit/5
         [HttpPost]
@@ -298,9 +333,24 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult Restablecer(int? id)
         {
 
-            tbRotacion Rot = (from r in db.tbRotacion where (r.codRotacion == id) select r).SingleOrDefault();
-            Rot.estado = true;
-            db.SubmitChanges();
+            try
+            {
+                tbRotacion Rot = (from r in db.tbRotacion where (r.codRotacion == id) select r).SingleOrDefault();
+                Rot.estado = true;
+
+                foreach (var item in Rot.tbRotacionUsuario.ToList())
+                {
+                    tbUsuario us = (from u in db.tbUsuario where u.codUsuario == item.codUsuario select u).SingleOrDefault();
+                    if (us.codTipoUsuario == 2) { us.estado = true; }
+
+                }
+                db.SubmitChanges();
+            }
+            catch
+            {
+                ViewBag.errores = "No se ha podido reestablecer la rotacion";
+                return View("VistaDeErrores");
+            }
 
 
             return RedirectToAction("Index");
@@ -310,7 +360,7 @@ namespace BD_PR_01_Clinicas.Controllers
         public JsonResult ObtenerDocs(int? id) {
 
    
-            List<ItemUser> codsDocs = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 1 select new ItemUser{ codUser = R.codUsuario }).ToList();
+            List<ItemUser> codsDocs = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 3 select new ItemUser{ codUser = R.codUsuario }).ToList();
 
             return Json(codsDocs.ToArray()); 
         }
@@ -318,6 +368,7 @@ namespace BD_PR_01_Clinicas.Controllers
             List<ItemUser> codsEstus = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 2 select new ItemUser{codUser = R.codUsuario }).ToList();
             return Json(codsEstus.ToArray());
         }
+
         [AllowAnonymous]
         public ActionResult ActivarDesacivarRegistro()
         {

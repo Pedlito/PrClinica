@@ -39,10 +39,10 @@ namespace BD_PR_01_Clinicas.Controllers
             else
             {
 
-                lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.nombre select t).ToList();
+                lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.nombre select t).Take(20).ToList();
             }
           
-            int pageSize = 5;
+            int pageSize = 15;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
             return View(lista.ToPagedList(pageNumber, pageSize));
