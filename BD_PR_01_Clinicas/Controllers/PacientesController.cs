@@ -51,18 +51,17 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult HistoriaClinica(int codPaciente)
         {
             HistoriaClinica historia = new Models.HistoriaClinica();
-            historia.consultas = (from t in db.tbConsulta where t.codPaciente == codPaciente orderby t.fechaLlegada descending select t).ToList();
+            historia.consultas = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.estado == 3 orderby t.fechaLlegada descending select t).ToList();
             historia.paciente = (from t in db.tbPaciente where t.codPaciente == codPaciente select t).SingleOrDefault();
-            historia.patologicos = (from t in db.tbAntecedentesPatologicos where t.codPaciente == codPaciente select t).SingleOrDefault();
-            historia.noPatologicos = (from t in db.tbAntecedentesNoPatologicos where t.codPaciente == codPaciente select t).SingleOrDefault();
-            historia.desarrollo = (from t in db.tbDesarrollo where t.codPaciente == codPaciente select t).SingleOrDefault();
-            historia.perfilSocial = (from t in db.tbPerfilSocial where t.codPaciente == codPaciente select t).SingleOrDefault();
+            historia.patologicos = historia.paciente.tbAntecedentesPatologicos;
+            historia.noPatologicos = historia.paciente.tbAntecedentesNoPatologicos;
+            historia.desarrollo = historia.paciente.tbDesarrollo;
+            historia.perfilSocial = historia.paciente.tbPerfilSocial;
             if (historia.paciente.genero == false)
             {
-                historia.mujeres = (from t in db.tbMujeres where t.codPaciente == codPaciente select t).SingleOrDefault();
+                historia.mujeres = historia.paciente.tbMujeres;
             }
-            historia.perfilSocial = (from t in db.tbPerfilSocial where t.codPaciente == codPaciente select t).SingleOrDefault();
-            //historia.revision = (from t in db.tbRevisionSistemas where t.codConsulta == codPaciente select t).SingleOrDefault(); para despues
+            historia.perfilSocial = historia.paciente.tbPerfilSocial;
             return View(historia);
         }
 
@@ -82,20 +81,30 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(consulta);
         }
 
-        // POST: Pacientes/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult DetalleReceta(IEnumerable<tbReceta> detalle)
         {
-            try
+            List<RegistroProducto> lista = new List<RegistroProducto>();
+            if (detalle != null)
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                foreach (tbReceta item in detalle)
+                {
+                    //por cada item dentro de la lista detalle creo un registroProducto
+                    lista.Add((from t in db.tbProducto
+                               where t.codProducto == item.codProducto
+                               orderby t.producto
+                               select new RegistroProducto
+                               {
+                                   codProducto = t.codProducto,
+                                   nombre = t.producto,
+                                   categoria = t.tbCategoria.categoria,
+                                   presentacion = t.tbPresentacion.presentacion,
+                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   descripcion = item.descripcion
+                               }).SingleOrDefault());
+                }
             }
-            catch
-            {
-                return View();
-            }
+            //el retorno sera el html creado en la vista parcial _detalle pasandole como modelo la lista
+            return PartialView("_Detalle", lista);
         }
 
         // GET: Pacientes/Edit/5

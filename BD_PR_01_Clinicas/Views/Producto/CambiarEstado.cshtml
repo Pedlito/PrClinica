@@ -83,7 +83,7 @@ else
                 </button>
             }
             @*@Html.ActionLink("Regresar", "Index", null, htmlAttributes: new { @class = "btn btn-primary" })*@
-            <a class="btn btn-primary" href="/Producto"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
+            <a class="btn btn-primary" href="@Url.Action("Index")"><span class="glyphicon glyphicon-arrow-left"></span> Regresar</a>
 
         </div>
     }

@@ -18,7 +18,7 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             List<tbPaciente> lista = (from cons in db.tbConsulta
                                       join pac in db.tbPaciente on cons.codPaciente equals pac.codPaciente
-                                      where cons.atendido == false
+                                      where cons.estado == 1 || (cons.estado == 2 && cons.codEstudiante == SessionUsuario.Get.UserId)
                                       orderby cons.fechaLlegada
                                       select pac).ToList();
             int pageSize = 15;
@@ -30,7 +30,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/Details/5
         public ActionResult Cancelar(int codPaciente)
         {
-            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.atendido == false select t).SingleOrDefault();
+            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.estado == 1 select t).SingleOrDefault();
             db.tbConsulta.DeleteOnSubmit(consulta);
             db.SubmitChanges();
             return RedirectToAction("Index");
@@ -47,14 +47,13 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Atencion/Crear
         [HttpPost]
-        //public string Crear(int codPaciente, string motivoConsulta, string HistoriaEnfermedad)
         public string Crear(tbConsulta consulta)
         {
             try
             {
                 // TODO: Add insert logic here
                 consulta.fechaLlegada = DateTime.Now;
-                consulta.atendido = false;
+                consulta.estado = 1;
                 db.tbConsulta.InsertOnSubmit(consulta);
                 db.SubmitChanges();
                 return Url.Action("Index", "Atencion");
@@ -93,8 +92,8 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/NuevoPaciente
         public JsonResult NuevoPaciente(tbPaciente paciente)
         {
-            //db.tbPaciente.InsertOnSubmit(paciente);
-            //db.SubmitChanges();
+            db.tbPaciente.InsertOnSubmit(paciente);
+            db.SubmitChanges();
             return Json(new { codPaciente = paciente.codPaciente, nombre = paciente.nombre });
         }
 
@@ -150,11 +149,18 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/CrearHC
         public ActionResult CrearHC(int codPaciente)
         {
+            //listas para dropdowns
             List<tbTipoSangre> paciente_codTipoSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
             ViewBag.paciente_codTipoSangre = new SelectList(paciente_codTipoSangre, "codTipoSangre", "tipoSangre");
-            List<tbUsuario> medicos = (from t in db.tbUsuario where t.codTipoUsuario == 1 && t.estado == true orderby t.nombre select t).ToList();
-            ViewBag.diagnostico_codUsuario = new SelectList(medicos, "codUsuario", "nombre");
-            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.atendido == false select t).SingleOrDefault();
+            List<tbUsuario> medicos = (from t in db.tbUsuario where t.codTipoUsuario == 3 && t.estado == true orderby t.nombre select t).ToList();
+            ViewBag.consulta_codMedico = new SelectList(medicos, "codUsuario", "nombre");
+
+            //pide la consulta y le asigna los valores 
+            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && (t.estado == 1 || (t.estado == 2 && t.codEstudiante == SessionUsuario.Get.UserId)) select t).SingleOrDefault();
+            consulta.estado = 2;
+            consulta.codEstudiante = SessionUsuario.Get.UserId;
+            consulta.fechaAtencion = DateTime.Now;
+            db.SubmitChanges();
             HistoriaClinica historia = new HistoriaClinica();
             historia.consulta = consulta;
             historia.paciente = consulta.tbPaciente;
@@ -166,14 +172,20 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 historia.mujeres = consulta.tbPaciente.tbMujeres;
             }
-
+            historia.revision = consulta.tbRevisionSistemas;
+            historia.signos = consulta.tbSignosVitales;
+            historia.planes = consulta.tbPlanes;
+            historia.terapeutico = consulta.tbPlanTerapeutico;
+            historia.problemas = (from t in db.tbProblema where t.codConsulta == consulta.codConsulta select t).ToList();
+            historia.receta = (from t in db.tbReceta where t.codConsulta == consulta.codConsulta select t).ToList();
+            historia.diagnostico = consulta.tbDiagnostico;
             return View(historia);
         }
 
         // POST: Atencion/GuardarHC
         public string GuardarHC(HistoriaClinica historia)
         {
-            
+            #region paciente
             //actualizacion de datos para paciente
             tbPaciente paciente = (from t in db.tbPaciente where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
             paciente.nombre = historia.paciente.nombre;
@@ -187,12 +199,18 @@ namespace BD_PR_01_Clinicas.Controllers
             paciente.razaEtnia = historia.paciente.razaEtnia;
             paciente.escolaridad = historia.paciente.escolaridad;
             paciente.codTipoSangre = historia.paciente.codTipoSangre;
+            #endregion
 
+            #region consulta
             //actualizacion de datos para consulta
             tbConsulta consulta = (from t in db.tbConsulta where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
             consulta.motivoConsulta = historia.consulta.motivoConsulta;
+            consulta.codMedico = historia.consulta.codMedico;
             consulta.HistoriaEnfermedad = historia.consulta.HistoriaEnfermedad;
+            consulta.fechaFinalizacion = DateTime.Now;
+            #endregion
 
+            #region patologicos
             //creacion o actualizacion de antecedentes patologicos
             tbAntecedentesPatologicos patologicos = (from t in db.tbAntecedentesPatologicos where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
             if (patologicos == null)
@@ -210,7 +228,9 @@ namespace BD_PR_01_Clinicas.Controllers
                 patologicos.ginecoObstetricos = historia.patologicos.ginecoObstetricos;
                 patologicos.viciosManias = historia.patologicos.viciosManias;
             }
+            #endregion
 
+            #region noPatologicos
             //creacion o actualizacion de antecedentes no patologicos
             tbAntecedentesNoPatologicos noPatologicos = (from t in db.tbAntecedentesNoPatologicos where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
             if (noPatologicos == null)
@@ -226,7 +246,9 @@ namespace BD_PR_01_Clinicas.Controllers
                 noPatologicos.alimentacion = historia.noPatologicos.alimentacion;
                 noPatologicos.habitos = historia.noPatologicos.habitos;
             }
+            #endregion
 
+            #region desarrollo
             //creacion o actualizacion de desarrollo
             tbDesarrollo desarrollo = (from t in db.tbDesarrollo where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
             if (desarrollo == null)
@@ -252,7 +274,9 @@ namespace BD_PR_01_Clinicas.Controllers
                 desarrollo.oncee = historia.desarrollo.oncee;
                 desarrollo.doce = historia.desarrollo.doce;
             }
+            #endregion
 
+            #region perfil
             //creacion o actualizacion del perfil social
             tbPerfilSocial perfil = (from t in db.tbPerfilSocial where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
             if (perfil == null)
@@ -269,7 +293,9 @@ namespace BD_PR_01_Clinicas.Controllers
                 perfil.tendenciaSexual = historia.perfilSocial.tendenciaSexual;
                 perfil.puntoVista = historia.perfilSocial.puntoVista;
             }
+            #endregion
 
+            #region mujeres
             //creacion o actualizacion de mujeres
             if (paciente.genero == false)
             {
@@ -292,24 +318,209 @@ namespace BD_PR_01_Clinicas.Controllers
                     mujeres.metodoPlanificacion = historia.mujeres.metodoPlanificacion;
                 }
             }
-            db.tbRevisionSistemas.InsertOnSubmit(historia.revision);
-            db.tbPlanes.InsertOnSubmit(historia.planes);
+            #endregion
 
-            historia.diagnostico.fecha = DateTime.Now;
-            db.tbDiagnostico.InsertOnSubmit(historia.diagnostico);
-            db.tbPlanTerapeutico.InsertOnSubmit(historia.terapeutico);
+            #region revision
+            tbRevisionSistemas revision = (from t in db.tbRevisionSistemas where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
+            if (revision == null)
+            {
+                db.tbRevisionSistemas.InsertOnSubmit(historia.revision);
+            }
+            else
+            {
+                revision.conducta = historia.revision.conducta;
+                revision.piel = historia.revision.piel;
+                revision.cabeza = historia.revision.cabeza;
+                revision.ojos = historia.revision.ojos;
+                revision.oidos = historia.revision.oidos;
+                revision.nariz = historia.revision.nariz;
+                revision.vicios = historia.revision.vicios;
+            }
+            #endregion
+
+            #region planes
+            tbPlanes planes = (from t in db.tbPlanes where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
+            if (planes == null)
+            {
+                db.tbPlanes.InsertOnSubmit(historia.planes);
+            }
+            else
+            {
+                planes.planInicial = historia.planes.planInicial;
+                planes.planDiagnostico = historia.planes.planDiagnostico;
+                planes.diagnosticoDiferencial = historia.planes.diagnosticoDiferencial;
+                planes.planEducacional = historia.planes.planEducacional;
+            }
+            #endregion
+
+            #region terapeutico
+            tbPlanTerapeutico terapeutico = (from t in db.tbPlanTerapeutico where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
+            if (terapeutico == null)
+            {
+                db.tbPlanTerapeutico.InsertOnSubmit(historia.terapeutico);
+            }
+            else
+            {
+                terapeutico.actividad = historia.terapeutico.actividad;
+                terapeutico.dieta = historia.terapeutico.dieta;
+                terapeutico.controlesEspecificos = historia.terapeutico.controlesEspecificos;
+                terapeutico.otrasTerapias = historia.terapeutico.otrasTerapias;
+            }
+            #endregion
+
+            #region problemas
             if (historia.problemas != null)
             {
-                db.tbProblema.InsertAllOnSubmit(historia.problemas);
+                List<tbProblema> problemasGuardados = (from t in db.tbProblema where t.codConsulta == consulta.codConsulta select t).ToList();
+                if (problemasGuardados == null)
+                {
+                    db.tbProblema.InsertAllOnSubmit(historia.problemas);
+                }
+                else
+                {
+                    int guardados = problemasGuardados.Count;
+                    int noGuardados = historia.problemas.Count;
+                    if (guardados > noGuardados)
+                    {
+                        int i;
+                        for (i = 0; i < noGuardados; i++)
+                        {
+                            problemasGuardados[i].problema = historia.problemas[i].problema;
+                            problemasGuardados[i].subjetivos = historia.problemas[i].subjetivos;
+                            problemasGuardados[i].objetivos = historia.problemas[i].objetivos;
+                            problemasGuardados[i].analisis = historia.problemas[i].analisis;
+                        }
+                        for (int j = i; j < guardados; j++)
+                        {
+                            db.tbProblema.DeleteOnSubmit(problemasGuardados[j]);
+                        }
+                    }
+                    else if (guardados == noGuardados)
+                    {
+                        for (int i = 0; i < guardados; i++)
+                        {
+                            problemasGuardados[i].problema = historia.problemas[i].problema;
+                            problemasGuardados[i].subjetivos = historia.problemas[i].subjetivos;
+                            problemasGuardados[i].objetivos = historia.problemas[i].objetivos;
+                            problemasGuardados[i].analisis = historia.problemas[i].analisis;
+                        }
+                    }
+                    else
+                    {
+                        int i;
+                        for (i = 0; i < guardados; i++)
+                        {
+                            problemasGuardados[i].problema = historia.problemas[i].problema;
+                            problemasGuardados[i].subjetivos = historia.problemas[i].subjetivos;
+                            problemasGuardados[i].objetivos = historia.problemas[i].objetivos;
+                            problemasGuardados[i].analisis = historia.problemas[i].analisis;
+                        }
+                        for (int j = i; j < noGuardados; j++)
+                        {
+                            db.tbProblema.InsertOnSubmit(historia.problemas[j]);
+                        }
+                    }
+                }
             }
+            #endregion
+
+            #region receta
             if (historia.receta != null)
             {
-                db.tbReceta.InsertAllOnSubmit(historia.receta);
+                List<tbReceta> recetasGuardadas = (from t in db.tbReceta where t.codConsulta == consulta.codConsulta select t).ToList();
+                if (recetasGuardadas == null)
+                {
+                    db.tbProblema.InsertAllOnSubmit(historia.problemas);
+                }
+                else
+                {
+                    int guardados = recetasGuardadas.Count;
+                    int noGuardados = historia.receta.Count;
+                    if (guardados > noGuardados)
+                    {
+                        int i;
+                        for (i = 0; i < noGuardados; i++)
+                        {
+                            recetasGuardadas[i].codProducto = historia.receta[i].codProducto;
+                            recetasGuardadas[i].descripcion = historia.receta[i].descripcion;
+                        }
+                        for (int j = i; j < guardados; j++)
+                        {
+                            db.tbReceta.DeleteOnSubmit(recetasGuardadas[j]);
+                        }
+                    }
+                    else if (guardados == noGuardados)
+                    {
+                        for (int i = 0; i < guardados; i++)
+                        {
+                            recetasGuardadas[i].codProducto = historia.receta[i].codProducto;
+                            recetasGuardadas[i].descripcion = historia.receta[i].descripcion;
+                        }
+                    }
+                    else
+                    {
+                        int i;
+                        for (i = 0; i < guardados; i++)
+                        {
+                            recetasGuardadas[i].codProducto = historia.receta[i].codProducto;
+                            recetasGuardadas[i].descripcion = historia.receta[i].descripcion;
+                        }
+                        for (int j = i; j < noGuardados; j++)
+                        {
+                            db.tbReceta.InsertOnSubmit(historia.receta[j]);
+                        }
+                    }
+                }
             }
-            db.tbSignosVitales.InsertOnSubmit(historia.signos);
-            consulta.atendido = true;
-            db.SubmitChanges();
-            return Url.Action("Index", "Atencion");
+            #endregion
+
+            #region signos
+            tbSignosVitales signos = (from t in db.tbSignosVitales where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
+            if (signos == null)
+            {
+                db.tbSignosVitales.InsertOnSubmit(historia.signos);
+            }
+            else
+            {
+                signos.peso = historia.signos.peso;
+                signos.talla = historia.signos.talla;
+                signos.indiceMasaCorporal = historia.signos.indiceMasaCorporal;
+                signos.presionArterial = historia.signos.presionArterial;
+                signos.frecuenciaCardiaca = historia.signos.frecuenciaCardiaca;
+                signos.frecuenciaRespiratoria = historia.signos.frecuenciaRespiratoria;
+                signos.temperatura = historia.signos.temperatura;
+                signos.circCefalica = historia.signos.circCefalica;
+                signos.circAbdominal = historia.signos.circAbdominal;
+                signos.focoFetal = historia.signos.focoFetal;
+                signos.alturaFondoUterino = historia.signos.alturaFondoUterino;
+                signos.pulso = historia.signos.pulso;
+                signos.saturacionOxigeno = historia.signos.saturacionOxigeno;
+            }
+            #endregion
+
+            #region diagnostico
+            tbDiagnostico diagnostico = (from t in db.tbDiagnostico where t.codConsulta == historia.consulta.codConsulta select t).SingleOrDefault();
+            if (diagnostico == null)
+            {
+                db.tbDiagnostico.InsertOnSubmit(historia.diagnostico);
+            }
+            else
+            {
+                diagnostico.impresionClinica = historia.diagnostico.impresionClinica;
+            }
+            #endregion
+
+            if (historia.accion == 2)
+            {
+                consulta.estado = 3;
+                db.SubmitChanges();
+                return Url.Action("Index", "Atencion");
+            }
+            else
+            {
+                db.SubmitChanges();
+                return @Url.Action("CrearHC", new { codPaciente = historia.paciente.codPaciente });
+            }
         }
         #endregion
 
@@ -377,5 +588,24 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             return PartialView("_Problemas", problemas);
         }
+
+        [HttpPost]
+        public ActionResult LlenarEditar(itemProblema problema)
+        {
+            ViewBag.index = problema.index;
+            return PartialView("_EditarProblema", problema.problema);
+        }
+
+        public ActionResult LlenarConsultas(int codPaciente)
+        {
+            List<tbConsulta> listado = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.estado == 3 select t).ToList();
+            return PartialView("_Consultas", listado);
+        }
+    }
+
+    public class itemProblema
+    {
+        public int index { get; set; }
+        public tbProblema problema { get; set; }
     }
 }

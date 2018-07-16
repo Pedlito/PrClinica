@@ -1,0 +1,41 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbConsulta>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Motivo de Consulta")
+            </th>
+            <th>
+                @Html.DisplayName("Historia de Enfermedad")
+            </th>
+            <th>
+                @Html.DisplayName("Fecha")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.motivoConsulta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HistoriaEnfermedad)
+                </td>
+                <td>
+                    @item.fechaFinalizacion.Value.ToShortDateString()
+                </td>
+                <td>
+                    <a href="@Url.Action("VerConsulta","Pacientes", new { codConsulta = item.codConsulta })" class="btn btn-primary btn-xs" target="_blank">
+                        <span class="glyphicon glyphicon-eye-open"></span> Ver
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

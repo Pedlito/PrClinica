@@ -35,7 +35,12 @@
                     @Html.DisplayFor(modelItem => item.analisis)
                 </td>
                 <td>
-                    <button type="button" class="btn btn-xs btn-danger" onclick="quitar('@item.problema')">Eliminar</button>
+                    <button type="button" class="btn btn-xs btn-primary" onclick="LlenarEditar('@item.problema')">
+                        <span class="glyphicon glyphicon-edit"></span> Editar
+                    </button>
+                    <button type="button" class="btn btn-xs btn-danger" onclick="Quitar('@item.problema')">
+                        <span class="glyphicon glyphicon-remove"></span> Quitar
+                    </button>
                 </td>
             </tr>
         }

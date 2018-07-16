@@ -28,8 +28,11 @@ namespace BD_PR_01_Clinicas.Controllers
         }
 
         // GET: EntregaMedicamento/Entregar
-        public ActionResult Entregar()
+        public ActionResult Entregar(int codPaciente = 0)
         {
+            string nombre = (from t in db.tbPaciente where t.codPaciente == codPaciente select t.nombre).SingleOrDefault();
+            ViewBag.codPaciente = codPaciente;
+            ViewBag.nombre = nombre;
             return View();
         }
 
@@ -61,7 +64,7 @@ namespace BD_PR_01_Clinicas.Controllers
             if (filtro == "")
             {
                 lista = (from t in db.tbProducto
-                         where t.estado == true
+                         where t.estado == true && db.existencias(t.codProducto) > 0
                          orderby t.producto
                          select new RegistroProducto
                          {
@@ -75,7 +78,7 @@ namespace BD_PR_01_Clinicas.Controllers
             else
             {
                 lista = (from t in db.tbProducto
-                         where t.producto.Contains(filtro) && t.estado == true//cambiado de & a && (no evalua la segunda expr si la 1era ea false)
+                         where t.producto.Contains(filtro) && t.estado == true && db.existencias(t.codProducto) > 0
                          orderby t.producto
                          select new RegistroProducto
                          {

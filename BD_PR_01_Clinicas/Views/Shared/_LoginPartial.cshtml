@@ -8,8 +8,8 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="/Account/DatosUsuario" title="Manage"><span class="glyphicon glyphicon-user"></span> @SessionUsuario.Get.UserName</a>  
-                @*@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
+                <a href="@Url.Action("DatosUsuario", "Account")" title="Manage"><span class="glyphicon glyphicon-user"></span> @SessionUsuario.Get.UserName</a>  
+                @*@Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }) /Account/DatosUsuario*@
              </li>
             <li>
                 <a href="javascript:document.getElementById('logoutForm').submit()">

@@ -23,13 +23,12 @@ namespace BD_PR_01_Clinicas.Controllers
             if (inicio != "" && fin != "")
             {
                 lista = (from consulta in db.tbConsulta
-                         join diagnostico in db.tbDiagnostico on consulta.codConsulta equals diagnostico.codConsulta
-                         where diagnostico.fecha.Value.Date >= DateTime.Parse(inicio) & diagnostico.fecha.Value.Date <= DateTime.Parse(fin)
+                         where consulta.fechaLlegada.Value.Date >= DateTime.Parse(inicio) & consulta.fechaLlegada.Value.Date <= DateTime.Parse(fin)
                          select new ConsultasFechas
                          {
-                             medico = diagnostico.tbUsuario.nombre,
-                             estudiante = diagnostico.tbUsuario1.nombre,
-                             fecha = diagnostico.fecha.Value,
+                             medico = consulta.tbUsuario.nombre,
+                             estudiante = consulta.tbUsuario1.nombre,
+                             fecha = consulta.fechaLlegada.Value,
                              paciente = consulta.tbPaciente.nombre
                          }).ToList();
             }

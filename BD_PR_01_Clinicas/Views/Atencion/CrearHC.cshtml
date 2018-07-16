@@ -5,7 +5,12 @@
 }
 @*@Model.tbPaciente.nombre*@
 <div class="page-header">
-    <h1>Historia Clinica <small>@Model.paciente.nombre</small></h1>
+    <h1>
+        Historia Clinica <small>@Model.paciente.nombre</small>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#listaConsultas" onclick="LlenarConsultas(@Model.consulta.codPaciente)">
+            <span class="glyphicon glyphicon-th-list"></span> Ver Consultas
+        </button>
+    </h1>
 </div>
 
 <div>
@@ -16,10 +21,11 @@
         <li role="presentation"><a href="#patologicos" role="tab" data-toggle="tab">Patológicos</a></li>
         <li role="presentation"><a href="#nPatologicos" role="tab" data-toggle="tab">No Patológicos</a></li>
         <li role="presentation"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
-        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
+        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisión</a></li>
         <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
         <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
         <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
+        <li role="presentation"><a href="#receta" role="tab" data-toggle="tab">Receta</a></li>
         <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
     </ul>
 
@@ -437,56 +443,56 @@
                     <div class="form-group">
                         @Html.Label("Talla", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.talla, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.talla, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Indice de Masa Corporal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.indiceMasaCorporal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.indiceMasaCorporal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Presión Arterial", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.presionArterial, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.presionArterial, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Cardiaca", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.frecuenciaCardiaca, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.frecuenciaCardiaca, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Frecuencia Respiratoria", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.frecuenciaRespiratoria, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.frecuenciaRespiratoria, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Temperatura", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.temperatura, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.temperatura, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Cefálica", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.circCefalica, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.circCefalica, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Circunferencia Abdominal", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.circAbdominal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.circAbdominal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
@@ -495,14 +501,14 @@
                         <div class="form-group">
                             @Html.Label("Foco Fetal", htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
-                                @Html.EditorFor(model => model.signos.focoFetal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                                @Html.EditorFor(model => model.signos.focoFetal, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                             </div>
                         </div>
 
                         <div class="form-group">
                             @Html.Label("Altura de Fondo Uterino", htmlAttributes: new { @class = "control-label col-md-3" })
                             <div class="col-md-9">
-                                @Html.EditorFor(model => model.signos.alturaFondoUterino, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                                @Html.EditorFor(model => model.signos.alturaFondoUterino, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                             </div>
                         </div>
                     }
@@ -510,14 +516,14 @@
                     <div class="form-group">
                         @Html.Label("Pulso", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.pulso, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.pulso, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.Label("Saturación de Oxigeno", htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-9">
-                            @Html.EditorFor(model => model.signos.saturacionOxigeno, new { htmlAttributes = new { @class = "form-control", onkeypress = "return numerico(event)" } })
+                            @Html.EditorFor(model => model.signos.saturacionOxigeno, new { htmlAttributes = new { @class = "form-control", onkeypress = "return decimal(event)" } })
                         </div>
                     </div>
                 </div>
@@ -594,13 +600,6 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Receta", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#receta">Crear Receta</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         @Html.Label("Controles Especificos", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.TextAreaFor(model => model.terapeutico.controlesEspecificos, new { @class = "form-control", rows = "4", maxlength = "700" })
@@ -615,6 +614,23 @@
                     </div>
                 </div>
             </form>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="receta">
+            <h2>Receta Medica</h2>
+            <div class="form-group">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#listaMedicamentos">
+                    <span class="glyphicon glyphicon-plus"></span> Agregar
+                </button>
+            </div>
+            <div id="detalle">
+
+            </div>
+            <div class="form-group">
+                <a href="@Url.Action("Entregar","EntregaMedicamento", new { codPaciente = Model.consulta.codPaciente })" target="_blank" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-th-list"></span> Entregar Medicamentos
+                </a>
+            </div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="diagnostico">
@@ -633,7 +649,7 @@
                     <div class="form-group">
                         @Html.Label("Médico", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownList("diagnostico_codUsuario", null, "Seleccione una Médico", htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("consulta_codMedico", null, "Seleccione una Médico", htmlAttributes: new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -646,14 +662,20 @@
 
 <div class="form-inline">
     <div class="form-group">
-        <button type="button" onclick="guardar()" class="btn btn-success btn-lg">
-            <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> Guardar Historia Clinica
+        <button type="button" onclick="guardar(1)" class="btn btn-primary btn-lg">
+            <span class="glyphicon glyphicon-floppy-saved" aria-hidden="true"></span> Guardar Avances
         </button>
     </div>
 
     <div class="form-group">
+        <button type="button" onclick="guardar(2)" class="btn btn-success btn-lg">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Finalizar Historia Clinica
+        </button>
+    </div>
+
+    <div class="form-group right">
         <a href="@Url.Action("Index")" class="btn btn-danger btn-lg" onclick="return confirm('¿Realmente desea cancelar?')">
-            <span class="glyphicon glyphicon-floppy-remove"></span> Cancelar
+            <span class="glyphicon glyphicon-remove"></span> Cancelar
         </a>
     </div>
 </div>
@@ -923,6 +945,10 @@
                                 {
                                     <input type="date" id="ultimaRegla" class="form-control" value='@Model.mujeres.ultimaRegla.Value.ToString("yyy-MM-dd")' />
                                 }
+                                else
+                                {
+                                    <input type="date" id="ultimaRegla" class="form-control" />
+                                }
                             }
                             else
                             {
@@ -989,33 +1015,6 @@
     </div>
 </div>
 
-<!-- modal para Crear Receta-->
-<div class="modal fade" id="receta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Receta</h4>
-            </div>
-            <div class="modal-body" id="medicamentos">
-
-                <div class="form-group">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#listaMedicamentos">
-                        Agregar
-                    </button>
-                </div>
-                <div id="detalle">
-
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- modal para lista de medicamentos-->
 <div class="modal fade" id="listaMedicamentos" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1040,19 +1039,38 @@
     </div>
 </div>
 
+<!-- modal para lista de consultas-->
+<div class="modal fade" id="listaConsultas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Medicamentos</h4>
+            </div>
+            <div class="modal-body" id="consultas">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- modal para pedir prescripcion-->
 <div class="modal fade" id="prescripcion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        @Html.Label("Prescripcion", htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.TextArea("descripcion", new { @class = "form-control", rows = "4", maxlength = "700" })
+                <form id="formPrescripcion">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Prescripcion", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                @Html.TextArea("descripcion", new { @class = "form-control", rows = "4", maxlength = "700" })
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" onclick="cambiarDescripcion()">Guardar</button>
@@ -1070,41 +1088,59 @@
                 <h4 class="modal-title" id="myModalLabel">Agregar Problema</h4>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal">
-                    
-                    <div class="form-group">
-                        @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextArea("problema", new { @class = "form-control", rows = "4", maxlength = "700" })
+                <form id="formProblema">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextArea("nProblema", new { @class = "form-control", rows = "4", maxlength = "700" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextArea("nSubjetivos", new { @class = "form-control", rows = "4", maxlength = "700" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextArea("nObjetivos", new { @class = "form-control", rows = "4", maxlength = "700" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextArea("nAnalisis", new { @class = "form-control", rows = "4", maxlength = "700" })
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextArea("subjetivos", new { @class = "form-control", rows = "4", maxlength = "700" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextArea("objetivos", new { @class = "form-control", rows = "4", maxlength = "700" })
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-3" })
-                        <div class="col-md-9">
-                            @Html.TextArea("analisis", new { @class = "form-control", rows = "4", maxlength = "700" })
-                        </div>
-                    </div>
-                </div>
+                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="agregarProblema()">Guardar</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="return agregarProblema()">Guardar</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- modal para Editar Problemas-->
+<div class="modal fade" id="editarProblema" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" id="problemaModal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Problema</h4>
+            </div>
+            <div class="modal-body" id="divEditar">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="EditarProblema(@ViewBag.index)">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts{
     <script>
         var codConsulta = @Model.consulta.codConsulta;
@@ -1112,6 +1148,18 @@
         var receta = [];
         var problemas = [];
         var paraReceta = null;
+        var index = 0;
+
+        function LlenarConsultas(codPaciente){
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("LlenarConsultas", "Atencion")',
+                data: { codPaciente },
+                success: function (response) {
+                    $('#consultas').html(response);
+                }
+            });
+        }
 
         function filtrar() {
             var filtro = $('#filtro').val();
@@ -1137,11 +1185,9 @@
         }
 
         function cambiarDescripcion(){
-            paraReceta.descripcion = $('#descripcion').val(),
+            paraReceta.descripcion = $('#descripcion').val().replace(/\n+/g, " "),
             receta.push(paraReceta);
             paraReceta = null;
-            //var index = receta.findIndex(function (element) { return element.codProducto == codProducto });
-            //receta[index].descripcion = entrada.value;
             $.ajax({
                 traditional: true,
                 url: '@Url.Action("DetalleReceta", "Atencion")',
@@ -1151,6 +1197,8 @@
                 success: function (response) {
                     $('#listaMedicamentos').modal('hide');
                     $('#detalle').html(response);
+                    $('#formPrescripcion').trigger("reset");
+
                 }
             });
         }
@@ -1170,7 +1218,7 @@
             });
         }
 
-        function guardar() {
+        function guardar(accion) {
             var paciente = {
                 "codPaciente": codPaciente,
                 "nombre": $('#paciente_nombre').val(),
@@ -1285,15 +1333,16 @@
             };
             var diagnostico = {
                 "codConsulta": codConsulta,
-                "impresionClinica": $('#diagnostico_impresionClinica').val(),
-                "codUsuario": $('#diagnostico_codUsuario').val()
+                "impresionClinica": $('#diagnostico_impresionClinica').val()
             };
             var consulta = {
                 "codConsulta": codConsulta,
                 "motivoConsulta": $('#consulta_motivoConsulta').val(),
-                "HistoriaEnfermedad": $('#consulta_HistoriaEnfermedad').val()
+                "HistoriaEnfermedad": $('#consulta_HistoriaEnfermedad').val(),
+                "codMedico": $('#consulta_codMedico').val()
             };
             var historia = {
+                "accion": accion,
                 "consulta": consulta,
                 "paciente": paciente,
                 "patologicos": patologicos,
@@ -1326,13 +1375,38 @@
         }
 
         function agregarProblema() {
-            problemas.push({
-                codConsulta: codConsulta,
-                problema: $('#problema').val(),
-                subjetivos: $('#subjetivos').val(),
-                objetivos: $('#objetivos').val(),
-                analisis: $('#analisis').val()
-            });
+            var resultado =  $('#nProblema').val().replace(/\n+/g, " ")
+            console.log(resultado);
+            if ($('#nProblema').val() != "") {
+                problemas.push({
+                    codConsulta: codConsulta,
+                    problema: $('#nProblema').val().replace(/\n+/g, " "),
+                    subjetivos: $('#nSubjetivos').val().replace(/\n+/g, " "),
+                    objetivos: $('#nObjetivos').val().replace(/\n+/g, " "),
+                    analisis: $('#nAnalisis').val().replace(/\n+/g, " ")
+                });
+                $.ajax({
+                    traditional: true,
+                    url: '@Url.Action("Problemas", "Atencion")',
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(problemas),
+                    success: function (response) {
+                        $('#listaProblemas').html(response);
+                        $('#formProblema').trigger("reset");
+                        return true;
+                    }
+                });
+            }
+            else {
+                alert("El nombre del problema es obligatorio");
+                return false;
+            }
+        }
+
+        function Quitar(problema) {
+            var index = problemas.findIndex(function (element) { return element.problema == problema });
+            problemas.splice(index, 1);
             $.ajax({
                 traditional: true,
                 url: '@Url.Action("Problemas", "Atencion")',
@@ -1340,15 +1414,30 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(problemas),
                 success: function (response) {
-                    $('#listaMedicamentos').modal('hide');
                     $('#listaProblemas').html(response);
                 }
             });
         }
 
-        function quitar(problema) {
-            var index = problemas.findIndex(function (element) { return element.problema == problema });
-            problemas.splice(index, 1);
+        function LlenarEditar(problema) {
+            index = problemas.findIndex(function (element) { return element.problema == problema });
+            var datos = {index: index, problema: problemas[index]};
+             $.ajax({
+                    url: '@Url.Action("LlenarEditar", "Atencion")',
+                    type: "POST",
+                    data: { problema: datos },
+                    success: function (response) {
+                        $('#divEditar').html(response);
+                        $('#editarProblema').modal('show');
+                    }
+                });
+        }
+
+        function EditarProblema(){
+            problemas[index].problema = $('#problema').val().replace(/\n+/g, " ");
+            problemas[index].objetivos = $('#objetivos').val().replace(/\n+/g, " ");
+            problemas[index].subjetivos = $('#subjetivos').val().replace(/\n+/g, " ");
+            problemas[index].analisis = $('#analisis').val().replace(/\n+/g, " ");
             $.ajax({
                 traditional: true,
                 url: '@Url.Action("Problemas", "Atencion")',
@@ -1375,6 +1464,42 @@
 
         window.onload = function (){
             $('#paciente_codTipoSangre > option[value="@Model.paciente.codTipoSangre"]').attr('selected', 'selected');
+            $('#consulta_codMedico > option[value="@Model.consulta.codMedico"]').attr('selected', 'selected');
+            var codConsulta = @Model.consulta.codConsulta;
+            var length = @Model.problemas.Count;
+            @foreach (var item in Model.problemas)
+            {
+                @:problemas.push({ codConsulta: @item.codConsulta, problema: "@item.problema", subjetivos: "@item.subjetivos", objetivos: "@item.objetivos", analisis: "@item.analisis"});
+            }
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Problemas", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(problemas),
+                success: function (response) {
+                    $('#listaProblemas').html(response);
+                    $('#formProblema').trigger("reset");
+                    return true;
+                }
+            });
+            @foreach (var item in Model.receta)
+            {
+                @:receta.push({ codConsulta: @item.codConsulta, codProducto: "@item.codProducto", descripcion: "@item.descripcion"});
+            }
+             $.ajax({
+                traditional: true,
+                url: '@Url.Action("DetalleReceta", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(receta),
+                success: function (response) {
+                    $('#listaMedicamentos').modal('hide');
+                    $('#detalle').html(response);
+                    $('#formPrescripcion').trigger("reset");
+
+                }
+            });
         }
 
         function vacio(input, nab){

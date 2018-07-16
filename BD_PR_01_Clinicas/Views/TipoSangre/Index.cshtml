@@ -35,7 +35,7 @@
                     @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
                 </td>
                 <td>
-                    <a class="btn btn-xs btn-primary" href="/TipoSangre/Editar?codTipoSangre=@item.codTipoSangre"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    <a class="btn btn-xs btn-primary" href="@Url.Action("Editar", new { codTipoSangre = item.codTipoSangre })"><span class="glyphicon glyphicon-edit"></span> Editar</a>
                     @if (item.estado == true)
                     {
                         @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codTipoSangre = item.codTipoSangre, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })
@@ -51,7 +51,7 @@
 </table>
 
 <div>
-    <a href="@Url.Action("Index", "Home")" class="btn btn-primary">
+    <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
         <span class="glyphicon glyphicon-arrow-left"></span> Regresar
     </a>
 </div>

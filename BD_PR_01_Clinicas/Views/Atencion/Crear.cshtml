@@ -262,12 +262,12 @@
                 "escolaridad": $('#escolaridad').val(),
                 "codTipoSangre": $('#codTipoSangre').val(),
             };
-            var fechaActual = Date();
+            var fechaActual = new Date();
             var fecha = new Date(paciente.fechaNacimiento);
             if (paciente.nombre == "") {
                 alert("el nombre del paciente es un campo obligatorio");
             }
-            else if (fechaActual < fecha) {
+            else if (fechaActual <= fecha) {
                 alert("fecha invalida");
             }
             else {

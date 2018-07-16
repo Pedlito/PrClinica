@@ -12,12 +12,15 @@
         <div class="col-md-5" style="padding-right: 85px">
             <div class="input-group">
                 <input type="text" placeholder="Nombre del paciente" id="paciente" class="form-control" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#busquedaPaciente" onclick="ListarPacientes()">
-                        <span class="glyphicon glyphicon-search">
-                        </span> Buscar
-                    </button>
-                </span>
+                @if (ViewBag.codPaciente == 0)
+                {
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#busquedaPaciente" onclick="ListarPacientes()">
+                            <span class="glyphicon glyphicon-search">
+                            </span> Buscar
+                        </button>
+                    </span>
+                }
             </div>
         </div>
     </div>
@@ -96,6 +99,14 @@
     //variable que contentra el array de todos los productos agregados
         var detalle = [];
         var paciente = 0;
+
+        window.onload = function () {
+            var codPaciente = @ViewBag.codPaciente;
+            var nombre = "@ViewBag.nombre";
+            if (codPaciente > 0 && nombre != "") {
+                Asignar(codPaciente, nombre);
+            }
+        }
 
         //mostrar medicamentos
         function BuscarMedicamentos() {

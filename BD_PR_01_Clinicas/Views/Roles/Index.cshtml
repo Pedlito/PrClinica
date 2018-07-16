@@ -8,7 +8,9 @@
 <h2>Roles</h2>
 
 <p>
-    @Html.ActionLink("Crear un rol", "CrearRol")
+    <a href="@Url.Action("CrearRol")" class="btn btn-success">
+        <span class="glyphicon glyphicon-plus"></span> Crear
+    </a>
 </p>
 <table class="table">
     <tr>
@@ -71,7 +73,8 @@ Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.Pa
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 <div>
     <p>
-
-        @Html.ActionLink("Regresar", "Administracion","Home",null,htmlAttributes:new { @class="btn btn-primary"})
+        <a href="@Url.Action("Administracion","Home")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+        </a>
     </p>
 </div>

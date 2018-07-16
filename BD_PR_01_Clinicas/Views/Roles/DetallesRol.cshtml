@@ -43,6 +43,7 @@
     </dl>
 </div>
 <p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.codTipoUsuario }) |*@
-    @Html.ActionLink("Regresar", "Index")
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </p>

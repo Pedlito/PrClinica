@@ -63,7 +63,9 @@
                 </td>
                 <td>
                     @*@Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })*@
-                    <a class="btn btn-xs btn-primary" href="/Categoria/Editar?codCategoria=@item.codCategoria"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    <a class="btn btn-xs btn-primary" href=""Editar", new { codCategoria = item.codCategoria }">
+                        <span class="glyphicon glyphicon-edit"></span> Editar
+                    </a>
                     @if (item.estado == true)
                     {
                         @Html.ActionLink("Deshabilitar", "CambiarEstado", new { codCategoria = item.codCategoria, estado = false }, htmlAttributes: new { @class = "btn btn-xs" })

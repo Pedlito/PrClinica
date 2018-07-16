@@ -16,6 +16,7 @@
         <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
         <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
         <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
+        <li role="presentation"><a href="#receta" role="tab" data-toggle="tab">Receta</a></li>
         <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
     </ul>
 
@@ -453,6 +454,13 @@
             </ul>
         </div>
 
+        <div role="tabpanel" class="tab-pane" id="receta">
+            <h2>Receta Medica</h2>
+            <div id="detalle">
+
+            </div>
+        </div>
+
         <div role="tabpanel" class="tab-pane" id="diagnostico">
             <h2>Diagnostico Final</h2>
 
@@ -474,7 +482,7 @@
                             <label>Médico</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Html.DisplayFor(model => model.diagnostico.tbUsuario.nombre)
+                            @Html.DisplayFor(model => model.consulta.tbUsuario1.nombre)
                         </div>
                     </div>
                 </li>
@@ -485,7 +493,7 @@
                             <label>Creador</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Html.DisplayFor(model => model.diagnostico.tbUsuario1.nombre)
+                            @Html.DisplayFor(model => model.consulta.tbUsuario.nombre)
                         </div>
                     </div>
                 </li>
@@ -498,7 +506,7 @@
                         <div class="col-md-9 text-left">
                             @try
                             {
-                                @Model.diagnostico.fecha.Value.ToLongDateString()
+                                @Model.consulta.fechaFinalizacion.Value.ToLongDateString()
 
                             }
                             catch
@@ -517,7 +525,7 @@
                         <div class="col-md-9 text-left">
                             @try
                             {
-                                @Model.diagnostico.fecha.Value.ToShortTimeString()
+                                @Model.consulta.fechaFinalizacion.Value.ToShortTimeString()
                             }
                             catch
                             {
@@ -536,4 +544,26 @@
         <span class="glyphicon glyphicon-arrow-left"></span> Regresar a Paciente
     </a>
 </div>
+
+@section scripts{
+    <script>
+        window.onload = function () {
+            var receta = [];
+            @foreach (var item in Model.receta)
+            {
+                @:receta.push({ codConsulta: @item.codConsulta, codProducto: "@item.codProducto", descripcion: "@item.descripcion"});
+            }
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("DetalleReceta", "Pacientes")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(receta),
+                success: function (response) {
+                    $('#detalle').html(response);
+                }
+            });
+        }
+    </script>
+}
 

@@ -1,0 +1,28 @@
+﻿@model BD_PR_01_Clinicas.Models.tbProblema
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Problema", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.problema, new { @class = "form-control", rows = "4", maxlength = "700" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Datos Subjetivos", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.subjetivos, new { @class = "form-control", rows = "4", maxlength = "700" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Datos Objetivos", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.objetivos, new { @class = "form-control", rows = "4", maxlength = "700" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Analisis", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextAreaFor(model => model.analisis, new { @class = "form-control", rows = "4", maxlength = "700" })
+            </div>
+        </div>
+    </div>

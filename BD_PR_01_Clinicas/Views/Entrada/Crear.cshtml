@@ -53,7 +53,9 @@
 @*onclick="cerrar()"*@
 <div>
     @*@Html.ActionLink("Cancelar", "Index", null, htmlAttributes: new { @class = "btn btn-danger" })*@
-    <a class="btn btn-danger" href="/Entrada/Index" role="button"><span class="glyphicon glyphicon-floppy-remove"></span> Cancelar</a>
+    <a class="btn btn-danger" href="@Url.Action("Index")" role="button">
+        <span class="glyphicon glyphicon-floppy-remove"></span> Cancelar
+    </a>
 </div>
 
 <!-- Modal -->

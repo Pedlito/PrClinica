@@ -33,14 +33,18 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-success" />
+                <button type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-plus"></span> Crear
+                </button>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Regresar", "Index",null,htmlAttributes: new { @class="btn btn-primary"})
+    <a href="@Url.Action("Index")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>
 
 @section Scripts {

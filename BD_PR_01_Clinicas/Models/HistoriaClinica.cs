@@ -7,6 +7,7 @@ namespace BD_PR_01_Clinicas.Models
 {
     public class HistoriaClinica
     {
+        public int accion { get; set; }
         public tbConsulta consulta { get; set; }
         public tbPaciente paciente { get; set; }
         public tbAntecedentesPatologicos patologicos { get; set; }
@@ -21,7 +22,6 @@ namespace BD_PR_01_Clinicas.Models
         public tbPlanTerapeutico terapeutico { get; set; }
         public List<tbReceta> receta { get; set; }
         public tbDiagnostico diagnostico { get; set; }
-
         public List<tbConsulta> consultas { get; set; }
     }
 

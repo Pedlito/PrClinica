@@ -67,5 +67,7 @@
 Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 <div>
-    @Html.ActionLink("Regresar", "Administracion", "Home", null, htmlAttributes: new { @class = "btn btn-primary" })
+    <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>

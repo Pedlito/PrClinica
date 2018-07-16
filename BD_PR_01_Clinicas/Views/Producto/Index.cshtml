@@ -106,8 +106,9 @@
                     @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
                 </td>
                 <td>
-                    @*@Html.ActionLink("Editar", "Editar", new { codProducto=item.codProducto }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })*@
-                    <a class="btn btn-xs btn-primary" href="/Producto/Editar?codProducto=@item.codProducto"><span class="glyphicon glyphicon-edit"></span> Editar</a>
+                    <a class="btn btn-xs btn-primary" href="@Url.Action("Editar", new { codProducto = item.codProducto })">
+                        <span class="glyphicon glyphicon-edit"></span> Editar
+                    </a>
 
                     @if (item.estado == true)
                     {
