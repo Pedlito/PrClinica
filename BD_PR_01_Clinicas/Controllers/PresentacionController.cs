@@ -54,14 +54,14 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Presentacion/Crear
         [HttpPost]
-        public ActionResult Crear(FormCollection collection)
+        public ActionResult Crear(tbPresentacion pre)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (db.tbPresentacion.Where(x => x.presentacion == pre.presentacion).Any()) { ModelState.AddModelError("presentacion","La presentacion ya existe"); return View(pre); }
                 tbPresentacion nueva = new tbPresentacion
                 {
-                    presentacion = collection["presentacion"],
+                    presentacion = pre.presentacion,
                     estado = true
                 };
                 db.tbPresentacion.InsertOnSubmit(nueva);
@@ -70,7 +70,8 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo completar la operacion";
+                return View("VistaDeErrores");
             }
 
         }
@@ -84,19 +85,21 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Presentacion/Editar/5
         [HttpPost]
-        public ActionResult Editar(int codPresentacion, FormCollection collection)
+        public ActionResult Editar(tbPresentacion pre)
         {
             try
             {
                 //TODO: Add update logic here
-                tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == codPresentacion select t).SingleOrDefault();
-                editar.presentacion = collection["presentacion"];
+                tbPresentacion editar = (from t in db.tbPresentacion where t.codPresentacion == pre.codPresentacion select t).SingleOrDefault();
+                if (db.tbPresentacion.Where(x => x.presentacion == pre.presentacion).Any()) { ModelState.AddModelError("presentacion", "La presentacion ya existe"); return View(pre); }
+                editar.presentacion = pre.presentacion;
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo completar la operacion";
+                return View("VistaDeErrores");
             }
         }
 

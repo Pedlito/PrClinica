@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbClinica" Class="DataClasesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=PCASUS\SQLEXPRESS;Initial Catalog=dbClinica;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=PCASUS\SQLEXPRESS;Initial Catalog=dbClinica;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbAntecedentesNoPatologicos" Member="tbAntecedentesNoPatologicos">
     <Type Name="tbAntecedentesNoPatologicos">
       <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />

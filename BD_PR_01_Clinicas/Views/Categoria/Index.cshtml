@@ -63,7 +63,10 @@
                 </td>
                 <td>
                     @*@Html.ActionLink("Editar", "Editar", new { codCategoria = item.codCategoria }, htmlAttributes: new { @class = "btn btn-xs btn-primary" })*@
-                    <a class="btn btn-xs btn-primary" href=""Editar", new { codCategoria = item.codCategoria }">
+                    @*<a class="btn btn-xs btn-primary" href=""Editar", new { codCategoria = item.codCategoria }">
+                        <span class="glyphicon glyphicon-edit"></span> Editar
+                    </a>*@
+                    <a class="btn btn-xs btn-primary" href="@Url.Action("Editar","Categoria",routeValues: new { codCategoria = item.codCategoria})">
                         <span class="glyphicon glyphicon-edit"></span> Editar
                     </a>
                     @if (item.estado == true)
@@ -79,6 +82,7 @@
         }
     </tbody>
 </table>
+
 Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page, filtroActual = ViewBag.filtroActual }))
 <div>
