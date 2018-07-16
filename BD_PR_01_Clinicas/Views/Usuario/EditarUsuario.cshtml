@@ -1,20 +1,20 @@
 ﻿@model BD_PR_01_Clinicas.Models.tbUsuario
 
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "EditarUsuario";
 }
 
 <h2>Editar usuario</h2>
 
 
-@using (Html.BeginForm("EditarUsuario", "Usuario", FormMethod.Post, new { @id = "formUsuario", @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("EditarUsuario", "Usuario", FormMethod.Post, new { @id = "editarUsuario", @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
   
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+  
         @Html.HiddenFor(model => model.codUsuario)
 
         <div class="form-group">
@@ -46,28 +46,22 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Fecha de nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @*@Html.TextBoxFor(model => model.fechaNacimiento, "", new { @class = "form-control", @ReadOnly = true })*@
                 @Html.TextBoxFor(model => model.fechaNacimiento, @Model.fechaNacimiento.ToShortDateString(), new { @class = "form-control", @ReadOnly = true })
              
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
-            </div>
-        </div>
+
 
         <div class="form-group">
             @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                <input type="text" class="form-control" id="password" name="password" value="@Model.password"/>
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+              
             </div>
         </div>
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-2">
@@ -81,8 +75,6 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 }
 
@@ -92,25 +84,22 @@
     @Scripts.Render("~/bundles/jqueryval")
 <script>
 
-    var dp = { rq: true, lt: true, lg: 12 }
+   
     mostrarD();
     function mostrarD() {
+
         var valor = $("#codTipoUsuario").val();
 
         if (valor == 2) {
             $("#carnet").prop('disabled', false)
-            dp.rq = true;
-            dp.lt = true;
-            dp.lg = 12;
+    
         }
         else {
             $('#carne').children('.help-block').html("");
             $("#carnet").closest('.entrada').removeClass('has-success has-error');
             $("#carnet").html();
             $("#carnet").prop('disabled', true);
-            dp.rq = false;
-            dp.lt = false;
-            dp.lg = 0;
+   
         }
     }
 
@@ -119,9 +108,10 @@
         changeMonth: true,
         changeYear: true,
         autoclose: true,
-        yearRange: '-80:-17',
-        defaultDate: '20/10/2000'
+        yearRange: '-80:-17'
     });
+
+
 
     $.validator.addMethod("soloNumeros", function (value, element) {
         return /^[0-9]+$/i.test(value);
@@ -131,8 +121,12 @@
         return /^[a-zA-Z ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
-    $("#formUsuario").validate({
+    $.validator.addMethod("alfanumerico", function (value, element) {
+        return /^[a-zA-Z0-9 ]+$/i.test(value);
+    }, "Ingrese sólo Letras, numeros solo al final, sin espacios");
 
+    $("#editarUsuario").validate({
+        
         errorClass: 'help-block',
         errorElement: 'div',
         errorPlacement: function (error, e) {
@@ -153,11 +147,10 @@
         rules: {
             codTipoUsuario: { required: true },
             nombre: { required: true, soloLetras: true, minlength: 3 },
-            dpi: { required: dp.rq, soloNumeros: dp.lt, minlength: dp.lg },
-            carnet: { required: true, soloNumeros: true, minlength: 8 },
+            dpi: { required: true, soloNumeros: true, minlength: 12 },
+            carnet: { required: true, soloNumeros: true, minlength: true },
             fechaNacimiento: { required: true },
-            usuario: { required: true, minlength: 3 },
-            password: { required: true, minlength: 4 },
+            password: { required: true, minlength: 4 }
         },
         messages: {
             codTipoUsuario: {
@@ -171,23 +164,22 @@
             dpi: {
                 required: "Debe introducir un numero de identificacion",
                 minlength: "12 caracteres minimo"
+       
             },
             carnet: {
                 required: "Debe introducir un numero de identificacion",
                 minlength: "8 caracteres minimo"
+        
             },
             fechaNacimiento: "Fecha nacimiento requerida",
 
-            usuario: {
-                required: "Debe introducir un nombre de usuario",
-                minlength: "3 caracteres como minimo"
-            },
+          
             password: {
                 required: "Debe introducir una contraseña",
                 minlength: "4 caracteres como minimo"
             }
-    
+
         }
     });
-    </script>
+</script>
 }

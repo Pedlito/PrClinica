@@ -1,0 +1,357 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.tbRotacionUsuario>
+@{
+    ViewBag.Title = "Editar";
+}
+
+<h2>Editar rotacion @ViewBag.fechaInicio - @ViewBag.fechaFinal</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+          <input type="hidden" value="@ViewBag.id" id="codRotacion" name="codRotacion" />
+    
+
+        <div class="form-group">
+            @Html.Label("Fecha de inicio", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                <input type="text" id="fechaInicio" name="fechaInicio" class="form-control"  value = "@ViewBag.fechaIni" disabled/>
+            </div>
+            @Html.Label("Fecha de finalizacion", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+           
+                <input type="text" id="fechaFinal" name="fechaFinal" class="form-control"  value = "@ViewBag.fechaFin" disabled/>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="panel panel-info">
+            <div class="panel-heading">Doctores</div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <div class="col-md-1">
+                        <label class="control-label " for="Nombre">Nombre</label>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.DropDownList("codDoctor", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-8">
+                        <button type="button" class="btn btn-success" onclick="agregarDocs()">
+                            <span class="glyphicon glyphicon-plus"></span> Agregar
+                        </button>
+                    </div>
+                </div>
+
+                <h2>Listado</h2>
+                <table class="table">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Nombre")
+                            </th>
+                            <th>
+                                @Html.DisplayName("DPI")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Usuario")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="doctores">
+
+                        @foreach (var item in Model)
+                        {
+
+                         if (item.tbUsuario.codTipoUsuario==3)
+	                      {
+		                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.tbUsuario.dpi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-xs" onclick="descartarDoc(@item.codUsuario, event)">
+                                        <span class="glyphicon glyphicon-remove"></span> Descartar
+                                    </button>
+                                </td>
+                            </tr> 
+	                     }
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+        <div class="panel panel-info">
+            <div class="panel-heading">Estudiantes</div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <div class="col-md-1">
+                        <label class="control-label" for="Nombre">Nombre</label>
+                    </div>
+
+                    <div class="col-md-3">
+
+
+                        @Html.DropDownList("codEstudiante", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
+                    </div>
+                    <div class="col-md-8">
+                        <button type="button" class="btn btn-success" onclick="agregarEstus()">
+                            <span class="glyphicon glyphicon-plus"></span> Agregar
+                        </button>
+                    </div>
+                </div>
+
+                <h2>Listado</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Nombre")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Carnet")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Usuario")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="estudiantes">
+                        @foreach (var item in Model)
+                        {
+
+                            if (item.tbUsuario.codTipoUsuario == 2)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-xs" onclick="descartarEstu(@item.codUsuario, event)">
+                                            <span class="glyphicon glyphicon-remove"></span> Descartar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-6">
+                <button type="button" value="save" class="btn btn-primary btn-lg col-lg-12" name="btn" onclick="guardar()">
+                    <span class="glyphicon glyphicon-save"></span> Guardar
+                </button>
+            </div>
+            <div class="col-md-6">
+                <a href="@Url.Action("Index", "Rotacion")" class="btn btn-danger btn-lg col-md-12" onclick="return confirm('Cancelar')">
+                    <span class="glyphicon glyphicon-remove"></span> Cancelar
+                </a>
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    <script>
+        window.onload = function () {
+
+            $("input[name='fechaFinal'][value='@ViewBag.fechaFinUR']").prop('disabled', false);
+            $("input[name='fechaFinal'][value='@ViewBag.fechaFinUR']").prop('readonly', true);
+           
+        }
+
+           $("#fechaInicio").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-1:+10',
+            defaultDate: '01/01/2018',
+            beforeShowDay:$.datepicker.noWeekends
+        }
+
+        );
+        $("#fechaFinal").datepicker({
+            dateFormat: 'dd/mm/yy',
+            changeMonth: true,
+            changeYear: true,
+            autoclose: true,
+            yearRange: '-1:+10',
+            defaultDate: '01/01/2018',
+            beforeShowDay: $.datepicker.noWeekends
+        }
+
+        );
+
+
+
+        var listaDocs ;
+        var listaEstus ;
+        var cod = { id: $("#codRotacion").val()};
+
+        getDocs();
+        getEstus();
+        function getDocs(){
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("ObtenerDocs", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(cod),
+                success: function (response) {
+                    listaDocs = response;
+                },
+                error: function (response) {
+                    console.log("no se pudieron cargar los datos de doctores");
+                }
+            });
+        }
+
+        function getEstus() {
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("ObtenerEstus", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(cod),
+                success: function (response) {
+
+                    listaEstus = response;
+                },
+                error: function (response) {
+                    console.log("no se pudieron cargar los datos de estudiantes");
+                }
+            });
+        }
+
+        function agregarDocs() {
+            if (!$("#codDoctor").val()) { alert("Seleccione un usurio valido"); return;}
+            var codDoc = parseInt($("#codDoctor").val());
+            var index = listaDocs.findIndex(function (element) { return element.codUser == codDoc });
+            if (index == -1) {
+                listaDocs.push({ codUser: codDoc });
+                cargarDocs(listaDocs);
+            }
+            else {
+
+                alert("Ya ha sido agregado");
+            }
+        }
+
+        function descartarDoc(codUsuario) {
+            var index = listaDocs.findIndex(function (element) { return element.codUser == codUsuario });
+            listaDocs.splice(index, 1);
+           cargarDocs(listaDocs);
+        }
+
+        function agregarEstus() {
+            if (!$("#codEstudiante").val()) { alert("Seleccione un usurio valido"); return; }
+            var codEstu = parseInt($("#codEstudiante").val());
+            var index = listaEstus.findIndex(function (element) { return element.codUser == codEstu });
+            if (index == -1) {
+            listaEstus.push({ codUser: codEstu });
+            cargarEstus(listaEstus);
+            }
+            else {
+                alert("Ya ha sido agregado");
+            }
+        }
+
+        function descartarEstu(codUsuario) {
+            var index = listaEstus.findIndex(function (element) { return element.codUser == codUsuario });
+            listaEstus.splice(index, 1);
+            cargarEstus(listaEstus);
+        }
+
+        function cargarDocs(listaDocs) {
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("AgregarDocs", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(listaDocs),
+                success: function (response) {
+                    $('#doctores').html(response);
+                },
+                error: function (response) {
+                    alert("Error al realizar la operacion");
+                }
+            });
+        }
+
+        function cargarEstus(listaEstus) {
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("AgregarEstus", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(listaEstus),
+                success: function (response) {
+
+                    $('#estudiantes').html(response);
+                },
+                error: function (response) {
+                    alert("Error al realizar la operacion");
+                }
+            });
+        }
+
+        function guardar() {
+            if (!($("#fechaInicio").val()) || !($("#fechaFinal").val())) { alert("Debe seleccionar las fechas"); return; }
+            var fi = $.datepicker.parseDate('dd/mm/yy', $("#fechaInicio").val());
+            var ff = $.datepicker.parseDate('dd/mm/yy', $("#fechaFinal").val());
+            if (fi > ff) { alert("La fecha de inicio debe ser mayor a la fecha de finalizacion"); return; }
+
+            var integrantes = listaDocs.concat(listaEstus);
+
+            var rotacion = {"rotacionId": $("#codRotacion").val(), "fechaIni": $("#fechaInicio").val(), "fechaFin": $("#fechaFinal").val(), "integrantes": integrantes }
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Editar", "Rotacion")',
+                contentType: "application/json",
+                type: "POST",
+                data: JSON.stringify(rotacion),
+                success: function (response) {
+                    if (response.length == 0) { location.href = '@Url.Action("Index", "Rotacion")'; }
+                    else { alert("Error al realizar la operacion: " + response); }
+
+                },
+                error: function (response) {
+                    alert("No se pudo realizar la accion");
+                }
+            })
+        }
+
+    </script>
+}

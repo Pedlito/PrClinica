@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
+using PagedList;
 
 namespace BD_PR_01_Clinicas.Controllers
 {
@@ -11,10 +12,38 @@ namespace BD_PR_01_Clinicas.Controllers
     {
         DataClasesDataContext db = new DataClasesDataContext();
         // GET: Salida
-        public ActionResult Index()
+        public ActionResult Index(int? page, string fechaIn, string fechaFin,string fec1,string fec2)
         {
-            List<tbSalida> lista = (from t in db.tbSalida where t.tipoSalida == true orderby t.fechaSalida select t).ToList();
-            return View(lista);
+            List<tbSalida> lista = null;
+            if (!string.IsNullOrEmpty(fechaIn) && !string.IsNullOrEmpty(fechaFin))
+            {
+                page = 1;
+            }
+            else
+            {
+                fechaIn = fec1;
+                fechaFin = fec2;
+            }
+
+            ViewBag.fec1 = fechaIn;
+            ViewBag.fec2 = fechaFin;
+
+            if (string.IsNullOrEmpty(fechaIn) || string.IsNullOrEmpty(fechaFin))
+            {
+                lista = (from t in db.tbSalida  orderby t.fechaSalida select t).Take(20).ToList();
+            }
+            else
+            {
+                lista = (from t in db.tbSalida
+                         where t.fechaSalida >= DateTime.Parse(fechaIn) && t.fechaSalida <= DateTime.Parse(fechaFin)
+                         select t).ToList();
+            }
+
+
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            if (lista == null) { return View(); }
+            return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: Salida/Detalles/5

@@ -52,14 +52,6 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
- 
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
@@ -121,11 +113,10 @@
         },
         rules: {
             nombre: { required: true, soloLetras: true, minlength: 3 },
-            dpi: { required: true, soloNumeros: true, minlength: 12 },
-            carnet:{required:true,soloNumeros:true, minlength: 8},
+            dpi: { required: true, soloNumeros: true, minlength: 13 },
+            carnet: { required: true, soloNumeros: true, minlength: 8 },
             fechaNacimiento: { required: true },
-            usuario: { required: true, minlength: 3 },
-            password: { required: true, minlength: 4 },
+            password: { required: true, minlength: 4 }
 
 
         },
@@ -138,20 +129,20 @@
             dpi: {
                 required: "Debe introducir un numero de identificacion",
                 minlength: "12 caracteres minimo"
+     
             },
             carnet: {
                 required: "Debe introducir un numero de identificacion",
                 minlength: "8 caracteres minimo"
+          
             },
             fechaNacimiento: "Fecha nacimiento requerida",
 
-            usuario: {
-                required: "Debe introducir un nombre de usuario",
-                minlength: "3 caracteres como minimo"
-            },
+        
             password: {
                 required: "Debe introducir una contraseña",
                 minlength: "4 caracteres como minimo"
+
             }
 
         }

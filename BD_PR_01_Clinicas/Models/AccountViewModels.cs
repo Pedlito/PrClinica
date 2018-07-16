@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+
 
 namespace BD_PR_01_Clinicas.Models
 {
@@ -65,33 +67,31 @@ namespace BD_PR_01_Clinicas.Models
   
     public class RegisterViewModel
     {
-       
-        public int codTipoUsuario { get; set; }
+
+        public IEnumerable<tbRol> roles { get; set; }
+        public int selectedRol { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 3)]
         [RegularExpression("^[A-Za-z][a-zA-Z ]+$",ErrorMessage ="Solo se admite texto con espacios")]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 13)]
         [RegularExpression("^\\d+$",ErrorMessage = "Numero de identificacion debe ser numerico")]
         [Display(Name = "DPI")]
         public string Dpi { get; set; }
-
-        [Required]
-        [RegularExpression("^\\d+$", ErrorMessage = "Numero de Carnet debe ser numerico")]
-        [Display(Name = "Carnet")]
-        public string Carnet { get; set; }
        
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Fecha de nacimiento")]
-        public  System.DateTime FechaNacimiento { get; set; }
+        public  DateTime FechaNacimiento { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Usuario")]
-        [RegularExpression("^[A-Za-z][a-zA-Z @0-9_]+$", ErrorMessage = "Se admite texto, numero, guion bajo y arroba")]
+        [RegularExpression("^[A-Za-z][a-zA-Z 0-9]+$", ErrorMessage = "Se admite texto, numero")]
         public string Usuario { get; set; }
 
         [Required]
@@ -104,7 +104,12 @@ namespace BD_PR_01_Clinicas.Models
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
- 
+
+        //[Required]
+        //[RegularExpression("^\\d+$", ErrorMessage = "Numero de Carnet debe ser numerico")]
+        //[StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 8)]
+        //[Display(Name = "Carnet")]
+        public string Carnet { get; set; }
     }
 
     public class ResetPasswordViewModel

@@ -1,73 +1,84 @@
-﻿@model BD_PR_01_Clinicas.Models.tbUsuario
+﻿@model BD_PR_01_Clinicas.Models.RegisterViewModel
 
 @{
-    ViewBag.Title = "CrearUsuario";
+    ViewBag.Title = "Crear usuario";
 }
 
 <h2>Crear usuario</h2>
 
 
-@using (Html.BeginForm("CrearUsuario", "Usuario", FormMethod.Post, new { @id = "formUsuario", @class = "form-horizontal", role = "form" })) 
+@using (Html.BeginForm("CrearUsuario", "Usuario", FormMethod.Post, new { @id = "formUsuario", @class = "form-horizontal", role = "form" } ))
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
             @Html.Label("Rol", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.DropDownList("codTipoUsuario", null, "Seleccione un rol", htmlAttributes: new { @class = "form-control col-md-3", onchange= "mostrarD(this.value)"})
+                @*@Html.DropDownList("codTipoUsuario", null, "Seleccione un rol", htmlAttributes: new { @class = "form-control col-md-3", onchange = "mostrarD(this.value)" })*@
+                @Html.DropDownListFor(m=>m.selectedRol,new SelectList(Model.roles, "codTipoUsuario", "Rol"),null,htmlAttributes:new { @class = "form-control col-md-3", onchange = "mostrarD(this.value)" })
             </div>
         </div> 
 
         <div class="form-group">
-            @Html.Label("Nombre", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.Label("DPI", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.dpi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Dpi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Dpi, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Carnet", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada" id="carne" >
-                @Html.EditorFor(model => model.carnet, new { htmlAttributes = new { @class = "form-control" } })             
+            @Html.LabelFor(model => model.Carnet, htmlAttributes: new { @class = "control-label col-md-2"})
+            <div class="col-md-10 entrada" id="carne">
+                @Html.EditorFor(model => model.Carnet, new { htmlAttributes = new { @class = "form-control", @disabled = false } })
+                @Html.ValidationMessageFor(model => model.Carnet, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model=>model.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.TextBoxFor(model => model.fechaNacimiento, "", new { @class = "form-control", @ReadOnly = true })
+                @Html.TextBoxFor(model => model.FechaNacimiento, "", new { @class = "form-control", @ReadOnly = true })
+                @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+     
+        <div class="form-group">
+            @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 entrada">
+                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.usuario, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Repita su contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                <input type="password" class="form-control" id="password" name="password" />
+                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Repetir", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
-                <input type="password" class="form-control" id="repetir" name="repetir" />
-            </div>
-        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-1">
@@ -87,110 +98,108 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
-
 <script>
-    var dp = { rq:true, lt:true, lg:12}
-    function mostrarD() {
-        var valor = $("#codTipoUsuario").val();
+    $("#FechaNacimiento").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        autoclose: true,
+        yearRange: '-80:-17',
+        dateFormat: 'dd/mm/yy'
+    });
 
-        if (valor == 2)
-        {  
-            $("#carnet").prop('disabled', false)
-            dp.rq = true;
-            dp.lt = true;
-            dp.lg = 12;
+    $("#FechaNacimiento").val("");
+
+    function mostrarD() {
+        var valor = $("#selectedRol").val();
+
+        if (valor == 2) {
+            $("#Carnet").prop('disabled', false)
+
         }
-        else
-        {
+        else {
             $('#carne').children('.help-block').html("");
-            $("#carnet").closest('.entrada').removeClass('has-success has-error');
-            $("#carnet").html();
-            $("#carnet").prop('disabled', true);
-            dp.rq = false;
-            dp.lt = false;
-            dp.lg = 0;
+            $("#Carnet").closest('.entrada').removeClass('has-success has-error');
+            $("#Carnet").html();
+            $("#Carnet").prop('disabled', true);
+            $("#Carnet").val("")
         }
     }
+    $.validator.addMethod("soloNumeros", function (value, element) {
+        return /^[0-9]+$/i.test(value);
+    }, "Ingrese sólo numeros");
 
+    $.validator.addMethod("soloLetras", function (value, element) {
+        return /^[a-zA-Z ]+$/i.test(value);
+    }, "Ingrese sólo Letras");
 
-        $("#fechaNacimiento").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            autoclose: true,
-            yearRange: '-80:-17',
-            defaultDate: '20/10/2000'
-        });
+    $.validator.addMethod("alfanumerico", function (value, element) {
+        return /^[a-zA-Z0-9 ]+$/i.test(value);
+    }, "Ingrese sólo Letras, numeros solo al final, sin espacios");
 
-        $.validator.addMethod("soloNumeros", function (value, element) {
-            return /^[0-9]+$/i.test(value);
-        }, "Ingrese sólo numeros");
+    $("#formUsuario").validate({
 
-        $.validator.addMethod("soloLetras", function (value, element) {
-            return /^[a-zA-Z ]+$/i.test(value);
-        }, "Ingrese sólo Letras");
+        errorClass: 'help-block',
+        errorElement: 'div',
+        errorPlacement: function (error, e) {
+            e.parents('.entrada').append(error);
+        },
+        highlight: function (e) {
 
-        $("#formUsuario").validate({
-           
-            errorClass: 'help-block',
-            errorElement: 'div',
-            errorPlacement: function (error, e) {
-                e.parents('.entrada').append(error);
-            },
-            highlight: function (e) {
+            $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
+            $(e).closest('.help-block').remove();
 
-                $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
-                $(e).closest('.help-block').remove();
-              
-            },
-            success: function (e) {
-                e.closest('.entrada').removeClass('has-success has-error');
-                e.closest('.help-block').remove();
-          
-            },
+        },
+        success: function (e) {
+            e.closest('.entrada').removeClass('has-success has-error');
+            e.closest('.help-block').remove();
 
-            rules: {
-                codTipoUsuario:{required:true},
-                nombre: { required: true, soloLetras: true, minlength: 3 },
-                dpi: { required: dp.rq, soloNumeros: dp.lt, minlength: dp.lg },
-                carnet: { required: true, soloNumeros: true, minlength: 8 },
-                fechaNacimiento: { required: true },
-                usuario: { required: true, minlength: 3 },
-                password: { required: true, minlength: 4 },
-                repetir: { required: true, equalTo: '#password' }
+        },
 
-            },
-            messages: {
-                codTipoUsuario:{
+        rules: {
+            codTipoUsuario: { required: true },
+            Nombre: { required: true, soloLetras: true, minlength: 3 },
+            Dpi: { required: true, soloNumeros: true, minlength: true},
+            Carnet: { required: true, soloNumeros: true, minlength: 8 },
+            FechaNacimiento: { required: true },
+            Usuario: { required: true, minlength: 3, alfanumerico: true, noRepetidos: true },
+            Password: { required: true, minlength: 4 },
+            ConfirmPassword: { required: true, equalTo: '#password' }
+
+        },
+        messages: {
+            codTipoUsuario: {
                 required: "Debe seleccionar un rol"
-                },
-                nombre: {
-                    required: "Debe introducir su nombre",
-                    minlength: "Tres caracteres como minimo"
-                },
+            },
+            Nombre: {
+                required: "Debe introducir su nombre",
+                minlength: "Tres caracteres como minimo"
+            },
 
-                dpi: {
-                    required: "Debe introducir un numero de identificacion",
-                    minlength: "12 caracteres minimo"
-                },
-                carnet: {
-                    required: "Debe introducir un numero de identificacion",
-                    minlength: "8 caracteres minimo"
-                },
-                fechaNacimiento: "Fecha nacimiento requerida",
+            Dpi: {
+                required: "Debe introducir un numero de identificacion",
+                minlength: "12 caracteres minimo"
+            },
+            Carnet: {
+                required: "Debe introducir un numero de identificacion",
+                minlength: "8 caracteres minimo"
+            },
+            FechaNacimiento: "Fecha nacimiento requerida",
 
-                usuario: {
-                    required: "Debe introducir un nombre de usuario",
-                    minlength: "3 caracteres como minimo"
-                },
-                password: {
-                    required: "Debe introducir una contraseña",
-                    minlength: "4 caracteres como minimo"
-                },
-                repetir: {
-                    required: "Repita su contraseña",
-                    equalTo: "Las contraseñas no coinciden"
-                }
+            Usuario: {
+                required: "Debe introducir un nombre de usuario",
+                minlength: "3 caracteres como minimo"
+            },
+            Password: {
+                required: "Debe introducir una contraseña",
+                minlength: "4 caracteres como minimo"
+            },
+            ConfirmPassword: {
+                required: "Repita su contraseña",
+                equalTo: "Las contraseñas no coinciden"
             }
-        });
+
+        }
+    });
+
 </script>
 }

@@ -66,16 +66,16 @@ namespace BD_PR_01_Clinicas.Controllers
                     }
                     else
                     {
-                        Console.Write(loginInfo.ToString());
+                     //   Console.Write(loginInfo.ToString());
                         // Setting.    
                         ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // quitar esto es solo para prueba              
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(string.Empty, "Fallo en la conexion con la base de datos");
             }
 
             return this.View(model);
@@ -101,6 +101,8 @@ namespace BD_PR_01_Clinicas.Controllers
         [ValidateAntiForgeryToken]
         public  ActionResult Register(RegisterViewModel model)
         {
+            if (db.tbUsuario.Where(m => m.usuario == model.Usuario).Any()) { ModelState.AddModelError("Usuario","El usuario ingresado ya existe."); return View(model); }
+
             if (ModelState.IsValid)
             {
                 tbUsuario NuevoUsuario = new tbUsuario
@@ -296,7 +298,7 @@ namespace BD_PR_01_Clinicas.Controllers
                         item.dpi = user.dpi;
                         item.carnet = user.carnet;
                         item.fechaNacimiento = user.fechaNacimiento;
-                        item.usuario = user.usuario;
+                       // item.usuario = user.usuario;
                         item.password = user.password;
                         contexto.SubmitChanges();
                         return RedirectToAction("DatosUsuario");
@@ -314,6 +316,24 @@ namespace BD_PR_01_Clinicas.Controllers
 
             }
             return View("VistaDeErrores");
+        }
+
+        [HttpPost]
+        public JsonResult UsuarioRepetido(string usuario)
+        {
+            try
+            {
+                if (db.tbUsuario.Where(x => x.usuario == usuario).Any())
+                {
+                    return Json(usuario);
+                }
+
+                return Json("");
+            }
+            catch
+            {
+                return Json("Fatal");
+            }
         }
     }
 

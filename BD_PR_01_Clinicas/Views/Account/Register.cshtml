@@ -6,7 +6,7 @@
 
 <h2>Registro</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @id = "formUsuario", @class = "form-horizontal", role = "form" })) 
 {
     @Html.AntiForgeryToken()
     
@@ -32,7 +32,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Carnet, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" >
+            <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.Carnet, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Carnet, "", new { @class = "text-danger" })
             </div>
@@ -85,13 +85,53 @@
     @Html.ActionLink("Ir a Inicio", "Index","Home")
 </div>
 @section Scripts{
+@Scripts.Render("~/bundles/jqueryval")
 <script>
-    $("#FechaNacimiento").datepicker({   
+    $("#FechaNacimiento").datepicker({
         changeMonth: true,
         changeYear: true,
         autoclose: true,
         yearRange: '-80:-17',
         defaultDate: '20/10/2000'
     });
+  
+
+        $.validator.addMethod("soloNumeros", function (value, element) {
+            return /^[0-9]+$/i.test(value);
+        }, "Ingrese sólo numeros");
+
+        $("#formUsuario").validate({
+
+            errorClass: 'help-block',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.entrada').append(error);
+            },
+            highlight: function (e) {
+
+                $(e).closest('.entrada').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+
+            },
+            success: function (e) {
+                e.closest('.entrada').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+
+            },
+
+            rules: {           
+                Carnet: { required: true, soloNumeros: true, minlength: 8 },         
+            },
+            messages: {
+  
+                Carnet: {
+                    required: "Debe introducir un numero de identificacion",
+                    minlength: "8 caracteres minimo"
+                }
+            }
+        });
+
+
     </script>
+
 }

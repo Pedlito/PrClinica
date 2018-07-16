@@ -39,10 +39,10 @@ namespace BD_PR_01_Clinicas.Controllers
             else
             {
 
-                lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.nombre select t).ToList();
+                lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.nombre select t).Take(20).ToList();
             }
           
-            int pageSize = 5;
+            int pageSize = 15;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
             return View(lista.ToPagedList(pageNumber, pageSize));
@@ -60,40 +60,54 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult CrearUsuario()
         {
             List<tbRol> rols = db.tbRol.Where(x=>x.estado==true).ToList();
-            List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();
-            
-            ViewBag.codTipoUsuario = roles;
-            return View();
+            var us = new RegisterViewModel();
+            us.roles = rols;
+            return View(us);
         }
         [HttpPost]
-        public ActionResult CrearUsuario(FormCollection collection)
+        public ActionResult CrearUsuario(RegisterViewModel model)
         {
+            List<tbRol> rols = null;
             try
-            {  
-                    tbUsuario nuevo = new tbUsuario
-                    {
-                        codTipoUsuario = int.Parse(collection["codTipoUsuario"]),
-                        nombre = collection["nombre"],
-                        dpi = collection["dpi"],
-                        carnet = collection["carnet"],
-                        fechaNacimiento = DateTime.Parse(collection["fechaNacimiento"]),
-                        usuario = collection["usuario"],
-                        password = collection["password"],
-                        estado = true
-                        
-                    };
-                db.tbUsuario.InsertOnSubmit(nuevo);
-                db.SubmitChanges();
-                return RedirectToAction("Index");
-  
-            }
-            catch
             {
-                    ModelState.AddModelError("", "Hubo un error al crear el registro");
-                    return View();
+                if (db.tbUsuario.Where(m => m.usuario == model.Usuario).Any()) {
+
+                    ModelState.AddModelError("Usuario", "El usuario ingresado ya existe.");    
+                }
+
+            if (ModelState.IsValid)
+            {
+                    tbUsuario NuevoUsuario = new tbUsuario
+                    {
+
+                    codTipoUsuario = model.selectedRol,
+                    nombre = model.Nombre,
+                    dpi = model.Dpi,
+                    carnet = model.Carnet,
+                    fechaNacimiento = model.FechaNacimiento,
+                    usuario = model.Usuario,
+                    password = model.Password,          
+                    estado = true
+
+                };
+
+                db.tbUsuario.InsertOnSubmit(NuevoUsuario);
+                db.SubmitChanges();
+
+                return RedirectToAction("Index", "Usuario");
+
             }
+        }
+            catch (Exception)
+            {
+                ViewBag.errores = "Error en la conexion con la base de datos";
+                return View("VistaDeErrores");
+    }
 
-
+    rols = db.tbRol.Where(x => x.estado == true).ToList();
+    model.roles = rols;
+           
+            return View(model);
         }
         // GET: Usuario/CrearDoctor
         public ActionResult CrearDoctor()
@@ -203,18 +217,17 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             try
             {
-           tbUsuario usr =  db.tbUsuario.Where(x => x.codUsuario == int.Parse(colecction["codUsuario"])).SingleOrDefault();
+                tbUsuario usr =  db.tbUsuario.Where(x => x.codUsuario == int.Parse(colecction["codUsuario"])).SingleOrDefault();
                
                 usr.codTipoUsuario = int.Parse(colecction["codTipoUsuario"]);
                 usr.nombre = colecction["nombre"];
                 usr.carnet = colecction["carnet"];
                 usr.dpi = colecction["dpi"];
                 usr.fechaNacimiento = DateTime.Parse(colecction["fechaNacimiento"]);
-                usr.usuario = colecction["usuario"];
                 usr.password = colecction["password"];
                 db.SubmitChanges();   
                 return RedirectToAction("Index");
-            }
+        }
             catch
             {
                 ViewBag.errores = "No se pudo terminar la operacion";
@@ -286,7 +299,23 @@ namespace BD_PR_01_Clinicas.Controllers
         //        return View();
         //    }
         //}
+        [HttpPost]
+        public JsonResult UsuarioRepetido(string usuario)
+        {
+            try
+            {
+                if (db.tbUsuario.Where(x => x.usuario == usuario).Any())
+                {
+                    return Json(usuario);
+                }
 
+                return Json("");
+            }
+            catch
+            {
+                return Json("Fatal");
+            }
+        }
         // GET: Usuario/Delete/5
         public ActionResult Delete(int id)
         {

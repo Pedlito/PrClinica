@@ -12,6 +12,27 @@
         <span class="glyphicon glyphicon-plus"></span> Nuevo Usuario
     </a>
 </p>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-info">
+        <div class="panel-heading">Buscar por nombre de Categoría</div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.Label("Usuario", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 form-inline">
+                        @Html.TextBox("usuario", ViewBag.filtroActual as string, new { @class = "form-control", placeholder = "Usuarios sugeridos" })
+
+                        <button type="submit" class="btn btn-info">
+                            <span class="glyphicon glyphicon-search"></span> Filtrar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 <table class="table table-striped table-hover">
     <thead>
         <tr class="bg-info">
