@@ -199,9 +199,12 @@ namespace BD_PR_01_Clinicas.Controllers
             
             if (codUsuario!=null) 
                 {
-                tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==codUsuario).SingleOrDefault();       
-                List<tbRol> rols = db.tbRol.Where(s=>s.codTipoUsuario!=usuario.codTipoUsuario).ToList();        
-                List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();          
+                tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==codUsuario).SingleOrDefault();     
+                  
+                List<tbRol> rols = db.tbRol.Where(s=>s.estado==true && s.codTipoUsuario!=usuario.codTipoUsuario).ToList();        
+                List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();
+              //  tbRol rl = db.tbRol.Where(x => x.codTipoUsuario == usuario.codTipoUsuario).SingleOrDefault();
+       
                 roles.Insert(0,(new SelectListItem {Text=usuario.tbRol.Rol,Value=usuario.tbRol.codTipoUsuario.ToString() }));
                 //el viewBag que lleva los roles
                 ViewBag.codTipoUsuario = roles;

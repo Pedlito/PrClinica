@@ -339,7 +339,7 @@
 
         function crearCategoria() {
                 //validacion categoria 
-            if (!$("#categoria").val().match(/^[a-zA-Z]{2}[a-zA-Z ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            if (!$("#categoria").val().match(/^[a-zA-Z]{2}[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
             var categoria = {
                 "categoria": document.getElementById("categoria").value,
                 "estado": true
@@ -364,7 +364,7 @@
 
         function crearPresentacion() {
             //validacion presentacion
-            if (!$("#presentacion").val().match(/^[a-zA-Z]{2}[a-zA-Z ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            if (!$("#presentacion").val().match(/^[a-zA-Z]{2}[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/)) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
             var presentacion = {
                 "presentacion": document.getElementById("presentacion").value,
                 "estado": true

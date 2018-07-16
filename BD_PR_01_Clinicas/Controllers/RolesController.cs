@@ -46,7 +46,7 @@ namespace BD_PR_01_Clinicas.Controllers
 
             try
             {
-
+                if (db.tbRol.Where(x=>x.Rol==rl.Rol).Any()) { ModelState.AddModelError("Rol", "El rol ya existe"); return View(rl); }
                 tbRol rol = new tbRol()
                 {
                     Rol = rl.Rol,
@@ -68,22 +68,23 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Roles/Edit/5
         public ActionResult EditarRol(int? id)
         {
+
            tbRol Rl = (from r in db.tbRol where r.codTipoUsuario == id select r).SingleOrDefault();
             return View(Rl);
         }
 
         // POST: Roles/Edit/5
         [HttpPost]
-        public ActionResult EditarRol(FormCollection coleccion)
+        public ActionResult EditarRol(tbRol rl)
         {
    
          
             try
             {
-
-                tbRol rl = db.tbRol.Where(x => x.codTipoUsuario == int.Parse(coleccion["codTipoUsuario"])).SingleOrDefault();
-                rl.Rol = coleccion["Rol"];
-                rl.descripcion = coleccion["descripcion"];
+                if (db.tbRol.Where(x => x.Rol == rl.Rol).Any()) { ModelState.AddModelError("Rol", "El rol ya existe"); return View(rl); }
+                tbRol rol = db.tbRol.Where(x => x.codTipoUsuario == rl.codTipoUsuario).SingleOrDefault();
+                rol.Rol = rl.Rol;
+                rol.descripcion = rl.descripcion;
 
                 db.SubmitChanges();
                 return RedirectToAction("Index");

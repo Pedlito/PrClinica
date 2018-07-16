@@ -62,7 +62,6 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                @*<input type="submit" value="Crear" class="btn btn-success" />*@
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-plus"></span> Crear
                 </button>
@@ -96,9 +95,7 @@
                         <div class="form-group">
                             @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10" id="entrada">
-                                @*@Html.Editor("categoria", new { htmlAttributes = new { @class = "form-control" } })*@
-                                <input class="form-control text-box single-line" id="categoria" name="categoria" type="text" value="" 
-                                onkeypress='return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)'/>
+                                <input class="form-control text-box single-line" id="categoria" name="categoria" type="text" value="" />
                             </div>
                         </div>
                     </div>
@@ -129,9 +126,7 @@
                         <div class="form-group">
                             @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @*@Html.Editor("presentacion", new { htmlAttributes = new { @class = "form-control" } })*@
-                                <input class="form-control text-box single-line" id="presentacion" name="presentacion" type="text" value="" 
-                                onkeypress='return (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122)'/>
+                                <input class="form-control text-box single-line" id="presentacion" name="presentacion" type="text" value="" />
                             </div>
                         </div>
                     </div>
@@ -150,7 +145,8 @@
  
     <script>
         $.validator.addMethod("soloLetras", function (value, element) {
-            return /^[a-zA-Z ]+$/i.test(value);
+            return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/i.test(value);
+            
         }, "Ingrese sólo Letras");
 
         $("#formId").validate({
@@ -198,6 +194,7 @@
         function crearCategoria() {
             //validacion de categoria
             if ($("#categoria").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            if (!ValidarSoloLetras($("#categoria").val())) { alert("Nombre invalido para categoria"); return; }
             var categoria = {
                 "categoria": document.getElementById("categoria").value,
                 "estado": true
@@ -218,10 +215,14 @@
                 }
             })
         }
+        function ValidarSoloLetras(valor) {
+            return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/i.test(valor);
+        }
 
         function crearPresentacion() {
             // validacion de presentacion
             if ($("#presentacion").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            if (!ValidarSoloLetras($("#presentacion").val())) { alert("Nombre invalido para categoria"); return; }
             var presentacion = {
                 "presentacion": document.getElementById("presentacion").value,
                 "estado": true

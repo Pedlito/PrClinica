@@ -55,14 +55,15 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Categoria/Create
         [HttpPost]
-        public ActionResult Crear(FormCollection collection)
+        public ActionResult Crear(tbCategoria cat)
         {
             try
             {
+                if (db.tbCategoria.Where(x => x.categoria == cat.categoria).Any()) { ModelState.AddModelError("categoria", "La categoria ya existe"); return View(cat); }
                  //TODO: Add insert logic here
                 tbCategoria nueva = new tbCategoria
                 {
-                    categoria = collection["categoria"],
+                    categoria = cat.categoria,
                     estado = true
                 };
                 db.tbCategoria.InsertOnSubmit(nueva);
@@ -71,7 +72,8 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo realizar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
@@ -84,19 +86,20 @@ namespace BD_PR_01_Clinicas.Controllers
 
         // POST: Categoria/Editar/5
         [HttpPost]
-        public ActionResult Editar(int codCategoria, FormCollection collection)
+        public ActionResult Editar(tbCategoria cat)
         {
             try
             {
-                //TODO: Add update logic here
-                tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == codCategoria select t).SingleOrDefault();
-                editar.categoria = collection["categoria"];
+                if (db.tbCategoria.Where(x => x.categoria == cat.categoria).Any()) { ModelState.AddModelError("categoria", "La categoria ya existe"); return View(cat); }
+                tbCategoria editar = (from t in db.tbCategoria where t.codCategoria == cat.codCategoria select t).SingleOrDefault();
+                editar.categoria = cat.categoria;
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.errores = "No se pudo realizar la operacion";
+                return View("VistaDeErrores");
             }
         }
 
