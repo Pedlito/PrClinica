@@ -10,20 +10,22 @@
 <p>
     @Html.ActionLink("Crear un rol", "CrearRol")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayName("Rol")
-        </th>
-        <th>
-            @Html.DisplayName("Descripcion")
-        </th>
-        <th>
-            @Html.DisplayName("Estado")
-        </th>
-        <th></th>
-    </tr>
-
+<table class="table table-striped table-hover">
+    
+    <thead>
+        <tr class="bg-info">
+            <th>
+                @Html.DisplayName("Rol")
+            </th>
+            <th>
+                @Html.DisplayName("Descripcion")
+            </th>
+            <th>
+                @Html.DisplayName("Estado")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 @foreach (var item in Model)
 {
     <tr>
@@ -49,7 +51,7 @@
   
         <td>
             <div class="btn-group">
-                <button class="btn btn-default btn-xs dropdown-toggle"
+                <button class="btn btn-primary btn-xs dropdown-toggle"
                         type="button" data-toggle="dropdown">
                     Opciones <span class="caret"></span>
                 </button>
@@ -70,8 +72,13 @@
 Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 <div>
-    <p>
+    @*<p>
 
         @Html.ActionLink("Regresar", "Administracion","Home",null,htmlAttributes:new { @class="btn btn-primary"})
-    </p>
+    </p>*@
+    <div>
+        <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
+            <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+        </a>
+    </div>
 </div>

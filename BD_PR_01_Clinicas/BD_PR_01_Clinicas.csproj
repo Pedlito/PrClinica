@@ -379,8 +379,6 @@
     <Content Include="Views\Roles\ArchivarRol.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CheckBoxPermiso.cshtml" />
     <Content Include="Views\Roles\AgregarPermisos.cshtml" />
-    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
-    <Content Include="Views\Usuario\CrearUsuario.cshtml" />
     <Content Include="Views\Account\AutoEditarUsuario.cshtml" />
     <Content Include="Views\Roles\CambiarEstadoRol.cshtml" />
     <Content Include="Views\Pacientes\Index.cshtml" />
@@ -394,6 +392,8 @@
     <Content Include="Views\EntregaMedicamento\Detalles.cshtml" />
     <Content Include="Views\Reportes\ConsultasFechas.cshtml" />
     <Content Include="Views\Rotacion\Editar.cshtml" />
+    <Content Include="Views\Usuario\CrearUsuario.cshtml" />
+    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

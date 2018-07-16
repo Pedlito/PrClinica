@@ -15,9 +15,31 @@ namespace BD_PR_01_Clinicas.Controllers
         List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
                                              (new Volumen { codVolumen = 2, volumen = "ml" }) };
 
-        public ActionResult Index(int? page)
+        public ActionResult Index(int? page, string fechaIn, string fechaFin, string fec1, string fec2)
         {
-            List<tbEntrada> lista = (from t in db.tbEntrada orderby t.fechaEntrada select t).ToList();
+            List<tbEntrada> lista = null;
+            if (!string.IsNullOrEmpty(fechaIn) && !string.IsNullOrEmpty(fechaFin))
+            {
+                page = 1;
+            }
+            else
+            {
+                fechaIn = fec1;
+                fechaFin = fec2;
+            }
+
+            ViewBag.fec1 = fechaIn;
+            ViewBag.fec2 = fechaFin;
+            if (string.IsNullOrEmpty(fechaIn) || string.IsNullOrEmpty(fechaFin))
+            {
+                lista = (from t in db.tbEntrada orderby t.fechaEntrada select t).Take(20).ToList();
+            }
+            else
+            {
+                lista = (from t in db.tbEntrada
+                         where t.fechaEntrada >= DateTime.Parse(fechaIn) && t.fechaEntrada <= DateTime.Parse(fechaFin)
+                         select t).ToList();
+            }
             int pageSize = 15;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }

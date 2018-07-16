@@ -58,7 +58,7 @@ namespace BD_PR_01_Clinicas.Controllers
 
                 return View();
         }
-            catch (Exception e){
+            catch (Exception){
                 ViewBag.errores += "Se genero un error en la conexion con la base de datos";
             }
 
@@ -90,13 +90,13 @@ namespace BD_PR_01_Clinicas.Controllers
                 db.tbRotacion.InsertOnSubmit(nuevaRotacion);
 
             }
-            catch (Exception e)
+            catch (Exception )
             {
 
-                resultado = e.Message;
+                resultado ="Ha ocurrido un error en la conexion con la base de datos";
             }
 
-            try { db.SubmitChanges(); } catch (Exception ex) { resultado += " ERROR: " + ex.Message; }
+            try { db.SubmitChanges(); } catch (Exception) { resultado += " ERROR: No se ha podido guradar el registro"; }
 
             return Json(resultado);
         }
