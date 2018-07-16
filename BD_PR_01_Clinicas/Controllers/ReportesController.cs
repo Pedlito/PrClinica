@@ -26,8 +26,8 @@ namespace BD_PR_01_Clinicas.Controllers
                          where consulta.fechaLlegada.Value.Date >= DateTime.Parse(inicio) & consulta.fechaLlegada.Value.Date <= DateTime.Parse(fin)
                          select new ConsultasFechas
                          {
-                             medico = consulta.tbUsuario.nombre,
-                             estudiante = consulta.tbUsuario1.nombre,
+                             medico = consulta.tbMedico.nombre,
+                             estudiante = consulta.tbEstudiante.nombre,
                              fecha = consulta.fechaLlegada.Value,
                              paciente = consulta.tbPaciente.nombre
                          }).ToList();

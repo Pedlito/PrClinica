@@ -420,19 +420,6 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Receta</label>
-                        </div>
-                        <div class="col-md-9 text-left">
-                            <button type="button" class="btn btn-xs btn-info">
-                                <span class="glyphicon glyphicon-eye-open"></span> Ver Receta
-                            </button>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-3 text-left">
                             <label>Controles Especificos</label>
                         </div>
                         <div class="col-md-9 text-left">
@@ -482,7 +469,7 @@
                             <label>Médico</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Html.DisplayFor(model => model.consulta.tbUsuario1.nombre)
+                            @Html.DisplayFor(model => model.consulta.tbMedico.nombre)
                         </div>
                     </div>
                 </li>
@@ -493,7 +480,7 @@
                             <label>Creador</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Html.DisplayFor(model => model.consulta.tbUsuario.nombre)
+                            @Html.DisplayFor(model => model.consulta.tbEstudiante.nombre)
                         </div>
                     </div>
                 </li>

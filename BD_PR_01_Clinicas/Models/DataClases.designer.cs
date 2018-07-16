@@ -987,25 +987,25 @@ namespace BD_PR_01_Clinicas.Models
 		private void attach_tbConsulta(tbConsulta entity)
 		{
 			this.SendPropertyChanging();
-			entity.tbUsuario = this;
+			entity.tbEstudiante = this;
 		}
 		
 		private void detach_tbConsulta(tbConsulta entity)
 		{
 			this.SendPropertyChanging();
-			entity.tbUsuario = null;
+			entity.tbEstudiante = null;
 		}
 		
 		private void attach_tbConsulta1(tbConsulta entity)
 		{
 			this.SendPropertyChanging();
-			entity.tbUsuario1 = this;
+			entity.tbMedico = this;
 		}
 		
 		private void detach_tbConsulta1(tbConsulta entity)
 		{
 			this.SendPropertyChanging();
-			entity.tbUsuario1 = null;
+			entity.tbMedico = null;
 		}
 		
 		private void attach_tbRotacionUsuario(tbRotacionUsuario entity)
@@ -2035,7 +2035,7 @@ namespace BD_PR_01_Clinicas.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbUsuario_tbConsulta", Storage="_tbUsuario", ThisKey="codEstudiante", OtherKey="codUsuario", IsForeignKey=true)]
-		public tbUsuario tbUsuario
+		public tbUsuario tbEstudiante
 		{
 			get
 			{
@@ -2063,13 +2063,13 @@ namespace BD_PR_01_Clinicas.Models
 					{
 						this._codEstudiante = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("tbUsuario");
+					this.SendPropertyChanged("tbEstudiante");
 				}
 			}
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="tbUsuario_tbConsulta1", Storage="_tbUsuario1", ThisKey="codMedico", OtherKey="codUsuario", IsForeignKey=true)]
-		public tbUsuario tbUsuario1
+		public tbUsuario tbMedico
 		{
 			get
 			{
@@ -2097,7 +2097,7 @@ namespace BD_PR_01_Clinicas.Models
 					{
 						this._codMedico = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("tbUsuario1");
+					this.SendPropertyChanged("tbMedico");
 				}
 			}
 		}
