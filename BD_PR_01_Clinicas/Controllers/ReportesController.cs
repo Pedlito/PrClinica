@@ -37,54 +37,54 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista);
         }
 
-        // GET: Reportes/Create
-        public ActionResult Create()
+        // GET: Reportes/ConsultasEstudiante
+        public ActionResult ConsultasEstudiante()
         {
             return View();
         }
 
-        // POST: Reportes/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        // GET: Reportes/FiltrarEstudiantes/5
+        public ActionResult FiltrarEstudiantes(string filtro)
         {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            List<tbUsuario> listado = (from t in db.tbUsuario where t.nombre.Contains(filtro) && t.codTipoUsuario == 2 select t).Take(15).ToList();
+            return PartialView("_Estudiantes", listado);
+        }
+        public ActionResult GetConsultasEstudiante(int codUsuario)
+        {
+            List<ClasConsultasEstudiante> listado = (from t in db.tbConsulta
+                                                     where t.codEstudiante == codUsuario && t.estado == 3
+                                                     select new ClasConsultasEstudiante
+                                                     {
+                                                         paciente = t.tbPaciente.nombre,
+                                                         medico = t.tbMedico.nombre,
+                                                         fechaInicio = t.fechaAtencion.Value,
+                                                         fechaFin = t.fechaFinalizacion.Value
+                                                     }).ToList();
+            return PartialView("_ConsultasEstudiante", listado);
         }
 
-        // GET: Reportes/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult ProductosMasRecetados()
         {
-            return View();
-        }
-
-        // POST: Reportes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Reportes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            List<RegistroProducto> listado = (from receta in db.tbReceta
+                                              join producto in db.tbProducto on receta.codProducto equals producto.codProducto
+                                              group receta by new
+                                              {
+                                                  receta.codProducto,
+                                                  producto.producto,
+                                                  producto.tbCategoria.categoria,
+                                                  producto.tbPresentacion.presentacion,
+                                                  producto.dosis,
+                                                  producto.codVolumen,
+                                              } into grupo
+                                              select new RegistroProducto
+                                              {
+                                                  nombre = grupo.Key.producto,
+                                                  categoria = grupo.Key.categoria,
+                                                  presentacion = grupo.Key.presentacion,
+                                                  dosis = grupo.Key.dosis.ToString() + ((grupo.Key.codVolumen == 1) ? " mg" : " ml"),
+                                                  cantidad = grupo.Count()
+                                              }).ToList();
+            return View(listado);
         }
 
         // POST: Reportes/Delete/5

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
+
+@{
+    ViewBag.Title = "ProductosMasRecetados";
+}
+
+<h2>Productos Mas Recetados</h2>
+
+<table class="table">
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Nombre")
+            </th>
+            <th>
+                @Html.DisplayName("Categoría")
+            </th>
+            <th>
+                @Html.DisplayName("Presentación")
+            </th>
+            <th>
+                @Html.DisplayName("Dosis")
+            </th>
+            <th>
+                @Html.DisplayName("Cantidad")
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presentacion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dosis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cantidad)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="form-group">
+    <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>

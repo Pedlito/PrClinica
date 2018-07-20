@@ -242,7 +242,12 @@
                     url: '@Url.Action("Crear", "Atencion")',
                     data: { "consulta": consulta },
                     success: function (response) {
-                        location.href = response;
+                        if (response == "error") {
+                            alert("Este paciente tiene una consulta no finalizada");
+                        }
+                        else {
+                            location.href = response;
+                        }
                     }
                 });
             }

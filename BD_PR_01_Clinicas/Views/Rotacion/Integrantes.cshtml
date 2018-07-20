@@ -12,37 +12,41 @@
     <div class="panel-body">
 
         <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayName("Nombre")
-                </th>
-                <th>
-                    @Html.DisplayName("Carnet")
-                </th>
-                <th>
-                    @Html.DisplayName("Usuario")
-                </th>
-               
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                if (item.tbUsuario.codTipoUsuario == 3)
-                {
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
-                    </td>
-          
+                    <th>
+                        @Html.DisplayName("Nombre")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Carnet")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Usuario")
+                    </th>
+
                 </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.tbUsuario.codTipoUsuario == 3)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                            </td>
+
+                        </tr>
+                    }
                 }
-            }
+            </tbody>
         </table>
     </div>
 </div>
@@ -53,42 +57,47 @@
     <div class="panel-body">
 
         <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayName("Nombre")
-                </th>
-                <th>
-                    @Html.DisplayName("Carnet")
-                </th>
-                <th>
-                    @Html.DisplayName("Usuario")
-                </th>
-            
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                if (item.tbUsuario.codTipoUsuario == 2)
-                {
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
-                    </td>
-
+                    <th>
+                        @Html.DisplayName("Nombre")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Carnet")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Usuario")
+                    </th>
                 </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    if (item.tbUsuario.codTipoUsuario == 2)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tbUsuario.nombre)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tbUsuario.carnet)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
+                            </td>
+
+                        </tr>
+                    }
                 }
-            }
+            </tbody>
         </table>
-        </div>
+    </div>
 </div>
 <div>
-    <a class="btn btn-primary" href="@Url.Action("Index")">Regresar</a>
+    <a class="btn btn-primary" href="@Url.Action("Index")">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
 </div>
 
 

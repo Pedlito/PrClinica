@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "ConsultasEstudiante";
+}
+
+<h2>ConsultasEstudiante</h2>
+
+<div class="panel panel-info">
+    <div class="panel-heading">Buscar Estudiante</div>
+    <div class="panel-body">
+        <div class="input-group col-md-offset-2 col-md-4">
+            <input type="text" class="form-control" placeholder="Nombre" id="nombre">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#estudiantes" onclick="Filtrar()">
+                    <span class="glyphicon glyphicon-search"></span> Buscar
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="reporte">
+
+</div>
+
+<div class="form-group">
+    <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
+        <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+    </a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="estudiantes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Busqueda</h4>
+            </div>
+            <div class="modal-body" id="lista">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script>
+        function Filtrar() {
+            var filtro = $('#nombre').val();
+
+            $.ajax({
+                url: '@Url.Action("FiltrarEstudiantes", "Reportes")',
+                type: "POST",
+                data: { filtro },
+                success: function (response) {
+                    $('#lista').html(response);
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
+
+        function Asignar(codUsuario) {
+            $.ajax({
+                url: '@Url.Action("GetConsultasEstudiante", "Reportes")',
+                type: "POST",
+                data: { codUsuario },
+                success: function (response) {
+                    $('#reporte').html(response);
+                    $('#estudiantes').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
+    </script>
+}
