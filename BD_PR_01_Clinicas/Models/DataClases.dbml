@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbClinica" Class="DataClasesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-R30TL5S;Initial Catalog=dbClinica;User ID=uPedro" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=PCASUS\SQLEXPRESS;Initial Catalog=dbClinica;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbAntecedentesNoPatologicos" Member="tbAntecedentesNoPatologicos">
     <Type Name="tbAntecedentesNoPatologicos">
       <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -23,8 +23,8 @@
       <Column Name="usuario" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
       <Column Name="password" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
       <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Association Name="tbUsuario_tbConsulta" Member="tbConsulta" ThisKey="codUsuario" OtherKey="codEstudiante" Type="tbConsulta" />
-      <Association Name="tbUsuario_tbConsulta1" Member="tbConsulta1" ThisKey="codUsuario" OtherKey="codMedico" Type="tbConsulta" />
+      <Association Name="tbUsuario_tbConsulta" Member="tbConsulta" ThisKey="codUsuario" OtherKey="codMedico" Type="tbConsulta" />
+      <Association Name="tbUsuario_tbConsulta1" Member="tbConsulta1" ThisKey="codUsuario" OtherKey="codEstudiante" Type="tbConsulta" />
       <Association Name="tbUsuario_tbRotacionUsuario" Member="tbRotacionUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbRotacionUsuario" />
       <Association Name="tbRol_tbUsuario" Member="tbRol" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbRol" IsForeignKey="true" />
     </Type>
@@ -68,8 +68,8 @@
       <Column Name="estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="codMedico" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="codEstudiante" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="fechaAtencion" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
-      <Column Name="fechaFinalizacion" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
+      <Column Name="fechaAtencion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="fechaFinalizacion" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Association Name="tbConsulta_tbDiagnostico" Member="tbDiagnostico" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbDiagnostico" Cardinality="One" />
       <Association Name="tbConsulta_tbPlanes" Member="tbPlanes" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbPlanes" Cardinality="One" />
       <Association Name="tbConsulta_tbPlanTerapeutico" Member="tbPlanTerapeutico" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbPlanTerapeutico" Cardinality="One" />
@@ -77,8 +77,8 @@
       <Association Name="tbConsulta_tbReceta" Member="tbReceta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbReceta" />
       <Association Name="tbConsulta_tbRevisionSistemas" Member="tbRevisionSistemas" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbRevisionSistemas" Cardinality="One" />
       <Association Name="tbConsulta_tbSignosVitales" Member="tbSignosVitales" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbSignosVitales" Cardinality="One" />
-      <Association Name="tbUsuario_tbConsulta" Member="tbEstudiante" Storage="_tbUsuario" ThisKey="codEstudiante" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
-      <Association Name="tbUsuario_tbConsulta1" Member="tbMedico" Storage="_tbUsuario1" ThisKey="codMedico" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
+      <Association Name="tbUsuario_tbConsulta" Member="tbMedico" Storage="_tbUsuario" ThisKey="codMedico" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
+      <Association Name="tbUsuario_tbConsulta1" Member="tbEstudiante" Storage="_tbUsuario1" ThisKey="codEstudiante" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
       <Association Name="tbPaciente_tbConsulta" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
@@ -190,6 +190,7 @@
     <Type Name="tbPermiso">
       <Column Name="idPermiso" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Permiso" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Association Name="tbPermiso_tbRolPermiso" Member="tbRolPermiso" ThisKey="idPermiso" OtherKey="idPermiso" Type="tbRolPermiso" />
     </Type>
   </Table>
@@ -306,22 +307,11 @@
       <Association Name="tbUsuario_tbRotacionUsuario" Member="tbUsuario" ThisKey="codUsuario" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tbSalida" Member="tbSalida">
-    <Type Name="tbSalida">
-      <Column Name="codSalida" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="descripcion" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
-      <Column Name="fechaSalida" Type="System.DateTime" DbType="Date" CanBeNull="true" />
-      <Column Name="tipoSalida" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="codPaciente" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="tbSalida_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbDetalleSalida" />
-      <Association Name="tbPaciente_tbSalida" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbSignosVitales" Member="tbSignosVitales">
     <Type Name="tbSignosVitales">
       <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="peso" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="talla" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="talla" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="indiceMasaCorporal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
       <Column Name="presionArterial" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="frecuenciaCardiaca" Type="System.Int32" DbType="Int" CanBeNull="true" />
@@ -342,6 +332,17 @@
       <Column Name="tipoSangre" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="tbTipoSangre_tbPaciente" Member="tbPaciente" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbPaciente" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbSalida" Member="tbSalida">
+    <Type Name="tbSalida">
+      <Column Name="codSalida" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="descripcion" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="fechaSalida" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="tipoSalida" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="codPaciente" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="tbSalida_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codSalida" OtherKey="codSalida" Type="tbDetalleSalida" />
+      <Association Name="tbPaciente_tbSalida" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

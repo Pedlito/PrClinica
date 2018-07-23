@@ -141,7 +141,7 @@
             autoclose: true,
             yearRange: '-1:+10',
             defaultDate: '01/01/2018',
-            beforeShowDay:$.datepicker.noWeekends
+          //  beforeShowDay:$.datepicker.noWeekends
         }
 
         );
@@ -152,7 +152,7 @@
             autoclose: true,
             yearRange: '-1:+10',
             defaultDate: '01/01/2018',
-            beforeShowDay:$.datepicker.noWeekends
+         //   beforeShowDay:$.datepicker.noWeekends
         }
 
         );
@@ -162,15 +162,7 @@
         var fUR=$.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
       
         
-        //function ver() {
-        //   var fi=$.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
-        //   var ff=$.datepicker.parseDate('dd/mm/yy',$("#fechaFinal").val());
 
-        //   // if (!$("#fechaInicio").val()) {
-
-        //        if (fi > ff) { alert(fi.getDate()); } else { alert(ff.getFullYear());}
-        ////   }
-        //}
 
 
         function agregarDocs() {
@@ -246,17 +238,38 @@
         }
 
         function guardar() {
-
-
-            if (!($("#fechaInicio").val()) || !($("#fechaFinal").val())) { alert("Debe seleccionar las fechas"); return; }
-          
-            //else if (($("#fechaInicio").val()>fechaI && $("#fechaInicio").val()<fechaF)||($("#fechaFinal").val()>fechaI && $("#fechaFinal").val()<fechaF)) { alert("Rango invalido, ya existe una rotacion en ese rango de fechas"); return; }
-            //else if ($("#fechaInicio").val() < fechaI && $("#fechaFinal").val() > fechaF) { alert("Asignacion de fechas invalido" + fechaF.getDate() + "-" + fechaF.getMonth()); return; }
+            if (!($("#fechaInicio").val()) || !($("#fechaFinal").val())) { alert("Debe seleccionar las fechas"); return; }      
                 var fi = $.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
                  var ff = $.datepicker.parseDate('dd/mm/yy',$("#fechaFinal").val());
                  if (fi > ff) { alert("La fecha de inicio debe ser mayor a la fecha de finalizacion"); return; }
-                 else if (fi < fUR) { alert("Fecha de inicio invalido"); return;}
-                 var integrantes = listaDocs.concat(listaEstus);
+                 Revisar();
+        }
+
+        function Revisar() {
+        
+            var rot = { "fechaIni": $("#fechaInicio").val(), "fechaFin": $("#fechaFinal").val() }
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("RevisarFechasCrear", "Rotacion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(rot),
+                success: function (response) {
+                
+                    if (response.length==1) {
+                        Guardar();
+                    }
+                    else { alert("Las fechas de rotaciones podrian estar traslapadas");}
+                },
+                error: function (response) {
+                    Alert("Error al conectarse con el servidor");
+                }
+            });
+      
+        }
+
+        function Guardar() {
+            var integrantes = listaDocs.concat(listaEstus);
             var rotacion = { "fechaIni": $("#fechaInicio").val(), "fechaFin": $("#fechaFinal").val(), "integrantes": integrantes }
             $.ajax({
                 traditional: true,

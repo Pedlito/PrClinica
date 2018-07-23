@@ -18,7 +18,7 @@
             <div class="form-group">
                 @Html.Label("Descripcion", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10 form-inline">
-                    @Html.TextArea("descripcion", null, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", cols = "40" })
+                    @Html.TextArea("descripcion", null, new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", cols = "40", maxlength = 150 })
                     @Html.ValidationMessage("descripcion", null, new { @class = "text-danger" })
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="form-group">
                 @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10 form-inline">
-                    @Html.TextBox("producto", "", new { @class = "form-control", placeholder = "Escriba parte del nombre del producto" })
+                    @Html.TextBox("producto", "", new { @class = "form-control", placeholder = "Escriba parte del nombre del producto", maxlength = 50 })
 
                     @*este boton se encarga de mostrar el modal, el data-target hace referencia a un div de clase modal con id= busqueda
                         cada vez que es precionado se muestra el modal. tambien tiene un evento onclick que llama a una funcion getDataAjax() *@

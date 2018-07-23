@@ -78,7 +78,7 @@ namespace BD_PR_01_Clinicas.Models
         public string Nombre { get; set; }
 
         [Required]
-        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 13)]
+        [StringLength(16, ErrorMessage = "El número de caracteres de {0} debe ser de {2}.", MinimumLength = 13)]
         [RegularExpression("^\\d+$",ErrorMessage = "Numero de identificacion debe ser numerico")]
         [Display(Name = "DPI")]
         public string Dpi { get; set; }
@@ -91,11 +91,12 @@ namespace BD_PR_01_Clinicas.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Usuario")]
+        [StringLength(30, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 4)]
         [RegularExpression("^[A-Za-z][a-zA-Z 0-9]+$", ErrorMessage = "Se admite texto, numero")]
         public string Usuario { get; set; }
 
         [Required]
-        [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 4)]
+        [StringLength(30, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
@@ -109,6 +110,7 @@ namespace BD_PR_01_Clinicas.Models
         //[RegularExpression("^\\d+$", ErrorMessage = "Numero de Carnet debe ser numerico")]
         //[StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 8)]
         //[Display(Name = "Carnet")]
+        [StringLength(13, ErrorMessage = "El número de caracteres de {0} debe ser  {2}.", MinimumLength = 8)]
         public string Carnet { get; set; }
     }
 

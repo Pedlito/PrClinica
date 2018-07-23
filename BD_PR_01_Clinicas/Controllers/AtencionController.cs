@@ -20,7 +20,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                       join pac in db.tbPaciente on cons.codPaciente equals pac.codPaciente
                                       where cons.estado == 1 || (cons.estado == 2 && cons.codEstudiante == SessionUsuario.Get.UserId)
                                       orderby cons.fechaLlegada
-                                      select pac).ToList();
+                                      select pac).Distinct().ToList();
             int pageSize = 15;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
@@ -92,6 +92,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/NuevoPaciente
         public JsonResult NuevoPaciente(tbPaciente paciente)
         {
+          
             db.tbPaciente.InsertOnSubmit(paciente);
             db.SubmitChanges();
             return Json(new { codPaciente = paciente.codPaciente, nombre = paciente.nombre });

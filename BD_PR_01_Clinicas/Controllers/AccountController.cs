@@ -78,6 +78,8 @@ namespace BD_PR_01_Clinicas.Controllers
                 ModelState.AddModelError(string.Empty, "Fallo en la conexion con la base de datos");
             }
 
+            ViewBag.registro = FrontUser.PuedeRegistrarse();
+            ViewBag.ReturnUrl = returnUrl;
             return this.View(model);
         }
 
@@ -101,7 +103,7 @@ namespace BD_PR_01_Clinicas.Controllers
         [ValidateAntiForgeryToken]
         public  ActionResult Register(RegisterViewModel model)
         {
-            if (db.tbUsuario.Where(m => m.usuario == model.Usuario).Any()) { ModelState.AddModelError("Usuario","El usuario ingresado ya existe."); return View(model); }
+            if (db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) { ModelState.AddModelError("Usuario","El usuario ingresado ya existe."); return View(model); }
 
             if (ModelState.IsValid)
             {
@@ -111,7 +113,7 @@ namespace BD_PR_01_Clinicas.Controllers
                     dpi = model.Dpi,
                     carnet = model.Carnet,
                     fechaNacimiento = model.FechaNacimiento,
-                    usuario = model.Usuario,
+                    usuario = model.Usuario.ToUpper(),
                     password = model.Password,
                     codTipoUsuario = 1,
                     estado = true

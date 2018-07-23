@@ -70,7 +70,7 @@ namespace BD_PR_01_Clinicas.Controllers
             List<tbRol> rols = null;
             try
             {
-                if (db.tbUsuario.Where(m => m.usuario == model.Usuario).Any()) {
+                if (db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) {
 
                     ModelState.AddModelError("Usuario", "El usuario ingresado ya existe.");    
                 }
@@ -85,7 +85,7 @@ namespace BD_PR_01_Clinicas.Controllers
                     dpi = model.Dpi,
                     carnet = model.Carnet,
                     fechaNacimiento = model.FechaNacimiento,
-                    usuario = model.Usuario,
+                    usuario = model.Usuario.ToUpper(),
                     password = model.Password,          
                     estado = true
 

@@ -30,7 +30,7 @@
         <div class="form-group">
             @Html.Label("DPI", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.dpi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.dpi, new { htmlAttributes = new { @class = "form-control", maxlength=16 } })
          
             </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="form-group">
             @Html.Label("Carnet", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.carnet, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.carnet, new { htmlAttributes = new { @class = "form-control", maxlength = 13 } })
         
             </div>
         </div>
@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", maxlength = 30} })
          
             </div>
         </div>

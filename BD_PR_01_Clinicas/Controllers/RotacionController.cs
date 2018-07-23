@@ -25,8 +25,32 @@ namespace BD_PR_01_Clinicas.Controllers
             return View(lista.ToPagedList(pageNumber, pageSize));
         }
 
-
-      
+        public JsonResult RevisarFechasEditar(Rotaciones rot) {
+            var rotaciones = db.tbRotacion.Where(x=>x.codRotacion!=rot.rotacionId);
+            var ultimaRotacion = rotaciones.Select(x => x.fechaFinal).Max();
+            var primeraRotacion = rotaciones.Select(x => x.fechaInicio).Min();
+            foreach (var r in rotaciones){
+                if ((DateTime.Parse(rot.fechaIni) >= r.fechaInicio) && (DateTime.Parse(rot.fechaIni) <= r.fechaFinal)||
+                   (DateTime.Parse(rot.fechaFin) >= r.fechaInicio) && (DateTime.Parse(rot.fechaFin) <= r.fechaFinal)||
+                   (DateTime.Parse(rot.fechaIni) < primeraRotacion) && (DateTime.Parse(rot.fechaFin) > ultimaRotacion))
+                   { return Json("aaaaa"); }
+            }
+            return Json("a");
+        }
+        public JsonResult RevisarFechasCrear(Rotaciones rot)
+        {
+            var rotaciones = db.tbRotacion.ToList();
+            var ultimaRotacion = rotaciones.Select(x => x.fechaFinal).Max();
+            var primeraRotacion = rotaciones.Select(x => x.fechaInicio).Min();
+            foreach (var r in rotaciones)
+            {
+                if ((DateTime.Parse(rot.fechaIni) >= r.fechaInicio) && (DateTime.Parse(rot.fechaIni) <= r.fechaFinal) ||
+                   (DateTime.Parse(rot.fechaFin) >= r.fechaInicio) && (DateTime.Parse(rot.fechaFin) <= r.fechaFinal) ||
+                   (DateTime.Parse(rot.fechaIni) < primeraRotacion) && (DateTime.Parse(rot.fechaFin) > ultimaRotacion))
+                { return Json("aaaaa"); }
+            }
+            return Json("a");
+        }
         public ActionResult Crear()
         {
             try
@@ -214,9 +238,15 @@ namespace BD_PR_01_Clinicas.Controllers
                 ViewBag.fechaFin = rotacion.fechaFinal.Value.ToString("dd/MM/yyyy"); ;
                 //id de la rotacion actual
                 ViewBag.id = rotacion.codRotacion;
+                List<tbUsuario> listaIntegrantes = (from u in db.tbUsuario where u.estado == true  select u).ToList();
+                foreach (var integrante in rotacion.tbRotacionUsuario.Select(x=>x.tbUsuario))
+                {
+                    listaIntegrantes.Remove(integrante);
+                }
                 //estudiantes y doctores por separado, si se agregan nuevos se obtiene la lista competa, en la vista se validan repetidos.
-                List<tbUsuario> doctores = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 3 select u).ToList();
-                List<tbUsuario> estudiantes = (from u in db.tbUsuario where u.estado == true && u.codTipoUsuario == 2 select u).ToList();
+                List<tbUsuario> doctores = (from u in listaIntegrantes where u.codTipoUsuario == 3 select u).ToList();
+                List<tbUsuario> estudiantes = (from u in listaIntegrantes where u.codTipoUsuario == 2 select u).ToList();
+
                 //combox seleccionar usuarios
                 ViewBag.codDoctor = new SelectList(doctores, "codUsuario", "nombre");
                 ViewBag.codEstudiante = new SelectList(estudiantes, "codUsuario", "nombre");
