@@ -66,8 +66,9 @@ namespace BD_PR_01_Clinicas.Controllers
                     }
                     else
                     {
-                     //   Console.Write(loginInfo.ToString());
+                        //   Console.Write(loginInfo.ToString());
                         // Setting.    
+                        ViewBag.registro = (from t in db.tbConfiguracion where t.codConfiguracion == 1 select t.valor).SingleOrDefault();
                         ModelState.AddModelError(string.Empty, "Intento de inicio de sesión no válido.");
                     }
                 }

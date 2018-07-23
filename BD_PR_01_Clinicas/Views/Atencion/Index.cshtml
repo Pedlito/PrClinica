@@ -1,5 +1,6 @@
 ﻿@using PagedList.Mvc;
-@model PagedList.IPagedList<BD_PR_01_Clinicas.Models.tbPaciente>
+@using BD_PR_01_Clinicas.Models;
+@model PagedList.IPagedList<BD_PR_01_Clinicas.Models.tbConsulta>
 
 @{
     ViewBag.Title = "Index";
@@ -36,23 +37,23 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.nombre)
+                    @Html.DisplayFor(modelItem => item.tbPaciente.nombre)
                 </td>
                 <td>
                     @try
                     {
-                        @item.fechaNacimiento.Value.ToShortDateString()
+                        @item.tbPaciente.fechaNacimiento.Value.ToShortDateString()
                     }
                     catch
                     {
                         <p>Desconocida</p>
                     }
                 </td>
-                @if (item.estadoCivil.Value == true)
+                @if (item.tbPaciente.estadoCivil.Value == true)
                 {
                     <td>Soltero</td>
                 }
-                else if (item.estadoCivil.Value == false)
+                else if (item.tbPaciente.estadoCivil.Value == false)
                 {
                     <td>Casado</td>
                 }
@@ -61,15 +62,30 @@
                     <td>Desconocido</td>
                 }
                 <td>
-                    @Html.DisplayFor(modelItem => item.residencia)
+                    @Html.DisplayFor(modelItem => item.tbPaciente.residencia)
                 </td>
                 <td>
-                    <a href="@Url.Action("CrearHC", new { codPaciente = item.codPaciente })" class="btn btn-primary btn-xs">
-                        <span class="glyphicon glyphicon-copy"></span> Atender
-                    </a>
-                    <a href="@Url.Action("Cancelar", new { codPaciente = item.codPaciente })" class="btn btn-danger btn-xs" onclick="return Confirmar()">
-                        <span class="glyphicon glyphicon-trash"></span> Cancelar
-                    </a>
+                    @if (item.estado == 1)
+                    {
+                        <a href="@Url.Action("CrearHC", new { codPaciente = item.codPaciente })" class="btn btn-primary btn-xs">
+                            <span class="glyphicon glyphicon-copy"></span> Atender
+                        </a>
+                        <a href="@Url.Action("Cancelar", new { codPaciente = item.codPaciente })" class="btn btn-danger btn-xs" onclick="return Confirmar()">
+                            <span class="glyphicon glyphicon-trash"></span> Cancelar
+                        </a>
+                    }
+                    else if (item.estado == 2 && (item.codEstudiante == SessionUsuario.Get.UserId || ViewBag.codTipoUsuario == 4))
+                    {
+                        <a href="@Url.Action("CrearHC", new { codPaciente = item.codPaciente })" class="btn btn-success btn-xs">
+                            <span class="glyphicon glyphicon-copy"></span> Continuar Consulta
+                        </a>
+                    }
+                    else if (item.estado == 2 && ViewBag.codTipoUsuario == 3)
+                    {
+                        <a href="@Url.Action("VerConsulta", "Pacientes", new { codConsulta = item.codConsulta })" class="btn btn-info btn-xs" target="_blank">
+                            <span class="glyphicon glyphicon-copy"></span> Ver Consulta
+                        </a>
+                    }
                 </td>
             </tr>
         }

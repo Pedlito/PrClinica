@@ -16,11 +16,11 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion
         public ActionResult Index(int? page)
         {
-            List<tbPaciente> lista = (from cons in db.tbConsulta
-                                      join pac in db.tbPaciente on cons.codPaciente equals pac.codPaciente
-                                      where cons.estado == 1 || (cons.estado == 2 && cons.codEstudiante == SessionUsuario.Get.UserId)
-                                      orderby cons.fechaLlegada
-                                      select pac).Distinct().ToList();
+            tbUsuario usuario = (from t in db.tbUsuario where t.codUsuario == SessionUsuario.Get.UserId select t).SingleOrDefault();
+            List<tbConsulta> lista = (from t in db.tbConsulta
+                                      where t.estado == 1 || (t.estado == 2 && (t.codEstudiante == usuario.codUsuario || (usuario.codTipoUsuario == 4 || usuario.codTipoUsuario == 3)))
+                                      select t).ToList();
+            ViewBag.codTipoUsuario = usuario.codTipoUsuario;
             int pageSize = 15;
             int pageNumber = (page ?? 1);
             if (lista == null) { return View(); }
@@ -50,13 +50,21 @@ namespace BD_PR_01_Clinicas.Controllers
         public string Crear(tbConsulta consulta)
         {
             try
-            {
-                // TODO: Add insert logic here
-                consulta.fechaLlegada = DateTime.Now;
-                consulta.estado = 1;
-                db.tbConsulta.InsertOnSubmit(consulta);
-                db.SubmitChanges();
-                return Url.Action("Index", "Atencion");
+            {   
+                tbConsulta existe = (from t in db.tbConsulta where t.codPaciente == consulta.codPaciente && t.estado != 3 select t).SingleOrDefault();
+                if (existe == null)
+                {
+                    consulta.fechaLlegada = DateTime.Now;
+                    consulta.estado = 1;
+                    db.tbConsulta.InsertOnSubmit(consulta);
+                    db.SubmitChanges();
+                    return Url.Action("Index", "Atencion");
+                }
+                else
+                {
+                    return "error";
+                }
+                
             }
             catch
             {
@@ -92,7 +100,6 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/NuevoPaciente
         public JsonResult NuevoPaciente(tbPaciente paciente)
         {
-          
             db.tbPaciente.InsertOnSubmit(paciente);
             db.SubmitChanges();
             return Json(new { codPaciente = paciente.codPaciente, nombre = paciente.nombre });

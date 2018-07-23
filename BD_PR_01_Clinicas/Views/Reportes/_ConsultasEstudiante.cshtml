@@ -1,0 +1,23 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.ClasConsultasEstudiante>
+
+<table class="table table-hover">
+    <thead>
+        <tr class="info">
+            <td>Paciente</td>
+            <td>Médico</td>
+            <td>Fecha Inicio</td>
+            <td>Fecha Fin</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.paciente</td>
+                <td>@item.medico</td>
+                <td>@item.fechaInicio.ToString()</td>
+                <td>@item.fechaFin</td>
+            </tr>
+        }
+    </tbody>
+</table>
