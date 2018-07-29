@@ -25,9 +25,18 @@ namespace BD_PR_01_Clinicas.Controllers
         [NoLoginAttribute]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.registro = (from t in db.tbConfiguracion where t.codConfiguracion == 1 select t.valor).SingleOrDefault();
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+
+            try
+            {
+                ViewBag.registro = (from t in db.tbConfiguracion where t.codConfiguracion == 1 select t.valor).SingleOrDefault();
+                ViewBag.ReturnUrl = returnUrl;
+                return View();
+            }
+            catch (Exception)
+            {
+
+                return HttpNotFound("Error en la conexion con la base de datos");
+            }
         }
 
         [HttpPost]
@@ -104,7 +113,8 @@ namespace BD_PR_01_Clinicas.Controllers
         [ValidateAntiForgeryToken]
         public  ActionResult Register(RegisterViewModel model)
         {
-            if (db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) { ModelState.AddModelError("Usuario","El usuario ingresado ya existe."); return View(model); }
+            //se corrigio un error feo que da cuando no se puede conectar a la base de datos
+            if (!string.IsNullOrEmpty(model.Usuario)&&db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) { ModelState.AddModelError("Usuario","El usuario ingresado ya existe."); }
 
             if (ModelState.IsValid)
             {

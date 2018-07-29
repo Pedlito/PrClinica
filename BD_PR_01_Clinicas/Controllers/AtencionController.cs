@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using BD_PR_01_Clinicas.Models;
 using PagedList;
+using CrystalDecisions.CrystalReports.Engine;
+using System.IO;
 namespace BD_PR_01_Clinicas.Controllers
 {
     [AutenticadoAttribute]
@@ -43,6 +45,50 @@ namespace BD_PR_01_Clinicas.Controllers
             List<tbTipoSangre> tiposSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
             ViewBag.codTipoSangre = new SelectList(tiposSangre, "codTipoSangre", "tipoSangre");
             return View();
+        }
+//genera la receta
+        public ActionResult imprimirReceta(int cod) {
+
+            var consul = (from c in db.tbConsulta where c.codConsulta == cod select c).SingleOrDefault();
+            var medicamentos = (from c in consul.tbReceta
+                                select new recetamedica
+                                {
+                                    NombreProducto = c.tbProducto.producto,
+                                    presenta = c.tbProducto.tbPresentacion.presentacion,
+                                    dosific = c.tbProducto.dosis.ToString()+" "+(c.tbProducto.codVolumen==1?"mg":"ml"),
+                                    prescripcion = c.descripcion
+                                });
+                string nombre = consul.tbPaciente.nombre;
+                DateTime fech = consul.fechaAtencion.Value;
+
+                ReportDocument rd = new ReportDocument();
+                rd.Load(Path.Combine(Server.MapPath("~/Reportes"), "receta.rpt"));
+
+                rd.SetDataSource(medicamentos);
+                Response.Buffer = false;
+                Response.Clear();
+                Response.ClearHeaders();
+                rd.SetParameterValue("name", nombre);
+                rd.SetParameterValue("fecha", fech);
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "aplication/pdf", "Receta.pdf");
+        }
+
+        //verifica si se han guardado los avances en receta
+        public ActionResult verConsulta(int cod)
+        {
+
+            var recetas = (from t in db.tbReceta where t.codConsulta == cod select t).ToList();
+            if (recetas != null&& recetas.ToList().Count > 0)
+            {//permite la ejecucion de OnSuccess
+                return new HttpStatusCodeResult(200, "Ok");
+            }
+            else
+            {
+                //permite que se ejecute OnFailure
+                return new HttpStatusCodeResult(404, "Debe guardar avances!");
+            }
         }
 
         // POST: Atencion/Crear

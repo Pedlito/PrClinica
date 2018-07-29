@@ -627,9 +627,20 @@
 
             </div>
             <div class="form-group">
-                <a href="@Url.Action("Entregar","EntregaMedicamento", new { codPaciente = Model.consulta.codPaciente })" target="_blank" class="btn btn-primary">
-                    <span class="glyphicon glyphicon-th-list"></span> Entregar Medicamentos
-                </a>
+                <div class="col-md-3">
+                    <a href="@Url.Action("Entregar","EntregaMedicamento", new { codPaciente = Model.consulta.codPaciente })" target="_blank" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-th-list"></span> Entregar Medicamentos
+                    </a>
+                </div>
+                <div class="col-md-9">
+                    <p>
+                        @*action link de unobtrusive ajax que me permite optener una respuesta de exito o fallo del servidor para generar recetamedica*@
+                        @Ajax.ActionLink("Generar receta", "verConsulta", routeValues: new {cod = Model.consulta.codConsulta},htmlAttributes: new  { @class = "btn btn-primary" },
+                       ajaxOptions: new AjaxOptions {HttpMethod ="POST",OnSuccess= "OnSuccess", OnFailure = "OnFailure" })
+                       
+                    </p>
+                   
+                </div>
             </div>
         </div>
 
@@ -1142,7 +1153,16 @@
     </div>
 </div>
 @section scripts{
+    @*permete actualizar contenido usando ajax.AtionLink() lo utilice para porder verificar si ya se han guardado avances.*@
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
     <script>
+        //funciones que me permiten mostrar un mensaje o generar la receta medica
+        function OnFailure(xhr, status){
+            alert("Debe agregar al menos un medicamento y guardar avances.");
+        }
+        function OnSuccess(data){
+            window.location.href = '@Url.Action("imprimirReceta","Atencion",routeValues: new { cod = Model.consulta.codConsulta })';
+        }//fin de codigo recetamedica
         var codConsulta = @Model.consulta.codConsulta;
         var codPaciente = @Model.paciente.codPaciente;
         var receta = [];
@@ -1513,6 +1533,8 @@
                 return true;
             }
         }
-
+        @*function GenerarReceta(){
+            window.location.href = '@Url.Action("imprimirReceta","Atencion",routeValues: new { cod = Model.consulta.codPaciente })';
+        }*@
     </script>
 }

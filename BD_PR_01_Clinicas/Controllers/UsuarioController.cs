@@ -70,12 +70,9 @@ namespace BD_PR_01_Clinicas.Controllers
             List<tbRol> rols = null;
             try
             {
-                if (db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) {
+                if (!string.IsNullOrEmpty(model.Usuario) && db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) { ModelState.AddModelError("Usuario", "El usuario ingresado ya existe."); }
 
-                    ModelState.AddModelError("Usuario", "El usuario ingresado ya existe.");    
-                }
-
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
             {
                     tbUsuario NuevoUsuario = new tbUsuario
                     {

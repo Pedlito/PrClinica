@@ -64,7 +64,7 @@ namespace BD_PR_01_Clinicas.Controllers
             Response.Buffer = false;
             Response.Clear();
             Response.ClearHeaders();
-
+            
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
             return File(stream, "aplication/pdf", "Inventario.pdf");
