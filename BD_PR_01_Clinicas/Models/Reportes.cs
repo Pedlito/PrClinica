@@ -12,4 +12,12 @@ namespace BD_PR_01_Clinicas.Models
         public string medico { get; set; }
         public string estudiante { get; set; }
     }
+
+    public class ClasConsultasEstudiante
+    {
+        public string paciente { get; set; }
+        public string medico { get; set; }
+        public DateTime fechaInicio { get; set; }
+        public DateTime fechaFin { get; set; }
+    }
 }

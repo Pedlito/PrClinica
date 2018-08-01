@@ -208,9 +208,23 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.paciente_codTipoSangre = new SelectList(paciente_codTipoSangre, "codTipoSangre", "tipoSangre");
             List<tbUsuario> medicos = (from t in db.tbUsuario where t.codTipoUsuario == 3 && t.estado == true orderby t.nombre select t).ToList();
             ViewBag.consulta_codMedico = new SelectList(medicos, "codUsuario", "nombre");
+            List<tbLaboratorio> labs = (from t in db.tbLaboratorio select t).ToList();
+            ViewBag.codLaboratorio = new SelectList(labs, "codLaboratorio", "laboratorio");
+
+            List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
+            ViewBag.codPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
+            List<tbCategoria> categorias = (from t in db.tbCategoria where t.estado == true orderby t.categoria select t).ToList();
+            ViewBag.codCategoria = new SelectList(categorias, "codCategoria", "categoria");
+            List<Volumen> volumenes = new List<Volumen> { (new Volumen { codVolumen = 1, volumen = "mg" }),
+                                             (new Volumen { codVolumen = 2, volumen = "ml" }) };
+            ViewBag.codVolumen = new SelectList(volumenes, "codVolumen", "volumen");
+            ViewBag.codVolumen2 = new SelectList(volumenes, "codVolumen", "volumen");
 
             //pide la consulta y le asigna los valores 
-            tbConsulta consulta = (from t in db.tbConsulta where t.codPaciente == codPaciente && (t.estado == 1 || (t.estado == 2 && t.codEstudiante == SessionUsuario.Get.UserId)) select t).SingleOrDefault();
+            tbUsuario usuario = (from t in db.tbUsuario where t.codUsuario == SessionUsuario.Get.UserId select t).SingleOrDefault();
+            tbConsulta consulta = (from t in db.tbConsulta
+                                   where t.codPaciente == codPaciente && (t.estado == 1 || (t.estado == 2 && (t.codEstudiante == usuario.codUsuario || usuario.codTipoUsuario == 4)))
+                                   select t).SingleOrDefault();
             consulta.estado = 2;
             consulta.codEstudiante = SessionUsuario.Get.UserId;
             consulta.fechaAtencion = DateTime.Now;
@@ -231,6 +245,7 @@ namespace BD_PR_01_Clinicas.Controllers
             historia.planes = consulta.tbPlanes;
             historia.terapeutico = consulta.tbPlanTerapeutico;
             historia.problemas = (from t in db.tbProblema where t.codConsulta == consulta.codConsulta select t).ToList();
+            historia.laboratorios = (from t in db.tbConsultaLaboratorio where t.codConsulta == consulta.codConsulta select t).ToList();
             historia.receta = (from t in db.tbReceta where t.codConsulta == consulta.codConsulta select t).ToList();
             historia.diagnostico = consulta.tbDiagnostico;
             return View(historia);
@@ -423,9 +438,9 @@ namespace BD_PR_01_Clinicas.Controllers
             #endregion
 
             #region problemas
+            List<tbProblema> problemasGuardados = (from t in db.tbProblema where t.codConsulta == consulta.codConsulta select t).ToList();
             if (historia.problemas != null)
             {
-                List<tbProblema> problemasGuardados = (from t in db.tbProblema where t.codConsulta == consulta.codConsulta select t).ToList();
                 if (problemasGuardados == null)
                 {
                     db.tbProblema.InsertAllOnSubmit(historia.problemas);
@@ -476,54 +491,81 @@ namespace BD_PR_01_Clinicas.Controllers
                     }
                 }
             }
+            else
+            {
+                if (problemasGuardados != null)
+                {
+                    db.tbProblema.DeleteAllOnSubmit(problemasGuardados);
+                }
+            }
+            #endregion
+
+            #region laboratorios
+            List<tbConsultaLaboratorio> labsGuardados = (from t in db.tbConsultaLaboratorio where t.codConsulta == consulta.codConsulta select t).ToList();
+            if (historia.laboratorios != null)
+            {
+                if (labsGuardados == null)
+                {
+                    db.tbConsultaLaboratorio.InsertAllOnSubmit(historia.laboratorios);
+                }
+                else
+                {
+                    foreach (tbConsultaLaboratorio item in historia.laboratorios)
+                    {
+                        if (!labsGuardados.Contains(item))
+                        {
+                            db.tbConsultaLaboratorio.InsertOnSubmit(item);
+                        }
+                    }
+                    foreach (tbConsultaLaboratorio item in labsGuardados)
+                    {
+                        if (!historia.laboratorios .Contains(item))
+                        {
+                            db.tbConsultaLaboratorio.DeleteOnSubmit(item);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (labsGuardados != null)
+                {
+                    db.tbConsultaLaboratorio.DeleteAllOnSubmit(labsGuardados);
+                }
+            }
             #endregion
 
             #region receta
+            List<tbReceta> recetasGuardadas = (from t in db.tbReceta where t.codConsulta == consulta.codConsulta select t).ToList();
             if (historia.receta != null)
             {
-                List<tbReceta> recetasGuardadas = (from t in db.tbReceta where t.codConsulta == consulta.codConsulta select t).ToList();
                 if (recetasGuardadas == null)
                 {
                     db.tbProblema.InsertAllOnSubmit(historia.problemas);
                 }
                 else
                 {
-                    int guardados = recetasGuardadas.Count;
-                    int noGuardados = historia.receta.Count;
-                    if (guardados > noGuardados)
+                    foreach (tbReceta item in historia.receta)
                     {
-                        int i;
-                        for (i = 0; i < noGuardados; i++)
+                        if (!recetasGuardadas.Contains(item))
                         {
-                            recetasGuardadas[i].codProducto = historia.receta[i].codProducto;
-                            recetasGuardadas[i].descripcion = historia.receta[i].descripcion;
-                        }
-                        for (int j = i; j < guardados; j++)
-                        {
-                            db.tbReceta.DeleteOnSubmit(recetasGuardadas[j]);
+                            db.tbReceta.InsertOnSubmit(item);
                         }
                     }
-                    else if (guardados == noGuardados)
+                    foreach (tbReceta item in recetasGuardadas)
                     {
-                        for (int i = 0; i < guardados; i++)
+                        if (!historia.receta.Contains(item))
                         {
-                            recetasGuardadas[i].codProducto = historia.receta[i].codProducto;
-                            recetasGuardadas[i].descripcion = historia.receta[i].descripcion;
+                            db.tbReceta.DeleteOnSubmit(item);
                         }
                     }
-                    else
-                    {
-                        int i;
-                        for (i = 0; i < guardados; i++)
-                        {
-                            recetasGuardadas[i].codProducto = historia.receta[i].codProducto;
-                            recetasGuardadas[i].descripcion = historia.receta[i].descripcion;
-                        }
-                        for (int j = i; j < noGuardados; j++)
-                        {
-                            db.tbReceta.InsertOnSubmit(historia.receta[j]);
-                        }
-                    }
+                }
+            }
+            else
+            {
+                if (recetasGuardadas != null)
+                {
+                    db.tbReceta.DeleteAllOnSubmit(recetasGuardadas);
                 }
             }
             #endregion
@@ -592,7 +634,7 @@ namespace BD_PR_01_Clinicas.Controllers
                              nombre = t.producto,
                              categoria = t.tbCategoria.categoria,
                              presentacion = t.tbPresentacion.presentacion,
-                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                             dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                          }).Take(10).ToList();
             }
             else
@@ -606,7 +648,7 @@ namespace BD_PR_01_Clinicas.Controllers
                              nombre = t.producto,
                              categoria = t.tbCategoria.categoria,
                              presentacion = t.tbPresentacion.presentacion,
-                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                             dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value)
                          }).Take(10).ToList();
             }
             return PartialView("_Medicamentos", lista);
@@ -629,7 +671,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                    nombre = t.producto,
                                    categoria = t.tbCategoria.categoria,
                                    presentacion = t.tbPresentacion.presentacion,
-                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                                    descripcion = item.descripcion
                                }).SingleOrDefault());
                 }
@@ -654,6 +696,26 @@ namespace BD_PR_01_Clinicas.Controllers
         {
             List<tbConsulta> listado = (from t in db.tbConsulta where t.codPaciente == codPaciente && t.estado == 3 select t).ToList();
             return PartialView("_Consultas", listado);
+        }
+
+        public ActionResult Laboratorios(List<tbConsultaLaboratorio> labs)
+        {
+            List<ConsultasLab> lista = new List<ConsultasLab>();
+            if (labs != null)
+            {
+                foreach (var item in labs)
+                {
+                    tbLaboratorio laboratorio = (from t in db.tbLaboratorio where t.codLaboratorio == item.codLaboratorio select t).SingleOrDefault();
+                    lista.Add(new ConsultasLab
+                    {
+                        codLaboratorio = item.codLaboratorio,
+                        laboratorio = laboratorio.laboratorio,
+                        resultado = item.resultado,
+                        rango = laboratorio.rango
+                    });
+                }
+            }
+            return PartialView("_Laboratorios", lista);
         }
     }
 

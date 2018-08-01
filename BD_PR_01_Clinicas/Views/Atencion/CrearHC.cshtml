@@ -1,5 +1,5 @@
 ﻿@model BD_PR_01_Clinicas.Models.HistoriaClinica
-
+@using BD_PR_01_Clinicas.Models
 @{
     ViewBag.Title = "Crear";
 }
@@ -26,6 +26,7 @@
         <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
         <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
         <li role="presentation"><a href="#receta" role="tab" data-toggle="tab">Receta</a></li>
+        <li role="presentation"><a href="#laboratorios" role="tab" data-toggle="tab">Laboratorios</a></li>
         <li role="presentation"><a href="#diagnostico" role="tab" data-toggle="tab">Diagnostico</a></li>
     </ul>
 
@@ -65,7 +66,7 @@
                                 }
                                 else
                                 {
-                                    <input type="date" id="fechaNacimiento" class="form-control"/>
+                                    <input type="date" id="fechaNacimiento" class="form-control" />
 
                                 }
                             </div>
@@ -124,7 +125,7 @@
                         <div class="form-group">
                             @Html.Label("Tipo de Sangre", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                               @Html.DropDownList("paciente_codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
+                                @Html.DropDownList("paciente_codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -155,7 +156,7 @@
                     <div class="form-group">
                         @Html.Label("Fecha Llegada", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            <input type="date" id="fechaLlegada" value="@Model.consulta.fechaLlegada.Value.ToString("yyy-MM-dd")" readonly class="form-control"/>
+                            <input type="date" id="fechaLlegada" value="@Model.consulta.fechaLlegada.Value.ToString("yyy-MM-dd")" readonly class="form-control" />
                         </div>
                     </div>
 
@@ -276,7 +277,7 @@
                         <div class="form-group">
                             @Html.Label("Inmunizaciónes", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.inmunizaciones, new { @class = "form-control",  rows = "4", maxlength = "700" })
+                                @Html.TextAreaFor(model => model.noPatologicos.inmunizaciones, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
@@ -290,7 +291,7 @@
                         <div class="form-group">
                             @Html.Label("Hábitos", htmlAttributes: new { @class = "control-label col-md-2" })
                             <div class="col-md-10">
-                                @Html.TextAreaFor(model => model.noPatologicos.habitos, new { @class = "form-control",  rows = "4", maxlength = "700" })
+                                @Html.TextAreaFor(model => model.noPatologicos.habitos, new { @class = "form-control", rows = "4", maxlength = "700" })
                             </div>
                         </div>
 
@@ -637,10 +638,22 @@
                         @*action link de unobtrusive ajax que me permite optener una respuesta de exito o fallo del servidor para generar recetamedica*@
                         @Ajax.ActionLink("Generar receta", "verConsulta", routeValues: new {cod = Model.consulta.codConsulta},htmlAttributes: new  { @class = "btn btn-primary" },
                        ajaxOptions: new AjaxOptions {HttpMethod ="POST",OnSuccess= "OnSuccess", OnFailure = "OnFailure" })
-                       
+
                     </p>
-                   
+
                 </div>
+            </div>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="laboratorios">
+            <h2>Listado de Laboratorios</h2>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarLab">
+                    <span class="glyphicon glyphicon-plus"></span> Agregar Laboratorio
+                </button>
+            </div>
+            <div id="listaLabs">
+
             </div>
         </div>
 
@@ -666,11 +679,12 @@
                 </div>
             </form>
         </div>
+
     </div>
 
 </div>
 
-
+<!-- botones de pie de pagina-->
 <div class="form-inline">
     <div class="form-group">
         <button type="button" onclick="guardar(1)" class="btn btn-primary btn-lg">
@@ -745,7 +759,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                3 
+                                3
                             </td>
                             <td>
                                 <p>Intenta agarra objetos, pero no lo consigue</p>
@@ -759,7 +773,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                4 
+                                4
                             </td>
                             <td>
                                 <p>Se sostiene sentado, pero no lo consigue</p>
@@ -773,7 +787,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                5 
+                                5
                             </td>
                             <td>
                                 <p>agarra objetos</p>
@@ -787,7 +801,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                6 
+                                6
                             </td>
                             <td>
                                 <p>Aguanta sentado en una silla y aguanta objetos con mayor precisión</p>
@@ -801,7 +815,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                7 
+                                7
                             </td>
                             <td>
                                 <p>
@@ -820,7 +834,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                8 
+                                8
                             </td>
                             <td>
                                 <p>
@@ -838,7 +852,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                9 
+                                9
                             </td>
                             <td>
                                 <p>
@@ -856,7 +870,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                10 
+                                10
                             </td>
                             <td>
                                 <p>
@@ -874,7 +888,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                11 
+                                11
                             </td>
                             <td>
                                 <p>
@@ -892,7 +906,7 @@
                         </tr>
                         <tr>
                             <td class="text-center">
-                                12 
+                                12
                             </td>
                             <td>
                                 <p>
@@ -1036,8 +1050,14 @@
             </div>
             <div class="modal-body" id="medicamentos">
 
-                <div class="form-group">
-                    <input type="text" id="filtro" placeholder="Nombre del medicamento" onkeyup="filtrar()" class="form-control" autocomplete="off"/>
+                <div class="form-group form-inline">
+                    <input type="text" id="filtro" placeholder="Nombre" onkeyup="filtrar()" class="form-control" autocomplete="off" />
+                    @if (FrontUser.TienePermiso(RolesPermisos.administrar_catalogo_prod))
+                    {
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#agregarProducto">
+                            <span class="glyphicon glyphicon-plus"></span> Nuevo
+                        </button>
+                    }
                 </div>
                 <div id="listado">
 
@@ -1144,7 +1164,7 @@
                 <h4 class="modal-title" id="myModalLabel">Agregar Problema</h4>
             </div>
             <div class="modal-body" id="divEditar">
-                
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-dismiss="modal" onclick="EditarProblema(@ViewBag.index)">Editar</button>
@@ -1152,6 +1172,180 @@
         </div>
     </div>
 </div>
+
+<!-- modal para agregar Laboratorio-->
+<div class="modal fade" id="agregarLab" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Laboratorio</h4>
+            </div>
+            <div class="modal-body">
+                <form id="formLab">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Laboratorio", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.DropDownList("codLaboratorio", null, "Seleccione un Laboratorio", htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.Label("Resultado", htmlAttributes: new { @class = "control-label col-md-3" })
+                            <div class="col-md-9">
+                                @Html.TextArea("resultado", new { @class = "form-control", rows = "4", maxlength = "700" })
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="return AgregarLab()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para agregar Producto-->
+<div class="modal fade" id="agregarProducto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Medicamento</h4>
+            </div>
+            <div class="modal-body">
+                <form id="nuevoProducto">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10 entrada">
+                                @Html.Editor("producto", new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10" style="padding-left: 0px">
+                                <div class="col-md-5 entrada">
+                                    @Html.DropDownList("codCategoria", null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+                                </div>
+                                @if (FrontUser.TienePermiso(RolesPermisos.administrar_categorias))
+                                {
+                                    <button class="btn btn-info" style="display:inline" type="button" data-toggle="modal" data-target="#nuevaCategoria">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10" style="padding-left: 0px">
+                                <div class="col-md-5  entrada">
+                                    @Html.DropDownList("codPresentacion", null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control col-md-3" })
+                                </div>
+                                @if (FrontUser.TienePermiso(RolesPermisos.administrar_presentaciones))
+                                {
+                                    <button class="btn btn-info" style="display:inline" type="button" data-toggle="modal" data-target="#nuevaPresentacion">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group form-inline">
+                            @Html.Label("Dosis", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3 entrada">
+                                @Html.Editor("dosis", new { htmlAttributes = new { @class = "form-control", maxlength = 8 } })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("codVolumen", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+
+                        <div class="form-group form-inline">
+                            @Html.Label("Segunda dosis", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-3 entrada">
+                                @Html.Editor("dosis2", new { htmlAttributes = new { @class = "form-control", maxlength = 8 } })
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("codVolumen2", null, htmlAttributes: new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="AgregarProducto()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para categoría-->
+<div class="modal fade" id="nuevaCategoria" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Categoría</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2", maxlength = 50 })
+                            <div class="col-md-10" id="entrada">
+                                <input class="form-control text-box single-line" id="categoria" name="categoria" type="text" value="" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearCategoria()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal para Presentación-->
+<div class="modal fade" id="nuevaPresentacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Nueva Presentación</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-horizontal">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" id="presentacion" name="presentacion" type="text" value="" , maxlength=50 />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="crearPresentacion()">Crear y Asignar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section scripts{
     @*permete actualizar contenido usando ajax.AtionLink() lo utilice para porder verificar si ya se han guardado avances.*@
     @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
@@ -1167,6 +1361,7 @@
         var codPaciente = @Model.paciente.codPaciente;
         var receta = [];
         var problemas = [];
+        var laboratorios = [];
         var paraReceta = null;
         var index = 0;
 
@@ -1373,12 +1568,13 @@
                 "revision": revision,
                 "signos": signos,
                 "problemas": problemas,
+                "laboratorios": laboratorios,
                 "planes": planes,
                 "terapeutico": terapeutico,
                 "receta": receta,
                 "diagnostico": diagnostico
             };
-            if (diagnostico.codUsuario == "") {
+            if (consulta.codMedico == "") {
                 alert("Es obligatorio seleccionar un Médico en el Diagnostico");
             }
             else
@@ -1395,8 +1591,6 @@
         }
 
         function agregarProblema() {
-            var resultado =  $('#nProblema').val().replace(/\n+/g, " ")
-            console.log(resultado);
             if ($('#nProblema').val() != "") {
                 problemas.push({
                     codConsulta: codConsulta,
@@ -1470,6 +1664,53 @@
             });
         }
 
+        function AgregarLab() {
+            if ($('#codLaboratorio').val() != "" && $('#resultado').val() != "") {
+                var index = laboratorios.findIndex(function (element) { return element.codLaboratorio == $('#codLaboratorio').val() });
+                if (index == -1) {
+                    laboratorios.push({
+                        codConsulta: codConsulta,
+                        codLaboratorio: $('#codLaboratorio').val(),
+                        resultado: $('#resultado').val().replace(/\n+/g, " ")
+                    });
+                    $.ajax({
+                        traditional: true,
+                        url: '@Url.Action("Laboratorios", "Atencion")',
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        data: JSON.stringify(laboratorios),
+                        success: function (response) {
+                            $('#formLab').trigger("reset");
+                            $('#listaLabs').html(response);
+
+                        }
+                    });
+                }
+                else {
+                    alert("Este laboratorio ya fue agregado");
+                }
+            }
+            else {
+                alert("El laboratorio y el resultado son obligatorios");
+                return false;
+            }
+        }
+
+        function QuitarLab(codLab) {
+            var index = laboratorios.findIndex(function (element) { return element.codLaboratorio == codLab });
+            laboratorios.splice(index, 1);
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Laboratorios", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(laboratorios),
+                success: function (response) {
+                    $('#listaLabs').html(response);
+                }
+            });
+        }
+
         function numerico(event){
             var n = event.charCode;
             var respuesta = ((n >= 48 && n <= 57) || n == 0);
@@ -1491,6 +1732,16 @@
             {
                 @:problemas.push({ codConsulta: @item.codConsulta, problema: "@item.problema", subjetivos: "@item.subjetivos", objetivos: "@item.objetivos", analisis: "@item.analisis"});
             }
+            @foreach (var item in Model.receta)
+            {
+                @:receta.push({ codConsulta: @item.codConsulta, codProducto: "@item.codProducto", descripcion: "@item.descripcion"});
+            }
+            @foreach (var item in Model.laboratorios)
+            {
+                @:laboratorios.push({ codConsulta: @item.codConsulta, codLaboratorio: @item.codLaboratorio, resultado: "@item.resultado"});
+            }
+            QuitarTildes();
+            //llama a la vista parcial de problemas
             $.ajax({
                 traditional: true,
                 url: '@Url.Action("Problemas", "Atencion")',
@@ -1499,27 +1750,110 @@
                 data: JSON.stringify(problemas),
                 success: function (response) {
                     $('#listaProblemas').html(response);
-                    $('#formProblema').trigger("reset");
                     return true;
                 }
             });
-            @foreach (var item in Model.receta)
-            {
-                @:receta.push({ codConsulta: @item.codConsulta, codProducto: "@item.codProducto", descripcion: "@item.descripcion"});
-            }
-             $.ajax({
+            //llama a la vista parcial para la receta
+            $.ajax({
                 traditional: true,
                 url: '@Url.Action("DetalleReceta", "Atencion")',
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(receta),
                 success: function (response) {
-                    $('#listaMedicamentos').modal('hide');
                     $('#detalle').html(response);
-                    $('#formPrescripcion').trigger("reset");
-
                 }
             });
+            //llama a la vista parcial para laboratorios
+            $.ajax({
+                traditional: true,
+                url: '@Url.Action("Laboratorios", "Atencion")',
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(laboratorios),
+                success: function (response) {
+                    $('#listaLabs').html(response);
+                }
+            });
+        }
+
+        //nuevo medicamento
+        function AgregarProducto() {
+            //validacion de categoria
+            if ($("#producto").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            var producto = {
+                producto: $('#producto').val(),
+                codCategoria: $('#codCategoria').val(),
+                codPresentacion: $('#codPresentacion').val(),
+                dosis: $('#dosis').val(),
+                codVolumen: $('#codVolumen').val(),
+                dosis2: $('#dosis2').val(),
+                codVolumen2: $('#codVolumen2').val()
+            };
+            $.ajax({
+                url: '@Url.Action("NuevoProducto", "Producto")',
+                type: "POST",
+                dataType: "json",
+                data: { producto: producto },
+                success: function (producto) {
+                    paraReceta = { codConsulta: codConsulta, codProducto: producto, descripcion: "" };
+                    $('#prescripcion').modal('show');
+                    $('#agregarProducto').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
+
+        //nueva categoria
+        function crearCategoria() {
+            //validacion de categoria
+            if ($("#categoria").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            var categoria = {
+                "categoria": document.getElementById("categoria").value,
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("nuevaCategoria", "Producto")',
+                type: "POST",
+                dataType: "json",
+                data: { "categoria": categoria },
+                success: function (categoria) {
+                    var item = "<option value='" + categoria.codCategoria + "'>" + categoria.categoria + "</option>"
+                    $('#codCategoria').append(item);
+                    document.getElementById("codCategoria").value = categoria.codCategoria;
+                    $('#nuevaCategoria').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
+        }
+
+        //nueva presentación
+        function crearPresentacion() {
+            // validacion de presentacion
+            if ($("#presentacion").val().length <= 2) { alert("Nombre invalido, se requiere como minimo 3 caracteres"); return; }
+            var presentacion = {
+                "presentacion": document.getElementById("presentacion").value,
+                "estado": true
+            };
+            $.ajax({
+                url: '@Url.Action("NuevaPresentacion", "Producto")',
+                type: "POST",
+                dataType: "json",
+                data: { "presentacion": presentacion },
+                success: function (presentacion) {
+                    var item = "<option value='" + presentacion.codPresentacion + "'>" + presentacion.presentacion + "</option>"
+                    $('#codPresentacion').append(item);
+                    document.getElementById("codPresentacion").value = presentacion.codPresentacion;
+                    $('#nuevaPresentacion').modal('hide');
+                },
+                error: function (response) {
+                    alert("error");
+                }
+            })
         }
 
         function vacio(input, nab){
@@ -1533,8 +1867,71 @@
                 return true;
             }
         }
-        @*function GenerarReceta(){
-            window.location.href = '@Url.Action("imprimirReceta","Atencion",routeValues: new { cod = Model.consulta.codPaciente })';
-        }*@
+
+        function QuitarTildes() {
+            problemas.forEach(function (item) {
+                item.problema = item.problema.replace(/&#225;/g, "á");
+                item.problema = item.problema.replace(/&#233;/g, "é");
+                item.problema = item.problema.replace(/&#237;/g, "í");
+                item.problema = item.problema.replace(/&#243;/g, "ó");
+                item.problema = item.problema.replace(/&#250;/g, "ú");
+                item.problema = item.problema.replace(/&#193;/g, "Á");
+                item.problema = item.problema.replace(/&#201;/g, "É");
+                item.problema = item.problema.replace(/&#205;/g, "Í");
+                item.problema = item.problema.replace(/&#211;/g, "Ó");
+                item.problema = item.problema.replace(/&#218;/g, "Ú");
+                item.problema = item.problema.replace(/&#241;/g, "ñ");
+
+                item.subjetivos = item.subjetivos.replace(/&#225;/g, "á");
+                item.subjetivos = item.subjetivos.replace(/&#233;/g, "é");
+                item.subjetivos = item.subjetivos.replace(/&#237;/g, "í");
+                item.subjetivos = item.subjetivos.replace(/&#243;/g, "ó");
+                item.subjetivos = item.subjetivos.replace(/&#250;/g, "ú");
+                item.subjetivos = item.subjetivos.replace(/&#193;/g, "Á");
+                item.subjetivos = item.subjetivos.replace(/&#201;/g, "É");
+                item.subjetivos = item.subjetivos.replace(/&#205;/g, "Í");
+                item.subjetivos = item.subjetivos.replace(/&#211;/g, "Ó");
+                item.subjetivos = item.subjetivos.replace(/&#218;/g, "Ú");
+                item.subjetivos = item.subjetivos.replace(/&#241;/g, "ñ");
+
+                item.objetivos = item.objetivos.replace(/&#225;/g, "á");
+                item.objetivos = item.objetivos.replace(/&#233;/g, "é");
+                item.objetivos = item.objetivos.replace(/&#237;/g, "í");
+                item.objetivos = item.objetivos.replace(/&#243;/g, "ó");
+                item.objetivos = item.objetivos.replace(/&#250;/g, "ú");
+                item.objetivos = item.objetivos.replace(/&#193;/g, "Á");
+                item.objetivos = item.objetivos.replace(/&#201;/g, "É");
+                item.objetivos = item.objetivos.replace(/&#205;/g, "Í");
+                item.objetivos = item.objetivos.replace(/&#211;/g, "Ó");
+                item.objetivos = item.objetivos.replace(/&#218;/g, "Ú");
+                item.objetivos = item.objetivos.replace(/&#241;/g, "ñ");
+
+                item.analisis = item.analisis.replace(/&#225;/g, "á");
+                item.analisis = item.analisis.replace(/&#233;/g, "é");
+                item.analisis = item.analisis.replace(/&#237;/g, "í");
+                item.analisis = item.analisis.replace(/&#243;/g, "ó");
+                item.analisis = item.analisis.replace(/&#250;/g, "ú");
+                item.analisis = item.analisis.replace(/&#193;/g, "Á");
+                item.analisis = item.analisis.replace(/&#201;/g, "É");
+                item.analisis = item.analisis.replace(/&#205;/g, "Í");
+                item.analisis = item.analisis.replace(/&#211;/g, "Ó");
+                item.analisis = item.analisis.replace(/&#218;/g, "Ú");
+                item.analisis = item.analisis.replace(/&#241;/g, "ñ");
+            })
+
+            receta.forEach(function (item) {
+                item.descripcion = item.descripcion.replace(/&#225;/g, "á");
+                item.descripcion = item.descripcion.replace(/&#233;/g, "é");
+                item.descripcion = item.descripcion.replace(/&#237;/g, "í");
+                item.descripcion = item.descripcion.replace(/&#243;/g, "ó");
+                item.descripcion = item.descripcion.replace(/&#250;/g, "ú");
+                item.descripcion = item.descripcion.replace(/&#193;/g, "Á");
+                item.descripcion = item.descripcion.replace(/&#201;/g, "É");
+                item.descripcion = item.descripcion.replace(/&#205;/g, "Í");
+                item.descripcion = item.descripcion.replace(/&#211;/g, "Ó");
+                item.descripcion = item.descripcion.replace(/&#218;/g, "Ú");
+                item.descripcion = item.descripcion.replace(/&#241;/g, "ñ");
+            })
+        }
     </script>
 }

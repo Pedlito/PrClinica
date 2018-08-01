@@ -72,12 +72,14 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.codPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
             ViewBag.codCategoria = new SelectList(categorias, "codCategoria", "categoria");
             ViewBag.codVolumen = new SelectList(volumenes, "codVolumen", "volumen");
+            ViewBag.codVolumen2 = new SelectList(volumenes, "codVolumen", "volumen");
             return View();
         }
 
         // GET: Producto/nuevaCategoria
         public JsonResult nuevaCategoria(tbCategoria categoria)
         {
+            categoria.estado = true;
             db.tbCategoria.InsertOnSubmit(categoria);
             db.SubmitChanges();
             return Json(categoria);
@@ -86,6 +88,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Producto/NuevaPresentacion
         public JsonResult NuevaPresentacion(tbPresentacion presentacion)
         {
+            presentacion.estado = true;
             db.tbPresentacion.InsertOnSubmit(presentacion);
             db.SubmitChanges();
             return Json(presentacion);
@@ -99,13 +102,20 @@ namespace BD_PR_01_Clinicas.Controllers
             try
             {
                 // TODO: Add insert logic here
+                int paraDosis2 = 0;
+                if (collection["dosis2"] != "")
+                {
+                    paraDosis2 = int.Parse(collection["dosis2"]);
+                }
                 tbProducto nuevo = new tbProducto
                 {
                     producto = collection["producto"],
                     codCategoria = int.Parse(collection["codCategoria"]),
                     codPresentacion = int.Parse(collection["codPresentacion"]),
-                    dosis = decimal.Parse(collection["dosis"]),
+                    dosis = int.Parse(collection["dosis"]),
                     codVolumen = int.Parse(collection["codVolumen"]),
+                    dosis2 = paraDosis2,
+                    codVolumen2 = int.Parse(collection["codVolumen2"]),
                     estado = true
                 };
                 db.tbProducto.InsertOnSubmit(nuevo);
@@ -114,6 +124,12 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             catch
             {
+                List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
+                List<tbCategoria> categorias = (from t in db.tbCategoria where t.estado == true orderby t.categoria select t).ToList();
+                ViewBag.codPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
+                ViewBag.codCategoria = new SelectList(categorias, "codCategoria", "categoria");
+                ViewBag.codVolumen = new SelectList(volumenes, "codVolumen", "volumen");
+                ViewBag.codVolumen2 = new SelectList(volumenes, "codVolumen", "volumen");
                 return View();
             }
         }
@@ -126,6 +142,7 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.codPresentacion = new SelectList(db.tbPresentacion, "codPresentacion", "presentacion");
             ViewBag.codCategoria = new SelectList(db.tbCategoria, "codCategoria", "categoria");
             ViewBag.codVolumen = new SelectList(volumenes, "codVolumen", "volumen");
+            ViewBag.codVolumen2 = new SelectList(volumenes, "codVolumen", "volumen");
             return View(producto);
         }
 
@@ -137,12 +154,19 @@ namespace BD_PR_01_Clinicas.Controllers
             try
             {
                 // TODO: Add update logic here
+                int paraDosis2 = 0;
+                if (collection["dosis2"] != "")
+                {
+                    paraDosis2 = int.Parse(collection["dosis2"]);
+                }
                 tbProducto producto = (from t in db.tbProducto where t.codProducto == codProducto select t).SingleOrDefault();
                 producto.producto = collection["producto"];
                 producto.codCategoria = int.Parse(collection["codCategoria"]);
                 producto.codPresentacion = int.Parse(collection["codPresentacion"]);
-                producto.dosis = decimal.Parse(collection["dosis"]);
+                producto.dosis = int.Parse(collection["dosis"]);
                 producto.codVolumen = int.Parse(collection["codVolumen"]);
+                producto.dosis2 = paraDosis2;
+                producto.codVolumen2 = int.Parse(collection["codVolumen2"]);
                 db.SubmitChanges();
                 return RedirectToAction("Index");
             }
@@ -198,6 +222,16 @@ namespace BD_PR_01_Clinicas.Controllers
             return File(stream, "aplication/pdf", "Catalogo_de_productos.pdf");
         }
 
-
+        public int NuevoProducto(tbProducto producto)
+        {
+            if (producto.dosis2 == null)
+            {
+                producto.dosis2 = 0;
+            }
+            producto.estado = true; 
+            db.tbProducto.InsertOnSubmit(producto);
+            db.SubmitChanges();
+            return producto.codProducto;
+        }
     }
 }

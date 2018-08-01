@@ -55,6 +55,7 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.nCodPresentacion = new SelectList(presentaciones, "codPresentacion", "presentacion");
             ViewBag.nCodCategoria = new SelectList(categorias, "codCategoria", "categoria");
             ViewBag.nCodVolumen = new SelectList(volumenes, "codVolumen", "volumen");
+            ViewBag.nCodVolumen2 = new SelectList(volumenes, "codVolumen", "volumen");
             return View(new Entrada());
         }
 
@@ -99,7 +100,7 @@ namespace BD_PR_01_Clinicas.Controllers
                              nombre = t.producto,
                              categoria = t.tbCategoria.categoria,
                              presentacion = t.tbPresentacion.presentacion,
-                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                             dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                             }).ToList();
             }
             else
@@ -113,7 +114,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                 nombre = t.producto,
                                 categoria = t.tbCategoria.categoria,
                                 presentacion = t.tbPresentacion.presentacion,
-                                dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                                dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value)
                             }).ToList();
             }
             return PartialView("_Productos", lista);
@@ -139,7 +140,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                    nombre = t.producto,
                                    categoria = t.tbCategoria.categoria,
                                    presentacion = t.tbPresentacion.presentacion,
-                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                                    cantidad = item.cantidad
                                }).SingleOrDefault());
                 }
@@ -161,7 +162,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                                 nombre = pro.producto,
                                                 categoria = pro.tbCategoria.categoria,
                                                 presentacion = pro.tbPresentacion.presentacion,
-                                                dosis = pro.dosis.ToString() + ((pro.codVolumen == 1) ? " mg" : " ml"),
+                                                dosis = RegistroProducto.Dosis(pro.dosis.ToString(), pro.codVolumen.Value, pro.dosis2.ToString(), pro.codVolumen2.Value),
                                                 cantidad = det.cantidad.Value
                                             }).ToList();
             tbEntrada entrada = (from t in db.tbEntrada where t.codEntrada == codEntrada select t).SingleOrDefault();
@@ -172,6 +173,10 @@ namespace BD_PR_01_Clinicas.Controllers
 
         public JsonResult CrearProducto(tbProducto producto)
         {
+            if (producto.dosis2 == null)
+            {
+                producto.dosis2 = 0;
+            }
             db.tbProducto.InsertOnSubmit(producto);
             db.SubmitChanges();
             return Json(producto.codProducto);

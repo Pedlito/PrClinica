@@ -4,6 +4,27 @@
     ViewBag.Title = "CambiarEstado";
 }
 
+@functions {
+    public string dosis(string dosis, int vol, string dosis2, int vol2)
+    {
+        string respuesta = "";
+        respuesta += dosis;
+        if (vol == 1)
+            respuesta += "mg";
+        else if (vol == 2)
+            respuesta += "ml";
+        if (dosis2 != "0")
+        {
+            respuesta += "/" + dosis2;
+            if (vol2 == 1)
+                respuesta += "mg";
+            else if (vol2 == 2)
+                respuesta += "ml";
+        }
+        return respuesta;
+    }
+}
+
 @if (Model.estado == true)
 {
     <h2>Deshabilitar</h2>
@@ -48,18 +69,9 @@ else
             @Html.DisplayName("Dosis")
         </dt>
 
-        @if (Model.codVolumen == 1)
-        {
-            <dd>
-                @Model.dosis mg
-            </dd>
-        }
-        else if (Model.codVolumen == 2)
-        {
-            <dd>
-                @Model.dosis ml
-            </dd>
-        }
+        <dd>
+            @dosis(Model.dosis.ToString(), Model.codVolumen.Value, Model.dosis2.ToString(), Model.codVolumen2.Value)
+        </dd>
 
     </dl>
 
@@ -71,7 +83,7 @@ else
             @if (Model.estado == true)
             {
                 @*<input type="submit" value="Deshabilitar" class="btn btn-danger" />*@
-                <button type="submit"  class="btn btn-danger">
+                <button type="submit" class="btn btn-danger">
                     <span class="glyphicon glyphicon-trash"></span> Archivar
                 </button>
             }

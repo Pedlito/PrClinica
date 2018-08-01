@@ -269,6 +269,12 @@
             }
         }
 
+        function numerico(event) {
+            var n = event.charCode;
+            var respuesta = ((n >= 48 && n <= 57) || n == 0);
+            return respuesta;
+        }
+
         function guardar() {
             if ($("#descripcion").val() == "") {
 
@@ -319,6 +325,8 @@
                 "codPresentacion": parseInt(document.getElementById("nCodPresentacion").value),
                 "dosis": parseFloat(document.getElementById("nDosis").value),
                 "codVolumen": parseInt(document.getElementById("nCodVolumen").value),
+                "dosis2": parseFloat(document.getElementById("nDosis2").value),
+                "codVolumen2": parseInt(document.getElementById("nCodVolumen2").value),
                 "estado": true
             };
             $.ajax({

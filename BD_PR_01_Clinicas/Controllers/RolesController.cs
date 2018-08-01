@@ -16,7 +16,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Roles
         public ActionResult Index(int? page)
         {
-            List<tbRol> roles = db.tbRol.ToList();
+            List<tbRol> roles = (from t in db.tbRol where t.codTipoUsuario != 4 select t).ToList();
           
             int pageSize = 15;
             int pageNumber = (page ?? 1);
