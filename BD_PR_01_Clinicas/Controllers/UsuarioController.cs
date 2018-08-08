@@ -9,7 +9,7 @@ using PagedList;
 namespace BD_PR_01_Clinicas.Controllers
 {
     [AutenticadoAttribute]
-  //  [PermisoAttribute(Permiso = RolesPermisos.administrar_usuarios)]
+    [PermisoAttribute(Permiso = RolesPermisos.administrar_usuarios)]
     public class UsuarioController : Controller
     {
         DataClasesDataContext db = new DataClasesDataContext();
@@ -33,13 +33,13 @@ namespace BD_PR_01_Clinicas.Controllers
             if (usuario == null)
             {
                
-                lista = (from t in db.tbUsuario orderby t.nombre select t).ToList();
+                lista = (from t in db.tbUsuario orderby t.codTipoUsuario select t).ToList();
 
             }
             else
             {
 
-                lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.nombre select t).Take(20).ToList();
+                lista = (from t in db.tbUsuario where t.nombre.Contains(usuario) orderby t.codTipoUsuario select t).Take(30).ToList();
             }
           
             int pageSize = 15;
@@ -62,6 +62,7 @@ namespace BD_PR_01_Clinicas.Controllers
             List<tbRol> rols = db.tbRol.Where(x=>x.estado==true).ToList();
             var us = new RegisterViewModel();
             us.roles = rols;
+            us.FechaNacimiento = DateTime.Now.AddYears(-25);
             return View(us);
         }
         [HttpPost]
@@ -73,7 +74,7 @@ namespace BD_PR_01_Clinicas.Controllers
                 if (!string.IsNullOrEmpty(model.Usuario) && db.tbUsuario.Where(m => m.usuario == model.Usuario.ToUpper()).Any()) { ModelState.AddModelError("Usuario", "El usuario ingresado ya existe."); }
 
                 if (ModelState.IsValid)
-            {
+                 {
                     tbUsuario NuevoUsuario = new tbUsuario
                     {
 
@@ -92,8 +93,8 @@ namespace BD_PR_01_Clinicas.Controllers
                 db.SubmitChanges();
 
                 return RedirectToAction("Index", "Usuario");
-
             }
+            
         }
             catch (Exception)
             {
@@ -302,18 +303,28 @@ namespace BD_PR_01_Clinicas.Controllers
         [HttpPost]
         public JsonResult UsuarioRepetido(string usuario)
         {
+            var respuestaModel = new respuestaModelo
+            {
+                respuesta = true,
+                 mensaje =""
+            };
+
             try
             {
-                if (db.tbUsuario.Where(x => x.usuario == usuario).Any())
-                {
-                    return Json(usuario);
-                }
+                  if (db.tbUsuario.Where(m => m.usuario == usuario.ToUpper()).Any())
+                  {
+                    respuestaModel.respuesta = false;
+                    respuestaModel.mensaje = "El usuario ya existe";
+                    return Json(respuestaModel);
+                  }
 
-                return Json("");
+                return Json(respuestaModel);
             }
             catch
             {
-                return Json("Fatal");
+                respuestaModel.respuesta = false;
+                respuestaModel.mensaje = "Error: conexion con servidor";
+                return Json(respuestaModel);
             }
         }
         // GET: Usuario/Delete/5

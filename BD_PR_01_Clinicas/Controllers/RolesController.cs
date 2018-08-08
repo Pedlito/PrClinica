@@ -81,7 +81,11 @@ namespace BD_PR_01_Clinicas.Controllers
          
             try
             {
-                if (db.tbRol.Where(x => x.Rol == rl.Rol).Any()) { ModelState.AddModelError("Rol", "El rol ya existe"); return View(rl); }
+                tbRol Rl = (from r in db.tbRol where r.codTipoUsuario == rl.codTipoUsuario select r).SingleOrDefault();
+                if (Rl.Rol.ToUpper() != rl.Rol.ToUpper()) {
+                    if (db.tbRol.Where(x => x.Rol.ToUpper() == rl.Rol.ToUpper()).Any()) { ModelState.AddModelError("Rol", "El rol ya existe"); return View(rl); }
+                }
+                
                 tbRol rol = db.tbRol.Where(x => x.codTipoUsuario == rl.codTipoUsuario).SingleOrDefault();
                 rol.Rol = rl.Rol;
                 rol.descripcion = rl.descripcion;

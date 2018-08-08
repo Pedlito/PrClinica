@@ -85,7 +85,7 @@
                                     @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-xs" onclick="descartarDoc(@item.codUsuario, event)">
+                                    <button type="button" class="btn btn-danger btn-xs" onclick="descartarDoc(@item.codUsuario, '@item.tbUsuario.nombre')">
                                         <span class="glyphicon glyphicon-remove"></span> Descartar
                                     </button>
                                 </td>
@@ -107,10 +107,7 @@
                     <div class="col-md-1">
                         <label class="control-label" for="Nombre">Nombre</label>
                     </div>
-
                     <div class="col-md-3">
-
-
                         @Html.DropDownList("codEstudiante", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
                     </div>
                     <div class="col-md-8">
@@ -154,7 +151,7 @@
                                         @Html.DisplayFor(modelItem => item.tbUsuario.usuario)
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger btn-xs" onclick="descartarEstu(@item.codUsuario, event)">
+                                        <button type="button" class="btn btn-danger btn-xs" onclick="descartarEstu(@item.codUsuario, '@item.tbUsuario.nombre')">
                                             <span class="glyphicon glyphicon-remove"></span> Descartar
                                         </button>
                                     </td>
@@ -186,13 +183,6 @@
 
 @section Scripts {
     <script>
-        @*window.onload = function () {
-
-            $("input[name='fechaFinal'][value='@ViewBag.fechaFinUR']").prop('disabled', false);
-            $("input[name='fechaFinal'][value='@ViewBag.fechaFinUR']").prop('readonly', true);
-           
-        }*@
-
            $("#fechaInicio").datepicker({
             dateFormat: 'dd/mm/yy',
             changeMonth: true,
@@ -200,7 +190,6 @@
             autoclose: true,
             yearRange: '-1:+10',
             defaultDate: '01/01/2018',
-           // beforeShowDay:$.datepicker.noWeekends
         }
 
         );
@@ -211,15 +200,11 @@
             autoclose: true,
             yearRange: '-1:+10',
             defaultDate: '01/01/2018',
-          //  beforeShowDay: $.datepicker.noWeekends
         }
 
         );
-
-
-
-        var listaDocs ;
-        var listaEstus ;
+        var listaDocs  ;
+        var listaEstus  ;
         var cod = { id: $("#codRotacion").val()};
 
         getDocs();
@@ -247,51 +232,43 @@
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(cod),
-                success: function (response) {
-
-                    listaEstus = response;
+                success: function (response) {    
+                    listaEstus = response; 
                 },
                 error: function (response) {
                     console.log("no se pudieron cargar los datos de estudiantes");
                 }
             });
         }
+       
+
 
         function agregarDocs() {
-            if (!$("#codDoctor").val()) { alert("Seleccione un usurio valido"); return;}
+            if (!$("#codDoctor").val()) { alert("Seleccione un usurio valido"); return; }
             var codDoc = parseInt($("#codDoctor").val());
-            var index = listaDocs.findIndex(function (element) { return element.codUser == codDoc });
-            if (index == -1) {
                 listaDocs.push({ codUser: codDoc });
                 cargarDocs(listaDocs);
-            }
-            else {
-
-                alert("Ya ha sido agregado");
-            }
+                $("#codDoctor option:selected").remove();
         }
 
-        function descartarDoc(codUsuario) {
-            var index = listaDocs.findIndex(function (element) { return element.codUser == codUsuario });
+        function descartarDoc(codUsuario, nom) {
+                $("#codDoctor").append('<option value="' + codUsuario + '">' + nom + '</option>');
+            index = listaDocs.findIndex(function (element) { return element.codUser == codUsuario });
             listaDocs.splice(index, 1);
-           cargarDocs(listaDocs);
+            cargarDocs(listaDocs);
         }
 
         function agregarEstus() {
             if (!$("#codEstudiante").val()) { alert("Seleccione un usurio valido"); return; }
             var codEstu = parseInt($("#codEstudiante").val());
-            var index = listaEstus.findIndex(function (element) { return element.codUser == codEstu });
-            if (index == -1) {
             listaEstus.push({ codUser: codEstu });
             cargarEstus(listaEstus);
-            }
-            else {
-                alert("Ya ha sido agregado");
-            }
+            $("#codEstudiante option:selected").remove();
         }
 
-        function descartarEstu(codUsuario) {
-            var index = listaEstus.findIndex(function (element) { return element.codUser == codUsuario });
+        function descartarEstu(codUsuario, nom) {
+                $("#codEstudiante").append('<option value="' + codUsuario + '">' + nom + '</option>');
+            index = listaEstus.findIndex(function (element) { return element.codUser == codUsuario });
             listaEstus.splice(index, 1);
             cargarEstus(listaEstus);
         }

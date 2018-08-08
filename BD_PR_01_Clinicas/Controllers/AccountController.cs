@@ -218,7 +218,7 @@ namespace BD_PR_01_Clinicas.Controllers
                     {
 
                         tbUsuario item = (from t in context.tbUsuario
-                                          where t.codUsuario == SessionUsuario.Get.UserId
+                                          where t.codUsuario == SessionUsuario.Get.UserId         
                                           select t).SingleOrDefault();
                         return View(item);
                     }
@@ -307,7 +307,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                           where t.codUsuario == user.codUsuario
                                           select t).SingleOrDefault();
 
-                        item.nombre = user.nombre;
+                        item.nombre = user.usuario;
                         item.dpi = user.dpi;
                         item.carnet = user.carnet;
                         item.fechaNacimiento = user.fechaNacimiento;

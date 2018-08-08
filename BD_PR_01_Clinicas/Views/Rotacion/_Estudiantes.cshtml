@@ -13,7 +13,7 @@
                 @Html.DisplayFor(modelItem => item.usuario)
             </td>
             <td>
-                <button type="button" class="btn btn-danger btn-xs" onclick="descartarEstu(@item.codUsuario, event)">
+                <button type="button" class="btn btn-danger btn-xs" onclick="descartarEstu(@item.codUsuario,'@item.nombre')">
                     <span class="glyphicon glyphicon-remove"></span> Descartar
                 </button>
             </td>

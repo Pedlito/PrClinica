@@ -20,30 +20,39 @@
 
         <div class="form-group">
            
-            <div class="col-xs-1">
-                @Html.LabelFor(model => model.valor, htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-2">
+                @Html.Label("Habilitar registro", htmlAttributes: new { @class = "control-label" })
             </div>
-                <div class="checkbox">                
+            
+            <div class="col-md-10">
+                <div class="checkbox">
                     @Html.EditorFor(model => model.valor)
                 </div>
+            </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-4">
+            <div class="col-md-2">
+                <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Regresar
+                </a>
+            </div>
+            <div class="col-md-10">
                 @*<input type="submit" value="Guardar cambios" class="btn btn-default" />*@
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-floppy-save"></span> Guardar cambios
                 </button>
             </div>
+
         </div>
     </div>
 }
 
-<div>
+@*<div>
     <a href="@Url.Action("Administracion", "Home")" class="btn btn-primary">
         <span class="glyphicon glyphicon-arrow-left"></span> Regresar
     </a>
-</div>
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

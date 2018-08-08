@@ -30,5 +30,9 @@ namespace BD_PR_01_Clinicas.Models
    public bool IsChecked { get; set; }
     }
 
+    public class respuestaModelo {
+        public bool respuesta { get; set; }
+        public string mensaje { get; set; }
+    }
 
 }

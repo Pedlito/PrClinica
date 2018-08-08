@@ -51,7 +51,7 @@
     @Scripts.Render("~/bundles/jqueryval")
 <script>
         $.validator.addMethod("soloLetras", function (value, element) {
-            return /^[a-zA-Z ]+$/i.test(value);
+            return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/i.test(value);
         }, "Ingrese sólo Letras");
 
         $("#formRol").validate({

@@ -24,7 +24,7 @@ namespace BD_PR_01_Clinicas.Controllers
             ViewBag.Message = "Your application description page.";
             return View();
         }
-      //  [PermisoAttribute(Permiso = RolesPermisos.administrar)]
+       [PermisoAttribute(Permiso = RolesPermisos.administrar)]
         public ActionResult Administracion()
         {
             return View();

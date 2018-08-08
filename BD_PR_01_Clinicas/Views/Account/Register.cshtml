@@ -16,7 +16,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group" >
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10" >
+            <div class="col-md-10 entrada" >
                 @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control", placeholder ="Nombre completo", maxlength = 100 } })
                 @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
             </div>
@@ -24,7 +24,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Dpi, htmlAttributes: new { @class = "control-label col-md-2"  })
-            <div class="col-md-10" >
+            <div class="col-md-10 entrada" >
                 @Html.EditorFor(model => model.Dpi, new { htmlAttributes = new { @class = "form-control", maxlength = 16 } })
                 @Html.ValidationMessageFor(model => model.Dpi, "", new { @class = "text-danger" })
             </div>
@@ -40,7 +40,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">
                 @Html.TextBoxFor(model => model.FechaNacimiento, "", new { @class = "form-control", @ReadOnly = true } )
                 @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
             </div>
@@ -48,7 +48,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", placeholder="Identificador de usuario", maxlength = 30 } })
                 @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
             </div>
@@ -56,7 +56,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", maxlength = 30 } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
@@ -64,26 +64,29 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="col-md-10 entrada">
                 @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @*<input type="submit" value="Crear" class="btn btn-default" />*@
+            <div class="col-md-offset-2 col-md-1">
+              
                 <button type="submit" class="btn btn-success">
                     <span class="glyphicon glyphicon-user"></span> Crear
                 </button>
+            </div>
+            <div class="col-md-9">
+                <a href = "@Url.Action("Index","Home")" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-remove-sign"></span> Cancelar
+                </a>
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Ir a Inicio", "Index","Home")
-</div>
+
 @section Scripts{
 @Scripts.Render("~/bundles/jqueryval")
 <script>
@@ -96,9 +99,17 @@
     });
   
 
-        $.validator.addMethod("soloNumeros", function (value, element) {
-            return /^[0-9]+$/i.test(value);
-        }, "Ingrese sólo numeros");
+    $.validator.addMethod("soloNumeros", function (value, element) {
+        return /^[0-9]+$/i.test(value);
+    }, "Ingrese sólo numeros");
+
+    $.validator.addMethod("soloLetras", function (value, element) {
+        return /^[a-zA-ZáéíóúÁÉÍÓÚÑñü ]+$/i.test(value);
+    }, "Ingrese sólo Letras");
+
+    $.validator.addMethod("alfanumerico", function (value, element) {
+        return /^[a-zA-Z0-9áéíóúÁÉÍÓÚÑñü ]+$/i.test(value);
+    }, "Ingrese sólo Letras, numeros solo al final, sin espacios");
 
         $("#formUsuario").validate({
 
@@ -118,16 +129,44 @@
                 e.closest('.help-block').remove();
 
             },
+            rules: {
+            Nombre: { required: true, soloLetras: true, minlength: 3 },
+            Dpi: { required: true, soloNumeros: true, minlength: 13},
+            Carnet: { required: true, soloNumeros: true, minlength: 8 },
+            FechaNacimiento: { required: true },
+            Usuario: { required: true, minlength: 3, alfanumerico: true, UserRep : true },
+            Password: { required: true, minlength: 4 },
+            ConfirmPassword: { required: true, equalTo: '#Password' }
 
-            rules: {           
-                Carnet: { required: true, soloNumeros: true, minlength: 8 },         
+        },
+        messages: {
+            Nombre: {
+                    required: "Debe introducir su nombre",
+                    minlength: "Tres caracteres como minimo"
             },
-            messages: {
-  
-                Carnet: {
+
+            Dpi: {
+                    required: "Debe introducir un numero de identificacion",
+                    minlength: "13 caracteres minimo"
+            },
+            Carnet: {
                     required: "Debe introducir un numero de identificacion",
                     minlength: "8 caracteres minimo"
-                }
+            },
+            FechaNacimiento: "Fecha nacimiento requerida",
+
+            Usuario: {
+                required: "Debe introducir un nombre de usuario",
+                minlength: "3 caracteres como minimo"
+            },
+            Password: {
+                    required: "Debe introducir una contraseña",
+                    minlength: "4 caracteres como minimo"
+            },
+            ConfirmPassword: {
+                    required: "Repita su contraseña",
+                    equalTo: "Las contraseñas no coinciden"
+            }
             }
         });
 

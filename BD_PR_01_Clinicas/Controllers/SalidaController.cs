@@ -99,7 +99,7 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 lista = (from e in db.tbDetalleEntrada
                          join p in db.tbProducto on e.codProducto equals p.codProducto
-                         where p.estado == true
+                         where db.existencias(p.codProducto) > 0
                          select new RegistroProducto
                          {
                              codProducto = p.codProducto,
@@ -107,13 +107,13 @@ namespace BD_PR_01_Clinicas.Controllers
                              categoria = p.tbCategoria.categoria,
                              presentacion = p.tbPresentacion.presentacion,
                              dosis = p.dosis.ToString() + ((p.codVolumen == 1) ? " mg" : " ml")
-                         }).Distinct().ToList();
+                         }).Take(10).Distinct().ToList();
             }
             else
             {
                 lista = (from e in db.tbDetalleEntrada
                          join p in db.tbProducto on e.codProducto equals p.codProducto
-                         where p.producto.Contains(filtro) && p.estado == true
+                         where p.producto.Contains(filtro) && db.existencias(p.codProducto) > 0
                          select new RegistroProducto
                          {
                              codProducto = p.codProducto,
