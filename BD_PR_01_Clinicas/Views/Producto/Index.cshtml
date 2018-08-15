@@ -5,6 +5,27 @@
     ViewBag.Title = "Productos";
 }
 
+@functions {
+    public string dosis(string dosis, int vol, string dosis2, int vol2)
+    {
+        string respuesta = "";
+        respuesta += dosis;
+        if (vol == 1)
+            respuesta += "mg";
+        else if (vol == 2)
+            respuesta += "ml";
+        if (dosis2 != "0")
+        {
+            respuesta += "/" + dosis2;
+            if (vol2 == 1)
+                respuesta += "mg";
+            else if (vol2 == 2)
+                respuesta += "ml";
+        }
+        return respuesta;
+    }
+}
+
 <h2>Productos</h2>
 
     <p>
@@ -90,18 +111,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.tbPresentacion.presentacion)
                 </td>
-                @if (item.codVolumen == 1)
-                {
-                    <td>
-                        @item.dosis mg
-                    </td>
-                }
-                else if (item.codVolumen == 2)
-                {
-                    <td>
-                        @item.dosis ml
-                    </td>
-                }
+                <td>
+                    @dosis(item.dosis.ToString(), item.codVolumen.Value, item.dosis2.ToString(), item.codVolumen2.Value)
+                </td>
                 <td>
                     @Html.CheckBoxFor(modelItem => item.estado.Value, new { onclick = "return false" })
                 </td>

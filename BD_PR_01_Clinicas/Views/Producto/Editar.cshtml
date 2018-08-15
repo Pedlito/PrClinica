@@ -10,57 +10,69 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Producto</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.codProducto)
+<div class="form-horizontal">
+    <h4>Producto</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.codProducto)
 
-        <div class="form-group">
-            @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.producto, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
-                @Html.ValidationMessageFor(model => model.producto, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
-                @Html.DropDownListFor(model => model.codCategoria, null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.codCategoria, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
-                @Html.DropDownListFor(model => model.codPresentacion, null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.codPresentacion, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Dosis", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-xs-2 entrada">
-                @Html.EditorFor(model => model.dosis, new { htmlAttributes = new { @class = "form-control", maxlength = 8 } })
-                @Html.ValidationMessageFor(model => model.dosis, "", new { @class = "text-danger" })
-            </div>
-            <div class="col-xs-2">
-                @Html.DropDownListFor(model => model.codVolumen, null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.codVolumen, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                @*<input type="submit" value="Guardar" class="btn btn-success" />*@
-                <button type="submit" class="btn btn-success">
-                    <span class="glyphicon glyphicon-floppy-save"></span> Guardar
-                </button>
-            </div>
+    <div class="form-group">
+        @Html.Label("Producto", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 entrada">
+            @Html.EditorFor(model => model.producto, new { htmlAttributes = new { @class = "form-control", maxlength = 50 } })
+            @Html.ValidationMessageFor(model => model.producto, "", new { @class = "text-danger" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.Label("Categoría", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 entrada">
+            @Html.DropDownListFor(model => model.codCategoria, null, "Seleccione una Categoría", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.codCategoria, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Presentación", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10 entrada">
+            @Html.DropDownListFor(model => model.codPresentacion, null, "Seleccione una Presentación", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.codPresentacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group form-inline">
+        @Html.Label("Dosis", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-xs-2 entrada">
+            @Html.EditorFor(model => model.dosis, new { htmlAttributes = new { @class = "form-control", maxlength = 8, onkeypress = "return numerico(event)" } })
+            @Html.ValidationMessageFor(model => model.dosis, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-xs-2">
+            @Html.DropDownListFor(model => model.codVolumen, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.codVolumen, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group form-inline">
+        @Html.Label("Segunda Dosis", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-2 entrada">
+            @Html.EditorFor(model => model.dosis2, new { htmlAttributes = new { @class = "form-control", maxlength = 8, onkeypress = "return numerico(event)" } })
+            @Html.ValidationMessageFor(model => model.dosis2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2">
+            @Html.DropDownListFor(model => model.codVolumen2, null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.codVolumen2, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @*<input type="submit" value="Guardar" class="btn btn-success" />*@
+            <button type="submit" class="btn btn-success">
+                <span class="glyphicon glyphicon-floppy-save"></span> Guardar
+            </button>
+        </div>
+    </div>
+</div>
 }
 
 <div>
@@ -120,6 +132,12 @@
             }
         }
 
-    });
+        });
+
+        function numerico(event) {
+            var n = event.charCode;
+            var respuesta = ((n >= 48 && n <= 57) || n == 0);
+            return respuesta;
+        }
     </script>
 }

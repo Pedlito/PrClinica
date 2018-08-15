@@ -23,6 +23,7 @@ namespace BD_PR_01_Clinicas.Models
         public List<tbReceta> receta { get; set; }
         public tbDiagnostico diagnostico { get; set; }
         public List<tbConsulta> consultas { get; set; }
+        public List<tbConsultaLaboratorio> laboratorios { get; set; }
     }
 
     public class consultas

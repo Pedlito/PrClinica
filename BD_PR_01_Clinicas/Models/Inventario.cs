@@ -14,7 +14,6 @@ namespace BD_PR_01_Clinicas.Models
         public decimal dosis { get; set; }
         public int codVolumen { get; set; }
         public int existencia { get; set; }
-
     }
 
 

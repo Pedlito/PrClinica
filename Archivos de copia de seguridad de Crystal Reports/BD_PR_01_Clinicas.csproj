@@ -213,6 +213,7 @@
     <Compile Include="Models\Entrada.cs" />
     <Compile Include="Models\FrontUser.cs" />
     <Compile Include="Models\HistoriaClinica.cs" />
+    <Compile Include="Models\recetamedica.cs" />
     <Compile Include="Models\Reportes.cs" />
     <Compile Include="Models\SessionUsuario.cs" />
     <Compile Include="Models\Inventario.cs" />
@@ -234,6 +235,12 @@
       <DependentUpon>Productos.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Reportes\receta.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>receta.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -247,6 +254,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\logoClinicasM.jpg" />
+    <Content Include="Images\LogoUSAC.png" />
+    <Content Include="Images\logoUsacClinica.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -262,11 +272,33 @@
       <LastGenOutput>DataClases.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\pedro.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\datapickerEspaniol.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-ui\external\jquery\jquery.js" />
+    <Content Include="Scripts\jquery-ui\images\ui-icons_444444_256x240.png" />
+    <Content Include="Scripts\jquery-ui\images\ui-icons_555555_256x240.png" />
+    <Content Include="Scripts\jquery-ui\images\ui-icons_777620_256x240.png" />
+    <Content Include="Scripts\jquery-ui\images\ui-icons_777777_256x240.png" />
+    <Content Include="Scripts\jquery-ui\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Scripts\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery-ui\package.json" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui\AUTHORS.txt" />
+    <Content Include="Scripts\jquery-ui\index.html" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.css" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Scripts\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Scripts\jquery-ui\LICENSE.txt" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -368,7 +400,6 @@
     <Content Include="Views\Atencion\_Detalle.cshtml" />
     <Content Include="Views\Rotacion\_Doctores.cshtml" />
     <Content Include="Views\Rotacion\_Estudiantes.cshtml" />
-    <Content Include="Views\Rotacion\Editar.cshtml" />
     <Content Include="Views\Rotacion\Archivados.cshtml" />
     <Content Include="Views\Usuario\CambiarEstadoUsuario.cshtml" />
     <Content Include="Views\Shared\VistaDeErrores.cshtml" />
@@ -380,8 +411,6 @@
     <Content Include="Views\Roles\ArchivarRol.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CheckBoxPermiso.cshtml" />
     <Content Include="Views\Roles\AgregarPermisos.cshtml" />
-    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
-    <Content Include="Views\Usuario\CrearUsuario.cshtml" />
     <Content Include="Views\Account\AutoEditarUsuario.cshtml" />
     <Content Include="Views\Roles\CambiarEstadoRol.cshtml" />
     <Content Include="Views\Pacientes\Index.cshtml" />
@@ -394,11 +423,21 @@
     <Content Include="Views\EntregaMedicamento\Entregar.cshtml" />
     <Content Include="Views\EntregaMedicamento\Detalles.cshtml" />
     <Content Include="Views\Reportes\ConsultasFechas.cshtml" />
+    <Content Include="Views\Atencion\_DatosPaciente.cshtml" />
+    <Content Include="Views\Atencion\_Problemas.cshtml" />
+    <Content Include="Views\Atencion\_EditarProblema.cshtml" />
+    <Content Include="Views\Atencion\_Consultas.cshtml" />
+    <Content Include="Views\Pacientes\_Detalle.cshtml" />
+    <Content Include="Views\Rotacion\Editar.cshtml" />
+    <Content Include="Views\Usuario\CrearUsuario.cshtml" />
+    <Content Include="Views\Usuario\EditarUsuario.cshtml" />
+    <Content Include="Views\Reportes\_ConsultasEstudiante.cshtml" />
+    <Content Include="Views\Reportes\ConsultasEstudiante.cshtml" />
+    <Content Include="Views\Reportes\_Estudiantes.cshtml" />
+    <Content Include="Views\Reportes\ProductosMasRecetados.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
-    <Folder Include="Scripts\jquery-ui\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -415,14 +454,23 @@
     <None Include="Models\DataClases.dbml.layout">
       <DependentUpon>DataClases.dbml</DependentUpon>
     </None>
-    <EmbeddedResource Include="Reportes\catalogo.rpt">
+    <Content Include="Reportes\catalogo.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>catalogo.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Productos.rpt">
+    </Content>
+    <Content Include="Reportes\Productos.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>Productos.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reportes\receta.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>receta.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

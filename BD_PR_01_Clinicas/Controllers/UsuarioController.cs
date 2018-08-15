@@ -59,7 +59,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Usuario/CrearDoctor
         public ActionResult CrearUsuario()
         {
-            List<tbRol> rols = db.tbRol.Where(x=>x.estado==true).ToList();
+            List<tbRol> rols = db.tbRol.Where(x=>x.estado==true && x.codTipoUsuario!=4).ToList();
             var us = new RegisterViewModel();
             us.roles = rols;
             us.FechaNacimiento = DateTime.Now.AddYears(-25);
@@ -199,7 +199,7 @@ namespace BD_PR_01_Clinicas.Controllers
                 {
                 tbUsuario usuario = db.tbUsuario.Where(x=>x.codUsuario==codUsuario).SingleOrDefault();     
                   
-                List<tbRol> rols = db.tbRol.Where(s=>s.estado==true && s.codTipoUsuario!=usuario.codTipoUsuario).ToList();        
+                List<tbRol> rols = db.tbRol.Where(s=>s.estado==true && s.codTipoUsuario!=usuario.codTipoUsuario && s.codTipoUsuario!=4).ToList();        
                 List<SelectListItem> roles = new SelectList(rols, "codTipoUsuario", "Rol").ToList();
               //  tbRol rl = db.tbRol.Where(x => x.codTipoUsuario == usuario.codTipoUsuario).SingleOrDefault();
        

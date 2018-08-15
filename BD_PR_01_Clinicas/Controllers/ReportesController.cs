@@ -49,19 +49,20 @@ namespace BD_PR_01_Clinicas.Controllers
             List<tbUsuario> listado = (from t in db.tbUsuario where t.nombre.Contains(filtro) && t.codTipoUsuario == 2 select t).Take(15).ToList();
             return PartialView("_Estudiantes", listado);
         }
-        //public ActionResult GetConsultasEstudiante(int codUsuario)
-        //{
-        //    List<ClasConsultasEstudiante> listado = (from t in db.tbConsulta
-        //                                             where t.codEstudiante == codUsuario && t.estado == 3
-        //                                             select new ClasConsultasEstudiante
-        //                                             {
-        //                                                 paciente = t.tbPaciente.nombre,
-        //                                                 medico = t.tbMedico.nombre,
-        //                                                 fechaInicio = t.fechaAtencion.Value,
-        //                                                 fechaFin = t.fechaFinalizacion.Value
-        //                                             }).ToList();
-        //    return PartialView("_ConsultasEstudiante", listado);
-        //}
+
+        public ActionResult GetConsultasEstudiante(int codUsuario)
+        {
+            List<ClasConsultasEstudiante> listado = (from t in db.tbConsulta
+                                                     where t.codEstudiante == codUsuario && t.estado == 3
+                                                     select new ClasConsultasEstudiante
+                                                     {
+                                                         paciente = t.tbPaciente.nombre,
+                                                         medico = t.tbMedico.nombre,
+                                                         fechaInicio = t.fechaAtencion.Value,
+                                                         fechaFin = t.fechaFinalizacion.Value
+                                                     }).ToList();
+            return PartialView("_ConsultasEstudiante", listado);
+        }
 
         public ActionResult ProductosMasRecetados()
         {

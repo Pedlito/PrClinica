@@ -30,6 +30,25 @@ namespace BD_PR_01_Clinicas.Models
         public int cantidad { get; set; }
         public int existencia { get; set; }
         public string descripcion { get; set; }
+
+        public static string Dosis(string dosis, int vol, string dosis2, int vol2)
+        {
+            string respuesta = "";
+            respuesta += dosis;
+            if (vol == 1)
+                respuesta += "mg";
+            else if (vol == 2)
+                respuesta += "ml";
+            if (dosis2 != "0")
+            {
+                respuesta += "/" + dosis2;
+                if (vol2 == 1)
+                    respuesta += "mg";
+                else if (vol2 == 2)
+                    respuesta += "ml";
+            }
+            return respuesta;
+        }
     }
         public class Item
     {

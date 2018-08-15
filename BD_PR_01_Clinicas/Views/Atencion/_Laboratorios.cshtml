@@ -1,0 +1,40 @@
+﻿@model IEnumerable<BD_PR_01_Clinicas.Models.ConsultasLab>
+
+<table class="table">
+    <thead>
+        <tr class="info">
+            <th>
+                @Html.DisplayName("Laboratorio")
+            </th>
+            <th>
+                @Html.DisplayName("Resultado")
+            </th>
+            <th>
+                @Html.DisplayName("Rango")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.laboratorio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.resultado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.rango)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs" onclick="QuitarLab(@item.codLaboratorio)">
+                        <span class="glyphicon glyphicon-remove"></span> Quitar
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
