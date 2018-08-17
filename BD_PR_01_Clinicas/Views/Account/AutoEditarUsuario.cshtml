@@ -54,7 +54,7 @@
         <div class="form-group">
             @Html.Label("Contraseña", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", maxlength = 30} })
+                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", maxlength = 30, @Type="password"} })
          
             </div>
         </div>
@@ -85,7 +85,7 @@
         changeYear: true,
         autoclose: true,
         yearRange: '-80:-17',
-        defaultDate: '20/10/2000'
+        defaultDate: '@Model.fechaNacimiento'
     });
 
     $.validator.addMethod("soloNumeros", function (value, element) {
@@ -93,7 +93,7 @@
     }, "Ingrese sólo numeros");
 
     $.validator.addMethod("soloLetras", function (value, element) {
-        return /^[a-zA-Z ]+$/i.test(value);
+        return /^[a-zA-ZáéíóúÁÉÍÓÚÑñü ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
     $("#formAUsuario").validate({
@@ -117,8 +117,6 @@
             carnet: { required: true, soloNumeros: true, minlength: 8 },
             fechaNacimiento: { required: true },
             password: { required: true, minlength: 4 }
-
-
         },
         messages: {
             nombre: {
@@ -128,7 +126,7 @@
 
             dpi: {
                 required: "Debe introducir un numero de identificacion",
-                minlength: "12 caracteres minimo"
+                minlength: "13 caracteres minimo"
      
             },
             carnet: {

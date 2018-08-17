@@ -210,13 +210,16 @@ namespace BD_PR_01_Clinicas.Controllers
                 presentacion = t.tbPresentacion.presentacion + " " + RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value)
             }).ToList();
 
+            int id = SessionUsuario.Get.UserId;
+            var us = db.tbUsuario.Where(x => x.codUsuario==id).SingleOrDefault();
             ReportDocument rd = new ReportDocument();
             rd.Load(Path.Combine(Server.MapPath("~/Reportes"), "catalogo.rpt"));
             rd.SetDataSource(lista);
             Response.Buffer = false;
             Response.Clear();
             Response.ClearHeaders();
-
+            rd.SetParameterValue("name", us.nombre);
+     
             Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
             stream.Seek(0, SeekOrigin.Begin);
             return File(stream, "aplication/pdf", "Catalogo_de_productos.pdf");

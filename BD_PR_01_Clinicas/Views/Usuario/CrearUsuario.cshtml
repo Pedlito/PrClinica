@@ -22,7 +22,7 @@
                 @Html.DropDownListFor(m=>m.selectedRol,new SelectList(Model.roles, "codTipoUsuario", "Rol"),null,htmlAttributes:new { @class = "form-control col-md-3", onchange = "mostrarD(this.value)" })
             </div>
         </div> 
-
+    
         <div class="form-group">
             @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
@@ -50,16 +50,17 @@
         <div class="form-group">
             @Html.LabelFor(model=>model.FechaNacimiento, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10 entrada">
-                @Html.TextBoxFor(model => model.FechaNacimiento, "", new { @class = "form-control", @ReadOnly = true })
+                @Html.TextBoxFor(model => model.FechaNacimiento, "{0:dd/MM/yyyy}", new {  @class = "form-control", @ReadOnly = true })
                 @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger" })
             </div>
         </div>
      
         <div class="form-group">
             @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10 entrada">
+            <div class="col-md-10 entrada" id="user">
                 @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control", maxlength = 30 } })
-                @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger" })
+            
+                @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger", @id="usu" })
             </div>
         </div>
 
@@ -106,11 +107,10 @@
         yearRange: '-80:-17',
         dateFormat: 'dd/mm/yy',
         defaultDate: '01/01/2000'
+        
     });
 
     mostrarD();
-    $("#FechaNacimiento").val("");
-
     function mostrarD() {
         var valor = $("#selectedRol").val();
 
@@ -131,11 +131,11 @@
     }, "Ingrese sólo numeros");
 
     $.validator.addMethod("soloLetras", function (value, element) {
-        return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/i.test(value);
+        return /^[a-zA-ZáéíóúÁÉÍÓÚÑñü ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
     $.validator.addMethod("alfanumerico", function (value, element) {
-        return /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$/i.test(value);
+        return /^[a-zA-Z0-9áéíóúÁÉÍÓÚÑñü ]+$/i.test(value);
     }, "Ingrese sólo Letras, numeros solo al final, sin espacios");
 
     $("#formUsuario").validate({
@@ -163,7 +163,7 @@
             Dpi: { required: true, soloNumeros: true, minlength: 13},
             Carnet: { required: true, soloNumeros: true, minlength: 8 },
             FechaNacimiento: { required: true },
-            Usuario: { required: true, minlength: 3, alfanumerico: true, noRepetidos: true },
+            Usuario: { required: true, minlength: 3, alfanumerico: true, UserRep : true },
             Password: { required: true, minlength: 4 },
             ConfirmPassword: { required: true, equalTo: '#Password' }
 

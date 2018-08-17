@@ -2,6 +2,7 @@
 
 @foreach (var item in Model)
 {
+    
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.nombre)
@@ -13,7 +14,7 @@
                 @Html.DisplayFor(modelItem => item.usuario)
             </td>
             <td>
-                <button type="button" class="btn btn-danger btn-xs" onclick="descartarDoc(@item.codUsuario, event)">
+                <button type="button" class="btn btn-danger btn-xs" onclick="descartarDoc(@item.codUsuario, '@item.nombre')">
                     <span class="glyphicon glyphicon-remove"></span> Descartar
                 </button>
             </td>

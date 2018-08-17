@@ -27,12 +27,9 @@ namespace BD_PR_01_Clinicas.Controllers
 
         public JsonResult RevisarFechasEditar(Rotaciones rot) {
             var rotaciones = db.tbRotacion.Where(x=>x.codRotacion!=rot.rotacionId);
-            var ultimaRotacion = rotaciones.Select(x => x.fechaFinal).Max();
-            var primeraRotacion = rotaciones.Select(x => x.fechaInicio).Min();
             foreach (var r in rotaciones){
                 if ((DateTime.Parse(rot.fechaIni) >= r.fechaInicio) && (DateTime.Parse(rot.fechaIni) <= r.fechaFinal)||
-                   (DateTime.Parse(rot.fechaFin) >= r.fechaInicio) && (DateTime.Parse(rot.fechaFin) <= r.fechaFinal)||
-                   (DateTime.Parse(rot.fechaIni) < primeraRotacion) && (DateTime.Parse(rot.fechaFin) > ultimaRotacion))
+                   (DateTime.Parse(rot.fechaFin) >= r.fechaInicio) && (DateTime.Parse(rot.fechaFin) <= r.fechaFinal))
                    { return Json("aaaaa"); }
             }
             return Json("a");
@@ -390,12 +387,16 @@ namespace BD_PR_01_Clinicas.Controllers
         public JsonResult ObtenerDocs(int? id) {
 
    
-            List<ItemUser> codsDocs = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 3 select new ItemUser{ codUser = R.codUsuario }).ToList();
+            List<ItemUser> codsDocs = (from R in db.tbRotacionUsuario
+                                       where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 3 select 
+                                       new ItemUser{ codUser = R.codUsuario }).ToList();
 
             return Json(codsDocs.ToArray()); 
         }
         public JsonResult ObtenerEstus(int? id) {
-            List<ItemUser> codsEstus = (from R in db.tbRotacionUsuario where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 2 select new ItemUser{codUser = R.codUsuario }).ToList();
+            List<ItemUser> codsEstus = (from R in db.tbRotacionUsuario
+                                        where R.codRotacion == id && R.tbUsuario.codTipoUsuario == 2
+                                        select new ItemUser{codUser = R.codUsuario }).ToList();
             return Json(codsEstus.ToArray());
         }
 

@@ -6,10 +6,8 @@
 <h2>Crear rotacion</h2>
     <div class="form-inline">
         <hr />
-        @*min="@ViewBag.fechaFinRC"*@ 
-    
-        <div class="form-group">
 
+        <div class="form-group">
             <label class="control-label col-md-4" for="fechaInicio">fechaInicio</label>
             <div class="col-md-2">
                 <input type="text" id="fechaInicio" name="fechaInicio" class="form-control" value="@ViewBag.fechaFinUR" readonly />
@@ -17,12 +15,9 @@
         </div>
 
         <div class="form-group">
-
             <label class="control-label col-md-4" for="fechaFinal">fechaFinal</label>
-
             <div class="col-md-2">
-                <input type="text" id="fechaFinal" name="fechaFinal" class="form-control" readonly/>
-            
+                <input type="text" id="fechaFinal" name="fechaFinal" class="form-control" readonly/>       
             </div>
         </div>
         <hr />
@@ -30,12 +25,10 @@
         <div class="panel panel-info">
             <div class="panel-heading">Doctores</div>
             <div class="panel-body">
-
                 <div class="form-group">
                         <div class="col-md-3">
                             <label class="control-label col-md-4" for="Nombre">Nombre</label>
                         </div>
-
                         <div class="col-md-6">         
                             @Html.DropDownList("codDoctor", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
                         </div>
@@ -47,7 +40,6 @@
                 </div>
                 <h2>Listado</h2>
                 <table class="table">
-
                     <thead>
                         <tr>
                             <th>
@@ -62,27 +54,21 @@
                             <th></th>
                         </tr>
                     </thead>
-
                     <tbody id="doctores">
 
                     </tbody>
                 </table>
-
             </div>
         </div>
 
         <div class="panel panel-info">
             <div class="panel-heading">Estudiantes</div>
             <div class="panel-body">
-
                 <div class="form-group">
                     <div class="col-md-3">
                         <label class="control-label col-md-3" for="Nombre">Nombre</label>
                     </div>
-
                     <div class="col-md-6">
-
-
                         @Html.DropDownList("codEstudiante", null, "Seleccione un integrante", htmlAttributes: new { @class = "form-control" })
                     </div>
                     <div class="col-md-3">
@@ -91,7 +77,6 @@
                         </button>
                     </div>
                 </div>
-           
                     <h2>Listado</h2>
                     <table class="table">
                         <thead>
@@ -112,21 +97,18 @@
                         <tbody id="estudiantes">
 
                         </tbody>
-                    </table>
-
-              
+                    </table>   
         </div>
 </div>
             <br />
             <div class="form-group">
                 <div class="col-md-12">
                     <input type="button" value="Guardar" class="btn btn-primary" name="btn" onclick="guardar()" />
-                   
                         @Html.ActionLink("Cancelar", "Index", "Rotacion", null, htmlAttributes: new { @class = "btn btn-danger" })
                    
                 </div>
             </div>
- @* <input type="button" value="ver" onclick="ver()" />*@
+
 </div>
 
 
@@ -140,8 +122,7 @@
             changeYear: true,
             autoclose: true,
             yearRange: '-1:+10',
-            defaultDate: '01/01/2018',
-          //  beforeShowDay:$.datepicker.noWeekends
+            defaultDate: '01/01/2018'
         }
 
         );
@@ -151,55 +132,45 @@
             changeYear: true,
             autoclose: true,
             yearRange: '-1:+10',
-            defaultDate: '01/01/2018',
-         //   beforeShowDay:$.datepicker.noWeekends
+            defaultDate: '01/01/2018'
         }
 
         );
 
         var listaDocs = [];
         var listaEstus = [];
-        var fUR=$.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
-      
+        var fUR = $.datepicker.parseDate('dd/mm/yy', $("#fechaInicio").val());
+       
+ 
         
-
-
 
         function agregarDocs() {
             if (!$("#codDoctor").val()) { alert("Seleccione un usurio valido"); return;}
             var codDoc = parseInt($("#codDoctor").val());
-            var index = listaDocs.findIndex(function (element) { return element.codUser == codDoc });
-            if (index == -1) {
-                listaDocs.push({ codUser: codDoc });
-                cargarDocs(listaDocs);
-            }
-            else {
+            listaDocs.push({ codUser: codDoc });    
+            cargarDocs(listaDocs);
+            $("#codDoctor option:selected").remove();
 
-                alert("Ya ha sido agregado");
-            }
         }
 
-        function descartarDoc(codUsuario) {
-            var index = listaDocs.findIndex(function (element) { return element.codUser == codUsuario });
+        function descartarDoc(codUsuario,nom) {
+            $("#codDoctor").append('<option value="' + codUsuario + '">' + nom + '</option>');
+             index = listaDocs.findIndex(function (element) { return element.codUser == codUsuario });
             listaDocs.splice(index, 1);
            cargarDocs(listaDocs);
         }
 
         function agregarEstus() {
             if (!$("#codEstudiante").val()) { alert("Seleccione un usurio valido"); return; }
-            var codEstu = parseInt($("#codEstudiante").val());
-            var index = listaEstus.findIndex(function (element) { return element.codUser == codEstu });
-            if (index == -1) {
+            var codEstu = parseInt($("#codEstudiante").val());      
             listaEstus.push({ codUser: codEstu });
             cargarEstus(listaEstus);
-            }
-            else {
-                alert("Ya ha sido agregado");
-            }
+            $("#codEstudiante option:selected").remove();
         }
 
-        function descartarEstu(codUsuario) {
-            var index = listaEstus.findIndex(function (element) { return element.codUser == codUsuario });
+        function descartarEstu(codUsuario, nom) {
+            $("#codEstudiante").append('<option value="' + codUsuario + '">' + nom + '</option>');
+             index = listaEstus.findIndex(function (element) { return element.codUser == codUsuario });
             listaEstus.splice(index, 1);
             cargarEstus(listaEstus);
         }
@@ -238,7 +209,7 @@
         }
 
         function guardar() {
-            if (!($("#fechaInicio").val()) || !($("#fechaFinal").val())) { alert("Debe seleccionar las fechas"); return; }      
+            if (!($("#fechaInicio").val()) || !($("#fechaFinal").val())) { alert("Debe seleccionar las fechas"); return; }
                 var fi = $.datepicker.parseDate('dd/mm/yy',$("#fechaInicio").val());
                  var ff = $.datepicker.parseDate('dd/mm/yy',$("#fechaFinal").val());
                  if (fi > ff) { alert("La fecha de inicio debe ser mayor a la fecha de finalizacion"); return; }
@@ -246,7 +217,7 @@
         }
 
         function Revisar() {
-        
+
             var rot = { "fechaIni": $("#fechaInicio").val(), "fechaFin": $("#fechaFinal").val() }
             $.ajax({
                 traditional: true,
@@ -255,7 +226,7 @@
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(rot),
                 success: function (response) {
-                
+
                     if (response.length==1) {
                         Guardar();
                     }
@@ -265,7 +236,7 @@
                     Alert("Error al conectarse con el servidor");
                 }
             });
-      
+
         }
 
         function Guardar() {

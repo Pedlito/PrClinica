@@ -99,7 +99,7 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 lista = (from e in db.tbDetalleEntrada
                          join p in db.tbProducto on e.codProducto equals p.codProducto
-                         where p.estado == true
+                         where db.existencias(p.codProducto) > 0
                          select new RegistroProducto
                          {
                              codProducto = p.codProducto,
@@ -113,7 +113,7 @@ namespace BD_PR_01_Clinicas.Controllers
             {
                 lista = (from e in db.tbDetalleEntrada
                          join p in db.tbProducto on e.codProducto equals p.codProducto
-                         where p.producto.Contains(filtro) && p.estado == true
+                         where p.producto.Contains(filtro) && db.existencias(p.codProducto) > 0
                          select new RegistroProducto
                          {
                              codProducto = p.codProducto,
@@ -121,7 +121,7 @@ namespace BD_PR_01_Clinicas.Controllers
                              categoria = p.tbCategoria.categoria,
                              presentacion = p.tbPresentacion.presentacion,
                              dosis = RegistroProducto.Dosis(p.dosis.ToString(), p.codVolumen.Value, p.dosis2.ToString(), p.codVolumen2.Value)
-
+                            
                          }).Distinct().ToList();
             }
             return PartialView("_Productos", lista);  

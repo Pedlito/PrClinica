@@ -88,6 +88,10 @@
         return /^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
+    $.validator.addMethod("decimales", function (value, element) {
+        return /^[0-9]+\,[0-9]+$/i.test(value);
+    }, "Ingrese sólo numeros");
+
     $("#formId").validate({
         errorClass: 'help-block animation-slideDown',
         errorElement: 'div',
@@ -107,7 +111,7 @@
             producto: { required: true, soloLetras: true },
             codCategoria: { required: true, number: true },
             codPresentacion: { required: true, number: true },
-            dosis: { required: true, number: true},
+            dosis: { required: true, decimales: true},
         },
         messages: {
             producto: {
