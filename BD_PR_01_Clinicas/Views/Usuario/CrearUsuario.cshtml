@@ -108,6 +108,7 @@
         defaultDate: '01/01/2000'
     });
 
+    mostrarD();
     $("#FechaNacimiento").val("");
 
     function mostrarD() {
@@ -130,11 +131,11 @@
     }, "Ingrese sólo numeros");
 
     $.validator.addMethod("soloLetras", function (value, element) {
-        return /^[a-zA-Z ]+$/i.test(value);
+        return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$/i.test(value);
     }, "Ingrese sólo Letras");
 
     $.validator.addMethod("alfanumerico", function (value, element) {
-        return /^[a-zA-Z0-9 ]+$/i.test(value);
+        return /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]+$/i.test(value);
     }, "Ingrese sólo Letras, numeros solo al final, sin espacios");
 
     $("#formUsuario").validate({
@@ -159,12 +160,12 @@
         rules: {
             codTipoUsuario: { required: true },
             Nombre: { required: true, soloLetras: true, minlength: 3 },
-            Dpi: { required: true, soloNumeros: true, minlength: true},
+            Dpi: { required: true, soloNumeros: true, minlength: 13},
             Carnet: { required: true, soloNumeros: true, minlength: 8 },
             FechaNacimiento: { required: true },
             Usuario: { required: true, minlength: 3, alfanumerico: true, noRepetidos: true },
             Password: { required: true, minlength: 4 },
-            ConfirmPassword: { required: true, equalTo: '#password' }
+            ConfirmPassword: { required: true, equalTo: '#Password' }
 
         },
         messages: {
@@ -178,7 +179,7 @@
 
             Dpi: {
                 required: "Debe introducir un numero de identificacion",
-                minlength: "12 caracteres minimo"
+                minlength: "13 caracteres minimo"
             },
             Carnet: {
                 required: "Debe introducir un numero de identificacion",

@@ -76,13 +76,15 @@ namespace BD_PR_01_Clinicas.Controllers
                                                   producto.tbPresentacion.presentacion,
                                                   producto.dosis,
                                                   producto.codVolumen,
+                                                  producto.dosis2,
+                                                  producto.codVolumen2
                                               } into grupo
                                               select new RegistroProducto
                                               {
                                                   nombre = grupo.Key.producto,
                                                   categoria = grupo.Key.categoria,
                                                   presentacion = grupo.Key.presentacion,
-                                                  dosis = grupo.Key.dosis.ToString() + ((grupo.Key.codVolumen == 1) ? " mg" : " ml"),
+                                                  dosis = RegistroProducto.Dosis(grupo.Key.dosis.ToString(), grupo.Key.codVolumen.Value, grupo.Key.dosis2.ToString(), grupo.Key.codVolumen2.Value),
                                                   cantidad = grupo.Count()
                                               }).ToList();
             return View(listado);

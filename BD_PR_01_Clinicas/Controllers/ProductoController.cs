@@ -207,7 +207,7 @@ namespace BD_PR_01_Clinicas.Controllers
             List<Inventario> lista = (from t in db.tbProducto orderby t.producto, t.producto select new Inventario {
                 producto = t.producto,
                 categoria = t.tbCategoria.categoria,
-                presentacion = t.tbPresentacion.presentacion + " " +Convert.ToString(t.dosis.Value) + " " + (t.codVolumen == 1 ? "mg" : "ml")
+                presentacion = t.tbPresentacion.presentacion + " " + RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value)
             }).ToList();
 
             ReportDocument rd = new ReportDocument();

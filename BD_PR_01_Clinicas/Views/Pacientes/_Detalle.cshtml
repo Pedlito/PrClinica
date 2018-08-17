@@ -2,58 +2,56 @@
 
 @if (Model.Count() > 0)
 {
+    <table class="table table-hover" id="facturador-detalle">
+        <thead>
+            <tr class="info">
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Categoría
+                </th>
+                <th>
+                    Presentación
+                </th>
+                <th>
+                    Dosis
+                </th>
+                <th>
+                    Prescripción
+                </th>
+                <th></th>
+            </tr>
+        </thead>
 
-    //aqui creo la lista que contiene todos los productos ya agregados a el detalle de Entrada
-    <ul id="facturador-detalle" class="list-group">
-        <li class="list-group-item list-group-item-heading list-group-item-info">
-            <div class="row">
-                <div class="col-xs-2 text-left">
-                    <b>Producto</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Categoría</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Presetación</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Dosis</b>
-                </div>
-                <div class="col-xs-2 text-center">
-                    <b>Prescripción</b>
-                </div>
-                <div class="col-xs-2"></div>
-            </div>
-        </li>
-        @foreach (var item in Model)
-        {
-            <li class="list-group-item">
-                <div class="row">
-                    <div class="col-xs-2 text-left">
-                        @item.nombre
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        @item.categoria
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        @item.presentacion
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        @item.dosis
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        @item.descripcion
-                    </div>
-                    <div class="col-xs-2 text-center">
-                        <button type="button" class="btn btn-danger btn-xs" onclick="quitarReceta(@item.codProducto)">
-                            <span class="glyphicon glyphicon-remove"></span> Quitar
-                        </button>
-                    </div>
-                </div>
-            </li>
-        }
-
-    </ul>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.nombre
+                </td>
+                <td>
+                    @item.categoria
+                </td>
+                <td>
+                    @item.presentacion
+                </td>
+                <td>
+                    @item.dosis
+                </td>
+                <td>
+                    @item.descripcion
+                </td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-xs" onclick="quitarReceta(@item.codProducto)">
+                        <span class="glyphicon glyphicon-remove"></span> Quitar
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 }
 
 

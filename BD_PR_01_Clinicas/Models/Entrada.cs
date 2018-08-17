@@ -41,7 +41,7 @@ namespace BD_PR_01_Clinicas.Models
                 respuesta += "ml";
             if (dosis2 != "0")
             {
-                respuesta += "/" + dosis2;
+                respuesta += " / " + dosis2;
                 if (vol2 == 1)
                     respuesta += "mg";
                 else if (vol2 == 2)

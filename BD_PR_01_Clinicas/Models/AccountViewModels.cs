@@ -73,7 +73,7 @@ namespace BD_PR_01_Clinicas.Models
 
         [Required]
         [StringLength(50, ErrorMessage = "El número de caracteres de {0} debe ser al menos {2}.", MinimumLength = 3)]
-        [RegularExpression("^[A-Za-z][a-zA-Z ]+$",ErrorMessage ="Solo se admite texto con espacios")]
+        [RegularExpression("^[A-Za-z][a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$",ErrorMessage ="Solo se admite texto con espacios")]
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 

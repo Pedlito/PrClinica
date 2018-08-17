@@ -29,20 +29,6 @@
       <Association Name="tbRol_tbUsuario" Member="tbRol" ThisKey="codTipoUsuario" OtherKey="codTipoUsuario" Type="tbRol" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tbAntecedentesPatologicos" Member="tbAntecedentesPatologicos">
-    <Type Name="tbAntecedentesPatologicos">
-      <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="padre" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="madre" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="medicos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="quirurgicos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="traumaticos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="alergicos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="ginecoObstetricos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="viciosManias" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Association Name="tbPaciente_tbAntecedentesPatologicos" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbCategoria" Member="tbCategoria">
     <Type Name="tbCategoria">
       <Column Name="codCategoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -182,12 +168,12 @@
       <Column Name="escolaridad" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="codTipoSangre" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="tbPaciente_tbAntecedentesNoPatologicos" Member="tbAntecedentesNoPatologicos" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbAntecedentesNoPatologicos" Cardinality="One" />
-      <Association Name="tbPaciente_tbAntecedentesPatologicos" Member="tbAntecedentesPatologicos" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbAntecedentesPatologicos" Cardinality="One" />
       <Association Name="tbPaciente_tbConsulta" Member="tbConsulta" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbConsulta" />
       <Association Name="tbPaciente_tbDesarrollo" Member="tbDesarrollo" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbDesarrollo" Cardinality="One" />
       <Association Name="tbPaciente_tbMujeres" Member="tbMujeres" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbMujeres" Cardinality="One" />
       <Association Name="tbPaciente_tbPerfilSocial" Member="tbPerfilSocial" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPerfilSocial" Cardinality="One" />
       <Association Name="tbPaciente_tbSalida" Member="tbSalida" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbSalida" />
+      <Association Name="tbPaciente_tbAntecedentesPatologicos" Member="tbAntecedentesPatologicos" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbAntecedentesPatologicos" Cardinality="One" />
       <Association Name="tbTipoSangre_tbPaciente" Member="tbTipoSangre" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbTipoSangre" IsForeignKey="true" />
     </Type>
   </Table>
@@ -362,6 +348,19 @@
       <Association Name="tbProducto_tbReceta" Member="tbReceta" ThisKey="codProducto" OtherKey="codProducto" Type="tbReceta" />
       <Association Name="tbCategoria_tbProducto" Member="tbCategoria" ThisKey="codCategoria" OtherKey="codCategoria" Type="tbCategoria" IsForeignKey="true" />
       <Association Name="tbPresentacion_tbProducto" Member="tbPresentacion" ThisKey="codPresentacion" OtherKey="codPresentacion" Type="tbPresentacion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbAntecedentesPatologicos" Member="tbAntecedentesPatologicos">
+    <Type Name="tbAntecedentesPatologicos">
+      <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="familiares" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="medicos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="quirurgicos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="traumaticos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="alergicos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="ginecoObstetricos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Column Name="viciosManias" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
+      <Association Name="tbPaciente_tbAntecedentesPatologicos" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">

@@ -12,7 +12,7 @@
 
 
 </head>
-<body>
+<body oncopy="return false" onpaste="return false">
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -22,7 +22,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 @*podemos quitar esto de aqui y agregarlo al login partial*@
-                @Html.ActionLink("Clinica Familiar", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Clínica Universitaria", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
 
                 <div class="navbar-collapse collapse">

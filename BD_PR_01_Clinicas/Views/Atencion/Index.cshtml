@@ -11,7 +11,7 @@
 
 <p>
     <a href="@Url.Action("Crear")" class="btn btn-success">
-        <span class="glyphicon glyphicon-plus"></span> Nueva Consulta
+        <span class="glyphicon glyphicon-plus"></span> Nueva consulta
     </a>
 </p>
 <table class="table table-hover">
@@ -21,10 +21,10 @@
                 @Html.DisplayName("Nombre")
             </th>
             <th>
-                @Html.DisplayName("Fecha Nacimiento")
+                @Html.DisplayName("Fecha nacimiento")
             </th>
             <th>
-                @Html.DisplayName("Estado Civil")
+                @Html.DisplayName("Estado civil")
             </th>
             <th>
                 @Html.DisplayName("Residencia")
@@ -78,7 +78,7 @@
                     else if (item.estado == 2 && (item.codEstudiante == SessionUsuario.Get.UserId || ViewBag.codTipoUsuario == 4))
                     {
                         <a href="@Url.Action("CrearHC", new { codPaciente = item.codPaciente })" class="btn btn-success btn-xs">
-                            <span class="glyphicon glyphicon-copy"></span> Continuar Consulta
+                            <span class="glyphicon glyphicon-copy"></span> Continuar consulta
                         </a>
                     }
                     else if (item.estado == 2 && ViewBag.codTipoUsuario == 3)

@@ -72,7 +72,7 @@ namespace BD_PR_01_Clinicas.Controllers
                              nombre = t.producto,
                              categoria = t.tbCategoria.categoria,
                              presentacion = t.tbPresentacion.presentacion,
-                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                             dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                          }).Take(10).ToList();
             }
             else
@@ -86,7 +86,7 @@ namespace BD_PR_01_Clinicas.Controllers
                              nombre = t.producto,
                              categoria = t.tbCategoria.categoria,
                              presentacion = t.tbPresentacion.presentacion,
-                             dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml")
+                             dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value)
                          }).Take(10).ToList();
             }
             return PartialView("_Medicamentos", lista);
@@ -109,7 +109,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                    nombre = t.producto,
                                    categoria = t.tbCategoria.categoria,
                                    presentacion = t.tbPresentacion.presentacion,
-                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                                    cantidad = item.cantidad,
                                    existencia = db.existencias(t.codProducto).Value
                                }).SingleOrDefault());
@@ -154,7 +154,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                                 nombre = pro.producto,
                                                 categoria = pro.tbCategoria.categoria,
                                                 presentacion = pro.tbPresentacion.presentacion,
-                                                dosis = pro.dosis.ToString() + ((pro.codVolumen == 1) ? " mg" : " ml"),
+                                                dosis = RegistroProducto.Dosis(pro.dosis.ToString(), pro.codVolumen.Value, pro.dosis2.ToString(), pro.codVolumen2.Value),
                                                 cantidad = det.cantidad.Value
                                             }).ToList();
             return View(modelo);

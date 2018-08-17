@@ -28,14 +28,14 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Motivo de Consulta", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Motivo de consulta", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextArea("motivoConsulta", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", maxlength = "700" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Historia de Enfermedad", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Historia de enfermedad", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextArea("HistoriaEnfermedad", new { @class = "form-control", placeholder = "Ingrese una descripcion", rows = "4", maxlength = "700" })
             </div>
@@ -113,14 +113,14 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Fecha Nacimiento", htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.Label("Fecha nacimiento", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
                             <input type="date" id="fechaNacimiento" class="form-control" />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Estado Civil", htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.Label("Estado civil", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
                             <label class="radio-inline"><input type="radio" name="estadoCivil" value="1" checked>Soltero </label>
                             <label class="radio-inline"><input type="radio" name="estadoCivil" value="0">Casado</label>
@@ -170,7 +170,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.Label("Tipo de Sangre", htmlAttributes: new { @class = "control-label col-md-4" })
+                        @Html.Label("Tipo de sangre", htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-8">
                             @Html.DropDownList("codTipoSangre", null, "Seleccione un tipo de sangre", new { @class = "form-control" })
                         </div>
@@ -179,7 +179,7 @@
                     <div class="form-group">
                         <div class="col-md-offset-4 col-md-8">
                             <button type="button" class="btn btn-success" onclick="CrearPaciente()">
-                                <span class="glyphicon glyphicon-plus"></span> Crear y Asignar
+                                <span class="glyphicon glyphicon-plus"></span> Crear y asignar
                             </button>
                         </div>
                     </div>

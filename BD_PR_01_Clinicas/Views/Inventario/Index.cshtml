@@ -5,7 +5,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Invetario</h2>
+<h2>Inventario</h2>
 
     <p>
         @Html.ActionLink("Generar reporte", "ReporteDeInventario")
@@ -32,7 +32,8 @@
             </th>
 
         </tr>
-          </thead>
+    </thead>
+    <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -45,24 +46,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.presentacion)
                 </td>
-                @if (item.codVolumen == 1)
-                {
-                    <td>
-                        @item.dosis mg
-                    </td>
-                }
-                else if (item.codVolumen == 2)
-                {
-                    <td>
-                        @item.dosis ml
-                    </td>
-                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.dosis)
+                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.existencia)
                 </td>
             </tr>
         }
-
+    </tbody>
 </table>
 Pagina @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
 @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

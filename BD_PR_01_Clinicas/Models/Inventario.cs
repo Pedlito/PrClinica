@@ -11,8 +11,7 @@ namespace BD_PR_01_Clinicas.Models
         public string producto { get; set; }
         public string categoria { get; set; }
         public string presentacion { get; set; }
-        public decimal dosis { get; set; }
-        public int codVolumen { get; set; }
+        public string dosis { get; set; }
         public int existencia { get; set; }
     }
 

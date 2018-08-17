@@ -13,7 +13,7 @@
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#paciente" role="tab" data-toggle="tab">Paciente</a></li>
         <li role="presentation"><a href="#patologicos" role="tab" data-toggle="tab">Patológicos</a></li>
-        <li role="presentation"><a href="#nPatologicos" role="tab" data-toggle="tab">No Patológicos</a></li>
+        <li role="presentation"><a href="#nPatologicos" role="tab" data-toggle="tab">No patológicos</a></li>
         <li role="presentation"><a href="#perfil" role="tab" data-toggle="tab">Perfil</a></li>
         <li role="presentation"><a href="#consultas" role="tab" data-toggle="tab">Consultas</a></li>
     </ul>
@@ -22,7 +22,7 @@
     <div class="tab-content">
 
         <div role="tabpanel" class="tab-pane active" id="paciente">
-            <h2>Datos Generales del Paciente</h2>
+            <h2>Datos generales del paciente</h2>
 
             <ul class="list-group">
                 <li class="list-group-item">
@@ -119,7 +119,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Religíon</label>
+                            <label>Religión</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.paciente.religion)
@@ -174,27 +174,16 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="patologicos">
-            <h2>Antecedentes Patológicos</h2>
+            <h2>Antecedentes patológicos</h2>
 
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Padre</label>
+                            <label>Familiares</label>
                         </div>
                         <div class="col-md-9 text-left">
-                            @Html.DisplayFor(model => model.patologicos.padre)
-                        </div>
-                    </div>
-                </li>
-
-                <li class="list-group-item">
-                    <div class="row">
-                        <div class="col-md-3 text-left">
-                            <label>Madre</label>
-                        </div>
-                        <div class="col-md-9 text-left">
-                            @Html.DisplayFor(model => model.patologicos.madre)
+                            @Html.DisplayFor(model => model.patologicos.familiares)
                         </div>
                     </div>
                 </li>
@@ -213,7 +202,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Quirurgicos</label>
+                            <label>Quirúrgicos </label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.patologicos.quirurgicos)
@@ -224,7 +213,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Traumaticos</label>
+                            <label>Traumáticos </label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.patologicos.traumaticos)
@@ -246,7 +235,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Gineco-Obstetricos</label>
+                            <label>Gineco-Obstétricos</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.patologicos.ginecoObstetricos)
@@ -268,7 +257,7 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="nPatologicos">
-            <h2>Antecedentes No Patológicos</h2>
+            <h2>Antecedentes no patológicos</h2>
 
             <ul class="list-group">
                 <li class="list-group-item">
@@ -372,20 +361,17 @@
                                 <label>Ritmo</label>
                             </div>
                             <div class="col-md-9 text-left">
-                                @if (Model.mujeres.ritmo != null)
+                                @switch (Model.mujeres.ritmo)
                                 {
-                                    if (Model.mujeres.ritmo == true)
-                                    {
-                                        <p>Regular</p>
-                                    }
-                                    else
-                                    {
-                                        <p>Irregular</p>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>nulo</p>
+                                    case true:
+                                        <text>Regular</text>
+                                        break;
+                                    case false:
+                                        <text>Irregular</text>
+                                        break;
+                                    default:
+                                        <text>NR</text>
+                                        break;
                                 }
                             </div>
                         </div>
@@ -405,7 +391,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Número Gestas</label>
+                                <label>Número gestas</label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.mujeres.numGestas)
@@ -427,7 +413,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Cesareas</label>
+                                <label>Cesáreas </label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.mujeres.cesareas)
@@ -449,7 +435,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Hijos Vivos</label>
+                                <label>Hijos vivos</label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.mujeres.hijosVivos)
@@ -460,7 +446,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Hijos Muertos</label>
+                                <label>Hijos muertos</label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.mujeres.hijosMuertos)
@@ -471,7 +457,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Método Planificación</label>
+                                <label>Método planificación</label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.mujeres.metodoPlanificacion)
@@ -511,7 +497,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Situación Familiar</label>
+                            <label>Situación familiar</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.perfilSocial.situacionFamiliar)
@@ -522,7 +508,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Ingreso Económico</label>
+                            <label>Ingreso económico</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.perfilSocial.ingresoEconomico)
@@ -544,7 +530,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Tendencia Sexual</label>
+                            <label>Tendencia sexual</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.perfilSocial.tendenciaSexual)
@@ -555,7 +541,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Punto de Vista</label>
+                            <label>Punto de vista</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.perfilSocial.puntoVista)
@@ -572,10 +558,10 @@
                 <li class="list-group-item list-group-item-heading list-group-item-info">
                     <div class="row">
                         <div class="col-xs-5 text-left">
-                            <b>Motivo de Consulta</b>
+                            <b>Motivo de consulta</b>
                         </div>
                         <div class="col-xs-5 text-left">
-                            <b>Fecha de Atención</b>
+                            <b>Fecha de atención</b>
                         </div>
                         <div class="col-xs-2"></div>
                     </div>
@@ -646,10 +632,18 @@
                                     <p>Levanta la cabeza</p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.uno == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.uno)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -663,10 +657,18 @@
                                     <p>Eleva el torax</p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.dos == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.dos)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -680,10 +682,18 @@
                                     <p>Intenta agarrar objetos, pero no lo consigue</p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.tres == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.tres)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -697,10 +707,18 @@
                                     <p>Se sostiene sentado, pero no lo consigue</p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.cuatro == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.cuatro)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -714,10 +732,18 @@
                                     <p>agarra objetos</p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.cinco == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.cinco)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -731,10 +757,18 @@
                                     <p>Aguanta sentado en una silla y aguanta objetos con mayor precisión</p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.seis == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.seis)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -753,10 +787,18 @@
                                     </p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.siete == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.siete)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -774,10 +816,18 @@
                                     </p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.ocho == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.ocho)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -795,10 +845,18 @@
                                     </p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.nueve == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.nueve)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -816,10 +874,18 @@
                                     </p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.diez == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.diez)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -837,10 +903,18 @@
                                     </p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.oncee == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.oncee)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>
@@ -858,10 +932,18 @@
                                     </p>
                                 </div>
                                 <div class="col-md-1">
-                                    @if (Model.desarrollo.doce == true)
-                                    { <p>Si</p> }
-                                    else
-                                    { <p> No </p> }
+                                    @switch (Model.desarrollo.doce)
+                                    {
+                                        case true:
+                                            <text>Si</text>
+                                            break;
+                                        case false:
+                                            <text>No</text>
+                                            break;
+                                        default:
+                                            <text>NR</text>
+                                            break;
+                                    }
                                 </div>
                             </div>
                         </li>

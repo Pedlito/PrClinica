@@ -12,7 +12,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#consulta" role="tab" data-toggle="tab">Consulta</a></li>
-        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisón</a></li>
+        <li role="presentation"><a href="#revision" role="tab" data-toggle="tab">Revisión</a></li>
         <li role="presentation"><a href="#signos" role="tab" data-toggle="tab">Signos</a></li>
         <li role="presentation"><a href="#problemas" role="tab" data-toggle="tab">Problemas</a></li>
         <li role="presentation"><a href="#planes" role="tab" data-toggle="tab">Planes</a></li>
@@ -30,7 +30,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Motivo de la Consulta</label>
+                            <label>Motivo de la consulta</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.consulta.motivoConsulta)
@@ -41,7 +41,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Historia de la Enfermedad</label>
+                            <label>Historia de la enfermedad</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.consulta.HistoriaEnfermedad)
@@ -52,7 +52,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Fecha de Consulta</label>
+                            <label>Fecha de consulta</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Model.consulta.fechaLlegada.Value.ToLongDateString()
@@ -80,7 +80,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Piel y Faneras</label>
+                            <label>Piel y faneras</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.revision.piel)
@@ -135,7 +135,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Vicios y Manias</label>
+                            <label>Vicios y manías</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.revision.vicios)
@@ -173,7 +173,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Indice de Masa Corporal</label>
+                            <label>Índice de masa corporal</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.indiceMasaCorporal)
@@ -184,7 +184,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Presión Arterial</label>
+                            <label>Presión arterial</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.presionArterial)
@@ -195,7 +195,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Frecuencia Cardiaca</label>
+                            <label>Frecuencia cardiaca</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.frecuenciaCardiaca)
@@ -206,7 +206,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Frecuencia Respiratoria</label>
+                            <label>Frecuencia respiratoria</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.frecuenciaRespiratoria)
@@ -228,7 +228,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Circunferencia Cefálica</label>
+                            <label>Circunferencia cefálica</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.circCefalica)
@@ -239,7 +239,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Circunferencia Abdominal</label>
+                            <label>Circunferencia abdominal</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.circAbdominal)
@@ -252,7 +252,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Foco Fetal</label>
+                                <label>Foco fetal</label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.signos.focoFetal)
@@ -263,7 +263,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-md-3 text-left">
-                                <label>Altura de Fondo Uterino</label>
+                                <label>Altura de fondo uterino</label>
                             </div>
                             <div class="col-md-9 text-left">
                                 @Html.DisplayFor(model => model.signos.alturaFondoUterino)
@@ -286,7 +286,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Saturación de Oxigeno</label>
+                            <label>Saturación de oxigeno</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.signos.saturacionOxigeno)
@@ -307,13 +307,13 @@
                             <b>Problema</b>
                         </div>
                         <div class="col-md-3 text-left">
-                            <b>Datos Subjetivos</b>
+                            <b>Datos subjetivos</b>
                         </div>
                         <div class="col-md-3 text-left">
-                            <b>Datos Objetivos</b>
+                            <b>Datos objetivos</b>
                         </div>
                         <div class="col-md-3 text-left">
-                            <b>Analisis</b>
+                            <b>Análisis</b>
                         </div>
                     </div>
                 </li>
@@ -343,13 +343,13 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="planes">
-            <h2>Plan y Diagnostico Diferencial</h2>
+            <h2>Plan y diagnostico diferencial</h2>
 
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Plan Inicial</label>
+                            <label>Plan inicial</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.planes.planInicial)
@@ -360,7 +360,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Plan Diagnostico</label>
+                            <label>Plan diagnostico</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.planes.planDiagnostico)
@@ -371,7 +371,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Diagnostico Diferencial</label>
+                            <label>Diagnostico diferencial</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.planes.diagnosticoDiferencial)
@@ -382,7 +382,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Plan Educacional</label>
+                            <label>Plan educacional</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.planes.planEducacional)
@@ -420,7 +420,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Controles Especificos</label>
+                            <label>Controles específicos</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.terapeutico.controlesEspecificos)
@@ -431,7 +431,7 @@
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Otras Terapias</label>
+                            <label>Otras terapias</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.terapeutico.otrasTerapias)
@@ -442,20 +442,20 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="receta">
-            <h2>Receta Medica</h2>
+            <h2>Receta médica</h2>
             <div id="detalle">
 
             </div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="diagnostico">
-            <h2>Diagnostico Final</h2>
+            <h2>Diagnostico final</h2>
 
             <ul class="list-group">
                 <li class="list-group-item">
                     <div class="row">
                         <div class="col-md-3 text-left">
-                            <label>Impresión Clínica</label>
+                            <label>Impresión clínica</label>
                         </div>
                         <div class="col-md-9 text-left">
                             @Html.DisplayFor(model => model.diagnostico.impresionClinica)

@@ -21,6 +21,7 @@ namespace BD_PR_01_Clinicas.Controllers
             tbUsuario usuario = (from t in db.tbUsuario where t.codUsuario == SessionUsuario.Get.UserId select t).SingleOrDefault();
             List<tbConsulta> lista = (from t in db.tbConsulta
                                       where t.estado == 1 || (t.estado == 2 && (t.codEstudiante == usuario.codUsuario || (usuario.codTipoUsuario == 4 || usuario.codTipoUsuario == 3)))
+                                      orderby t.fechaLlegada
                                       select t).ToList();
             ViewBag.codTipoUsuario = usuario.codTipoUsuario;
             int pageSize = 15;
@@ -42,7 +43,7 @@ namespace BD_PR_01_Clinicas.Controllers
         // GET: Atencion/Crear
         public ActionResult Crear()
         {
-            List<tbTipoSangre> tiposSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
+            List<tbTipoSangre> tiposSangre = (from t in db.tbTipoSangre where t.estado == true orderby t.tipoSangre select t).ToList();
             ViewBag.codTipoSangre = new SelectList(tiposSangre, "codTipoSangre", "tipoSangre");
             return View();
         }
@@ -55,7 +56,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                 {
                                     NombreProducto = c.tbProducto.producto,
                                     presenta = c.tbProducto.tbPresentacion.presentacion,
-                                    dosific = c.tbProducto.dosis.ToString()+" "+(c.tbProducto.codVolumen==1?"mg":"ml"),
+                                    dosific = RegistroProducto.Dosis(c.tbProducto.dosis.ToString(), c.tbProducto.codVolumen.Value, c.tbProducto.dosis2.ToString(), c.tbProducto.codVolumen2.Value),
                                     prescripcion = c.descripcion
                                 });
                 string nombre = consul.tbPaciente.nombre;
@@ -204,11 +205,11 @@ namespace BD_PR_01_Clinicas.Controllers
         public ActionResult CrearHC(int codPaciente)
         {
             //listas para dropdowns
-            List<tbTipoSangre> paciente_codTipoSangre = (from t in db.tbTipoSangre where t.estado == true select t).ToList();
+            List<tbTipoSangre> paciente_codTipoSangre = (from t in db.tbTipoSangre where t.estado == true orderby t.tipoSangre select t).ToList();
             ViewBag.paciente_codTipoSangre = new SelectList(paciente_codTipoSangre, "codTipoSangre", "tipoSangre");
             List<tbUsuario> medicos = (from t in db.tbUsuario where t.codTipoUsuario == 3 && t.estado == true orderby t.nombre select t).ToList();
             ViewBag.consulta_codMedico = new SelectList(medicos, "codUsuario", "nombre");
-            List<tbLaboratorio> labs = (from t in db.tbLaboratorio select t).ToList();
+            List<tbLaboratorio> labs = (from t in db.tbLaboratorio orderby t.laboratorio select t).ToList();
             ViewBag.codLaboratorio = new SelectList(labs, "codLaboratorio", "laboratorio");
 
             List<tbPresentacion> presentaciones = (from t in db.tbPresentacion where t.estado == true orderby t.presentacion select t).ToList();
@@ -288,8 +289,7 @@ namespace BD_PR_01_Clinicas.Controllers
             }
             else
             {
-                patologicos.padre = historia.patologicos.padre;
-                patologicos.madre = historia.patologicos.madre;
+                patologicos.familiares = historia.patologicos.familiares;
                 patologicos.medicos = historia.patologicos.medicos;
                 patologicos.quirurgicos = historia.patologicos.quirurgicos;
                 patologicos.traumaticos = historia.patologicos.traumaticos;
@@ -322,8 +322,9 @@ namespace BD_PR_01_Clinicas.Controllers
             tbDesarrollo desarrollo = (from t in db.tbDesarrollo where t.codPaciente == historia.paciente.codPaciente select t).SingleOrDefault();
             if (desarrollo == null)
             {
-                if (historia.desarrollo.uno != null && historia.desarrollo.dos != null && historia.desarrollo.tres != null && historia.desarrollo.cuatro != null && historia.desarrollo.cinco != null &&
-                    historia.desarrollo.seis != null && historia.desarrollo.siete != null && historia.desarrollo.ocho != null && historia.desarrollo.nueve != null && historia.desarrollo.diez != null)
+                if (historia.desarrollo.uno != null || historia.desarrollo.dos != null || historia.desarrollo.tres != null || historia.desarrollo.cuatro != null || historia.desarrollo.cinco != null ||
+                    historia.desarrollo.seis != null || historia.desarrollo.siete != null || historia.desarrollo.ocho != null || historia.desarrollo.nueve != null || historia.desarrollo.diez != null ||
+                    historia.desarrollo.oncee != null || historia.desarrollo.doce != null)
                 {
                     db.tbDesarrollo.InsertOnSubmit(historia.desarrollo);
                 }
@@ -615,7 +616,7 @@ namespace BD_PR_01_Clinicas.Controllers
             else
             {
                 db.SubmitChanges();
-                return @Url.Action("CrearHC", new { codPaciente = historia.paciente.codPaciente });
+                return "guardado";
             }
         }
         #endregion

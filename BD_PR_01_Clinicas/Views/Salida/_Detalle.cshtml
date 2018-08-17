@@ -14,65 +14,61 @@
     <hr />
 
     //aqui creo la lista que contiene todos los productos ya agregados a el detalle de Entrada
-    <ul id="facturador-detalle" class="list-group">
-        <li class="list-group-item list-group-item-heading list-group-item-info">
-            <div class="row">
-                <div class="col-xs-2 text-left">
-                    <b>Producto</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Categoría</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Presetación</b>
-                </div>
-                <div class="col-xs-1 text-center">
-                    <b>Dosis</b>
-                </div>
-                <div class="col-xs-1 text-center">
-                    <b>Existencia</b>
-                </div>
-                <div class="col-xs-2 text-center">
-                    <b>Cantidad</b>
-                </div>
-                <div class="col-xs-2"></div>
-            </div>
-        </li>
-        @foreach (var item in Model)
-        {
-            <li class="list-group-item">
-                <input type="hidden" value="@item.existencia" />
-                <div class="row">
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.nombre</label>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.categoria</label>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.presentacion</label>
-                    </div>
-                    <div class="col-xs-1 text-left">
-                        <label class="btn">@item.dosis</label>
-                    </div>
-                    <div class="col-xs-1 text-center">
-                        <label class="btn">@item.existencia</label>
-                    </div>
-                    <div class="col-xs-2 text-right">
-                        @* es importante tomar en cuenta que agregue un evento onchange a la funcion cantidad(codigoProducto, el valor cambiado)
-                            que se realiza cuando cambian el numero del input (el usuario cambia la cantidad default por otra) para ir a cambiarlo en el array *@
+    <table class="table table-hover">
+        <thead>
+            <tr class="info">
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Categoría
+                </th>
+                <th>
+                    Presentación
+                </th>
+                <th>
+                    Dosis
+                </th>
+                <th>
+                    Existencia
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="row">
+                        @item.nombre
+                    </td>
+                    <td>
+                        @item.categoria
+                    </td>
+                    <td>
+                        @item.presentacion
+                    </td>
+                    <td>
+                        @item.dosis
+                    </td>
+                    <td>
+                        @item.existencia
+                    </td>
+                    <td>
                         <input type="number" class="form-control input-sm cant" value="@item.cantidad" onchange="cantidad(@item.codProducto,this,@item.existencia)" />
-                    </div>
-                    <div class="col-xs-2 text-right">
-                        @* el boton quitar tiene un evento a la funcion quitar y le manda como parametro el codigo del producto *@
-                        @*<input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />*@
-                        <button type="button" class="btn btn-danger" onclick="quitar(@item.codProducto, event)">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-xs" onclick="quitar(@item.codProducto, event)">
                             <span class="glyphicon glyphicon-remove"></span> Quitar
                         </button>
-                    </div>
-                </div>
-            </li>
-        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-    </ul>
 }

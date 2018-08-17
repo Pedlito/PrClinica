@@ -31,8 +31,7 @@ namespace BD_PR_01_Clinicas.Controllers
                                                producto = prod.producto,
                                                categoria = cat.categoria,
                                                presentacion = pres.presentacion,
-                                               dosis = prod.dosis.Value,
-                                               codVolumen = prod.codVolumen.Value,
+                                               dosis = RegistroProducto.Dosis(prod.dosis.ToString(), prod.codVolumen.Value, prod.dosis2.ToString(), prod.codVolumen2.Value),
                                                existencia = db.existencias(prod.codProducto).Value
                                            }).ToList();
             int pageSize = 15;
@@ -53,8 +52,9 @@ namespace BD_PR_01_Clinicas.Controllers
                                            {
                                                producto = prod.producto,
                                                categoria = cat.categoria,
-                                               presentacion = pres.presentacion + " " +
-                                               Convert.ToString(prod.dosis.Value) + " " + (prod.codVolumen.Value == 1 ? "mg" : "ml"),
+                                               //cambiar por un campo dosis por que no deja concatenar
+                                               presentacion = pres.presentacion,
+                                               dosis = RegistroProducto.Dosis(prod.dosis.ToString(), prod.codVolumen.Value, prod.dosis2.ToString(), prod.codVolumen2.Value),
                                                existencia = db.existencias(prod.codProducto).Value
                                            }).ToList();
 

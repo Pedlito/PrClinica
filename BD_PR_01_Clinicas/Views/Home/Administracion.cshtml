@@ -12,7 +12,7 @@
 
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#inventario" aria-controls="first" role="tab" data-toggle="tab">Inventario</a></li>
-        <li role="presentation"><a href="#medicamentos" aria-controls="second" role="tab" data-toggle="tab">Medicamentos</a></li>
+        <li role="presentation"><a href="#medicamentos" aria-controls="second" role="tab" data-toggle="tab">Catalogos</a></li>
         @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_rotaciones) ||
              BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_usuarios) ||
              BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_registro))
@@ -67,7 +67,7 @@
                 <div class="col-md-4">
                     @if (BD_PR_01_Clinicas.Models.FrontUser.TienePermiso(BD_PR_01_Clinicas.Models.RolesPermisos.administrar_catalogo_prod))
                     {
-                        <h2><p>@Html.ActionLink("Catalogo", "Index", "Producto")</p></h2>
+                        <h2><p>@Html.ActionLink("Medicamentos", "Index", "Producto")</p></h2>
                         <p>Administracion de todos los medicamentos.</p>
                     }
                 </div>

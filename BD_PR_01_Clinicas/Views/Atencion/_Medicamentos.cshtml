@@ -1,53 +1,46 @@
 ﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
 
-<ul class="list-group">
-    @*Fila de titulos*@
-    <li class="list-group-item list-group-item-heading list-group-item-info">
-        <div class="row">
-            <div class="col-xs-4 text-left">
-                <b>Producto</b>
-            </div>
-            <div class="col-xs-2 text-left">
-                <b>Categoría</b>
-            </div>
-            <div class="col-xs-2 text-left">
-                <b>Presentación</b>
-            </div>
-            <div class="col-xs-2 text-left">
-                <b>Dosis</b>
-            </div>
-            <div class="col-xs-2"></div>
-        </div>
-    </li>
+<table class="table table-hover">
+    <thead>
+        <tr class="info">
+            <th>
+                Producto
+            </th>
+            <th>
+                Categoría
+            </th>
+            <th>
+                Presentación
+            </th>
+            <th>
+                Dosis
+            </th>
+            <th></th>
+        </tr>
+    </thead>
 
-    @foreach (var item in Model)
-    {
-        //Contenido
-        <li class="list-group-item">
-
-            <div class="row">
-                <div class="col-xs-4 text-left">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
                     @item.nombre
-                </div>
-                <div class="col-xs-2 text-left">
+                </td>
+                <td>
                     @item.categoria
-                </div>
-                <div class="col-xs-2 text-left">
+                </td>
+                <td>
                     @item.presentacion
-                </div>
-                <div class="col-xs-2 text-left">
+                </td>
+                <td>
                     @item.dosis
-                </div>
-                <div class="col-xs-2 text-left">
-                    @* en este caso al hacer click en el boton agregar de una fila, se llama a la funcion agregar que esta en la pagina principal
-                        y se le manda como parametro el codigo del producto del item de esa fila *@
-                    @*<input type="button" value="Agregar" class="btn btn-xs btn-success" onclick="agregar(@item.codProducto)" />*@
+                </td>
+                <td>
                     <button type="button" class="btn btn-xs btn-success" onclick="agregar(@item.codProducto)">
                         <span class="glyphicon glyphicon-check"></span> Agregar
                     </button>
-                </div>
-            </div>
-        </li>
-    }
-
-</ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

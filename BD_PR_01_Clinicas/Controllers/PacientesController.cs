@@ -98,57 +98,13 @@ namespace BD_PR_01_Clinicas.Controllers
                                    nombre = t.producto,
                                    categoria = t.tbCategoria.categoria,
                                    presentacion = t.tbPresentacion.presentacion,
-                                   dosis = t.dosis.ToString() + ((t.codVolumen == 1) ? " mg" : " ml"),
+                                   dosis = RegistroProducto.Dosis(t.dosis.ToString(), t.codVolumen.Value, t.dosis2.ToString(), t.codVolumen2.Value),
                                    descripcion = item.descripcion
                                }).SingleOrDefault());
                 }
             }
             //el retorno sera el html creado en la vista parcial _detalle pasandole como modelo la lista
             return PartialView("_Detalle", lista);
-        }
-
-        // GET: Pacientes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Pacientes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Pacientes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Pacientes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

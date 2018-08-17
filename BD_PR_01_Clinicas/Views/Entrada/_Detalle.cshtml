@@ -1,71 +1,66 @@
 ﻿@model IEnumerable<BD_PR_01_Clinicas.Models.RegistroProducto>
 
 @* aqui hay un if que indica que si el modelo esta vacio no se crea nada de codigo html y se devuelve una vista parcial vacia
-   de lo contrario se crea el boton Guardar que hace referencia a la funcion guardar(), esta funcion es la que envia todos los datos
-   al post de crear y lo inserta a la base de datos para finalizar y guardar la entrada *@
+    de lo contrario se crea el boton Guardar que hace referencia a la funcion guardar(), esta funcion es la que envia todos los datos
+    al post de crear y lo inserta a la base de datos para finalizar y guardar la entrada *@
 
 @if (Model.Count() > 0)
 {
-    <hr/>
+    <hr />
     @*<input type="button" class="btn btn-primary" onclick="guardar()" value="Guardar" id="save"/>*@
     <button type="button" class="btn btn-primary" onclick="guardar()" id="save">
         <span class="glyphicon glyphicon-floppy-disk"></span> Guardar
     </button>
-    <hr/>
+    <hr />
 
-    //aqui creo la lista que contiene todos los productos ya agregados a el detalle de Entrada
-    <ul id="facturador-detalle" class="list-group">
-        <li class="list-group-item list-group-item-heading list-group-item-info">
-            <div class="row">
-                <div class="col-xs-2 text-left">
-                    <b>Producto</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Categoría</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Presetación</b>
-                </div>
-                <div class="col-xs-2 text-left">
-                    <b>Dosis</b>
-                </div>
-                <div class="col-xs-2 text-center">
-                    <b>Cantidad</b>
-                </div>
-                <div class="col-xs-2"></div>
-            </div>
-        </li>
-        @foreach (var item in Model)
-        {
-            <li class="list-group-item">          
-                <div class="row">
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.nombre</label>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.categoria</label>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.presentacion</label>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        <label class="btn">@item.dosis</label>
-                    </div>
-                    <div class="col-xs-2 text-left">
-                        @* es importante tomar en cuenta que agregue un evento onchange a la funcion cantidad(codigoProducto, el valor cambiado)
-                           que se realiza cuando cambian el numero del input (el usuario cambia la cantidad default por otra) para ir a cambiarlo en el array *@
+    <table class="table table-hover">
+        <thead>
+            <tr class="info">
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Categoría
+                </th>
+                <th>
+                    Presentación
+                </th>
+                <th>
+                    Dosis
+                </th>
+                <th>
+                    Cantidad
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="row">
+                        @item.nombre
+                    </td>
+                    <td>
+                        @item.categoria
+                    </td>
+                    <td>
+                        @item.presentacion
+                    </td>
+                    <td>
+                        @item.dosis
+                    </td>
+                    <td>
                         <input type="number" class="form-control input-sm cant" value="@item.cantidad" onchange="cantidad(@item.codProducto,this)" />
-                    </div>
-                    <div class="col-xs-2 text-center">
-                        @* el boton quitar tiene un evento a la funcion quitar y le manda como parametro el codigo del producto *@
-                        @*<input type="button" value="Quitar" class="btn btn-danger" onclick="quitar(@item.codProducto, event)" />*@
+                    </td>
+                    <td>
                         <button type="button" class="btn btn-danger" onclick="quitar(@item.codProducto, event)">
                             <span class="glyphicon glyphicon-remove"></span> Quitar
                         </button>
-                    </div>
-                </div>
-            </li>
-        }
-
-    </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

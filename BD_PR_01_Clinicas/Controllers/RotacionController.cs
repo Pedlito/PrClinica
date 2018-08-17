@@ -63,7 +63,7 @@ namespace BD_PR_01_Clinicas.Controllers
             if (rotacionU!=null)
             {
 
-                ViewBag.fechaFinUR = rotacionU.fechaFinal.Value.ToString("dd/MM/yyyy");//limite superior
+                ViewBag.fechaFinUR = rotacionU.fechaFinal.Value.AddDays(1).ToString("dd/MM/yyyy");//limite superior
                    // ViewBag.fechaInPR = rotacionP.fechaInicio.Value.ToString("dd/MM/yyyy"); //limite inferior
             }
             else
