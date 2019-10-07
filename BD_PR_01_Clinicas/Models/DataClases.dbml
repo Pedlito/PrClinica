@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="dbClinica" Class="DataClasesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-1CHIF35\SQLEXPRESS;Initial Catalog=dbClinica;Integrated Security=True;User ID=uPedro" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-1CHIF35\SQLEXPRESS;Initial Catalog=dbClinica;Integrated Security=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="dbClinicaConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.tbAntecedentesNoPatologicos" Member="tbAntecedentesNoPatologicos">
     <Type Name="tbAntecedentesNoPatologicos">
       <Column Name="codPaciente" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -62,8 +62,8 @@
       <Association Name="tbConsulta_tbPlanTerapeutico" Member="tbPlanTerapeutico" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbPlanTerapeutico" Cardinality="One" />
       <Association Name="tbConsulta_tbProblema" Member="tbProblema" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbProblema" />
       <Association Name="tbConsulta_tbReceta" Member="tbReceta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbReceta" />
-      <Association Name="tbConsulta_tbRevisionSistemas" Member="tbRevisionSistemas" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbRevisionSistemas" Cardinality="One" />
       <Association Name="tbConsulta_tbSignosVitales" Member="tbSignosVitales" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbSignosVitales" Cardinality="One" />
+      <Association Name="tbConsulta_tbRevisionSistemas" Member="tbRevisionSistemas" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbRevisionSistemas" Cardinality="One" />
       <Association Name="tbUsuario_tbConsulta" Member="tbEstudiante" Storage="_tbUsuario" ThisKey="codEstudiante" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
       <Association Name="tbUsuario_tbConsulta1" Member="tbMedico" Storage="_tbUsuario1" ThisKey="codMedico" OtherKey="codUsuario" Type="tbUsuario" IsForeignKey="true" />
       <Association Name="tbPaciente_tbConsulta" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
@@ -245,19 +245,6 @@
       <Association Name="tbProducto_tbReceta" Member="tbProducto" ThisKey="codProducto" OtherKey="codProducto" Type="tbProducto" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tbRevisionSistemas" Member="tbRevisionSistemas">
-    <Type Name="tbRevisionSistemas">
-      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="conducta" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="piel" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="cabeza" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="ojos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="oidos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="nariz" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Column Name="vicios" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
-      <Association Name="tbConsulta_tbRevisionSistemas" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbRol" Member="tbRol">
     <Type Name="tbRol">
       <Column Name="codTipoUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -305,49 +292,12 @@
       <Association Name="tbPaciente_tbSalida" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.tbSignosVitales" Member="tbSignosVitales">
-    <Type Name="tbSignosVitales">
-      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="peso" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="talla" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
-      <Column Name="indiceMasaCorporal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="presionArterial" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="frecuenciaCardiaca" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="frecuenciaRespiratoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="temperatura" Type="System.Decimal" DbType="Decimal(4,2)" CanBeNull="true" />
-      <Column Name="circCefalica" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="circAbdominal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="focoFetal" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="alturaFondoUterino" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Column Name="pulso" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="saturacionOxigeno" Type="System.Decimal" DbType="Decimal(5,2)" CanBeNull="true" />
-      <Association Name="tbConsulta_tbSignosVitales" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.tbTipoSangre" Member="tbTipoSangre">
     <Type Name="tbTipoSangre">
       <Column Name="codTipoSangre" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="tipoSangre" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="tbTipoSangre_tbPaciente" Member="tbPaciente" ThisKey="codTipoSangre" OtherKey="codTipoSangre" Type="tbPaciente" />
-    </Type>
-  </Table>
-  <Table Name="dbo.tbProducto" Member="tbProducto">
-    <Type Name="tbProducto">
-      <Column Name="codProducto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="codCategoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="codPresentacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="producto" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
-      <Column Name="dosis" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="codVolumen" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="dosis2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="codVolumen2" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Association Name="tbProducto_tbDetalleEntrada" Member="tbDetalleEntrada" ThisKey="codProducto" OtherKey="codProducto" Type="tbDetalleEntrada" />
-      <Association Name="tbProducto_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codProducto" OtherKey="codProducto" Type="tbDetalleSalida" />
-      <Association Name="tbProducto_tbReceta" Member="tbReceta" ThisKey="codProducto" OtherKey="codProducto" Type="tbReceta" />
-      <Association Name="tbCategoria_tbProducto" Member="tbCategoria" ThisKey="codCategoria" OtherKey="codCategoria" Type="tbCategoria" IsForeignKey="true" />
-      <Association Name="tbPresentacion_tbProducto" Member="tbPresentacion" ThisKey="codPresentacion" OtherKey="codPresentacion" Type="tbPresentacion" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.tbAntecedentesPatologicos" Member="tbAntecedentesPatologicos">
@@ -361,6 +311,68 @@
       <Column Name="ginecoObstetricos" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
       <Column Name="viciosManias" Type="System.String" DbType="VarChar(700)" CanBeNull="true" />
       <Association Name="tbPaciente_tbAntecedentesPatologicos" Member="tbPaciente" ThisKey="codPaciente" OtherKey="codPaciente" Type="tbPaciente" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbProducto" Member="tbProducto">
+    <Type Name="tbProducto">
+      <Column Name="codProducto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="codCategoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="codPresentacion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="producto" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dosis" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="codVolumen" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dosis2" Type="System.Decimal" DbType="Decimal(8,2)" CanBeNull="true" />
+      <Column Name="codVolumen2" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="estado" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="tbProducto_tbDetalleEntrada" Member="tbDetalleEntrada" ThisKey="codProducto" OtherKey="codProducto" Type="tbDetalleEntrada" />
+      <Association Name="tbProducto_tbDetalleSalida" Member="tbDetalleSalida" ThisKey="codProducto" OtherKey="codProducto" Type="tbDetalleSalida" />
+      <Association Name="tbProducto_tbReceta" Member="tbReceta" ThisKey="codProducto" OtherKey="codProducto" Type="tbReceta" />
+      <Association Name="tbCategoria_tbProducto" Member="tbCategoria" ThisKey="codCategoria" OtherKey="codCategoria" Type="tbCategoria" IsForeignKey="true" />
+      <Association Name="tbPresentacion_tbProducto" Member="tbPresentacion" ThisKey="codPresentacion" OtherKey="codPresentacion" Type="tbPresentacion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbSignosVitales" Member="tbSignosVitales">
+    <Type Name="tbSignosVitales">
+      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="peso" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="talla" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="indiceMasaCorporal" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="presionArterial" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="frecuenciaCardiaca" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="frecuenciaRespiratoria" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="temperatura" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="circCefalica" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="circAbdominal" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="focoFetal" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="alturaFondoUterino" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="pulso" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="saturacionOxigeno" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Association Name="tbConsulta_tbSignosVitales" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbRevisionSistemas" Member="tbRevisionSistemas">
+    <Type Name="tbRevisionSistemas">
+      <Column Name="codConsulta" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="conducta" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="piel" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="cabeza" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="ojos" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="oidos" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="nariz" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="boca" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="garganta" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="cuello" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="mamas" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sLinfatico" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sRespiratorio" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sCardiovascular" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sDigestivo" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sGenitoUrinario" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sEndocrino" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sMusculoEsqueletico" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="sNervioso" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Column Name="vicios" Type="System.String" DbType="VarChar(1500)" CanBeNull="true" />
+      <Association Name="tbConsulta_tbRevisionSistemas" Member="tbConsulta" ThisKey="codConsulta" OtherKey="codConsulta" Type="tbConsulta" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.Logiar" Method="Logiar">
