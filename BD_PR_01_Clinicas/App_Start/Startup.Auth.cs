@@ -15,7 +15,7 @@ namespace BD_PR_01_Clinicas
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure el contexto de base de datos, el administrador de usuarios y el administrador de inicios de sesión para usar una única instancia por solicitud
-           // app.CreatePerOwinContext(ApplicationDbContext.Create);
+            // app.CreatePerOwinContext(ApplicationDbContext.Create);
             //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             //app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
@@ -27,7 +27,7 @@ namespace BD_PR_01_Clinicas
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
                 LogoutPath = new PathString("/Account/LogOff"),
-                ExpireTimeSpan = TimeSpan.FromMinutes(40)
+                ExpireTimeSpan = TimeSpan.FromDays(30)
                 //Provider = new CookieAuthenticationProvider
                 //{
                 //    // Permite a la aplicación validar la marca de seguridad cuando el usuario inicia sesión.
